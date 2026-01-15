@@ -1,2 +1,4 @@
 .venv/
 healthcare_lnp_model.pth
+OCR_System/ocr-backend/images_for_Test_yu/
+OCR_System/ocr-backend/test_space_yu/
