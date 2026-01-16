@@ -8,11 +8,13 @@ from __future__ import annotations
 import base64
 import json
 import urllib.request
+from datetime import datetime
 from pathlib import Path
 
 OCR_URL = "http://localhost:8000/ocr/base64"
 AI_URL = "http://localhost:8001/api/v1/correct"
-IMAGE_PATH = Path(__file__).parent.parent / "ocr-service" / "images_for_Test_yu" / "image2.png"
+IMAGE_PATH = Path(__file__).parent.parent / "ocr-service" / "images_for_Test_yu" / "image1.png"
+RESULTS_DIR = Path(__file__).parent.parent / "ocr-service" / "test_space_yu"
 
 
 def post_json(url: str, payload: dict) -> dict:
@@ -45,10 +47,25 @@ def main() -> None:
 
     ai_result = post_json(AI_URL, ai_payload)
 
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    output_path = RESULTS_DIR / f"ocr_ai_result_{timestamp}.json"
+    output_payload = {
+        "image_path": str(IMAGE_PATH),
+        "ocr_url": OCR_URL,
+        "ai_url": AI_URL,
+        "ocr_payload": ocr_payload,
+        "ocr_result": ocr_result,
+        "ai_payload": ai_payload,
+        "ai_result": ai_result,
+    }
+    output_path.write_text(json.dumps(output_payload, ensure_ascii=False, indent=2), encoding="utf-8")
+
     print("=== OCR Raw Text ===")
     print(raw_text)
     print("\n=== AI Corrected Text ===")
     print(ai_result.get("corrected_text", ""))
+    print(f"\nResults saved to: {output_path}")
 
 
 if __name__ == "__main__":
