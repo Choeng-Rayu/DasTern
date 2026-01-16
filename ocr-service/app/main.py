@@ -7,6 +7,8 @@ Supports: English, Khmer, French mixed-language prescriptions.
 
 import base64
 import io
+import os
+import sys
 from typing import Optional, List
 from fastapi import FastAPI, File, UploadFile, HTTPException, Form
 from fastapi.middleware.cors import CORSMiddleware
@@ -14,8 +16,16 @@ from fastapi.responses import JSONResponse
 import numpy as np
 import cv2
 
-from .pipeline import run_pipeline, run_pipeline_from_bytes
-from .schemas import OCRResult, OCRRequest, LanguageCode
+try:
+    from .pipeline import run_pipeline, run_pipeline_from_bytes
+    from .schemas import OCRResult, OCRRequest, LanguageCode
+except ImportError:
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    parent_dir = os.path.dirname(current_dir)
+    if parent_dir not in sys.path:
+        sys.path.insert(0, parent_dir)
+    from app.pipeline import run_pipeline, run_pipeline_from_bytes
+    from app.schemas import OCRResult, OCRRequest, LanguageCode
 
 
 # Initialize FastAPI app
@@ -53,8 +63,9 @@ async def health_check():
         "status": "healthy",
         "components": {
             "ocr_engine": "ready",
-            "ai_corrector": "ready",
-            "preprocessing": "ready"
+            "layout": "ready",
+            "preprocessing": "ready",
+            "postprocessing": "ready"
         }
     }
 
@@ -62,7 +73,6 @@ async def health_check():
 @app.post("/ocr", response_model=None)
 async def process_image(
     file: UploadFile = File(...),
-    use_ai_correction: bool = Form(default=True),
     lenient_quality: bool = Form(default=False),
     languages: str = Form(default="eng+khm+fra")
 ):
@@ -71,7 +81,6 @@ async def process_image(
     
     Args:
         file: Uploaded image file (JPEG, PNG)
-        use_ai_correction: Enable MT5-based OCR error correction
         lenient_quality: Use lenient quality thresholds for mobile images
         languages: Tesseract language codes (e.g., "eng+khm+fra")
         
@@ -92,7 +101,6 @@ async def process_image(
     try:
         result = run_pipeline_from_bytes(
             contents,
-            use_ai_correction=use_ai_correction,
             lenient_quality=lenient_quality,
             languages=languages
         )
@@ -121,7 +129,6 @@ async def process_base64_image(request: OCRRequest):
         # Run pipeline
         result = run_pipeline_from_bytes(
             image_data,
-            use_ai_correction=request.apply_ai_correction,
             lenient_quality=request.lenient_quality,
             languages=lang_str
         )
@@ -152,9 +159,6 @@ async def startup_event():
     """Initialize models on startup."""
     print("Starting Prescription OCR API...")
     print("Supported languages: English, Khmer, French")
-    # Optionally preload AI model here
-    # from .ai_corrector import load_model
-    # load_model()
 
 
 if __name__ == "__main__":

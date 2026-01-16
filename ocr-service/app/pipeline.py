@@ -2,7 +2,7 @@
 Main OCR Pipeline Module
 
 Connects all components into a complete prescription OCR system.
-Flow: Quality Gate → Preprocessing → Layout → OCR → AI Correction → Post-processing → Output
+Flow: Quality Gate → Preprocessing → Layout → OCR → Rule Cleanup → Post-processing → Output
 """
 
 import cv2
@@ -14,7 +14,6 @@ from .quality import quality_check, quality_check_lenient
 from .preprocess import preprocess, preprocess_for_khmer
 from .layout import extract_regions, merge_overlapping_regions
 from .ocr_engine import ocr, ocr_with_confidence, ocr_multi_pass, detect_language_hint
-from .ai_corrector import ai_correct, detect_and_correct
 from .postprocess import clean, postprocess_region
 from .confidence import score_ocr_confidence, calculate_document_confidence, needs_manual_review
 from .schemas import build_output
@@ -22,7 +21,6 @@ from .schemas import build_output
 
 def run_pipeline(
     img: np.ndarray,
-    use_ai_correction: bool = True,
     lenient_quality: bool = False,
     languages: str = "eng+khm+fra"
 ) -> Dict:
@@ -31,7 +29,6 @@ def run_pipeline(
     
     Args:
         img: Input image in BGR format (from cv2.imread)
-        use_ai_correction: Whether to apply MT5 AI correction
         lenient_quality: Use lenient quality thresholds for mobile images
         languages: Tesseract language codes
         
@@ -97,21 +94,11 @@ def run_pipeline(
         conf_result = ocr_with_confidence(crop_gray, lang=languages)
         tesseract_conf = conf_result.get("confidence", 0)
         
-        # Step 5: AI Correction (if enabled)
-        if use_ai_correction and raw_text.strip():
-            try:
-                # Map detected language to correction language
-                lang_map = {"khm": "khm", "eng+fra": "eng", "eng+khm+fra": "eng"}
-                correction_lang = lang_map.get(detected_lang, "eng")
-                ai_corrected = ai_correct(raw_text, correction_lang)
-            except Exception as e:
-                print(f"AI correction failed: {e}")
-                ai_corrected = raw_text
-        else:
-            ai_corrected = raw_text
+        # Step 5: Rule-based cleanup (no AI correction in OCR service)
+        cleaned_text = raw_text
         
         # Step 6: Post-processing
-        final_text = clean(ai_corrected, language=detected_lang.split("+")[0] if detected_lang else "eng")
+        final_text = clean(cleaned_text, language=detected_lang.split("+")[0] if detected_lang else "eng")
         
         # Step 7: Confidence Scoring
         confidence = score_ocr_confidence(raw_text, final_text, tesseract_conf)
@@ -120,7 +107,7 @@ def run_pipeline(
             "box": region["box"],
             "type": region["type"],
             "raw": raw_text,
-            "ai_corrected": ai_corrected,
+            "cleaned": cleaned_text,
             "final": final_text,
             "detected_language": detected_lang,
             "tesseract_confidence": tesseract_conf,
@@ -146,7 +133,7 @@ def run_pipeline_simple(img: np.ndarray, lang: str = "eng+khm+fra") -> str:
     Simplified pipeline that returns just the extracted text.
     Useful for quick testing or simple integrations.
     """
-    result = run_pipeline(img, use_ai_correction=True, languages=lang)
+    result = run_pipeline(img, languages=lang)
     return result.get("full_text", "")
 
 

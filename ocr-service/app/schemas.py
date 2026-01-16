@@ -40,7 +40,7 @@ class Medication(BaseModel):
 
 class TextBlock(BaseModel):
     raw_text: str = Field(description="Original OCR output")
-    corrected_text: str = Field(description="AI-corrected text")
+    corrected_text: str = Field(description="Rule-based cleaned text (no AI)")
     final_text: str = Field(description="Post-processed clean text")
     confidence: float = Field(ge=0.0, le=1.0, description="Confidence score")
     region_type: RegionType = RegionType.BODY
@@ -77,7 +77,6 @@ class OCRRequest(BaseModel):
     """Request schema for OCR endpoint."""
     image_base64: Optional[str] = Field(None, description="Base64 encoded image")
     languages: List[LanguageCode] = [LanguageCode.ENGLISH, LanguageCode.KHMER, LanguageCode.FRENCH]
-    apply_ai_correction: bool = True
     lenient_quality: bool = False
 
 
@@ -92,7 +91,7 @@ def build_text_block(region: Dict) -> TextBlock:
     
     return TextBlock(
         raw_text=region.get("raw", ""),
-        corrected_text=region.get("ai_corrected", region.get("raw", "")),
+        corrected_text=region.get("cleaned", region.get("raw", "")),
         final_text=region.get("final", ""),
         confidence=region.get("confidence", 0.5),
         region_type=RegionType(region.get("type", "body")),
@@ -139,7 +138,7 @@ def build_output(regions: List[Dict], quality_metrics: Dict = None,
     for region in regions:
         text_blocks.append({
             "raw_text": region.get("raw", ""),
-            "corrected_text": region.get("ai_corrected", region.get("raw", "")),
+            "corrected_text": region.get("cleaned", region.get("raw", "")),
             "final_text": region.get("final", ""),
             "confidence": region.get("confidence", 0.5),
             "region_type": region.get("type", "body"),

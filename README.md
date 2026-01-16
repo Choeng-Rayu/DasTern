@@ -1,226 +1,154 @@
-# DasTern - Medical Prescription OCR System
+# DasTern V2 - Medical Prescription OCR System
 
-## 📁 MONOREPO PROJECT STRUCTURE
+## 📁 FINAL MONOREPO STRUCTURE (RECOMMENDED)
 
 ```
-dastern/
-├── mobile_app/                 # Flutter Mobile Application
-│   ├── lib/
-│   │   ├── screens/           # UI screens
-│   │   ├── widgets/           # Reusable widgets
-│   │   ├── services/          # API services
-│   │   ├── models/            # Data models
-│   │   └── main.dart          # Entry point
-│   ├── android/               # Android config
-│   ├── ios/                   # iOS config
-│   └── pubspec.yaml           # Dependencies
-│
-├── backend/                    # Next.js Backend (API Gateway)
-│   ├── app/
-│   │   ├── api/               # API routes
-│   │   │   ├── auth/          # Authentication
-│   │   │   ├── ocr/           # OCR endpoints
-│   │   │   ├── review/        # Review system
-│   │   │   └── users/         # User management
-│   │   ├── dashboard/         # Admin dashboard
-│   │   ├── layout.tsx         # Root layout
-│   │   └── page.tsx           # Home page
-│   ├── lib/                   # Utilities
-│   │   ├── db.ts              # Database connection
-│   │   ├── ocr-client.ts      # OCR backend client
-│   │   └── auth.ts            # Auth utilities
-│   ├── prisma/                # Database schema
-│   ├── package.json
-│   └── next.config.ts
-│
-├── OCR_System/
-│   └── ocr-backend/           # Python OCR + AI Engine
+dastern-v2/
+├── apps/
+│   ├── mobile-flutter/
+│   │   └── lib/
+│   ├── backend-nextjs/
+│   │   ├── app/
+│   │   │   └── api/
+│   │   │       ├── ocr/
+│   │   │       ├── ai/
+│   │   │       ├── chat/
+│   │   │       └── users/
+│   │   ├── lib/
+│   │   └── prisma/
+│   ├── ocr-service/
+│   │   ├── app/
+│   │   │   ├── main.py
+│   │   │   ├── pipeline.py
+│   │   │   ├── quality.py
+│   │   │   ├── preprocess.py
+│   │   │   ├── layout.py
+│   │   │   ├── ocr_engine.py
+│   │   │   ├── postprocess.py
+│   │   │   ├── confidence.py
+│   │   │   └── schemas.py
+│   │   ├── tessdata/
+│   │   └── requirements.txt
+│   └── ai-llm-service/
 │       ├── app/
-│       │   ├── main.py        # FastAPI entry
-│       │   ├── pipeline.py    # OCR pipeline
-│       │   ├── quality.py     # Image quality check
-│       │   ├── preprocess.py  # OpenCV preprocessing
-│       │   ├── layout.py      # Layout detection
-│       │   ├── ocr_engine.py  # Tesseract OCR
-│       │   ├── ai_corrector.py # MT5 correction
-│       │   ├── postprocess.py # Text cleanup
-│       │   ├── confidence.py  # Confidence scoring
-│       │   └── schemas.py     # Pydantic models
-│       │
-│       ├── ai/                # AI models
-│       │   └── mt5/
-│       │       ├── tokenizer/ # MT5 tokenizer
-│       │       └── model/     # MT5 model files
-│       │
-│       ├── tessdata/          # Tesseract language data
-│       ├── requirements.txt
-│       └── README.md
-│
-└── AI/                        # AI Training & Development
-    ├── train.py               # Model training
-    ├── healthcare_lnp.py      # Healthcare LNP model
-    ├── healthcare_lnp_model.pth # Trained model
-    ├── app.py                 # Demo application
-    └── requirements.txt
+│       │   ├── main.py
+│       │   ├── model_loader.py
+│       │   ├── ocr_corrector.py
+│       │   ├── chat_assistant.py
+│       │   ├── prompts/
+│       │   │   ├── ocr_fix.txt
+│       │   │   ├── chatbot.txt
+│       │   │   └── medical_help.txt
+│       │   ├── schemas.py
+│       │   └── confidence.py
+│       ├── models/
+│       │   └── mt5-small/
+│       ├── fine_tune/
+│       └── requirements.txt
+├── shared/
+│   ├── types/
+│   └── constants/
+└── docs/
+   └── architecture.md
+```
+---
+
+## 🎯 ROLE OF EACH SERVICE (CLEAR & NON-OVERLAPPING)
+
+### 1️⃣ OCR SERVICE (Python – OpenCV + Tesseract)
+
+**📁 apps/ocr-service**
+
+**Responsibilities**
+- Image quality check
+- Image preprocessing
+- Layout detection
+- OCR text extraction
+- Basic rule cleanup
+- Confidence estimation
+
+**Does NOT**
+- ❌ Run MT5
+- ❌ Understand meaning
+- ❌ Chat with users
+
+**📌 Output = raw but clean text**
+
+---
+
+### 2️⃣ AI LLM SERVICE (MT5)
+
+**📁 apps/ai-llm-service**
+
+**Responsibilities**
+- OCR error correction
+- Multilingual normalization (KH / EN / FR)
+- Medical text understanding
+- Chatbot assistance
+- Question answering
+- Explanation to users
+
+**Does NOT**
+- ❌ Process images
+- ❌ Handle OpenCV
+- ❌ Do OCR
+
+**📌 Input = text only**
+
+---
+
+### 3️⃣ NEXT.JS BACKEND (Orchestrator)
+
+**📁 apps/backend-nextjs**
+
+**Responsibilities**
+- User authentication
+- API gateway
+- Call OCR service
+- Call AI service
+- Manage workflow
+- Save results
+- Serve Flutter
+
+**📌 This is your control tower**
+
+---
+
+### 4️⃣ FLUTTER APP (UI)
+
+**📁 apps/mobile-flutter**
+
+**Responsibilities**
+- Capture image
+- Upload image
+- Show OCR preview
+- Chat with AI assistant
+- Confirm data
+
+**📌 Zero intelligence here (by design)**
+
+---
+
+## 🔄 REAL REQUEST FLOW (IMPORTANT)
+
+### OCR Flow
+```
+Flutter → Next.js → OCR Service
+OCR Service → raw text
+Next.js → AI LLM Service (optional)
+AI Service → enhanced text
+Next.js → Flutter
 ```
 
----
-
-## 🎯 ROLE OF EACH COMPONENT
-
-### 1️⃣ Flutter App (`mobile_app/`) - User Interface
-
-**📱 Role**: Mobile application for end users (pharmacists, doctors, patients)
-
-**Responsibilities**:
-- ✅ Capture prescription images
-- ✅ Upload to backend
-- ✅ Display OCR preview
-- ✅ Allow user corrections
-- ✅ Confirm final results
-- ✅ User authentication UI
-
-**Does NOT**:
-- ❌ No OCR processing
-- ❌ No AI logic
-- ❌ No image preprocessing
-
-**📌 Benefit**: Keeps app fast, lightweight, and responsive
-
----
-
-### 2️⃣ Next.js Backend (`backend/`) - API Gateway & Controller
-
-**🔧 Role**: System orchestrator and workflow manager
-
-**Responsibilities**:
-- ✅ User authentication & authorization
-- ✅ File upload handling
-- ✅ Call OCR + AI backend
-- ✅ Database operations (save results, track status)
-- ✅ Manage review workflow
-- ✅ Serve data to Flutter app
-- ✅ Admin dashboard (optional)
-
-**Request Flow**:
+### Chatbot Flow
 ```
-Flutter → /api/ocr/upload
-Next.js → OCR Backend (Python)
-OCR Backend → JSON response
-Next.js → Save to database
-Next.js → Return to Flutter
+Flutter → Next.js → AI LLM Service
+AI LLM Service → response
+Next.js → Flutter
 ```
 
-**Why Next.js?**
-- TypeScript type safety
-- Built-in API routes
-- Can serve admin dashboard
-- Easy deployment (Vercel/VPS)
-- Excellent scalability
-
----
-
-### 3️⃣ OCR + AI Backend (`OCR_System/ocr-backend/`) - Intelligence Engine
-
-**🧠 Role**: Pure computational processing engine
-
-**Responsibilities**:
-- ✅ Image quality gate (reject blurry images)
-- ✅ OpenCV preprocessing (deskew, denoise, binarization)
-- ✅ Layout detection (find text regions)
-- ✅ Tesseract OCR (extract text)
-- ✅ MT5 AI correction (fix errors, normalize language)
-- ✅ Confidence scoring
-- ✅ Return structured JSON
-
-**Does NOT**:
-- ❌ No user management
-- ❌ No authentication
-- ❌ No database operations
-- ❌ No UI logic
-
-**📌 Why Separate?**
-- Python excels at image processing (OpenCV)
-- AI/ML models (PyTorch, Transformers)
-- Stateless service = easy scaling
-- Can be deployed independently
-
----
-
-### 4️⃣ AI MT5 Model (`OCR_System/ocr-backend/ai/mt5/`) - Error Correction
-
-**🤖 Role**: OCR text correction and normalization
-
-**Responsibilities**:
-- ✅ Correct OCR errors (e.g., "Arnoxicillin" → "Amoxicillin")
-- ✅ Handle multilingual text (Khmer + English + French)
-- ✅ Medical terminology correction
-- ✅ Structured text formatting
-
-**Why Separate Folder?**
-- Easier to fine-tune model
-- Easier to replace with better model
-- Cleaner deployment strategy
-- Version control for models
-
----
-
-### 5️⃣ AI Training (`AI/`) - Model Development
-
-**🔬 Role**: AI model training and experimentation
-
-**Responsibilities**:
-- ✅ Train custom models for healthcare text
-- ✅ Fine-tune MT5 for medical domain
-- ✅ Experiment with different architectures
-- ✅ Model evaluation and testing
-
-**📌 Note**: This folder is for development only, not production deployment
-
----
-
-### 6️⃣ Database (Managed by Next.js Backend)
-
-**💾 Role**: Persistent data storage
-
-**Stores**:
-- User accounts
-- Uploaded image paths
-- OCR raw text output
-- AI-corrected text
-- User manual edits
-- Confidence scores
-- Review status
-
-**Example Tables**:
-- `users` - User accounts
-- `prescriptions` - Uploaded prescriptions
-- `ocr_results` - OCR processing results
-- `reviews` - Manual review tracking
-
-**📌 OCR backend stays stateless** - only Next.js touches the database
-
----
-
-## 🔄 FULL REQUEST FLOW
-
-```
-1. User captures image → Flutter app
-2. Flutter uploads → Next.js /api/ocr/upload
-3. Next.js forwards image → OCR backend (Python)
-4. OCR backend processes:
-   ├─ Quality check (OpenCV)
-   ├─ Preprocessing (deskew, denoise)
-   ├─ Layout detection
-   ├─ Tesseract OCR
-   └─ MT5 AI correction
-5. OCR backend returns → Structured JSON
-6. Next.js saves result → Database
-7. Next.js responds → Flutter
-8. Flutter displays preview → User can edit
-9. User confirms → Flutter sends to Next.js
-10. Next.js marks as verified → Database
-```
+📌 OCR can work without AI
+📌 AI can work without OCR
 
 ---
 
@@ -228,8 +156,8 @@ Next.js → Return to Flutter
 
 ### **Question**: "Why separate services?"
 
-**Answer**: 
-> "We separate concerns for maintainability and scalability. Next.js manages user workflows, security, and data persistence, while Python handles computationally intensive OCR and AI tasks that require specialized libraries like OpenCV and PyTorch—which are not suitable for Node.js. This allows each service to use the best tools for its specific role."
+**Answer**:
+> "We separated OCR and AI services to follow the single-responsibility principle. OCR focuses on visual text extraction, while MT5 handles multilingual language understanding and user assistance. This design improves performance, scalability, and future extensibility."
 
 ### **Question**: "Why not do OCR in the mobile app?"
 
@@ -243,19 +171,19 @@ Next.js → Return to Flutter
 
 ---
 
-## ⚙️ DEPLOYMENT STRATEGY
+## ⚙️ DEPLOYMENT STRATEGY (SIMPLE)
 
 | Component | Platform | Purpose |
 |-----------|----------|---------|
-| **Flutter App** | Play Store / APK | End-user mobile application |
-| **Next.js Backend** | Vercel / VPS | API gateway and web services |
-| **OCR Backend** | VPS (CPU-optimized) | Image processing and OCR |
-| **MT5 Model** | Loaded at startup | Cached in memory for speed |
-| **Database** | PostgreSQL (VPS/Cloud) | Data persistence |
+| Flutter App | Play Store / APK | End-user mobile application |
+| Next.js Backend | VPS / Vercel | API gateway and workflow |
+| OCR Service | VPS (CPU) | Image processing + OCR |
+| AI LLM Service | VPS (CPU/GPU) | MT5 correction + chatbot |
+| Database | PostgreSQL | Persistent storage |
 
 ---
 
-## 🚀 Getting Started
+## 🚀 QUICK START (PATHS UPDATED)
 
 ### Prerequisites
 - Node.js 18+ (for Next.js backend)
@@ -265,29 +193,30 @@ Next.js → Return to Flutter
 
 ### Quick Start
 
-1. **Clone the repository**
+1. **Next.js Backend**
    ```bash
-   git clone https://github.com/yourusername/dastern.git
-   cd dastern
-   ```
-
-2. **Setup Next.js Backend**
-   ```bash
-   cd backend
+   cd apps/backend-nextjs
    npm install
    npm run dev
    ```
 
-3. **Setup OCR Backend**
+2. **OCR Service**
    ```bash
-   cd OCR_System/ocr-backend
+   cd apps/ocr-service
    pip install -r requirements.txt
-   uvicorn app.main:app --reload
+   uvicorn app.main:app --reload --port 8000
    ```
 
-4. **Setup Flutter App**
+3. **AI LLM Service**
    ```bash
-   cd mobile_app
+   cd apps/ai-llm-service
+   pip install -r requirements.txt
+   uvicorn app.main:app --reload --port 8001
+   ```
+
+4. **Flutter App**
+   ```bash
+   cd apps/mobile-flutter
    flutter pub get
    flutter run
    ```
@@ -296,9 +225,7 @@ Next.js → Return to Flutter
 
 ## 📚 Documentation
 
-- [AI Model Training Guide](AI/README.md)
-- [OCR Backend Documentation](OCR_System/ocr-backend/README.md)
-- [API Documentation](backend/README.md)
+- docs/architecture.md
 
 ---
 
