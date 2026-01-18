@@ -1,4 +1,52 @@
-# MT5 Quick Start Guide
+# MT5 Model Setup & Usage Guide
+
+## ⚠️ IMPORTANT: Download Models First
+
+The MT5 model files are **not included in Git** due to their large size (1.1 GB). You must download them before running the AI service.
+
+---
+
+## 📥 Download MT5 Models
+
+### Option 1: Automatic Download (Recommended)
+
+```bash
+cd ai-llm-service/models/
+pip install transformers torch
+python -c "
+from transformers import MT5ForConditionalGeneration, MT5Tokenizer
+model = MT5ForConditionalGeneration.from_pretrained('google/mt5-small')
+tokenizer = MT5Tokenizer.from_pretrained('google/mt5-small')
+model.save_pretrained('./mt5-small/model')
+tokenizer.save_pretrained('./mt5-small/tokenizer')
+print('✅ Model downloaded successfully!')
+"
+```
+
+### Option 2: Shared Team Storage
+
+Ask your team lead for the shared model files and place them in:
+
+```
+ai-llm-service/models/mt5-small/
+├── model/
+│   ├── config.json
+│   ├── generation_config.json
+│   └── model.safetensors  (~1.1 GB)
+└── tokenizer/
+    ├── special_tokens_map.json
+    ├── spiece.model
+    └── tokenizer_config.json
+```
+
+### Verify Installation
+
+```bash
+ls -lh ai-llm-service/models/mt5-small/model/model.safetensors
+# Should show ~1.1 GB file
+```
+
+---
 
 ## 📖 What You Now Have
 

@@ -1,0 +1,56 @@
+# Git
+.git
+.gitignore
+
+# Environment
+.env
+.env.local
+
+# Node
+node_modules
+.next
+npm-debug.log
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info
+dist
+build
+.venv
+venv
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test files
+ocr-service/images_for_Test_yu
+ocr-service/test_space_yu
+
+# Large model files (download separately)
+ai-llm-service/models/mt5-small/model
+ai-llm-service/models/mt5-small/tokenizer
+*.safetensors
+*.bin
+*.pth
+
+# Flutter
+mobile-flutter/build
+mobile-flutter/.dart_tool
+
+# Documentation
+README.md
+LICENSE
+docs/
