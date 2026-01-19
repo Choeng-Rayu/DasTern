@@ -1,9 +1,9 @@
 # ===========================================
 # DasTern Backend - Next.js
-# Node 18 LTS (stable + safe)
+# Node 20 LTS (required by Next.js)
 # ===========================================
 
-FROM node:18.19.0-slim
+FROM node:20-slim
 
 WORKDIR /app
 
