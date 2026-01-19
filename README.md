@@ -183,43 +183,185 @@ Next.js → Flutter
 
 ---
 
-## 🚀 QUICK START (PATHS UPDATED)
+## 🚀 QUICK START (DOCKER - RECOMMENDED)
+
+### Prerequisites
+- Docker & Docker Compose installed
+- Git
+
+### One Command to Run Everything
+
+```bash
+# From repo root
+docker compose up --build
+```
+
+That's it! All services will start:
+- **Backend (Next.js)**: http://localhost:3000
+- **OCR Service**: http://localhost:8000
+- **AI LLM Service**: http://localhost:8001
+
+### First Time Setup
+
+1. **Clone and setup environment**
+   ```bash
+   git clone https://github.com/Choeng-Rayu/DasTern.git
+   cd DasTern
+   cp .env.example .env
+   # Edit .env with your values
+   ```
+
+2. **Run all services**
+   ```bash
+   docker compose up --build
+   ```
+
+---
+
+## 🌿 GIT WORKFLOW (IMPORTANT)
+
+### Branch Strategy
+
+| Branch | Purpose |
+|--------|---------|
+| `main` | Stable / Defense / Demo - **PROTECTED** |
+| `develop` | Integration branch |
+| `feature/*` | New features |
+| `fix/*` | Bug fixes |
+
+### Branch Naming Convention
+
+```
+feature/ocr-preprocess
+feature/llm-ocr-fix
+feature/flutter-upload-ui
+fix/docker-build-error
+```
+
+⚠️ **NEVER work on `main` or `develop` directly!**
+
+### Daily Workflow for Contributors
+
+```bash
+# 1. Start from develop
+git checkout develop
+git pull origin develop
+
+# 2. Create your feature branch
+git checkout -b feature/task-name
+
+# 3. Start Docker and work
+docker compose up
+
+# 4. Before creating PR
+git fetch origin
+git merge develop
+docker compose up  # Test everything works!
+
+# 5. Push and create PR
+git push origin feature/task-name
+```
+
+### Conflict Handling
+
+```bash
+git checkout feature/your-branch
+git fetch origin
+git merge develop
+# Fix conflicts
+docker compose up  # Always test via Docker!
+git add .
+git commit -m "fix: resolve merge conflicts"
+git push
+```
+
+❌ **Never resolve conflicts without running Docker.**
+
+---
+
+## 🐳 DOCKER ARCHITECTURE
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    docker-compose.yml                    │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐    │
+│  │   Backend   │  │ OCR Service │  │ AI Service  │    │
+│  │  (Next.js)  │  │  (Python)   │  │  (Python)   │    │
+│  │   :3000     │  │   :8000     │  │   :8001     │    │
+│  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘    │
+│         │                │                │            │
+│         └────────────────┴────────────────┘            │
+│                    dastern-network                      │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Why Docker?
+
+✅ No "works on my machine" problems
+✅ No Node version issues
+✅ No Python version issues
+✅ No Tesseract installation issues
+✅ One command to run everything
+
+---
+
+## 🚀 ALTERNATIVE: Manual Setup (Not Recommended)
 
 ### Prerequisites
 - Node.js 18+ (for Next.js backend)
-- Python 3.9+ (for OCR backend)
+- Python 3.10+ (for OCR and AI services)
 - Flutter 3.0+ (for mobile app)
+- Tesseract OCR installed
 - PostgreSQL (for database)
 
 ### Quick Start
 
 1. **Next.js Backend**
    ```bash
-   cd apps/backend-nextjs
+   cd backend-nextjs
    npm install
    npm run dev
    ```
 
 2. **OCR Service**
    ```bash
-   cd apps/ocr-service
+   cd ocr-service
    pip install -r requirements.txt
    uvicorn app.main:app --reload --port 8000
    ```
 
 3. **AI LLM Service**
    ```bash
-   cd apps/ai-llm-service
+   cd ai-llm-service
    pip install -r requirements.txt
    uvicorn app.main:app --reload --port 8001
    ```
 
 4. **Flutter App**
    ```bash
-   cd apps/mobile-flutter
+   cd mobile-flutter
    flutter pub get
    flutter run
    ```
+
+---
+
+## 🛡️ BRANCH PROTECTION (For Repo Admin)
+
+Go to **GitHub → Settings → Branches → Add rule**
+
+Branch name pattern: `main`
+
+Enable:
+- ✅ Require pull request before merging
+- ✅ Require approvals (1 is enough)
+- ✅ Dismiss stale reviews
+- ✅ Block force pushes
+- ❌ Do NOT allow direct push
+
+💡 **This single step prevents 70% of disasters.**
 
 ---
 

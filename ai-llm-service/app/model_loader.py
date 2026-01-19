@@ -61,6 +61,11 @@ def load_mt5_model():
             logger.warning(f"Model not found at {base_path}, downloading from HuggingFace...")
             _tokenizer = AutoTokenizer.from_pretrained("google/mt5-small", use_fast=False)
             _model = AutoModelForSeq2SeqLM.from_pretrained("google/mt5-small")
+            # Save locally so future runs do not re-download
+            tokenizer_path.mkdir(parents=True, exist_ok=True)
+            model_path.mkdir(parents=True, exist_ok=True)
+            _tokenizer.save_pretrained(str(tokenizer_path))
+            _model.save_pretrained(str(model_path))
         
         _model.to(_device)
         _model.eval()  # Set to evaluation mode

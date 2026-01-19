@@ -1,0 +1,52 @@
+services:
+  # ===========================================
+  # Next.js Backend - Main Orchestrator
+  # ===========================================
+  backend:
+    build: ./backend-nextjs
+    container_name: dastern-backend
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - ocr-service
+      - ai-llm-service
+    volumes:
+      - ./backend-nextjs:/app
+      - /app/node_modules
+      - /app/.next
+    networks:
+      - dastern-network
+
+  # ===========================================
+  # OCR Service - Python + Tesseract
+  # ===========================================
+  ocr-service:
+    build: ./ocr-service
+    container_name: dastern-ocr
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./ocr-service:/app
+      - ./shared:/shared:ro
+    networks:
+      - dastern-network
+
+  # ===========================================
+  # AI LLM Service - Python MT5
+  # ===========================================
+  ai-llm-service:
+    build: ./ai-llm-service
+    container_name: dastern-ai
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./ai-llm-service:/app
+      - ./shared:/shared:ro
+    networks:
+      - dastern-network
+
+networks:
+  dastern-network:
+    driver: bridge

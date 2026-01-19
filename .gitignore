@@ -1,4 +1,61 @@
+# ===========================================
+# DasTern .gitignore
+# ===========================================
+
+# Virtual environments
 .venv/
+venv/
+env/
+
+# Environment variables (NEVER commit!)
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+
+# Node.js
+node_modules/
+.next/
+out/
+.npm
+
+# Model files (too large for git)
 healthcare_lnp_model.pth
+*.pth
+*.pt
+*.bin
+*.onnx
+*.safetensors
+*.spiece.model
+ai-llm-service/models/mt5-small/
+
+# Test files
 ocr-service/images_for_Test_yu/
 ocr-service/test_space_yu/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+*.log
+
+# Flutter
+mobile-flutter/build/
+mobile-flutter/.dart_tool/
+mobile-flutter/.packages
