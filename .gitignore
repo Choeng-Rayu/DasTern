@@ -38,9 +38,9 @@ healthcare_lnp_model.pth
 *.spiece.model
 ai-llm-service/models/mt5-small/
 
-# Test files
-ocr-service/images_for_Test_yu/
-ocr-service/test_space_yu/
+# # Test files
+# ocr-service/images_for_Test_yu/
+# ocr-service/test_space_yu/
 
 # IDE
 .idea/
