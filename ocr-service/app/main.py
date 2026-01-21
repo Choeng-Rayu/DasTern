@@ -109,6 +109,46 @@ async def process_image(
         raise HTTPException(status_code=500, detail=f"OCR processing failed: {str(e)}")
 
 
+@app.post("/process")
+async def process_prescription(
+    file: UploadFile = File(...),
+    lenient_quality: bool = Form(default=False),
+    languages: str = Form(default="eng+khm+fra")
+):
+    """
+    Process endpoint for backend integration.
+    Returns standardized format with text, confidence, and language.
+    """
+    # Validate file type
+    if not file.content_type or not file.content_type.startswith("image/"):
+        raise HTTPException(status_code=400, detail="File must be an image")
+    
+    contents = await file.read()
+    
+    if len(contents) == 0:
+        raise HTTPException(status_code=400, detail="Empty file uploaded")
+    
+    try:
+        result = run_pipeline_from_bytes(
+            contents,
+            lenient_quality=lenient_quality,
+            languages=languages
+        )
+        
+        # Standardize response format for backend
+        return {
+            "raw_text": result.get("text", ""),
+            "text": result.get("text", ""),
+            "confidence": result.get("confidence", 0),
+            "language": result.get("language", "eng"),
+            "layout": result.get("layout", {}),
+            "quality_report": result.get("quality_report", {})
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"OCR processing failed: {str(e)}")
+
+
+
 @app.post("/ocr/base64", response_model=None)
 async def process_base64_image(request: OCRRequest):
     """
