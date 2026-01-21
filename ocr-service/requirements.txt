@@ -11,10 +11,10 @@ Pillow>=10.0.0
 # OCR
 pytesseract>=0.3.10
 
-# AI/ML (MT5-small for OCR correction)
-torch>=2.0.0
-transformers>=4.35.0
-sentencepiece>=0.1.99
+# # AI/ML (MT5-small for OCR correction)
+# torch>=2.0.0
+# transformers>=4.35.0
+# sentencepiece>=0.1.99
 
 # Utilities
 pydantic>=2.0.0
