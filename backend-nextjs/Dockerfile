@@ -10,8 +10,8 @@ WORKDIR /app
 # Copy package files first (better caching)
 COPY package*.json ./
 
-# Deterministic install
-RUN npm ci
+# Install dependencies (use install instead of ci for flexibility)
+RUN npm install --prefer-offline --no-audit
 
 # Copy source
 COPY . .
