@@ -9,7 +9,7 @@ WORKDIR /app
 
 # Install Python dependencies with retry and timeout handling
 COPY requirements.txt .
-RUN pip install --no-cache-dir \
+RUN pip install \
     --default-timeout=1000 \
     --retries 5 \
     -r requirements.txt

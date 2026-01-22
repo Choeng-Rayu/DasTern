@@ -82,6 +82,6 @@ def get_model():
     global _model, _tokenizer, _device
     
     if _model is None:
-        load_mt5_model()
+        raise RuntimeError("Model not loaded. Service may have failed to initialize.")
     
     return _model, _tokenizer, _device

@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "/Users/macbookpro/Documents/Capstone2/DasTern/mobile-flutter/linux"
+    "cmake.sourceDirectory": "/Users/macbookpro/Documents/Capstone2/DasTern/mobile-flutter/linux",
+    "kiroAgent.configureMCP": "Disabled"
 }
