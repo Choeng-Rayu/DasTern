@@ -123,13 +123,14 @@ async def correct_ocr_simple(request: dict):
         }
         
     except Exception as e:
-        logger.error(f"Error in OCR correction: {str(e)}")
+        error_msg = str(e) if str(e) else repr(e)
+        logger.error(f"Error in OCR correction: {error_msg}", exc_info=True)
         # Return original text if correction fails
         return {
             "corrected_text": request.get("text", ""),
             "confidence": 0.5,
             "corrections_made": 0,
-            "error": str(e)
+            "error": error_msg
         }
 
 

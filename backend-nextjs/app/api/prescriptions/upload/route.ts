@@ -58,6 +58,7 @@ export async function POST(request: NextRequest) {
     console.log('📥 OCR Response:', ocrData);
 
     // Step 3: Update prescription with OCR results
+    const rawText = ocrData.full_text || ocrData.text || ocrData.raw_text || '';
     await query(
       `UPDATE prescriptions 
        SET ocr_raw_text = $1, 
@@ -68,8 +69,8 @@ export async function POST(request: NextRequest) {
            updated_at = NOW()
        WHERE id = $5`,
       [
-        ocrData.raw_text || ocrData.text,
-        ocrData.confidence || 0,
+        rawText,
+        ocrData.overall_confidence || ocrData.confidence || 0,
         ocrData.language || 'en',
         'completed',
         prescriptionId
@@ -79,33 +80,38 @@ export async function POST(request: NextRequest) {
     // Step 4: Check if AI service is available for enhancement
     const aiServiceUrl = process.env.AI_SERVICE_URL || 'http://ai-llm-service:8001';
     let aiEnhanced = false;
-    let correctedText = ocrData.raw_text || ocrData.text;
+    let correctedText = rawText;
 
     try {
-      console.log(`🤖 Sending to AI service for correction: ${aiServiceUrl}/correct-ocr`);
-      
-      const aiResponse = await axios.post(
-        `${aiServiceUrl}/correct-ocr`,
-        {
-          text: ocrData.raw_text || ocrData.text,
-          language: ocrData.language || 'en'
-        },
-        { timeout: 30000 }
-      );
-
-      if (aiResponse.data.corrected_text) {
-        correctedText = aiResponse.data.corrected_text;
-        aiEnhanced = true;
-
-        // Update with AI-corrected text
-        await query(
-          `UPDATE prescriptions 
-           SET ocr_corrected_text = $1,
-               ai_confidence_score = $2,
-               updated_at = NOW()
-           WHERE id = $3`,
-          [correctedText, aiResponse.data.confidence || 0, prescriptionId]
+      // Only call AI service if there's text to correct
+      if (rawText && rawText.trim()) {
+        console.log(`🤖 Sending to AI service for correction: ${aiServiceUrl}/correct-ocr`);
+        
+        const aiResponse = await axios.post(
+          `${aiServiceUrl}/correct-ocr`,
+          {
+            text: rawText,
+            language: ocrData.language || 'en'
+          },
+          { timeout: 30000 }
         );
+
+        if (aiResponse.data.corrected_text) {
+          correctedText = aiResponse.data.corrected_text;
+          aiEnhanced = true;
+
+          // Update with AI-corrected text
+          await query(
+            `UPDATE prescriptions 
+             SET ocr_corrected_text = $1,
+                 ai_confidence_score = $2,
+                 updated_at = NOW()
+             WHERE id = $3`,
+            [correctedText, aiResponse.data.confidence || 0, prescriptionId]
+          );
+        }
+      } else {
+        console.log('⚠️ No text extracted from OCR, skipping AI correction');
       }
     } catch (aiError) {
       console.warn('⚠️ AI enhancement not available, using raw OCR text:', aiError);
