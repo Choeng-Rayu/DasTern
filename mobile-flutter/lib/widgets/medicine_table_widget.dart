@@ -13,7 +13,8 @@ class MedicineTableWidget extends StatelessWidget {
         DataColumn(label: Text('Time')),
       ],
       rows: items
-          .map((m) => DataRow(cells: [DataCell(Text(m.name)), DataCell(Text(m.timeOfDay))]))
+          .map((m) => DataRow(
+              cells: [DataCell(Text(m.name)), DataCell(Text(m.timeOfDay))]))
           .toList(),
     );
   }

@@ -12,7 +12,8 @@ class AppRouter {
       case '/scan':
         return MaterialPageRoute(builder: (_) => const ScanScreen());
       case '/medicine_schedule':
-        return MaterialPageRoute(builder: (_) => const MedicineScheduleScreen());
+        return MaterialPageRoute(
+            builder: (_) => const MedicineScheduleScreen());
       case '/settings':
         return MaterialPageRoute(builder: (_) => const SettingsScreen());
       default:
