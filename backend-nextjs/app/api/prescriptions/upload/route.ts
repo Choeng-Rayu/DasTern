@@ -120,21 +120,55 @@ export async function POST(request: NextRequest) {
     // Step 5: Extract medications from text (simple parsing for MVP)
     const medications = extractMedications(correctedText);
 
-    // Step 6: Save medications to database
+    // Step 6: Save medications to database and create reminders
+    const medicationIds = [];
     for (const med of medications) {
-      await query(
+      const medResult = await query(
         `INSERT INTO medications 
-         (prescription_id, name, strength, dosage, frequency, duration, created_at, updated_at)
-         VALUES ($1, $2, $3, $4, $5, $6, NOW(), NOW())`,
+         (prescription_id, name, strength, dosage, frequency, duration, instructions, created_at, updated_at)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, NOW(), NOW())
+         RETURNING id`,
         [
           prescriptionId,
           med.name,
           med.strength,
           med.dosage,
           med.frequency,
-          med.duration
+          med.duration,
+          med.instructions || 'Take as prescribed'
         ]
       );
+      
+      const medicationId = medResult.rows[0].id;
+      medicationIds.push({ id: medicationId, ...med });
+    }
+
+    // Step 7: Auto-generate reminders for each medication
+    const reminders = [];
+    for (const med of medicationIds) {
+      const reminderTimes = generateReminderTimes(med.timing || {});
+      const durationDays = extractDurationDays(med.duration);
+      
+      const reminderResult = await query(
+        `INSERT INTO medication_reminders 
+         (medication_id, patient_id, reminder_times, start_date, end_date, days_of_week, is_active, created_at, updated_at)
+         VALUES ($1, $2, $3, CURRENT_DATE, CURRENT_DATE + INTERVAL '${durationDays} days', $4, $5, NOW(), NOW())
+         RETURNING id`,
+        [
+          med.id,
+          patientId || '00000000-0000-0000-0000-000000000000',
+          JSON.stringify(reminderTimes),
+          JSON.stringify([1, 2, 3, 4, 5, 6, 7]), // All days
+          true
+        ]
+      );
+      
+      reminders.push({
+        reminder_id: reminderResult.rows[0].id,
+        medication_name: med.name,
+        reminder_times: reminderTimes,
+        duration_days: durationDays
+      });
     }
 
     // Return complete response
@@ -145,7 +179,8 @@ export async function POST(request: NextRequest) {
       ocr_confidence: ocrData.confidence || 0,
       ai_enhanced: aiEnhanced,
       medications: medications,
-      message: 'Prescription processed successfully'
+      reminders: reminders,
+      message: `Prescription processed successfully. Created ${medications.length} medications and ${reminders.length} reminders.`
     });
 
   } catch (error: any) {
@@ -163,40 +198,161 @@ export async function POST(request: NextRequest) {
 }
 
 /**
- * Simple medication extraction from OCR text
- * This is a basic implementation - can be enhanced with AI/ML
+ * Enhanced medication extraction for Khmer prescriptions
+ * Handles the specific table format with timing columns
  */
 function extractMedications(text: string) {
   const medications = [];
   const lines = text.split('\n');
-
-  // Simple pattern matching for medications
-  // Format: MedicationName 500mg - 1 tablet twice daily for 7 days
-  const medPattern = /([A-Za-z]+)\s*(\d+\s*mg|ml)?.*?(\d+\s*tablet|capsule|ml)?\s*(once|twice|thrice|[\d]+\s*times)?\s*(daily|weekly|monthly)?.*?(for\s*\d+\s*days)?/i;
+  
+  // Known medication names from Khmer prescriptions
+  const knownMedications = [
+    'Calcium', 'Multivitamine', 'Amitriptyline', 'Butylscopolamine',
+    'Celcoxx', 'Omeprazole', 'Paracetamol', 'Esome'
+  ];
 
   for (const line of lines) {
-    const match = line.match(medPattern);
-    if (match) {
-      medications.push({
-        name: match[1],
-        strength: match[2] || null,
-        dosage: match[3] || null,
-        frequency: `${match[4] || 'once'} ${match[5] || 'daily'}`,
-        duration: match[6] || null
-      });
+    const trimmedLine = line.trim();
+    if (!trimmedLine || trimmedLine.length < 10) continue;
+
+    // Look for numbered medication lines (e.g., "1. Calcium amp Tablet...")
+    if (/^\d+\./.test(trimmedLine)) {
+      const medInfo = parseMedicationLine(trimmedLine, knownMedications);
+      if (medInfo) {
+        medications.push(medInfo);
+      }
     }
   }
 
-  // If no medications found, create a placeholder
+  // If no medications found, try fallback parsing
+  if (medications.length === 0) {
+    for (const medName of knownMedications) {
+      if (text.toLowerCase().includes(medName.toLowerCase())) {
+        medications.push({
+          name: medName,
+          strength: null,
+          dosage: '1 tablet',
+          frequency: 'once daily',
+          duration: '7 days',
+          timing: { morning: true, noon: false, evening: false, night: false }
+        });
+      }
+    }
+  }
+
+  // Final fallback
   if (medications.length === 0) {
     medications.push({
       name: 'Unknown Medication',
       strength: null,
       dosage: '1 tablet',
-      frequency: 'twice daily',
-      duration: 'for 7 days'
+      frequency: 'once daily',
+      duration: '7 days',
+      timing: { morning: true, noon: false, evening: false, night: false }
     });
   }
 
   return medications;
+}
+
+/**
+ * Parse a single medication line from Khmer prescription table
+ */
+function parseMedicationLine(line: string, knownMedications: string[]) {
+  const parts = line.split(/\s+/);
+  if (parts.length < 4) return null;
+
+  // Extract medication name
+  let medName = null;
+  for (const part of parts.slice(1)) { // Skip the number
+    if (knownMedications.some(known => known.toLowerCase() === part.toLowerCase())) {
+      medName = part;
+      break;
+    }
+  }
+
+  if (!medName) {
+    // Try to find any medication-like word
+    for (const part of parts.slice(1, 4)) {
+      if (/^[A-Za-z]+/.test(part) && part.length > 3) {
+        medName = part;
+        break;
+      }
+    }
+  }
+
+  if (!medName) return null;
+
+  // Extract strength (e.g., "10mg")
+  const strengthMatch = line.match(/(\d+)\s*(mg|ml)/i);
+  const strength = strengthMatch ? strengthMatch[0] : null;
+
+  // Extract dosage
+  const quantityMatch = line.match(/(\d+)\s*(tablet|ថ្នាំ)/i);
+  const dosage = quantityMatch ? `${quantityMatch[1]} tablet` : '1 tablet';
+
+  // Parse timing columns (look for pattern of numbers and dashes)
+  const timingPattern = line.match(/[1-9-]\s+[1-9-]\s+[1-9-]\s+[1-9-]/);
+  const timing = { morning: false, noon: false, evening: false, night: false };
+  
+  if (timingPattern) {
+    const timingParts = timingPattern[0].split(/\s+/);
+    timing.morning = timingParts[0] !== '-' && /\d/.test(timingParts[0]);
+    timing.noon = timingParts[1] !== '-' && /\d/.test(timingParts[1]);
+    timing.evening = timingParts[2] !== '-' && /\d/.test(timingParts[2]);
+    timing.night = timingParts[3] !== '-' && /\d/.test(timingParts[3]);
+  } else {
+    // Default to morning if no timing found
+    timing.morning = true;
+  }
+
+  // Convert timing to frequency
+  const activeTimes = Object.values(timing).filter(Boolean).length;
+  let frequency = 'once daily';
+  if (activeTimes === 2) frequency = 'twice daily';
+  else if (activeTimes === 3) frequency = 'three times daily';
+  else if (activeTimes === 4) frequency = 'four times daily';
+
+  // Extract duration (last number in the line)
+  const durationMatch = line.match(/(\d+)\s*$/);
+  const duration = durationMatch ? `${durationMatch[1]} days` : '7 days';
+
+  return {
+    name: medName,
+    strength,
+    dosage,
+    frequency,
+    duration,
+    timing,
+    instructions: 'Take as prescribed'
+  };
+}
+
+/**
+ * Generate reminder times based on timing information
+ */
+function generateReminderTimes(timing: any): string[] {
+  const times = [];
+  
+  if (timing.morning) times.push('08:00');
+  if (timing.noon) times.push('12:00');
+  if (timing.evening) times.push('18:00');
+  if (timing.night) times.push('22:00');
+  
+  // Default to morning if no times specified
+  if (times.length === 0) {
+    times.push('08:00');
+  }
+  
+  return times;
+}
+
+/**
+ * Extract duration in days from duration string
+ */
+function extractDurationDays(duration: string): number {
+  if (!duration) return 7;
+  
+  const match = duration.match(/(\d+)/);
+  return match ? parseInt(match[1]) : 7;
 }
