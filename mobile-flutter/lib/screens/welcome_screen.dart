@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import '../widgets/hospital_logo.dart';
 import '../widgets/primary_button.dart';
 import '../widgets/background_welcome.dart';
-import '';
 
 class WelcomeScreen extends StatelessWidget {
   final void Function(Locale)? onLocaleChange;
