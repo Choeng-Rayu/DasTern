@@ -69,6 +69,15 @@ class AppLocalizationsKm extends AppLocalizations {
   String get cancel => 'បោះបង់';
 
   @override
+  String get loginAsDoctor => 'ចូលប្រើប្រាស់ជាគ្រូពេទ្យ';
+
+  @override
+  String get signin => 'បានបង្កើតគណនីពីមុន';
+
+  @override
+  String get createAccount => 'បង្កើតគណនីថ្មី';
+
+  @override
   String get hello => 'សួស្តី';
 
   @override
@@ -115,9 +124,6 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get welcomeBack => 'សូមស្វាគមន៍ត្រលប់មកវិញ';
-
-  @override
-  String get createAccount => 'បង្កើតគណនីថ្មី';
 
   @override
   String get medications => 'ថ្នាំ';

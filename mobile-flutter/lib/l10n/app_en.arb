@@ -80,6 +80,23 @@
   "@cancel": {
     "description": "Cancel button"
   },
+
+
+    "loginAsDoctor": "Login as a Doctor",
+    "@loginAsDoctor": {
+      "description": "Button or label for logging in as a doctor"
+    },
+
+      "signin": "Sign in",
+      "@signin": {
+        "description": "Button or label for signing in (already have an account)"
+      },
+
+        "createAccount": "Create an account",
+        "@createAccount": {
+          "description": "Button or label for creating a new account"
+        },
+
   "hello": "Hello",
   "@hello": {
     "description": "Greeting"
