@@ -89,6 +89,51 @@ async def correct_ocr(request: OCRCorrectionRequest):
         logger.error(f"Error in OCR correction: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
+
+@app.post("/correct-ocr")
+async def correct_ocr_simple(request: dict):
+    """
+    Simple OCR correction endpoint for backend integration
+    
+    Args:
+        request: Dict with 'text' and optional 'language'
+        
+    Returns:
+        Dict with corrected_text and confidence
+    """
+    try:
+        text = request.get("text", "")
+        language = request.get("language", "en")
+        
+        if not text:
+            raise HTTPException(status_code=400, detail="No text provided")
+        
+        logger.info(f"Correcting OCR text (length: {len(text)})")
+        
+        result = correct_ocr_text(
+            raw_text=text,
+            language=language,
+            context=None
+        )
+        
+        return {
+            "corrected_text": result.get("corrected_text", text),
+            "confidence": result.get("confidence", 0.0),
+            "corrections_made": result.get("corrections_made", 0)
+        }
+        
+    except Exception as e:
+        error_msg = str(e) if str(e) else repr(e)
+        logger.error(f"Error in OCR correction: {error_msg}", exc_info=True)
+        # Return original text if correction fails
+        return {
+            "corrected_text": request.get("text", ""),
+            "confidence": 0.5,
+            "corrections_made": 0,
+            "error": error_msg
+        }
+
+
 @app.post("/api/v1/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
     """
