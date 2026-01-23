@@ -20,6 +20,10 @@
   "medicineName": "ឈ្មោះថ្នាំ",
   "save": "រក្សាទុក",
   "cancel": "បោះបង់",
+    "loginAsDoctor": "ចូលប្រើប្រាស់ជាគ្រូពេទ្យ",
+      "signin": "បានបង្កើតគណនីពីមុន",
+
+        "createAccount": "បង្កើតគណនី",
   "hello": "សួស្តី",
   "dateOfBirth": "ថ្ងៃកំណើត",
   "todaySchedule": "កាលវិភាគ (ថ្ងៃនេះ)",
