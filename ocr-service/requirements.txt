@@ -1,21 +1,27 @@
-# FastAPI & Server
+# FastAPI and Server
 fastapi>=0.104.0
-uvicorn>=0.24.0
-python-multipart>=0.0.6
+uvicorn[standard]>=0.24.0
+
+# OCR Engine
+paddleocr>=2.7.0
+paddlepaddle>=2.5.0  # CPU version, use paddlepaddle-gpu for GPU
 
 # Image Processing
+pillow>=10.0.0
 opencv-python>=4.8.0
 numpy>=1.24.0
-Pillow>=10.0.0
 
-# OCR
-pytesseract>=0.3.10
+# Layout Understanding (LayoutLMv3)
+transformers>=4.35.0
+torch>=2.0.0  # Use CPU version initially, optimize later
 
-# # AI/ML (MT5-small for OCR correction)
-# torch>=2.0.0
-# transformers>=4.35.0
-# sentencepiece>=0.1.99
-
-# Utilities
+# Data Validation
 pydantic>=2.0.0
 
+# Optional: Language Detection
+langdetect>=1.0.9
+
+# Testing (optional)
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+httpx>=0.25.0
