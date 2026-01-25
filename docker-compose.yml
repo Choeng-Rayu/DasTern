@@ -34,6 +34,10 @@ services:
     container_name: dastern-backend
     ports:
       - "3000:3000"
+    environment:
+      - TURBOPACK=0
+      - NEXT_TELEMETRY_DISABLED=1
+      - NODE_ENV=production
     env_file:
       - .env
     depends_on:
@@ -43,10 +47,12 @@ services:
         condition: service_started
       ai-llm-service:
         condition: service_started
-    volumes:
-      - ./backend-nextjs:/app
-      - /app/node_modules
-      - /app/.next
+    # Note: Volumes commented out for production build
+    # Uncomment for development with hot-reload:
+    # volumes:
+    #   - ./backend-nextjs:/app
+    #   - /app/node_modules
+    #   - /app/.next
     networks:
       - dastern-network
     restart: unless-stopped
