@@ -58,10 +58,6 @@ Recommended structure:
   - prisma/ OR migrations/
   - .env.example
 
-- frontend/
-  - src/
-  - .env.example
-
 - .env                (never committed)
 - .env.example        (always committed)
 - docker-compose.yml

@@ -39,9 +39,7 @@ def _get_ocr_engine(lang: str = "en") -> Any:
             logger.info(f"Initializing PaddleOCR engine for language: {paddle_lang}")
             _ocr_engines[lang] = PaddleOCR(
                 use_angle_cls=True,
-                lang=paddle_lang,
-                show_log=False,
-                use_gpu=False  # Set to True if GPU available
+                lang=paddle_lang
             )
             logger.info(f"PaddleOCR engine initialized for: {lang}")
         except ImportError:
