@@ -218,6 +218,24 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get cancel;
 
+  /// Button or label for logging in as a doctor
+  ///
+  /// In en, this message translates to:
+  /// **'Login as a Doctor'**
+  String get loginAsDoctor;
+
+  /// Button or label for signing in (already have an account)
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get signin;
+
+  /// Create account message
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get createAccount;
+
   /// Greeting
   ///
   /// In en, this message translates to:
@@ -313,12 +331,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Welcome Back'**
   String get welcomeBack;
-
-  /// Create account message
-  ///
-  /// In en, this message translates to:
-  /// **'Create Account'**
-  String get createAccount;
 
   /// Medications screen title
   ///

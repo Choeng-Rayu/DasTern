@@ -69,6 +69,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancel => 'Cancel';
 
   @override
+  String get loginAsDoctor => 'Login as a Doctor';
+
+  @override
+  String get signin => 'Sign in';
+
+  @override
+  String get createAccount => 'Create Account';
+
+  @override
   String get hello => 'Hello';
 
   @override
@@ -115,9 +124,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get welcomeBack => 'Welcome Back';
-
-  @override
-  String get createAccount => 'Create Account';
 
   @override
   String get medications => 'Medications';

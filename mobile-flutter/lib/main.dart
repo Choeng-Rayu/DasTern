@@ -1,38 +1,50 @@
+import 'package:dastern_mobile/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'providers/auth_provider.dart';
-import 'providers/app_settings_provider.dart';
-import 'navigation/app_router.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'screens/welcome_screen.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  static void setLocale(BuildContext context, Locale newLocale) {
+    final _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
+    state?.setLocale(newLocale);
+  }
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale? _locale;
+
+  void setLocale(Locale locale) {
+    setState(() {
+      _locale = locale;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
-        ChangeNotifierProvider(create: (_) => AppSettingsProvider()),
+    return MaterialApp(
+      locale: _locale,
+      supportedLocales: const [Locale('en'), Locale('km')],
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
-      child: Consumer<AppSettingsProvider>(
-        builder: (context, settings, _) {
-          return MaterialApp(
-            title: 'DasTern Mobile',
-            debugShowCheckedModeBanner: false,
-            locale: settings.locale,
-            supportedLocales: const [Locale('en'), Locale('km')],
-            theme: ThemeData(primarySwatch: Colors.indigo),
-            initialRoute: AppRouter.initialRoute,
-            onGenerateRoute: AppRouter.onGenerateRoute,
-          );
-        },
+      title: 'DasTern',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
+      home: WelcomeScreen(onLocaleChange: (locale) => setLocale(locale)),
     );
   }
 }
