@@ -97,7 +97,8 @@ services:
       - "8001:8001"
     environment:
       - PYTHONUNBUFFERED=1
-      - MODEL_PATH=/app/models/llama/weights.gguf
+      - OLLAMA_HOST=http://ollama:11434
+      - LLM_MODEL=llama3.1:8b
       - ALLOWED_LANGUAGES=en,kh,fr
     volumes:
       # Development mode - uncomment to enable hot reload
@@ -106,8 +107,36 @@ services:
       - ./shared:/shared:ro
     networks:
       - dastern-network
+    depends_on:
+      ollama:
+        condition: service_started
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # ===========================================
+  # Ollama - Local LLM Inference Server
+  # ===========================================
+  ollama:
+    image: ollama/ollama:latest
+    container_name: dastern-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - dastern-network
+    # For future GPU support, uncomment:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -119,4 +148,6 @@ networks:
 
 volumes:
   postgres_data:
+    driver: local
+  ollama_data:
     driver: local
