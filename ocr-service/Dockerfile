@@ -1,25 +1,31 @@
 # ===========================================
 # DasTern OCR Service
-# Python 3.10 + OpenCV + Tesseract
+# Python 3.10 + PaddleOCR + LayoutLMv3
 # ===========================================
 
 FROM python:3.10-slim
 
-# System dependencies for OCR
+WORKDIR /app
+
+# Set PYTHONPATH
+ENV PYTHONPATH=/app:$PYTHONPATH
+ENV PYTHONUNBUFFERED=1
+
+# Install system dependencies for OCR and image processing
+# OpenCV requires: libGL, libglib, libsm, libxext, libxrender, libgomp
 RUN apt-get update && apt-get install -y \
-    tesseract-ocr \
-    tesseract-ocr-eng \
-    tesseract-ocr-khm \
-    tesseract-ocr-fra \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libgomp1 \
     libgl1 \
     libglib2.0-0 \
+    curl \
     && rm -rf /var/lib/apt/lists/*
-
-WORKDIR /app
 
 # Install Python dependencies with retry and timeout handling
 COPY requirements.txt .
-RUN pip install --no-cache-dir \
+RUN pip install \
     --default-timeout=1000 \
     --retries 5 \
     -r requirements.txt
@@ -27,6 +33,6 @@ RUN pip install --no-cache-dir \
 # Copy source
 COPY . .
 
-EXPOSE 8000
+EXPOSE 8002
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8002"]
