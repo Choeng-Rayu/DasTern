@@ -1,170 +1,238 @@
 """
-AI LLM Service - MT5 Model API
-Handles OCR correction and chatbot functionality
+AI LLM Service API Entry Point
+FastAPI application for prescription enhancement using LLaMA/Ollama
 """
-import os
-import sys
+
 import logging
-from contextlib import asynccontextmanager
+from datetime import datetime
+from typing import Optional, Dict, Any
+
 from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
-try:
-    from .schemas import OCRCorrectionRequest, OCRCorrectionResponse
-    from .schemas import ChatRequest, ChatResponse
-    from .ocr_corrector import correct_ocr_text
-    from .chat_assistant import chat_with_assistant
-    from .model_loader import load_mt5_model
-except ImportError:
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    parent_dir = os.path.dirname(current_dir)
-    if parent_dir not in sys.path:
-        sys.path.insert(0, parent_dir)
-    from app.schemas import OCRCorrectionRequest, OCRCorrectionResponse
-    from app.schemas import ChatRequest, ChatResponse
-    from app.ocr_corrector import correct_ocr_text
-    from app.chat_assistant import chat_with_assistant
-    from app.model_loader import load_mt5_model
+from pydantic import BaseModel
+
+from .core.model_loader import load_model, is_model_ready, get_model_info
+from .features.prescription.enhancer import enhance_prescription
+from .features.prescription.validator import validate_prescription
+from .safety.medical import (
+    is_diagnosis_request, 
+    is_drug_advice_request,
+    get_safe_refusal
+)
+from .safety.language import detect_language
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    logger.info("Loading MT5 model...")
-    load_mt5_model()
-    logger.info("MT5 model loaded successfully!")
-    yield
-
-# Initialize FastAPI
 app = FastAPI(
-    title="AI LLM Service",
-    description="MT5-based OCR correction and medical chatbot assistant",
+    title="DasTern AI LLM Service",
+    description="Prescription enhancement and medical AI using LLaMA",
     version="1.0.0",
-    lifespan=lifespan
+    docs_url="/docs",
+    redoc_url="/redoc"
 )
 
-# CORS middleware
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Configure based on your needs
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+
+# Request/Response Models
+class EnhanceRequest(BaseModel):
+    """Request for prescription enhancement"""
+    ocr_data: Dict[str, Any]
+    language: Optional[str] = None
+
+
+class EnhanceResponse(BaseModel):
+    """Response with enhanced prescription"""
+    success: bool
+    ai_enhanced: bool
+    data: Dict[str, Any]
+    prescription_summary: Optional[str] = None
+    validation: Optional[Dict[str, Any]] = None
+
+
+class ValidateRequest(BaseModel):
+    """Request for prescription validation"""
+    prescription_data: Dict[str, Any]
+
+
+class ChatRequest(BaseModel):
+    """Request for chatbot interaction"""
+    message: str
+    prescription_context: Optional[Dict[str, Any]] = None
+    language: Optional[str] = None
+
+
+class ChatResponse(BaseModel):
+    """Chatbot response"""
+    message: str
+    is_safe_response: bool
+    detected_language: str
+
+
+@app.on_event("startup")
+async def startup_event():
+    """Initialize model on startup."""
+    logger.info("Initializing AI LLM Service...")
+    try:
+        load_model()
+        logger.info("Model initialization complete")
+    except Exception as e:
+        logger.warning(f"Model not available at startup: {e}")
+
 
 @app.get("/")
 async def root():
-    """Health check endpoint"""
+    """Health check endpoint."""
     return {
-        "service": "AI LLM Service",
-        "status": "running",
-        "model": "MT5-small",
-        "capabilities": ["ocr_correction", "chatbot"]
+        "service": "DasTern AI LLM Service",
+        "status": "ready" if is_model_ready() else "model_not_loaded",
+        "version": "1.0.0",
+        "timestamp": datetime.now().isoformat()
     }
 
-@app.post("/api/v1/correct", response_model=OCRCorrectionResponse)
-async def correct_ocr(request: OCRCorrectionRequest):
-    """
-    Correct OCR text using MT5 model
-    
-    Args:
-        request: OCR correction request with raw text
-        
-    Returns:
-        Corrected text with confidence score
-    """
-    try:
-        logger.info(f"Received OCR correction request for language: {request.language}")
-        
-        result = correct_ocr_text(
-            raw_text=request.raw_text,
-            language=request.language,
-            context=request.context
-        )
-        
-        return OCRCorrectionResponse(**result)
-        
-    except Exception as e:
-        logger.error(f"Error in OCR correction: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@app.post("/correct-ocr")
-async def correct_ocr_simple(request: dict):
-    """
-    Simple OCR correction endpoint for backend integration
-    
-    Args:
-        request: Dict with 'text' and optional 'language'
-        
-    Returns:
-        Dict with corrected_text and confidence
-    """
-    try:
-        text = request.get("text", "")
-        language = request.get("language", "en")
-        
-        if not text:
-            raise HTTPException(status_code=400, detail="No text provided")
-        
-        logger.info(f"Correcting OCR text (length: {len(text)})")
-        
-        result = correct_ocr_text(
-            raw_text=text,
-            language=language,
-            context=None
-        )
-        
-        return {
-            "corrected_text": result.get("corrected_text", text),
-            "confidence": result.get("confidence", 0.0),
-            "corrections_made": result.get("corrections_made", 0)
-        }
-        
-    except Exception as e:
-        error_msg = str(e) if str(e) else repr(e)
-        logger.error(f"Error in OCR correction: {error_msg}", exc_info=True)
-        # Return original text if correction fails
-        return {
-            "corrected_text": request.get("text", ""),
-            "confidence": 0.5,
-            "corrections_made": 0,
-            "error": error_msg
-        }
-
-
-@app.post("/api/v1/chat", response_model=ChatResponse)
-async def chat(request: ChatRequest):
-    """
-    Chat with medical assistant
-    
-    Args:
-        request: Chat request with message
-        
-    Returns:
-        AI assistant response
-    """
-    try:
-        logger.info(f"Received chat request: {request.message[:50]}...")
-        
-        result = chat_with_assistant(
-            message=request.message,
-            language=request.language,
-            context=request.context
-        )
-        
-        return ChatResponse(**result)
-        
-    except Exception as e:
-        logger.error(f"Error in chat: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint"""
-    return {"status": "healthy", "service": "ai-llm-service"}
+    """Detailed health check."""
+    model_info = get_model_info()
+    return {
+        "status": "healthy" if model_info["is_loaded"] else "degraded",
+        "model": model_info,
+        "components": {
+            "enhancer": "ready",
+            "validator": "ready",
+            "safety": "ready"
+        }
+    }
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8001)
+
+@app.post("/enhance", response_model=EnhanceResponse)
+async def enhance_endpoint(request: EnhanceRequest):
+    """
+    Enhance OCR prescription data with AI descriptions.
+    
+    Takes raw OCR output and adds:
+    - Medication descriptions
+    - Dosage instructions in multiple languages
+    - Warnings and safety information
+    - Prescription summary
+    """
+    try:
+        ocr_data = request.ocr_data
+        
+        # Enhance prescription
+        enhanced = enhance_prescription(ocr_data)
+        
+        # Validate enhanced data
+        validation = validate_prescription(enhanced)
+        
+        return EnhanceResponse(
+            success=True,
+            ai_enhanced=enhanced.get("ai_enhanced", False),
+            data=enhanced,
+            prescription_summary=enhanced.get("prescription_summary"),
+            validation=validation
+        )
+        
+    except Exception as e:
+        logger.error(f"Enhancement failed: {e}")
+        # Return original data without AI enhancement
+        return EnhanceResponse(
+            success=True,
+            ai_enhanced=False,
+            data=request.ocr_data,
+            prescription_summary=None,
+            validation=None
+        )
+
+
+@app.post("/validate")
+async def validate_endpoint(request: ValidateRequest):
+    """Validate prescription for safety issues."""
+    try:
+        validation = validate_prescription(request.prescription_data)
+        return validation
+    except Exception as e:
+        logger.error(f"Validation failed: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/chat", response_model=ChatResponse)
+async def chat_endpoint(request: ChatRequest):
+    """
+    Prescription-aware chatbot endpoint.
+    
+    Can answer questions about a prescription but will not:
+    - Diagnose conditions
+    - Recommend medications
+    - Provide medical advice
+    """
+    from .core.generation import generate
+    
+    message = request.message
+    detected_lang = detect_language(message)
+    
+    # Safety checks
+    if is_diagnosis_request(message):
+        return ChatResponse(
+            message=get_safe_refusal("diagnosis"),
+            is_safe_response=True,
+            detected_language=detected_lang
+        )
+    
+    if is_drug_advice_request(message):
+        return ChatResponse(
+            message=get_safe_refusal("drug_advice"),
+            is_safe_response=True,
+            detected_language=detected_lang
+        )
+    
+    # Build context from prescription if provided
+    context = ""
+    if request.prescription_context:
+        meds = request.prescription_context.get("structured_data", {}).get("medications", [])
+        if meds:
+            context = "Current prescription medications:\n"
+            for med in meds:
+                context += f"- {med.get('name', 'Unknown')}: {med.get('strength', '')}\n"
+    
+    # Generate response
+    system_prompt = """You are a helpful pharmacy assistant. You can only:
+1. Explain what prescribed medications are used for
+2. Clarify dosage instructions from prescriptions
+3. Remind about general medication safety
+
+You CANNOT:
+- Diagnose any condition
+- Recommend medications
+- Suggest changing dosages
+- Provide medical advice
+
+Always recommend consulting a doctor for medical concerns."""
+
+    try:
+        response = generate(
+            prompt=f"{context}\n\nUser question: {message}",
+            system_prompt=system_prompt,
+            temperature=0.3
+        )
+        
+        if response:
+            return ChatResponse(
+                message=response,
+                is_safe_response=True,
+                detected_language=detected_lang
+            )
+        else:
+            return ChatResponse(
+                message="I apologize, but I'm unable to respond right now. Please try again later.",
+                is_safe_response=True,
+                detected_language=detected_lang
+            )
+            
+    except Exception as e:
+        logger.error(f"Chat generation failed: {e}")
+        return ChatResponse(
+            message="I'm having trouble responding. Please consult your pharmacist or doctor.",
+            is_safe_response=True,
+            detected_language=detected_lang
+        )
