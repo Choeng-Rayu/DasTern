@@ -1,3 +1,4 @@
+import 'package:dastern_mobile/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import '../widgets/hospital_logo.dart';
 import '../widgets/bottom_round_container.dart';
@@ -33,19 +34,19 @@ class SignupScreen extends StatelessWidget {
         child: Align(
           alignment: Alignment.bottomCenter,
           child: BottomRoundContainer(
-            backgroundColor: Colors.black.withOpacity(0.8),
+            backgroundColor: Colors.black.withOpacity(0.5),
             padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 18),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Center(
+                  Center(
                     child: Padding(
-                      padding: EdgeInsets.only(bottom: 12.0),
+                      padding: const EdgeInsets.only(bottom: 12.0),
                       child: Text(
-                        'បញ្ចូលគណនីថ្មី',
-                        style: TextStyle(
+                        AppLocalizations.of(context)?.createNewAccount ?? 'បង្កើតគណនីថ្មី',
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Color.fromARGB(221, 255, 255, 255),
@@ -53,34 +54,33 @@ class SignupScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Label('សាមញ្ញឈ្មោះ'),
-                  const CustomInputField(hint: 'សូមបញ្ចូលឈ្មោះរបស់អ្នក'),
-                  const Label('អាសយដ្ឋាន'),
-                  const CustomInputField(hint: 'សូមបញ្ចូលអាសយដ្ឋានរបស់អ្នក'),
-                  const Label('ភេទ'),
-                  const CustomInputField(hint: 'សូមបញ្ចូលភេទរបស់អ្នក'),
-                  const Label('ថ្ងៃ ខែ ឆ្នាំ កំណើត'),
-                  const Row(
+                  Label(AppLocalizations.of(context)?.lastName ?? 'នាមត្រកូល'),
+                  CustomInputField(hint: AppLocalizations.of(context)?.fillLastName ?? 'សូមបំពេញនាមត្រកូលរបស់អ្នក'),
+                  Label(AppLocalizations.of(context)?.firstName ?? 'នាមខ្លួន'),
+                  CustomInputField(hint: AppLocalizations.of(context)?.fillFirstName ?? 'សូមបំពេញនាមខ្លួនរបស់អ្នក'),
+                  Label(AppLocalizations.of(context)?.gender ?? 'ភេទ'),
+                  CustomInputField(hint: AppLocalizations.of(context)?.fillGender ?? 'សូមបំពេញភេទរបស់អ្នក'),
+                  Label(AppLocalizations.of(context)?.dateOfBirth ?? 'ថ្ងៃ ខែ ឆ្នាំ កំណើត'),
+                  Row(
                     children: [
                       Expanded(
-                        child: CustomInputField(hint: 'ថ្ងៃ', maxLength: 2),
+                        child: CustomInputField(hint: AppLocalizations.of(context)?.day ?? 'ថ្ងៃទី', maxLength: 2),
                       ),
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       Expanded(
-                        child: CustomInputField(hint: 'ខែ', maxLength: 2),
+                        child: CustomInputField(hint: AppLocalizations.of(context)?.month ?? 'ខែ', maxLength: 2),
                       ),
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       Expanded(
-                        child: CustomInputField(hint: 'ឆ្នាំ', maxLength: 4),
+                        child: CustomInputField(hint: AppLocalizations.of(context)?.year ?? 'ឆ្នាំ', maxLength: 4),
                       ),
                     ],
                   ),
-                  const Label('លេខទូរស័ព្ទ/អ៊ីមែល'),
-                  const CustomInputField(
-                      hint: 'សូមបញ្ចូលលេខទូរស័ព្ទ/អ៊ីមែលរបស់អ្នក'),
+                  Label(AppLocalizations.of(context)?.idCardNumber ?? 'លេខអត្តសញ្ញាណប័ណ្ណ'),
+                  CustomInputField(hint: AppLocalizations.of(context)?.fillIdCardNumber ?? 'សូមបំពេញលេខអត្តសញ្ញាណប័ណ្ណរបស់អ្នក'),
                   const SizedBox(height: 18),
                   PrimaryButton(
-                    text: 'បញ្ចូល',
+                    text: AppLocalizations.of(context)?.continueText ?? 'បន្ត',
                     onPressed: () {
                       // Navigator.push(
                       //   context,
@@ -94,9 +94,9 @@ class SignupScreen extends StatelessWidget {
                   Center(
                     child: TextButton(
                       onPressed: () {},
-                      child: const Text(
-                        'ចូលដោយគណនីមានរួច',
-                        style: TextStyle(fontSize: 15, color: Colors.blue),
+                      child: Text(
+                        AppLocalizations.of(context)?.alreadyCreatedAccount ?? 'បានបង្កើតគណនីពីមុន',
+                        style: const TextStyle(fontSize: 15, color: Colors.blue),
                       ),
                     ),
                   ),

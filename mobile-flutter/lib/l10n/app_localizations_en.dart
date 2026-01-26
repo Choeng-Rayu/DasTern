@@ -12,6 +12,88 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'DasTern';
 
   @override
+  String get createNewAccount => 'Create a new account';
+
+  @override
+  String get lastName => 'Last name / Surname';
+
+  @override
+  String get fillLastName => 'Please fill in your last name';
+
+  @override
+  String get firstName => 'First name / Given name';
+
+  @override
+  String get fillFirstName => 'Please fill in your first name';
+
+  @override
+  String get gender => 'Gender';
+
+  @override
+  String get fillGender => 'Please fill in your gender';
+
+  @override
+  String get dateOfBirth => 'Date of Birth';
+
+  @override
+  String get day => 'Day';
+
+  @override
+  String get month => 'Month';
+
+  @override
+  String get year => 'Year';
+
+  @override
+  String get idCardNumber => 'ID card number / Identification number';
+
+  @override
+  String get fillIdCardNumber => 'Please fill in your ID card number';
+
+  @override
+  String get continueText => 'Continue';
+
+  @override
+  String get alreadyCreatedAccount => 'Already created an account before';
+
+  @override
+  String get goBack => 'Go back';
+
+  @override
+  String get phoneNumber => 'Phone Number';
+
+  @override
+  String get fillPhoneNumber => 'Please fill in your phone number';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get fillPassword => 'Please fill in your password';
+
+  @override
+  String get confirmPassword => 'Confirm Password';
+
+  @override
+  String get fillConfirmPassword => 'Please fill in your password again';
+
+  @override
+  String get pinCode => '4-digit PIN code';
+
+  @override
+  String get readTerms =>
+      'Please read the terms and conditions before using the application';
+
+  @override
+  String get alreadyRead => 'Already read / I have read';
+
+  @override
+  String get signIn => 'Log in to account / Sign in';
+
+  @override
+  String get forgotPassword => 'Forgot Password?';
+
+  @override
   String get welcomeTitle => 'Welcome to DasTern';
 
   @override
@@ -81,9 +163,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hello => 'Hello';
 
   @override
-  String get dateOfBirth => 'Date of Birth';
-
-  @override
   String get todaySchedule => 'Schedule (Today)';
 
   @override
@@ -109,12 +188,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get logoutConfirmation => 'Are you sure you want to logout?';
-
-  @override
-  String get phoneNumber => 'Phone Number';
-
-  @override
-  String get password => 'Password';
 
   @override
   String get loginError => 'Invalid phone number or password';
@@ -359,9 +432,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get address => 'Address (Optional)';
 
   @override
-  String get confirmPassword => 'Confirm Password';
-
-  @override
   String get passwordMismatch => 'Passwords do not match';
 
   @override
@@ -387,9 +457,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pleaseEnterFamilyContact => 'Please enter family contact';
-
-  @override
-  String get forgotPassword => 'Forgot Password?';
 
   @override
   String get dontHaveAccount => 'Don\'t have an account? ';
