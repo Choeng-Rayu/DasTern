@@ -10,7 +10,8 @@ from typing import Optional
 logger = logging.getLogger(__name__)
 
 # Ollama configuration
-OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
+# Default to 'ollama' service name for Docker network, fallback to localhost for local dev
+OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://ollama:11434")
 DEFAULT_MODEL = os.getenv("LLM_MODEL", "llama3.1:8b")
 
 # Cached model status

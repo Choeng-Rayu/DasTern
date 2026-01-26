@@ -2,6 +2,8 @@
 PaddleOCR Engine - Text Extraction
 Responsibility: Image → raw text + bounding boxes
 NO cleanup, NO rules - keep raw OCR output
+
+Updated for PaddleOCR 3.x API (v3.3.3+)
 """
 
 import logging
@@ -20,6 +22,8 @@ def _get_ocr_engine(lang: str = "en") -> Any:
     """
     Get or create PaddleOCR engine for specified language.
     Engines are cached for reuse.
+
+    PaddleOCR 3.x uses a new API with predict() method.
     """
     global _ocr_engines
 
@@ -27,7 +31,7 @@ def _get_ocr_engine(lang: str = "en") -> Any:
         try:
             from paddleocr import PaddleOCR
 
-            # Language mapping for PaddleOCR
+            # Language mapping for PaddleOCR 3.x
             lang_map = {
                 "en": "en",
                 "kh": "en",  # Khmer uses English model + post-processing
@@ -36,16 +40,17 @@ def _get_ocr_engine(lang: str = "en") -> Any:
             }
             paddle_lang = lang_map.get(lang, "en")
 
-            logger.info(f"Initializing PaddleOCR engine for language: {paddle_lang}")
+            logger.info(f"Initializing PaddleOCR 3.x engine for language: {paddle_lang}")
+            # PaddleOCR 3.x initialization - disable extra processing for speed
             _ocr_engines[lang] = PaddleOCR(
-                use_angle_cls=True,
                 lang=paddle_lang,
-                show_log=False,
-                use_gpu=False  # Set to True if GPU available
+                use_doc_orientation_classify=False,
+                use_doc_unwarping=False,
+                use_textline_orientation=True,
             )
-            logger.info(f"PaddleOCR engine initialized for: {lang}")
+            logger.info(f"PaddleOCR 3.x engine initialized for: {lang}")
         except ImportError:
-            logger.error("PaddleOCR not installed. Install with: pip install paddleocr paddlepaddle")
+            logger.error("PaddleOCR not installed. Install with: pip install paddleocr")
             raise RuntimeError("PaddleOCR not available")
 
     return _ocr_engines[lang]
@@ -114,6 +119,8 @@ def run_ocr(image_path: str, lang: str = "en") -> List[Dict[str, Any]]:
     """
     Run OCR on image and extract text with bounding boxes.
 
+    Updated for PaddleOCR 3.x API - uses predict() method instead of ocr().
+
     Args:
         image_path: Path to prescription image
         lang: Target language (en, kh, fr)
@@ -135,33 +142,77 @@ def run_ocr(image_path: str, lang: str = "en") -> List[Dict[str, Any]]:
         # Get OCR engine
         ocr = _get_ocr_engine(lang)
 
-        # Run OCR
-        result = ocr.ocr(image_path, cls=True)
+        # Run OCR using PaddleOCR 3.x predict() API
+        logger.info(f"Running PaddleOCR 3.x predict on: {image_path}")
+        results = ocr.predict(input=image_path)
 
-        if not result or not result[0]:
-            logger.warning(f"No text detected in image: {image_path}")
+        if not results:
+            logger.warning(f"No results from OCR for image: {image_path}")
             return blocks
 
-        # Process results
-        for idx, line in enumerate(result[0]):
-            if not line or len(line) < 2:
-                continue
+        # PaddleOCR 3.x returns a generator/list of result objects
+        for result in results:
+            # Access the rec_texts and other attributes from result
+            # PaddleOCR 3.x result structure uses attributes like rec_texts, rec_scores, dt_polys
+            if hasattr(result, 'rec_texts') and result.rec_texts:
+                rec_texts = result.rec_texts
+                rec_scores = result.rec_scores if hasattr(result, 'rec_scores') else [1.0] * len(rec_texts)
+                dt_polys = result.dt_polys if hasattr(result, 'dt_polys') else []
 
-            box_coords, (text, conf) = line
+                for idx, text in enumerate(rec_texts):
+                    if not text or not text.strip():
+                        continue
 
-            # Normalize bounding box
-            bbox = _normalize_bbox(box_coords, img_width, img_height)
+                    conf = rec_scores[idx] if idx < len(rec_scores) else 1.0
 
-            # Detect language of this block
-            block_lang = _detect_text_language(text)
+                    # Get bounding box if available
+                    if idx < len(dt_polys) and dt_polys[idx] is not None:
+                        box_coords = dt_polys[idx]
+                        bbox = _normalize_bbox(box_coords.tolist() if hasattr(box_coords, 'tolist') else list(box_coords), img_width, img_height)
+                    else:
+                        bbox = {"x1": 0, "y1": 0, "x2": img_width, "y2": img_height}
 
-            blocks.append({
-                "text": text,
-                "box": bbox,
-                "confidence": float(conf),
-                "language": block_lang,
-                "line_number": idx
-            })
+                    # Detect language of this block
+                    block_lang = _detect_text_language(text)
+
+                    blocks.append({
+                        "text": text,
+                        "box": bbox,
+                        "confidence": float(conf),
+                        "language": block_lang,
+                        "line_number": idx
+                    })
+            # Alternative: check for dict-like access (older result format)
+            elif hasattr(result, '__getitem__'):
+                try:
+                    # Try dict-style access
+                    rec_texts = result.get('rec_texts', result.get('texts', []))
+                    rec_scores = result.get('rec_scores', result.get('scores', []))
+                    dt_polys = result.get('dt_polys', result.get('boxes', []))
+
+                    for idx, text in enumerate(rec_texts):
+                        if not text or not text.strip():
+                            continue
+
+                        conf = rec_scores[idx] if idx < len(rec_scores) else 1.0
+
+                        if idx < len(dt_polys) and dt_polys[idx] is not None:
+                            box_coords = dt_polys[idx]
+                            bbox = _normalize_bbox(list(box_coords), img_width, img_height)
+                        else:
+                            bbox = {"x1": 0, "y1": 0, "x2": img_width, "y2": img_height}
+
+                        block_lang = _detect_text_language(text)
+
+                        blocks.append({
+                            "text": text,
+                            "box": bbox,
+                            "confidence": float(conf),
+                            "language": block_lang,
+                            "line_number": idx
+                        })
+                except Exception as dict_err:
+                    logger.warning(f"Could not parse result as dict: {dict_err}")
 
         logger.info(f"OCR extracted {len(blocks)} text blocks from {image_path}")
 
