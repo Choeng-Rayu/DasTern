@@ -1,0 +1,32 @@
+{
+  "test_date": "2026-01-27T16:17:40.972802",
+  "total_images": 3,
+  "images_processed": 3,
+  "successful": 0,
+  "failed": 3,
+  "ai_enhanced_count": 0,
+  "results": [
+    {
+      "image": "image.png",
+      "result_file": "ocr_test_image_20260127_161740.json",
+      "success": false,
+      "ai_enhanced": false
+    },
+    {
+      "image": "image1.png",
+      "result_file": "ocr_test_image1_20260127_161740.json",
+      "success": false,
+      "ai_enhanced": false
+    },
+    {
+      "image": "image2.png",
+      "result_file": "ocr_test_image2_20260127_161740.json",
+      "success": false,
+      "ai_enhanced": false
+    }
+  ],
+  "services": {
+    "ocr_service": "http://localhost:8000",
+    "ai_service": "http://localhost:8001"
+  }
+}
