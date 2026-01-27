@@ -1,0 +1,7 @@
+{
+  "error": true,
+  "status_code": 500,
+  "message": "{\"detail\":\"OCR processing failed: 'list' object has no attribute 'get'\"}",
+  "image_name": "image2.png",
+  "timestamp": "2026-01-27T16:22:24.441900"
+}

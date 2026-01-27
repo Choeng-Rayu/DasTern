@@ -1,0 +1,19 @@
+{
+  "success": false,
+  "image_path": "/tmp/92b7c493-3b39-41bd-9185-b46713d1a705.png",
+  "raw_text": "",
+  "blocks": [],
+  "structured_data": null,
+  "overall_confidence": 0.0,
+  "needs_manual_review": true,
+  "error": "No text detected in image",
+  "ai_enhanced": false,
+  "test_metadata": {
+    "image_name": "image1.png",
+    "image_path": "/home/rayu/DasTern/.ignore-ocr-service/images_for_Test_yu/image1.png",
+    "test_timestamp": "2026-01-27T16:17:40.924564",
+    "ocr_service_url": "http://localhost:8000",
+    "response_status": 200
+  },
+  "ai_status": "not_enhanced"
+}

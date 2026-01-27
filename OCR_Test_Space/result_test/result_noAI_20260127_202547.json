@@ -1,0 +1,26 @@
+{
+  "timestamp": "20260127_202547",
+  "service_url": "http://localhost:8001",
+  "endpoint": "/ocr/simple",
+  "description": "Raw PaddleOCR without AI enhancement",
+  "images": [
+    {
+      "filename": "image.png",
+      "filepath": "/home/rayu/DasTern/OCR_Test_Space/Images_for_test/image.png",
+      "status": "error",
+      "error": "ConnectionError: HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /ocr/simple (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=8001): Failed to establish a new connection: [Errno 111] Connection refused\"))"
+    },
+    {
+      "filename": "image1.png",
+      "filepath": "/home/rayu/DasTern/OCR_Test_Space/Images_for_test/image1.png",
+      "status": "error",
+      "error": "ConnectionError: HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /ocr/simple (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=8001): Failed to establish a new connection: [Errno 111] Connection refused\"))"
+    },
+    {
+      "filename": "image2.png",
+      "filepath": "/home/rayu/DasTern/OCR_Test_Space/Images_for_test/image2.png",
+      "status": "error",
+      "error": "ConnectionError: HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /ocr/simple (Caused by NewConnectionError(\"HTTPConnection(host='localhost', port=8001): Failed to establish a new connection: [Errno 111] Connection refused\"))"
+    }
+  ]
+}

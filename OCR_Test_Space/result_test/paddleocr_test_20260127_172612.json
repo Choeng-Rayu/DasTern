@@ -1,0 +1,11 @@
+{
+  "success": false,
+  "image_path": "/tmp/447fb341-d9a7-4a56-af70-573f174b2032.png",
+  "raw_text": "",
+  "blocks": [],
+  "structured_data": null,
+  "overall_confidence": 0.0,
+  "needs_manual_review": true,
+  "error": "No text detected in image",
+  "ai_enhanced": false
+}
