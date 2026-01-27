@@ -1,0 +1,62 @@
+{
+  "timestamp": "20260127_202754",
+  "service_url": "http://localhost:8001",
+  "endpoint": "/ocr",
+  "description": "PaddleOCR with AI LLM enhancement",
+  "images": [
+    {
+      "filename": "image.png",
+      "filepath": "/home/rayu/DasTern/OCR_Test_Space/Images_for_test/image.png",
+      "status": "success",
+      "status_code": 200,
+      "text_blocks_count": 0,
+      "data": {
+        "success": false,
+        "image_path": "/tmp/832ead69-0d23-451b-a7aa-46405561b194.png",
+        "raw_text": "",
+        "blocks": [],
+        "structured_data": null,
+        "overall_confidence": 0.0,
+        "needs_manual_review": true,
+        "error": "No text detected in image",
+        "ai_enhanced": false
+      }
+    },
+    {
+      "filename": "image1.png",
+      "filepath": "/home/rayu/DasTern/OCR_Test_Space/Images_for_test/image1.png",
+      "status": "success",
+      "status_code": 200,
+      "text_blocks_count": 0,
+      "data": {
+        "success": false,
+        "image_path": "/tmp/21c95d14-d6c9-4c25-8920-82176aaf1c2d.png",
+        "raw_text": "",
+        "blocks": [],
+        "structured_data": null,
+        "overall_confidence": 0.0,
+        "needs_manual_review": true,
+        "error": "No text detected in image",
+        "ai_enhanced": false
+      }
+    },
+    {
+      "filename": "image2.png",
+      "filepath": "/home/rayu/DasTern/OCR_Test_Space/Images_for_test/image2.png",
+      "status": "success",
+      "status_code": 200,
+      "text_blocks_count": 0,
+      "data": {
+        "success": false,
+        "image_path": "/tmp/fae4f7f4-da49-475a-a28e-4add9a57d002.png",
+        "raw_text": "",
+        "blocks": [],
+        "structured_data": null,
+        "overall_confidence": 0.0,
+        "needs_manual_review": true,
+        "error": "No text detected in image",
+        "ai_enhanced": false
+      }
+    }
+  ]
+}
