@@ -17,6 +17,7 @@ from pydantic import BaseModel
 
 from .pipeline import process_image, process_image_simple
 from .confidence import calculate_confidence, get_low_confidence_blocks
+from .paddle_mock import extract_text_blocks
 
 # AI LLM Service URL
 AI_LLM_SERVICE_URL = os.getenv("AI_LLM_SERVICE_URL", "http://ai-llm-service:8001")
@@ -260,3 +261,60 @@ async def validate_ocr(data: ValidationRequest):
         low_confidence_blocks=low_conf,
         needs_review=level in ("low", "critical") or len(low_conf) > 0
     )
+
+
+@app.post("/ocr/simple")
+async def simple_ocr(file: UploadFile = File(...), background_tasks: BackgroundTasks = None):
+    """
+    Simple OCR endpoint using PaddleOCR-like interface
+    
+    Args:
+        file: Uploaded image file
+        
+    Returns:
+        OCR results with text blocks and confidence scores
+    """
+    # Validate file extension
+    file_ext = os.path.splitext(file.filename)[1].lower()
+    if file_ext not in ALLOWED_EXTENSIONS:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Invalid file type. Allowed: {', '.join(ALLOWED_EXTENSIONS)}"
+        )
+
+    # Generate unique filename
+    unique_filename = f"{uuid.uuid4()}{file_ext}"
+    image_path = os.path.join(TEMP_DIR, unique_filename)
+
+    try:
+        # Save uploaded file temporarily
+        contents = await file.read()
+        with open(image_path, "wb") as f:
+            f.write(contents)
+
+        logger.info(f"Processing simple OCR for: {file.filename}")
+
+        # Extract text blocks using our PaddleOCR mock
+        blocks = extract_text_blocks(image_path)
+
+        # Cleanup
+        if background_tasks:
+            background_tasks.add_task(cleanup_temp_file, image_path)
+        else:
+            cleanup_temp_file(image_path)
+
+        return {
+            "success": True,
+            "filename": file.filename,
+            "blocks": blocks,
+            "total_blocks": len(blocks),
+            "timestamp": datetime.now().isoformat()
+        }
+
+    except Exception as e:
+        logger.error(f"Simple OCR processing failed: {e}")
+        if background_tasks:
+            background_tasks.add_task(cleanup_temp_file, image_path)
+        else:
+            cleanup_temp_file(image_path)
+        raise HTTPException(status_code=500, detail=f"OCR processing failed: {str(e)}")

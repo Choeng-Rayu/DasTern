@@ -2,6 +2,8 @@
 PaddleOCR Engine - Text Extraction
 Responsibility: Image → raw text + bounding boxes
 NO cleanup, NO rules - keep raw OCR output
+
+Uses PaddleOCR standard API with ocr() method
 """
 
 import logging
@@ -20,6 +22,8 @@ def _get_ocr_engine(lang: str = "en") -> Any:
     """
     Get or create PaddleOCR engine for specified language.
     Engines are cached for reuse.
+
+    PaddleOCR 3.x uses a new API with predict() method.
     """
     global _ocr_engines
 
@@ -27,7 +31,7 @@ def _get_ocr_engine(lang: str = "en") -> Any:
         try:
             from paddleocr import PaddleOCR
 
-            # Language mapping for PaddleOCR
+            # Language mapping for PaddleOCR 3.x
             lang_map = {
                 "en": "en",
                 "kh": "en",  # Khmer uses English model + post-processing
@@ -37,15 +41,16 @@ def _get_ocr_engine(lang: str = "en") -> Any:
             paddle_lang = lang_map.get(lang, "en")
 
             logger.info(f"Initializing PaddleOCR engine for language: {paddle_lang}")
+            # PaddleOCR initialization - use_angle_cls controls text orientation classification
             _ocr_engines[lang] = PaddleOCR(
-                use_angle_cls=True,
                 lang=paddle_lang,
-                show_log=False,
-                use_gpu=False  # Set to True if GPU available
+                use_angle_cls=False,  # Disable angle classification for speed
+                use_gpu=False,  # CPU mode for compatibility
+                show_log=False  # Reduce logging verbosity
             )
             logger.info(f"PaddleOCR engine initialized for: {lang}")
         except ImportError:
-            logger.error("PaddleOCR not installed. Install with: pip install paddleocr paddlepaddle")
+            logger.error("PaddleOCR not installed. Install with: pip install paddleocr")
             raise RuntimeError("PaddleOCR not available")
 
     return _ocr_engines[lang]
@@ -114,6 +119,8 @@ def run_ocr(image_path: str, lang: str = "en") -> List[Dict[str, Any]]:
     """
     Run OCR on image and extract text with bounding boxes.
 
+    Uses PaddleOCR standard ocr() method.
+
     Args:
         image_path: Path to prescription image
         lang: Target language (en, kh, fr)
@@ -135,32 +142,37 @@ def run_ocr(image_path: str, lang: str = "en") -> List[Dict[str, Any]]:
         # Get OCR engine
         ocr = _get_ocr_engine(lang)
 
-        # Run OCR
-        result = ocr.ocr(image_path, cls=True)
+        # Run OCR using PaddleOCR ocr() method
+        logger.info(f"Running PaddleOCR on: {image_path}")
+        results = ocr.ocr(image_path, cls=False)  # cls=False to disable angle classification
 
-        if not result or not result[0]:
-            logger.warning(f"No text detected in image: {image_path}")
+        if not results or not results[0]:
+            logger.warning(f"No results from OCR for image: {image_path}")
             return blocks
 
-        # Process results
-        for idx, line in enumerate(result[0]):
+        # PaddleOCR returns format: [[[bbox, (text, confidence)]...]]
+        # results[0] contains list of detected text regions
+        for line in results[0]:
             if not line or len(line) < 2:
                 continue
 
-            box_coords, (text, conf) = line
+            bbox_coords, (text, conf) = line
+            
+            if not text or not text.strip():
+                continue
 
             # Normalize bounding box
-            bbox = _normalize_bbox(box_coords, img_width, img_height)
+            bbox = _normalize_bbox(bbox_coords, img_width, img_height)
 
             # Detect language of this block
             block_lang = _detect_text_language(text)
 
             blocks.append({
-                "text": text,
+                "text": text.strip(),
                 "box": bbox,
                 "confidence": float(conf),
                 "language": block_lang,
-                "line_number": idx
+                "line_number": len(blocks)
             })
 
         logger.info(f"OCR extracted {len(blocks)} text blocks from {image_path}")

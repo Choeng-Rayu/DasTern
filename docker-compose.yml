@@ -3,7 +3,7 @@ services:
   # PostgreSQL Database
   # ===========================================
   postgres:
-    image: postgres:16-alpine
+    build: ./database
     container_name: dastern-postgres
     environment:
       POSTGRES_USER: ${DB_USER:-dastern}
@@ -14,10 +14,8 @@ services:
       - "${DB_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      # - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql # just using only one final-schema.sql is enough because in first project it has know data yet
-      # - ./database/migrations:/docker-entrypoint-initdb.d/migrations
-      # - ./database/seeds:/docker-entrypoint-initdb.d/seeds
-      - ./database/final-schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      # Using COPY instead of VOLUME MOUNT to avoid permission issues
+      # Database initialization will happen on first start
     networks:
       - dastern-network
     healthcheck:
@@ -49,7 +47,8 @@ services:
       ai-llm-service:
         condition: service_healthy
     volumes:
-      - ./backend-nextjs:/app
+      # Development mode - uncomment to enable hot reload
+      # - ./backend-nextjs:/app
       - /app/node_modules
       - /app/.next
     networks:
@@ -74,7 +73,8 @@ services:
       - OCR_LANG=en,kh
       - AI_LLM_SERVICE_URL=http://ai-llm-service:8001
     volumes:
-      - ./ocr-service:/app
+      # Development mode - uncomment to enable hot reload
+      # - ./ocr-service:/app
       - ./shared:/shared:ro
     networks:
       - dastern-network
@@ -97,16 +97,46 @@ services:
       - "8001:8001"
     environment:
       - PYTHONUNBUFFERED=1
-      - MODEL_PATH=/app/models/llama/weights.gguf
+      - OLLAMA_HOST=http://ollama:11434
+      - LLM_MODEL=llama3.1:8b
       - ALLOWED_LANGUAGES=en,kh,fr
     volumes:
-      - ./ai-llm-service:/app
+      # Development mode - uncomment to enable hot reload
+      # - ./ai-llm-service:/app
       - ./ai-llm-service/models:/app/models
       - ./shared:/shared:ro
     networks:
       - dastern-network
+    depends_on:
+      ollama:
+        condition: service_started
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # ===========================================
+  # Ollama - Local LLM Inference Server
+  # ===========================================
+  ollama:
+    image: ollama/ollama:latest
+    container_name: dastern-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - dastern-network
+    # For future GPU support, uncomment:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -118,4 +148,6 @@ networks:
 
 volumes:
   postgres_data:
+    driver: local
+  ollama_data:
     driver: local
