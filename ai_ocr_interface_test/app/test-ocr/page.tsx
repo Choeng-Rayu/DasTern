@@ -82,79 +82,57 @@ export default function OCRTestPage() {
     setError('');
 
     try {
-      // For testing without backend, we'll simulate OCR processing
-      // In production, this would call your OCR service
-      
-      // Simulated OCR result
-      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate processing time
+      // Call the actual OCR service
+      const formData = new FormData();
+      formData.append('file', selectedFile);
 
-      const mockOCRBlocks: OCRBlock[] = [
-        { text: 'Patient Name: John Doe', confidence: 0.95 },
-        { text: 'Date: 26/01/2026', confidence: 0.92 },
-        { text: 'Dr. Sarah Johnson', confidence: 0.88 },
-        { text: 'City Medical Center', confidence: 0.90 },
-        { text: 'Diagnosis: Common Cold', confidence: 0.85 },
-        { text: 'Amoxicillin 500mg', confidence: 0.93 },
-        { text: 'Take 1 tablet', confidence: 0.89 },
-        { text: '3 times daily', confidence: 0.91 },
-        { text: 'After meals', confidence: 0.87 },
-        { text: 'Duration: 7 days', confidence: 0.90 },
-        { text: 'Paracetamol 500mg', confidence: 0.94 },
-        { text: 'Take 1-2 tablets', confidence: 0.88 },
-        { text: 'As needed for fever', confidence: 0.86 },
-        { text: 'Maximum 4 times daily', confidence: 0.89 },
-      ];
+      const response = await fetch('http://localhost:8000/ocr', {
+        method: 'POST',
+        body: formData,
+      });
 
-      setOcrBlocks(mockOCRBlocks);
+      if (!response.ok) {
+        throw new Error(`OCR service error: ${response.statusText}`);
+      }
 
-      // Format as prescription
-      const mockPrescription: PrescriptionData = {
-        patient_info: {
-          name: 'John Doe',
+      const result = await response.json();
+      console.log('OCR Result:', result);
+
+      // Extract blocks for display
+      const blocks: OCRBlock[] = result.blocks?.map((block: any) => ({
+        text: block.text,
+        confidence: block.confidence,
+        bbox: block.bbox,
+      })) || [];
+
+      setOcrBlocks(blocks);
+
+      // Format as prescription data
+      const prescriptionData: PrescriptionData = {
+        patient_info: result.patient_info || {
+          name: undefined,
           age: undefined,
           gender: undefined,
           patient_id: undefined,
         },
-        prescription_details: {
-          date: '26/01/2026',
-          doctor_name: 'Dr. Sarah Johnson',
-          clinic_name: 'City Medical Center',
-          diagnosis: 'Common Cold',
+        prescription_details: result.prescription_details || {
+          date: undefined,
+          doctor_name: undefined,
+          clinic_name: undefined,
+          diagnosis: undefined,
         },
-        medications: [
-          {
-            name: 'Amoxicillin 500mg',
-            dosage: '1 tablet',
-            frequency: '3 times daily',
-            duration: '7 days',
-            instructions: 'After meals',
-          },
-          {
-            name: 'Paracetamol 500mg',
-            dosage: '1-2 tablets',
-            frequency: 'As needed',
-            duration: undefined,
-            instructions: 'Maximum 4 times daily, for fever',
-          },
-        ],
-        dosage_instructions: [
-          { text: 'Take 1 tablet 3 times daily after meals', timing: 'After meals', with_food: true },
-          { text: 'Take 1-2 tablets as needed for fever', timing: 'As needed', with_food: undefined },
-        ],
-        reminder_schedule: [
-          { time: '08:00', instruction: 'Amoxicillin 500mg - 1 tablet after breakfast', enabled: true },
-          { time: '14:00', instruction: 'Amoxicillin 500mg - 1 tablet after lunch', enabled: true },
-          { time: '20:00', instruction: 'Amoxicillin 500mg - 1 tablet after dinner', enabled: true },
-        ],
+        medications: result.medications || [],
+        dosage_instructions: result.dosage_instructions || [],
+        reminder_schedule: result.reminder_schedule || [],
         raw_ocr_data: {
-          full_text: mockOCRBlocks.map(b => b.text).join(' '),
-          confidence: 0.90,
-          blocks_count: mockOCRBlocks.length,
-          language: 'en',
+          full_text: result.full_text || blocks.map(b => b.text).join(' '),
+          confidence: result.overall_confidence || 0,
+          blocks_count: blocks.length,
+          language: result.language || 'en',
         },
       };
 
-      setPrescription(mockPrescription);
+      setPrescription(prescriptionData);
       setActiveTab('prescription');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'OCR processing failed');

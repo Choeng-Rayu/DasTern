@@ -17,7 +17,7 @@ from pydantic import BaseModel
 
 from .pipeline import process_image, process_image_simple
 from .confidence import calculate_confidence, get_low_confidence_blocks
-from .paddle_mock import extract_text_blocks
+from .ocr.paddle_engine import extract_text_blocks
 
 # AI LLM Service URL
 AI_LLM_SERVICE_URL = os.getenv("AI_LLM_SERVICE_URL", "http://ai-llm-service:8001")

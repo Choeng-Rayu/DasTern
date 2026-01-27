@@ -3,7 +3,7 @@ OCR Pipeline Orchestration - Heart of OCR Service
 Coordinates all OCR processing steps
 
 This is the main entry point for OCR processing that:
-1. Runs multi-language OCR with PaddleOCR
+1. Runs multi-language OCR with PaddleOCR (supports Khmer, English, French)
 2. Classifies document layout with LayoutLMv3
 3. Groups blocks into logical rows
 4. Extracts key-value pairs and table data
@@ -15,15 +15,18 @@ import logging
 import os
 from typing import Dict, Any, List
 
-from .paddle_mock import extract_text_blocks
+logger = logging.getLogger(__name__)
+
+# Use PaddleOCR with multi-language support (Khmer, English, French)
+from .ocr.paddle_engine import extract_text_blocks
+logger.info("Using PaddleOCR with multi-language support (Khmer, English, French)")
+
 from .layout.layoutlmv3 import classify_layout, detect_table_structure
 from .layout.grouping import group_blocks, group_medication_rows
 from .layout.key_value import extract_key_values, extract_medications_from_table
 from .rules.medical_terms import fix_terms, normalize_strength, normalize_drug_name
 from .rules.khmer_fix import fix_khmer, convert_khmer_digits
 from .confidence import calculate_document_confidence
-
-logger = logging.getLogger(__name__)
 
 
 def process_image(image_path: str) -> Dict[str, Any]:
@@ -50,11 +53,17 @@ def process_image(image_path: str) -> Dict[str, Any]:
     if not os.path.exists(image_path):
         raise FileNotFoundError(f"Image not found: {image_path}")
 
-    # Step 1: Run OCR using our mock
-    logger.info("Step 1: Running OCR...")
-    raw_blocks = extract_text_blocks(image_path)
-    primary_language = "en"  # Default language
-    logger.info(f"Detected {len(raw_blocks)} blocks, primary language: {primary_language}")
+    # Step 1: Run OCR with multi-language support
+    logger.info("Step 1: Running multi-language OCR (Khmer, English, French)...")
+    try:
+        raw_blocks = extract_text_blocks(image_path)
+        # Detect primary language from block analysis
+        primary_language = _detect_primary_language(raw_blocks) if raw_blocks else "en"
+        logger.info(f"Detected {len(raw_blocks)} blocks, primary language: {primary_language}")
+    except Exception as e:
+        logger.error(f"OCR extraction failed: {e}")
+        raw_blocks = []
+        primary_language = "en"
 
     if not raw_blocks:
         return _create_empty_result(image_path)
@@ -111,21 +120,25 @@ def process_image(image_path: str) -> Dict[str, Any]:
             blocks=grouped_blocks,
             medications=structured_data.get("medications", [])
         )
-    except:
-        # Basic confidence calculation
-        total_conf = sum(block.get("confidence", 0) for block in grouped_blocks)
-        avg_conf = total_conf / len(grouped_blocks) if grouped_blocks else 0
+    except Exception as e:
+        # Basic confidence calculation fallback
+        logger.warning(f"Confidence calculation failed: {e}, using fallback")
+        if grouped_blocks:
+            total_conf = sum(block.get("confidence", 0.0) if isinstance(block, dict) else 0.0 for block in grouped_blocks)
+            avg_conf = total_conf / len(grouped_blocks)
+        else:
+            avg_conf = 0.0
         confidence_report = {
             "overall_confidence": avg_conf,
             "confidence_level": "medium" if avg_conf > 0.5 else "low"
         }
 
-    # Build final result
+    #  Build final result
     result = _build_result(
         image_path=image_path,
         blocks=grouped_blocks,
         structured_data=structured_data,
-        table_data=[],
+        table_data={},  # Empty dict instead of list
         primary_language=primary_language,
         confidence_report=confidence_report
     )

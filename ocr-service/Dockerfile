@@ -1,6 +1,7 @@
 # ===========================================
 # DasTern OCR Service
-# Python 3.10 + PaddleOCR + LayoutLMv3
+# Python 3.10 + Tesseract OCR (Multi-Language)
+# Supports: Khmer, English, French
 # ===========================================
 
 FROM python:3.10-slim
@@ -12,8 +13,15 @@ ENV PYTHONPATH=/app:$PYTHONPATH
 ENV PYTHONUNBUFFERED=1
 
 # Install system dependencies for OCR and image processing
-# OpenCV requires: libGL, libglib, libsm, libxext, libxrender, libgomp
+# - Tesseract OCR with language packs (Khmer, English, French)
+# - OpenCV requires: libGL, libglib, libsm, libxext, libxrender, libgomp
 RUN apt-get update && apt-get install -y \
+    # Tesseract OCR and language packs
+    tesseract-ocr \
+    tesseract-ocr-khm \
+    tesseract-ocr-eng \
+    tesseract-ocr-fra \
+    # OpenCV dependencies
     libsm6 \
     libxext6 \
     libxrender-dev \
@@ -21,7 +29,9 @@ RUN apt-get update && apt-get install -y \
     libgl1 \
     libglib2.0-0 \
     curl \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && echo "Installed Tesseract languages:" \
+    && tesseract --list-langs
 
 # Install Python dependencies with retry and timeout handling
 COPY requirements.txt .

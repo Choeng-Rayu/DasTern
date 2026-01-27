@@ -6,6 +6,7 @@ NO cleanup, NO rules - keep raw OCR output
 Uses PaddleOCR standard API with ocr() method
 """
 
+import os
 import logging
 from typing import List, Dict, Any, Tuple
 import numpy as np
@@ -22,8 +23,8 @@ def _get_ocr_engine(lang: str = "en") -> Any:
     """
     Get or create PaddleOCR engine for specified language.
     Engines are cached for reuse.
-
-    PaddleOCR 3.x uses a new API with predict() method.
+    
+    Khmer support: PaddleOCR's 'ch' (Chinese) model supports multilingual including Khmer.
     """
     global _ocr_engines
 
@@ -31,27 +32,26 @@ def _get_ocr_engine(lang: str = "en") -> Any:
         try:
             from paddleocr import PaddleOCR
 
-            # Language mapping for PaddleOCR 3.x
+            # Language mapping for PaddleOCR
+            # 'ch' (Chinese/multilingual) model supports Khmer, English, numbers, and common symbols
             lang_map = {
-                "en": "en",
-                "kh": "en",  # Khmer uses English model + post-processing
-                "fr": "fr",
-                "mixed": "en",  # Default to English for mixed
+                "en": "ch",  # Use multilingual model for better support
+                "kh": "ch",  # Khmer is supported by Chinese multilingual model
+                "fr": "french",  # French specific
+                "mixed": "ch",  # Multilingual model handles mixed text best
             }
-            paddle_lang = lang_map.get(lang, "en")
+            paddle_lang = lang_map.get(lang, "ch")
 
-            logger.info(f"Initializing PaddleOCR engine for language: {paddle_lang}")
-            # PaddleOCR initialization - use_angle_cls controls text orientation classification
-            _ocr_engines[lang] = PaddleOCR(
-                lang=paddle_lang,
-                use_angle_cls=False,  # Disable angle classification for speed
-                use_gpu=False,  # CPU mode for compatibility
-                show_log=False  # Reduce logging verbosity
-            )
-            logger.info(f"PaddleOCR engine initialized for: {lang}")
+            logger.info(f"Initializing PaddleOCR engine for language: {lang} -> model: {paddle_lang}")
+            # PaddleOCR initialization - minimal params for compatibility
+            _ocr_engines[lang] = PaddleOCR(lang=paddle_lang)
+            logger.info(f"PaddleOCR engine initialized successfully: {lang}")
         except ImportError:
             logger.error("PaddleOCR not installed. Install with: pip install paddleocr")
             raise RuntimeError("PaddleOCR not available")
+        except Exception as e:
+            logger.error(f"Failed to initialize PaddleOCR: {e}")
+            raise
 
     return _ocr_engines[lang]
 
@@ -144,7 +144,7 @@ def run_ocr(image_path: str, lang: str = "en") -> List[Dict[str, Any]]:
 
         # Run OCR using PaddleOCR ocr() method
         logger.info(f"Running PaddleOCR on: {image_path}")
-        results = ocr.ocr(image_path, cls=False)  # cls=False to disable angle classification
+        results = ocr.ocr(image_path)
 
         if not results or not results[0]:
             logger.warning(f"No results from OCR for image: {image_path}")
@@ -274,3 +274,30 @@ def run_ocr_on_region(
         }
 
     return {"text": "", "confidence": 0, "box": box}
+
+
+# Public API function for pipeline
+def extract_text_blocks(image_path: str, lang: str = "mixed") -> List[Dict[str, Any]]:
+    """
+    Extract text blocks from image with PaddleOCR multi-language support.
+    This function is the main entry point used by pipeline.py
+    
+    Args:
+        image_path: Path to image file
+        lang: Language hint ('en', 'kh', 'fr', 'mixed')
+        
+    Returns:
+        List of text blocks with text, box, confidence, language
+    """
+    logger.info(f"Extracting text blocks from {image_path} with lang={lang}")
+    
+    # Use multi-language detection if lang is 'mixed' or not specified
+    if lang == "mixed" or not lang:
+        blocks, detected_lang = run_ocr_multi_language(image_path)
+        logger.info(f"Detected primary language: {detected_lang}, extracted {len(blocks)} blocks")
+        return blocks
+    else:
+        # Single language mode
+        blocks = run_ocr(image_path, lang=lang)
+        logger.info(f"Extracted {len(blocks)} blocks with lang={lang}")
+        return blocks

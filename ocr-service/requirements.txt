@@ -3,27 +3,22 @@ fastapi>=0.104.0
 uvicorn[standard]>=0.24.0
 python-multipart>=0.0.6  # Required for file uploads
 
-# OCR Engine - PaddleOCR 2.x (more stable)
-# Using PaddleOCR 2.7.x for better compatibility
-paddleocr>=2.7.0,<3.0.0
-paddlepaddle>=2.5.0  # CPU version, stable release
+# OCR Engine - Tesseract (via pytesseract)
+# Tesseract supports Khmer, English, French natively
+# Language packs installed via apt: tesseract-ocr-khm, tesseract-ocr-eng, tesseract-ocr-fra
+pytesseract>=0.3.10
 
 # Image Processing
 pillow>=10.0.0
-opencv-python>=4.8.0
+opencv-python-headless>=4.8.0  # headless version for Docker
 numpy>=1.24.0
-
-# Layout Understanding (LayoutLMv3)
-transformers>=4.35.0
-torch>=2.0.0  # Use CPU version initially, optimize later
 
 # Data Validation
 pydantic>=2.0.0
 
-# Optional: Language Detection
-langdetect>=1.0.9
+# HTTP Client (for AI service calls)
+httpx>=0.25.0
 
 # Testing (optional)
 pytest>=7.4.0
 pytest-asyncio>=0.21.0
-httpx>=0.25.0
