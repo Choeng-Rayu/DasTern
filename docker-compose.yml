@@ -14,9 +14,10 @@ services:
       - "${DB_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
-      - ./database/migrations:/docker-entrypoint-initdb.d/migrations
-      - ./database/seeds:/docker-entrypoint-initdb.d/seeds
+      # - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql # just using only one final-schema.sql is enough because in first project it has know data yet
+      # - ./database/migrations:/docker-entrypoint-initdb.d/migrations
+      # - ./database/seeds:/docker-entrypoint-initdb.d/seeds
+      - ./database/final-schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
     networks:
       - dastern-network
     healthcheck:
@@ -36,48 +37,80 @@ services:
       - "3000:3000"
     env_file:
       - .env
+    environment:
+      - OCR_SERVICE_URL=http://ocr-service:8002
+      - LLM_SERVICE_URL=http://ai-llm-service:8001
+      - DATABASE_URL=postgresql://${DB_USER:-dastern}:${DB_PASSWORD:-dastern_secure_password_2026}@postgres:5432/${DB_NAME:-dastern}
     depends_on:
       postgres:
         condition: service_healthy
       ocr-service:
-        condition: service_started
+        condition: service_healthy
       ai-llm-service:
-        condition: service_started
+        condition: service_healthy
     volumes:
       - ./backend-nextjs:/app
       - /app/node_modules
       - /app/.next
     networks:
       - dastern-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     restart: unless-stopped
 
   # ===========================================
-  # OCR Service - Python + Tesseract
+  # OCR Service - Document AI (PaddleOCR + LayoutLMv3)
   # ===========================================
   ocr-service:
     build: ./ocr-service
     container_name: dastern-ocr
     ports:
-      - "8000:8000"
+      - "8002:8002"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - OCR_LANG=en,kh
+      - AI_LLM_SERVICE_URL=http://ai-llm-service:8001
     volumes:
       - ./ocr-service:/app
       - ./shared:/shared:ro
     networks:
       - dastern-network
+    depends_on:
+      - ai-llm-service
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
 
   # ===========================================
-  # AI LLM Service - Python MT5
+  # AI LLM Service - LLaMA-based Medical AI
   # ===========================================
   ai-llm-service:
     build: ./ai-llm-service
     container_name: dastern-ai
     ports:
       - "8001:8001"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - MODEL_PATH=/app/models/llama/weights.gguf
+      - ALLOWED_LANGUAGES=en,kh,fr
     volumes:
       - ./ai-llm-service:/app
+      - ./ai-llm-service/models:/app/models
       - ./shared:/shared:ro
     networks:
       - dastern-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
 
 networks:
   dastern-network:
