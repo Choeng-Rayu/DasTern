@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # AI-LLM Service
 
 AI-powered prescription OCR correction and parsing service using LLaMA 3.1 8B via Ollama.
@@ -18,14 +17,17 @@ Takes messy OCR output from prescription images and:
 ### 1. Install Ollama & Download Model
 
 ```bash
-# Install Ollama (if not installed)
+# Install Ollama
 brew install ollama
 
-# Start Ollama server
+# Start Ollama server (keep this running in one terminal)
 ollama serve
 
-# Download LLaMA model (in another terminal)
+# In another terminal, download LLaMA model (4.9GB, one-time download)
 ollama pull llama3.1:8b
+
+# Verify model is downloaded
+ollama list
 ```
 
 ### 2. Setup Python Environment
@@ -33,27 +35,55 @@ ollama pull llama3.1:8b
 ```bash
 cd /Users/macbook/CADT/DasTern/ai-llm-service
 
-# Create virtual environment
+# Create virtual environment (first time only)
 python3 -m venv venv
 
-# Activate environment
+# Activate virtual environment
 source venv/bin/activate
 
+# You should see (venv) prefix in your terminal
 # Install dependencies
 pip install -r requirements.txt
-
-# Set Ollama host
-export OLLAMA_HOST=http://localhost:11434
 ```
 
-### 3. Verify Setup
+### 3. Set Environment Variable
+
+```bash
+# Set this every time you open a new terminal
+export OLLAMA_HOST=http://localhost:11434
+
+# Or add to ~/.zshrc to make it permanent:
+echo 'export OLLAMA_HOST=http://localhost:11434' >> ~/.zshrc
+```
+
+### 4. Verify Setup
 
 ```bash
 # Check Ollama is running
 curl http://localhost:11434/api/tags
 
+# Should show: {"models":[{"name":"llama3.1:8b",...}]}
+
 # Run test
 python3 tests/test_simple.py
+```
+
+---
+
+## Daily Usage
+
+Every time you start working:
+
+```bash
+# 1. Make sure Ollama is running (in one terminal)
+ollama serve
+
+# 2. In your work terminal:
+cd /Users/macbook/CADT/DasTern/ai-llm-service
+source venv/bin/activate
+export OLLAMA_HOST=http://localhost:11434
+
+# Now you're ready to use the tools!
 ```
 
 ---
@@ -63,12 +93,8 @@ python3 tests/test_simple.py
 ### Process OCR Data
 
 ```bash
-# Activate environment first
-source venv/bin/activate
-export OLLAMA_HOST=http://localhost:11434
-
 # Process a prescription OCR file
-python3 tools/process_with_corrections.py data/my_prescription.json
+python3 tools/process_with_corrections.py data/ocr_file.json
 ```
 
 **Input format** (your OCR JSON):
@@ -86,19 +112,45 @@ python3 tools/process_with_corrections.py data/my_prescription.json
 - All corrections made
 - Quality metrics
 
-### Add Training Data
+### Add Training Data (Teach the AI)
 
-When you get new prescription formats:
+**When to use:** AI makes mistakes on a new hospital format
+
+**What you need:** The original prescription **image** (not just OCR output)
+
+**How it works:**
 
 ```bash
 python3 tools/add_training_simple.py data/new_prescription.json
 ```
 
-**Interactive steps:**
-1. Tool loads your OCR JSON
-2. You provide correct extracted data
-3. Saves to `data/training/sample_prescriptions.jsonl`
-4. AI learns from it automatically
+**The tool will:**
+1. Show you the messy OCR text
+2. Ask YOU (human) to type the CORRECT data by looking at the original image
+3. Save this example so AI learns the pattern
+
+**Example session:**
+```
+📄 OCR Text (messy):
+paracetamo1 s00mg
+Patient: 25 years
+
+Now YOU look at the original image and type correct data:
+
+Patient name? Mr. Pich Chan
+Patient age? 35
+Medication name? Paracetamol
+Medication strength? 500mg
+...
+```
+
+**How AI "learns":**
+- ✅ NO model retraining required
+- ✅ Uses **few-shot learning** - includes your examples in every prompt
+- ✅ Instant - works immediately after adding example
+- ✅ Just needs 3-5 examples to handle most cases
+
+**Your examples are saved in:** `data/training/sample_prescriptions.jsonl`
 
 ### Run Tests
 
@@ -156,15 +208,45 @@ ls -lh reports/
 cat reports/correction_report_*.json | jq
 ```
 
-### Add New Hospital Format
+### Add New Hospital Format (Step-by-Step)
+
+**Scenario:** You receive OCR from a new hospital and AI makes mistakes.
+
+**Step 1: Test current AI**
+```bash
+python3 tools/process_with_corrections.py data/new_hospital.json
+```
+
+Check `reports/` - is the output correct?
+- ✅ If correct → Done! No training needed
+- ❌ If wrong → Continue to Step 2
+
+**Step 2: Add training example**
+
+You need:
+1. The OCR JSON file (`new_hospital.json`)
+2. The **original prescription image** (to read correct data)
 
 ```bash
-# When you get OCR from a new hospital
-python3 tools/add_training_simple.py data/new_hospital_ocr.json
-
-# Follow prompts to enter correct data
-# AI will learn this format
+python3 tools/add_training_simple.py data/new_hospital.json
 ```
+
+**Step 3: Look at the image and type correct data**
+
+Tool shows messy OCR, you type what you **see in the image**:
+```
+Patient name? [Look at image, type: "លោក ពេជ្រ ចន្ទ"]
+Age? [Look at image, type: "35"]
+Medication? [Look at image, type: "Paracetamol"]
+Strength? [Look at image, type: "500mg"]
+```
+
+**Step 4: Test again**
+```bash
+python3 tools/process_with_corrections.py data/similar_prescription.json
+```
+
+AI now knows the pattern and will handle similar formats correctly!
 
 ### Update AI Behavior
 
@@ -217,6 +299,15 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+**"venv/bin/activate: No such file":**
+```bash
+# You need to create venv first
+python3 -m venv venv
+
+# Then activate it
+source venv/bin/activate
+```
+
 **Wrong Python version:**
 ```bash
 # Check Python version (should be 3.8+)
@@ -225,6 +316,40 @@ python3 --version
 # Use python3 explicitly
 python3 tools/process_with_corrections.py data/file.json
 ```
+
+---
+
+## How Few-Shot Learning Works
+
+**NOT traditional training** - no model updates, no GPU needed!
+
+**What happens when you add training:**
+1. Your example is saved to `data/training/sample_prescriptions.jsonl`
+2. Every time AI processes OCR, it reads these examples
+3. AI sees the pattern and mimics it
+
+**Example:**
+
+Before adding training:
+```
+AI sees: "paracetamo1 s00mg"
+AI output: Confused, might fail
+```
+
+After adding ONE example:
+```
+Prompt to AI:
+"Example: paracetamo1 s00mg → Paracetamol 500mg
+Now process: Esome praso1 40mg"
+
+AI output: Esomeprazole 40mg ✓
+```
+
+**Key points:**
+- ✅ Works instantly (no training time)
+- ✅ 3-5 examples usually enough
+- ✅ No GPU needed
+- ✅ Model stays the same (llama3.1:8b)
 
 ---
 
@@ -256,6 +381,38 @@ docker run -p 8000:8000 \
 
 ---
 
+## For Your Teammates
+
+Three options for using this AI service:
+
+### Option 1: Local Ollama (Recommended)
+Everyone installs Ollama and downloads the model:
+```bash
+brew install ollama
+ollama pull llama3.1:8b  # 4.9GB download per person
+ollama serve
+```
+**Pros:** Fast (local), works offline  
+**Cons:** 5GB storage per person
+
+### Option 2: Shared Server
+One person hosts Ollama, others connect remotely:
+```bash
+# Host machine (you):
+OLLAMA_HOST=0.0.0.0:11434 ollama serve
+
+# Teammates:
+export OLLAMA_HOST=http://YOUR_IP:11434
+python3 tools/process_with_corrections.py data/file.json
+```
+**Pros:** No model download for teammates  
+**Cons:** Your machine must stay running
+
+### Option 3: Docker
+Package everything in Docker (see Docker Deployment section)
+
+---
+
 ## Tips
 
 - **Environment variables:** Always set `OLLAMA_HOST` before running scripts
@@ -263,16 +420,7 @@ docker run -p 8000:8000 \
 - **Training:** Start with 3-5 examples, add more as needed
 - **Testing:** Use `test_real_ocr_data.py` to verify improvements
 - **Reports:** Check `reports/` folder for detailed correction analysis
-```bash
-# From your OCR JSON
-python3 tools/add_training_simple.py data/new_prescription.json
-```
-
-### **Process New Prescription**
-```bash
-# Generate correction report
-python3 tools/process_with_corrections.py data/new_ocr.json
-```
+- **Original images:** Keep prescription images to add training examples later
 
 ### **Check Current Training Examples**
 ```bash
