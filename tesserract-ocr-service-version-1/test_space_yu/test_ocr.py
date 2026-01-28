@@ -12,7 +12,7 @@ from datetime import datetime
 API_URL = "http://localhost:8000"
 
 # Test image path
-IMAGE_PATH = Path(__file__).parent.parent / "images_for_Test_yu" / "image2.png"
+IMAGE_PATH = Path(__file__).parent.parent / "images_for_Test_yu" / "image3.JPG"
 # IMAGE_PATH = Path("images_for_Test") / "image2.png"
 
 # Output directory for results
