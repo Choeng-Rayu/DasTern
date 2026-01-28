@@ -1,204 +1,267 @@
-# 🗂️ AI-LLM Service - Clean Folder Structure
+# AI-LLM Service
 
-## 📁 Directory Organization
+AI-powered prescription OCR correction and parsing service using LLaMA 3.1 8B via Ollama.
 
-```
-ai-llm-service/
-├── 📦 tools/              # User-facing tools (run these!)
-├── 🧪 tests/              # Test scripts and demos
-├── 📚 docs/               # Documentation
-├── 📊 reports/            # Generated outputs (gitignored)
-├── 🔧 app/                # Core application code
-├── 💬 prompts/            # AI system prompts
-├── 📁 data/               # Training data and OCR files
-├── 🐍 venv/               # Python virtual environment
-├── 📄 requirements.txt    # Python dependencies
-├── 🐳 Dockerfile          # Docker configuration
-└── 📖 README.md           # This file
-```
+## What This Does
+
+Takes messy OCR output from prescription images and:
+- **Corrects OCR errors** (s00mg → 500mg, Esome → Esomeprazole)
+- **Extracts key medical data** (patient, medications, dosages, instructions)
+- **Ignores irrelevant data** (IDs, phone numbers, layout artifacts)
+- **Outputs clean JSON** for the DasTern mobile app
 
 ---
 
-## 🚀 Quick Start
+## Setup (First Time)
 
-### **1. Setup (First Time Only)**
+### 1. Install Ollama & Download Model
+
+```bash
+# Install Ollama (if not installed)
+brew install ollama
+
+# Start Ollama server
+ollama serve
+
+# Download LLaMA model (in another terminal)
+ollama pull llama3.1:8b
+```
+
+### 2. Setup Python Environment
+
 ```bash
 cd /Users/macbook/CADT/DasTern/ai-llm-service
 
 # Create virtual environment
 python3 -m venv venv
-source venv/bin/activate
 
-# Install dependencies  
-pip install -r requirements.txt
-```
-
-### **2. Daily Usage**
-```bash
 # Activate environment
 source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Set Ollama host
 export OLLAMA_HOST=http://localhost:11434
-
-# Add training examples
-python3 tools/add_training_simple.py data/my_ocr.json
-
-# Process OCR and see corrections
-python3 tools/process_with_corrections.py data/my_ocr.json
-
-# Run tests
-python3 tests/test_real_ocr_data.py
 ```
 
----
-
-## 📦 Tools (Main Scripts You Use)
-
-### **`tools/add_training_simple.py`**
-Add training examples from your OCR JSON files.
-
-**Usage:**
-```bash
-python3 tools/add_training_simple.py data/prescription.json
-```
-
-**What it does:**
-- Reads your OCR JSON (with `corrected_text` field)
-- Guides you to enter correct extracted data
-- Saves as training example for AI to learn
-
----
-
-### **`tools/process_with_corrections.py`**
-Process OCR data and generate detailed correction reports.
-
-**Usage:**
-```bash
-python3 tools/process_with_corrections.py data/ocr_file.json [output.json]
-```
-
-**What it does:**
-- Takes messy OCR input
-- AI processes and cleans it
-- Shows all corrections made
-- Generates JSON report in `reports/`
-
-**Output:** `reports/correction_report_YYYYMMDD_HHMMSS.json`
-
----
-
-## 🧪 Tests (Test Scripts)
-
-### **`tests/test_real_ocr_data.py`**
-Test with real OCR data file.
+### 3. Verify Setup
 
 ```bash
-python3 tests/test_real_ocr_data.py
-```
+# Check Ollama is running
+curl http://localhost:11434/api/tags
 
-### **`tests/test_simple.py`**
-Quick API test.
-
-```bash
+# Run test
 python3 tests/test_simple.py
 ```
 
-### **`tests/test_phase2.py`**
-Full prescription enhancement test.
+---
+
+## How to Use
+
+### Process OCR Data
 
 ```bash
-python3 tests/test_phase2.py
+# Activate environment first
+source venv/bin/activate
+export OLLAMA_HOST=http://localhost:11434
+
+# Process a prescription OCR file
+python3 tools/process_with_corrections.py data/my_prescription.json
 ```
 
-### **`tests/demo_showcase.sh`**
-Complete demo script.
+**Input format** (your OCR JSON):
+```json
+{
+  "corrected_text": "Dr. Sun Moniroth\nPatient: Mr. Pich\nparacetamo1 s00mg...",
+  "raw": [...],
+  "stats": {...}
+}
+```
+
+**Output:** Generates `reports/correction_report_YYYYMMDD_HHMMSS.json` with:
+- Original OCR text
+- AI-enhanced output
+- All corrections made
+- Quality metrics
+
+### Add Training Data
+
+When you get new prescription formats:
 
 ```bash
-./tests/demo_showcase.sh
+python3 tools/add_training_simple.py data/new_prescription.json
+```
+
+**Interactive steps:**
+1. Tool loads your OCR JSON
+2. You provide correct extracted data
+3. Saves to `data/training/sample_prescriptions.jsonl`
+4. AI learns from it automatically
+
+### Run Tests
+
+```bash
+# Test with real OCR data
+python3 tests/test_real_ocr_data.py
+
+# Quick API test
+python3 tests/test_simple.py
 ```
 
 ---
 
-## 📚 Documentation (Read These!)
+## Project Structure
 
-### **`docs/QUICK_REFERENCE.md`**
-- How to add training examples
-- How to see corrections
-- Quick command reference
-
-### **`docs/TESTING_GUIDE.md`**
-- Complete setup instructions
-- Testing procedures  
-- Troubleshooting
-
-### **`docs/DAILY_PROGRESS_SHOWCASE.md`**
-- Project progress tracking
-- Feature demonstrations
-
----
-
-## 📊 Reports (Auto-Generated)
-
-The `reports/` folder contains:
-- `correction_report_*.json` - Detailed correction analysis
-- `test_result*.json` - Test outputs
-
-**Note:** This folder is gitignored. Reports are temporary and regenerated.
-
----
-
-## 🔧 Application Code
-
-### **`app/`** - Core Service
 ```
-app/
-├── main.py                    # FastAPI service
-├── core/
-│   ├── generation.py          # LLaMA generation logic
-│   └── model_loader.py        # Ollama connection
-├── features/
-│   └── prescription/
-│       ├── enhancer.py        # Main enhancement logic
-│       └── validator.py       # Validation rules
-└── safety/
-    ├── language.py            # Language detection
-    └── medical.py             # Medical safety checks
-```
-
-### **`prompts/`** - AI Instructions
-```
-prompts/
-└── medical_system_prompt.py   # System prompt for LLaMA
-```
-
-### **`data/`** - Data Files
-```
-data/
-├── training/
-│   └── sample_prescriptions.jsonl  # Training examples (editable!)
-├── labeled/                    # Labeled data (if any)
-└── raw/                        # Raw OCR outputs
+ai-llm-service/
+├── tools/                        # User scripts
+│   ├── add_training_simple.py    # Add training examples
+│   └── process_with_corrections.py # Process OCR files
+├── tests/                        # Test scripts
+│   ├── test_real_ocr_data.py     # Test with real data
+│   └── test_simple.py            # Quick API test
+├── app/                          # Core application
+│   ├── main.py                   # FastAPI server
+│   ├── core/                     # AI generation & model loading
+│   ├── features/prescription/    # Prescription enhancer & validator
+│   └── safety/                   # Safety checks
+├── prompts/                      # AI system prompts
+│   └── medical_system_prompt.py  # Instructions for LLaMA
+├── data/                         # Data files
+│   └── training/sample_prescriptions.jsonl  # Training examples
+├── reports/                      # Generated outputs (gitignored)
+└── requirements.txt              # Python dependencies
 ```
 
 ---
 
-## 🧹 Cleanup Complete!
+## Common Tasks
 
-### **Files Moved:**
-- ✅ Tools → `tools/`
-- ✅ Tests → `tests/`
-- ✅ Docs → `docs/`
-- ✅ Reports → `reports/`
+### Daily Workflow
 
-### **Files Removed:**
-- 🗑️ `add_training_example.py` (old complex version)
-- 🗑️ `cleanup_and_reorganize.sh` (cleanup script itself)
-- 🗑️ `reorganize.py` (cleanup script)
+```bash
+# 1. Start working
+cd /Users/macbook/CADT/DasTern/ai-llm-service
+source venv/bin/activate
+export OLLAMA_HOST=http://localhost:11434
+
+# 2. Process prescriptions
+python3 tools/process_with_corrections.py data/prescription1.json
+python3 tools/process_with_corrections.py data/prescription2.json
+
+# 3. Check reports
+ls -lh reports/
+cat reports/correction_report_*.json | jq
+```
+
+### Add New Hospital Format
+
+```bash
+# When you get OCR from a new hospital
+python3 tools/add_training_simple.py data/new_hospital_ocr.json
+
+# Follow prompts to enter correct data
+# AI will learn this format
+```
+
+### Update AI Behavior
+
+Edit `prompts/medical_system_prompt.py`:
+- Add new medication name patterns
+- Add new OCR error corrections
+- Update extraction rules
+
+### View Generated Reports
+
+```bash
+# List all reports
+ls -lh reports/
+
+# View specific report (with jq for pretty formatting)
+cat reports/correction_report_20260128_204805.json | jq
+
+# Or without jq
+cat reports/correction_report_20260128_204805.json
+```
 
 ---
 
-## 📝 Common Tasks
+## Troubleshooting
 
-### **Add More Training Examples**
+**Ollama not responding:**
+```bash
+# Check if Ollama is running
+curl http://localhost:11434/api/tags
+
+# If not, start it
+ollama serve
+```
+
+**Model not found:**
+```bash
+# List installed models
+ollama list
+
+# Pull LLaMA if missing
+ollama pull llama3.1:8b
+```
+
+**Import errors:**
+```bash
+# Make sure virtual environment is activated
+source venv/bin/activate
+
+# Reinstall dependencies if needed
+pip install -r requirements.txt
+```
+
+**Wrong Python version:**
+```bash
+# Check Python version (should be 3.8+)
+python3 --version
+
+# Use python3 explicitly
+python3 tools/process_with_corrections.py data/file.json
+```
+
+---
+
+## Training Examples
+
+Training data location: `data/training/sample_prescriptions.jsonl`
+
+Current examples:
+1. Khmer prescription (Calmette Hospital)
+2. Mixed language prescription
+3. English prescription
+4. Messy OCR (Khmer-Soviet Hospital) with corrections
+
+Add more using `tools/add_training_simple.py`
+
+---
+
+## Docker Deployment
+
+```bash
+# Build image
+docker build -t ai-llm-service .
+
+# Run container
+docker run -p 8000:8000 \
+  -e OLLAMA_HOST=http://host.docker.internal:11434 \
+  ai-llm-service
+```
+
+---
+
+## Tips
+
+- **Environment variables:** Always set `OLLAMA_HOST` before running scripts
+- **Virtual environment:** Always activate with `source venv/bin/activate`
+- **Training:** Start with 3-5 examples, add more as needed
+- **Testing:** Use `test_real_ocr_data.py` to verify improvements
+- **Reports:** Check `reports/` folder for detailed correction analysis
 ```bash
 # From your OCR JSON
 python3 tools/add_training_simple.py data/new_prescription.json
