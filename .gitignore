@@ -6,7 +6,7 @@
 .venv/
 venv/
 env/
-.vscode/
+*.venv/
 paddle-ocr-service/venv_ocr/
 paddle-ocr-service/venv_ocr_broken_3.3.3/
 
