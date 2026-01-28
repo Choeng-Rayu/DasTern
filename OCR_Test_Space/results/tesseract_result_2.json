@@ -1,0 +1,147 @@
+{
+  "success": true,
+  "page": 1,
+  "raw": [
+    {
+      "text": "ParscotamolB00mg",
+      "confidence": 49,
+      "bbox": {
+        "x": 51,
+        "y": 32,
+        "w": 89,
+        "h": 10
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 1,
+      "word": 1
+    },
+    {
+      "text": "Tako",
+      "confidence": 60,
+      "bbox": {
+        "x": 50,
+        "y": 60,
+        "w": 21,
+        "h": 30
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 2,
+      "word": 1
+    },
+    {
+      "text": "2ibotsdeiy",
+      "confidence": 6,
+      "bbox": {
+        "x": 75,
+        "y": 72,
+        "w": 62,
+        "h": 10
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 2,
+      "word": 2
+    },
+    {
+      "text": "Morning",
+      "confidence": 73,
+      "bbox": {
+        "x": 51,
+        "y": 112,
+        "w": 39,
+        "h": 10
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 3,
+      "word": 1
+    },
+    {
+      "text": "and",
+      "confidence": 73,
+      "bbox": {
+        "x": 94,
+        "y": 112,
+        "w": 16,
+        "h": 8
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 3,
+      "word": 2
+    },
+    {
+      "text": "Evening",
+      "confidence": 67,
+      "bbox": {
+        "x": 114,
+        "y": 112,
+        "w": 38,
+        "h": 10
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 3,
+      "word": 3
+    },
+    {
+      "text": "Duration",
+      "confidence": 59,
+      "bbox": {
+        "x": 51,
+        "y": 152,
+        "w": 39,
+        "h": 8
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 4,
+      "word": 1
+    },
+    {
+      "text": "5",
+      "confidence": 49,
+      "bbox": {
+        "x": 95,
+        "y": 152,
+        "w": 5,
+        "h": 8
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 4,
+      "word": 2
+    },
+    {
+      "text": "days",
+      "confidence": 49,
+      "bbox": {
+        "x": 103,
+        "y": 152,
+        "w": 20,
+        "h": 10
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 4,
+      "word": 3
+    }
+  ],
+  "stats": {
+    "total_words": 9,
+    "avg_confidence": 53.89,
+    "min_confidence": 6,
+    "max_confidence": 73,
+    "total_blocks": 1,
+    "total_lines": 4,
+    "image_width": 600,
+    "image_height": 200
+  },
+  "languages_used": "khm+eng+fra",
+  "error": null,
+  "source_file": "test_prescription_1.png",
+  "timestamp": "2026-01-28T12:44:58.219113",
+  "test_number": 2
+}
