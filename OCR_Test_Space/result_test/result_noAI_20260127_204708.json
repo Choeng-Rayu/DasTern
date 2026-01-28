@@ -1,0 +1,29 @@
+{
+  "timestamp": "20260127_204708",
+  "service_url": "http://localhost:8001",
+  "endpoint": "/ocr/simple",
+  "description": "Raw PaddleOCR without AI enhancement",
+  "images": [
+    {
+      "filename": "image.png",
+      "filepath": "/home/rayu/DasTern/OCR_Test_Space/Images_for_test/image.png",
+      "status": "failed",
+      "status_code": 500,
+      "error": "{\"detail\":\"OCR processing failed: (Unimplemented) ConvertPirAttribute2RuntimeAttribute not support [pir::ArrayAttribute<pir::DoubleAttribute>]  (at /paddle/paddle/fluid/framework/new_executor/instruction/onednn/onednn_instruction.cc:116)\\n\"}"
+    },
+    {
+      "filename": "image1.png",
+      "filepath": "/home/rayu/DasTern/OCR_Test_Space/Images_for_test/image1.png",
+      "status": "failed",
+      "status_code": 500,
+      "error": "{\"detail\":\"OCR processing failed: (Unimplemented) ConvertPirAttribute2RuntimeAttribute not support [pir::ArrayAttribute<pir::DoubleAttribute>]  (at /paddle/paddle/fluid/framework/new_executor/instruction/onednn/onednn_instruction.cc:116)\\n\"}"
+    },
+    {
+      "filename": "image2.png",
+      "filepath": "/home/rayu/DasTern/OCR_Test_Space/Images_for_test/image2.png",
+      "status": "failed",
+      "status_code": 500,
+      "error": "{\"detail\":\"OCR processing failed: (Unimplemented) ConvertPirAttribute2RuntimeAttribute not support [pir::ArrayAttribute<pir::DoubleAttribute>]  (at /paddle/paddle/fluid/framework/new_executor/instruction/onednn/onednn_instruction.cc:116)\\n\"}"
+    }
+  ]
+}

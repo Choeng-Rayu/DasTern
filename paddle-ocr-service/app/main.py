@@ -20,7 +20,7 @@ from .confidence import calculate_confidence, get_low_confidence_blocks
 from .ocr.paddle_engine import extract_text_blocks
 
 # AI LLM Service URL
-AI_LLM_SERVICE_URL = os.getenv("AI_LLM_SERVICE_URL", "http://ai-llm-service:8001")
+AI_LLM_SERVICE_URL = os.getenv("AI_LLM_SERVICE_URL", "http://localhost:8002")
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

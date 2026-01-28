@@ -1,0 +1,53 @@
+{
+  "test_metadata": {
+    "timestamp": "20260128_000654",
+    "test_type": "comprehensive_ocr_ai_enhancement",
+    "services": {
+      "ocr_service": "http://localhost:8001",
+      "ai_service": "http://localhost:8002",
+      "ai_model": "llama3.1:8b",
+      "ocr_engine": "tesseract_fallback"
+    }
+  },
+  "results": [
+    {
+      "image": "image.png",
+      "filename": "comprehensive_image_20260128_000645.json",
+      "ocr_blocks": 71,
+      "medications_found": 0,
+      "ai_enhanced": false,
+      "has_summary": false,
+      "confidence": 0.7977464788732395,
+      "primary_language": "kh"
+    },
+    {
+      "image": "image1.png",
+      "filename": "comprehensive_image1_20260128_000649.json",
+      "ocr_blocks": 72,
+      "medications_found": 0,
+      "ai_enhanced": false,
+      "has_summary": false,
+      "confidence": 0.6340277777777776,
+      "primary_language": "en"
+    },
+    {
+      "image": "image2.png",
+      "filename": "comprehensive_image2_20260128_000654.json",
+      "ocr_blocks": 88,
+      "medications_found": 0,
+      "ai_enhanced": false,
+      "has_summary": false,
+      "confidence": 0.7587500000000001,
+      "primary_language": "kh"
+    }
+  ],
+  "statistics": {
+    "total_images": 3,
+    "successful_tests": 3,
+    "ai_enhanced_count": 0,
+    "with_ai_summary": 0,
+    "total_ocr_blocks": 231,
+    "total_medications_found": 0,
+    "average_confidence": 0.7301747522170058
+  }
+}

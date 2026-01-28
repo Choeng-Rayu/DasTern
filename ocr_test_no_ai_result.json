@@ -1,0 +1,996 @@
+{
+  "endpoint": "/ocr/simple",
+  "image": "/home/rayu/DasTern/OCR_Test_Space/Images_for_test/image2.png",
+  "status": "success",
+  "ai_enhanced": false,
+  "processing_time": "~10 seconds",
+  "total_blocks": 88,
+  "extracted_data": {
+    "hospital": "Khmer-Soviet Friendship Hospital",
+    "patient_code": "HAKF1354164",
+    "patient_name": "ង៉ាំ ដានី",
+    "age": "19",
+    "gender": "ស្រី",
+    "payment_type": "មូលនិធិសមធម៌",
+    "diagnosis": [
+      "Chronic Cystitis",
+      "Encour ménorhée"
+    ],
+    "department": "ពិគ្រោះជំងឺក្រៅ",
+    "room": "5",
+    "medication": "Butylscopolamine",
+    "date": "22/06/2025",
+    "time": "14:47",
+    "doctor": "ហឹង គឹមអ៊ាង"
+  },
+  "blocks": [
+    {
+      "text": "រៈ",
+      "box": {
+        "x1": 673,
+        "y1": 47,
+        "x2": 678,
+        "y2": 59
+      },
+      "confidence": 0.37,
+      "language": "kh"
+    },
+    {
+      "text": "ត",
+      "box": {
+        "x1": 59,
+        "y1": 69,
+        "x2": 126,
+        "y2": 142
+      },
+      "confidence": 0.41,
+      "language": "kh"
+    },
+    {
+      "text": "oie",
+      "box": {
+        "x1": 149,
+        "y1": 93,
+        "x2": 281,
+        "y2": 114
+      },
+      "confidence": 0.43,
+      "language": "en"
+    },
+    {
+      "text": "រ",
+      "box": {
+        "x1": 591,
+        "y1": 33,
+        "x2": 645,
+        "y2": 108
+      },
+      "confidence": 0.55,
+      "language": "kh"
+    },
+    {
+      "text": "ea",
+      "box": {
+        "x1": 637,
+        "y1": 68,
+        "x2": 659,
+        "y2": 106
+      },
+      "confidence": 0.39,
+      "language": "en"
+    },
+    {
+      "text": "F",
+      "box": {
+        "x1": 660,
+        "y1": 47,
+        "x2": 703,
+        "y2": 120
+      },
+      "confidence": 0.67,
+      "language": "en"
+    },
+    {
+      "text": "my",
+      "box": {
+        "x1": 710,
+        "y1": 68,
+        "x2": 766,
+        "y2": 94
+      },
+      "confidence": 0.45,
+      "language": "en"
+    },
+    {
+      "text": "FD",
+      "box": {
+        "x1": 783,
+        "y1": 69,
+        "x2": 808,
+        "y2": 108
+      },
+      "confidence": 0.59,
+      "language": "en"
+    },
+    {
+      "text": "Khmer-Soviet",
+      "box": {
+        "x1": 116,
+        "y1": 121,
+        "x2": 182,
+        "y2": 130
+      },
+      "confidence": 0.91,
+      "language": "en"
+    },
+    {
+      "text": "Friendship",
+      "box": {
+        "x1": 188,
+        "y1": 119,
+        "x2": 238,
+        "y2": 129
+      },
+      "confidence": 0.66,
+      "language": "en"
+    },
+    {
+      "text": "Hospital",
+      "box": {
+        "x1": 243,
+        "y1": 118,
+        "x2": 282,
+        "y2": 128
+      },
+      "confidence": 0.94,
+      "language": "en"
+    },
+    {
+      "text": "Ê",
+      "box": {
+        "x1": 768,
+        "y1": 102,
+        "x2": 789,
+        "y2": 137
+      },
+      "confidence": 0.78,
+      "language": "unknown"
+    },
+    {
+      "text": "លេខកូដ:",
+      "box": {
+        "x1": 53,
+        "y1": 164,
+        "x2": 121,
+        "y2": 187
+      },
+      "confidence": 0.93,
+      "language": "kh"
+    },
+    {
+      "text": "HAKF1354164",
+      "box": {
+        "x1": 130,
+        "y1": 163,
+        "x2": 252,
+        "y2": 180
+      },
+      "confidence": 0.91,
+      "language": "en"
+    },
+    {
+      "text": "ឈ្មោះអ្នកជំងឺឺឺ:",
+      "box": {
+        "x1": 369,
+        "y1": 150,
+        "x2": 465,
+        "y2": 179
+      },
+      "confidence": 0.87,
+      "language": "kh"
+    },
+    {
+      "text": "ង៉ាំ",
+      "box": {
+        "x1": 478,
+        "y1": 152,
+        "x2": 494,
+        "y2": 177
+      },
+      "confidence": 0.83,
+      "language": "kh"
+    },
+    {
+      "text": "ដានី",
+      "box": {
+        "x1": 503,
+        "y1": 151,
+        "x2": 531,
+        "y2": 171
+      },
+      "confidence": 0.96,
+      "language": "kh"
+    },
+    {
+      "text": "អាយុ:",
+      "box": {
+        "x1": 628,
+        "y1": 154,
+        "x2": 668,
+        "y2": 173
+      },
+      "confidence": 0.96,
+      "language": "kh"
+    },
+    {
+      "text": "19",
+      "box": {
+        "x1": 677,
+        "y1": 153,
+        "x2": 690,
+        "y2": 167
+      },
+      "confidence": 0.96,
+      "language": "unknown"
+    },
+    {
+      "text": "ឆ្នាំ",
+      "box": {
+        "x1": 698,
+        "y1": 145,
+        "x2": 788,
+        "y2": 172
+      },
+      "confidence": 0.96,
+      "language": "kh"
+    },
+    {
+      "text": "ភេទ:",
+      "box": {
+        "x1": 732,
+        "y1": 141,
+        "x2": 759,
+        "y2": 177
+      },
+      "confidence": 0.95,
+      "language": "kh"
+    },
+    {
+      "text": "ស្រី",
+      "box": {
+        "x1": 768,
+        "y1": 141,
+        "x2": 791,
+        "y2": 177
+      },
+      "confidence": 0.95,
+      "language": "kh"
+    },
+    {
+      "text": "ប្រភេទបង់ប្រ៉ាក់",
+      "box": {
+        "x1": 54,
+        "y1": 204,
+        "x2": 169,
+        "y2": 233
+      },
+      "confidence": 0.92,
+      "language": "kh"
+    },
+    {
+      "text": ":",
+      "box": {
+        "x1": 177,
+        "y1": 222,
+        "x2": 179,
+        "y2": 224
+      },
+      "confidence": 0.92,
+      "language": "unknown"
+    },
+    {
+      "text": "មូលនិធិសមធម៌",
+      "box": {
+        "x1": 187,
+        "y1": 200,
+        "x2": 302,
+        "y2": 229
+      },
+      "confidence": 0.92,
+      "language": "kh"
+    },
+    {
+      "text": "/",
+      "box": {
+        "x1": 308,
+        "y1": 207,
+        "x2": 313,
+        "y2": 221
+      },
+      "confidence": 0.93,
+      "language": "unknown"
+    },
+    {
+      "text": "20051002-0409",
+      "box": {
+        "x1": 319,
+        "y1": 203,
+        "x2": 448,
+        "y2": 221
+      },
+      "confidence": 0.93,
+      "language": "unknown"
+    },
+    {
+      "text": "អ្នកជំងឺឺឺ",
+      "box": {
+        "x1": 780,
+        "y1": 175,
+        "x2": 850,
+        "y2": 226
+      },
+      "confidence": 0.61,
+      "language": "kh"
+    },
+    {
+      "text": "|",
+      "box": {
+        "x1": 855,
+        "y1": 183,
+        "x2": 864,
+        "y2": 222
+      },
+      "confidence": 0.86,
+      "language": "unknown"
+    },
+    {
+      "text": "រោគវិនិច្ឆ័យ",
+      "box": {
+        "x1": 54,
+        "y1": 251,
+        "x2": 137,
+        "y2": 278
+      },
+      "confidence": 0.93,
+      "language": "kh"
+    },
+    {
+      "text": ":",
+      "box": {
+        "x1": 147,
+        "y1": 241,
+        "x2": 156,
+        "y2": 282
+      },
+      "confidence": 0.93,
+      "language": "unknown"
+    },
+    {
+      "text": "1.",
+      "box": {
+        "x1": 162,
+        "y1": 256,
+        "x2": 169,
+        "y2": 270
+      },
+      "confidence": 0.93,
+      "language": "unknown"
+    },
+    {
+      "text": "Chronic",
+      "box": {
+        "x1": 179,
+        "y1": 255,
+        "x2": 242,
+        "y2": 270
+      },
+      "confidence": 0.91,
+      "language": "en"
+    },
+    {
+      "text": "Cystitis",
+      "box": {
+        "x1": 248,
+        "y1": 241,
+        "x2": 307,
+        "y2": 282
+      },
+      "confidence": 0.91,
+      "language": "en"
+    },
+    {
+      "text": "4",
+      "box": {
+        "x1": 833,
+        "y1": 243,
+        "x2": 835,
+        "y2": 245
+      },
+      "confidence": 0.65,
+      "language": "unknown"
+    },
+    {
+      "text": "2.",
+      "box": {
+        "x1": 156,
+        "y1": 287,
+        "x2": 169,
+        "y2": 301
+      },
+      "confidence": 0.93,
+      "language": "unknown"
+    },
+    {
+      "text": "Encour",
+      "box": {
+        "x1": 178,
+        "y1": 286,
+        "x2": 237,
+        "y2": 300
+      },
+      "confidence": 0.91,
+      "language": "en"
+    },
+    {
+      "text": "ménorhée",
+      "box": {
+        "x1": 243,
+        "y1": 283,
+        "x2": 326,
+        "y2": 298
+      },
+      "confidence": 0.91,
+      "language": "en"
+    },
+    {
+      "text": "ផ្នែក",
+      "box": {
+        "x1": 55,
+        "y1": 341,
+        "x2": 86,
+        "y2": 368
+      },
+      "confidence": 0.88,
+      "language": "kh"
+    },
+    {
+      "text": ":",
+      "box": {
+        "x1": 96,
+        "y1": 332,
+        "x2": 104,
+        "y2": 372
+      },
+      "confidence": 0.88,
+      "language": "unknown"
+    },
+    {
+      "text": "ពិគ្រោះជំងឺឺក្រៅ",
+      "box": {
+        "x1": 105,
+        "y1": 336,
+        "x2": 326,
+        "y2": 366
+      },
+      "confidence": 0.89,
+      "language": "kh"
+    },
+    {
+      "text": "-",
+      "box": {
+        "x1": 224,
+        "y1": 332,
+        "x2": 232,
+        "y2": 372
+      },
+      "confidence": 0.91,
+      "language": "unknown"
+    },
+    {
+      "text": "បន្ទប់លេខ",
+      "box": {
+        "x1": 241,
+        "y1": 336,
+        "x2": 309,
+        "y2": 366
+      },
+      "confidence": 0.95,
+      "language": "kh"
+    },
+    {
+      "text": "5",
+      "box": {
+        "x1": 316,
+        "y1": 332,
+        "x2": 329,
+        "y2": 372
+      },
+      "confidence": 0.97,
+      "language": "unknown"
+    },
+    {
+      "text": "វេជ្ជបញ្ជា",
+      "box": {
+        "x1": 425,
+        "y1": 372,
+        "x2": 517,
+        "y2": 406
+      },
+      "confidence": 0.96,
+      "language": "kh"
+    },
+    {
+      "text": "|",
+      "box": {
+        "x1": 925,
+        "y1": 359,
+        "x2": 928,
+        "y2": 394
+      },
+      "confidence": 0.96,
+      "language": "unknown"
+    },
+    {
+      "text": "ក",
+      "box": {
+        "x1": 516,
+        "y1": 437,
+        "x2": 527,
+        "y2": 450
+      },
+      "confidence": 0.85,
+      "language": "kh"
+    },
+    {
+      "text": "ល្ងាច",
+      "box": {
+        "x1": 709,
+        "y1": 423,
+        "x2": 745,
+        "y2": 456
+      },
+      "confidence": 0.95,
+      "language": "kh"
+    },
+    {
+      "text": "យប់់.",
+      "box": {
+        "x1": 822,
+        "y1": 413,
+        "x2": 857,
+        "y2": 453
+      },
+      "confidence": 0.56,
+      "language": "kh"
+    },
+    {
+      "text": "ញញ",
+      "box": {
+        "x1": 54,
+        "y1": 410,
+        "x2": 868,
+        "y2": 502
+      },
+      "confidence": 0.51,
+      "language": "kh"
+    },
+    {
+      "text": "2",
+      "box": {
+        "x1": 713,
+        "y1": 406,
+        "x2": 758,
+        "y2": 508
+      },
+      "confidence": 0.46,
+      "language": "unknown"
+    },
+    {
+      "text": "Le",
+      "box": {
+        "x1": 798,
+        "y1": 406,
+        "x2": 866,
+        "y2": 508
+      },
+      "confidence": 0.22,
+      "language": "en"
+    },
+    {
+      "text": "Butylscopolamine",
+      "box": {
+        "x1": 104,
+        "y1": 506,
+        "x2": 251,
+        "y2": 536
+      },
+      "confidence": 0.88,
+      "language": "en"
+    },
+    {
+      "text": "|",
+      "box": {
+        "x1": 806,
+        "y1": 466,
+        "x2": 818,
+        "y2": 536
+      },
+      "confidence": 0.7,
+      "language": "unknown"
+    },
+    {
+      "text": "-",
+      "box": {
+        "x1": 829,
+        "y1": 470,
+        "x2": 841,
+        "y2": 532
+      },
+      "confidence": 0.51,
+      "language": "unknown"
+    },
+    {
+      "text": "|",
+      "box": {
+        "x1": 852,
+        "y1": 466,
+        "x2": 871,
+        "y2": 536
+      },
+      "confidence": 0.87,
+      "language": "unknown"
+    },
+    {
+      "text": "{",
+      "box": {
+        "x1": 927,
+        "y1": 503,
+        "x2": 930,
+        "y2": 511
+      },
+      "confidence": 0.72,
+      "language": "unknown"
+    },
+    {
+      "text": "|",
+      "box": {
+        "x1": 381,
+        "y1": 455,
+        "x2": 403,
+        "y2": 579
+      },
+      "confidence": 0.53,
+      "language": "unknown"
+    },
+    {
+      "text": "D",
+      "box": {
+        "x1": 433,
+        "y1": 455,
+        "x2": 496,
+        "y2": 579
+      },
+      "confidence": 0.39,
+      "language": "en"
+    },
+    {
+      "text": "|",
+      "box": {
+        "x1": 650,
+        "y1": 455,
+        "x2": 672,
+        "y2": 579
+      },
+      "confidence": 0.44,
+      "language": "unknown"
+    },
+    {
+      "text": "Gaon",
+      "box": {
+        "x1": 56,
+        "y1": 528,
+        "x2": 228,
+        "y2": 624
+      },
+      "confidence": 0.29,
+      "language": "en"
+    },
+    {
+      "text": "យយ",
+      "box": {
+        "x1": 292,
+        "y1": 553,
+        "x2": 438,
+        "y2": 610
+      },
+      "confidence": 0.66,
+      "language": "kh"
+    },
+    {
+      "text": "||",
+      "box": {
+        "x1": 532,
+        "y1": 528,
+        "x2": 676,
+        "y2": 624
+      },
+      "confidence": 0.28,
+      "language": "unknown"
+    },
+    {
+      "text": "1",
+      "box": {
+        "x1": 512,
+        "y1": 613,
+        "x2": 517,
+        "y2": 626
+      },
+      "confidence": 0.96,
+      "language": "unknown"
+    },
+    {
+      "text": "<1",
+      "box": {
+        "x1": 58,
+        "y1": 583,
+        "x2": 871,
+        "y2": 696
+      },
+      "confidence": 0.47,
+      "language": "unknown"
+    },
+    {
+      "text": "1",
+      "box": {
+        "x1": 513,
+        "y1": 685,
+        "x2": 518,
+        "y2": 699
+      },
+      "confidence": 0.94,
+      "language": "unknown"
+    },
+    {
+      "text": "1",
+      "box": {
+        "x1": 618,
+        "y1": 680,
+        "x2": 624,
+        "y2": 694
+      },
+      "confidence": 0.95,
+      "language": "unknown"
+    },
+    {
+      "text": "(",
+      "box": {
+        "x1": 701,
+        "y1": 685,
+        "x2": 704,
+        "y2": 691
+      },
+      "confidence": 0.37,
+      "language": "unknown"
+    },
+    {
+      "text": "5:",
+      "box": {
+        "x1": 107,
+        "y1": 655,
+        "x2": 874,
+        "y2": 741
+      },
+      "confidence": 0.33,
+      "language": "unknown"
+    },
+    {
+      "text": "|",
+      "box": {
+        "x1": 59,
+        "y1": 696,
+        "x2": 97,
+        "y2": 773
+      },
+      "confidence": 0.55,
+      "language": "unknown"
+    },
+    {
+      "text": "deo",
+      "box": {
+        "x1": 107,
+        "y1": 736,
+        "x2": 164,
+        "y2": 753
+      },
+      "confidence": 0.21,
+      "language": "en"
+    },
+    {
+      "text": "គ្រ៉ា",
+      "box": {
+        "x1": 319,
+        "y1": 707,
+        "x2": 352,
+        "y2": 744
+      },
+      "confidence": 0.8,
+      "language": "kh"
+    },
+    {
+      "text": "|\"",
+      "box": {
+        "x1": 386,
+        "y1": 673,
+        "x2": 413,
+        "y2": 757
+      },
+      "confidence": 0.63,
+      "language": "unknown"
+    },
+    {
+      "text": "|",
+      "box": {
+        "x1": 433,
+        "y1": 677,
+        "x2": 440,
+        "y2": 753
+      },
+      "confidence": 0.82,
+      "language": "unknown"
+    },
+    {
+      "text": "គ្រ៉ាប់",
+      "box": {
+        "x1": 450,
+        "y1": 714,
+        "x2": 486,
+        "y2": 736
+      },
+      "confidence": 0.93,
+      "language": "kh"
+    },
+    {
+      "text": "ក្រោយប់ាយ",
+      "box": {
+        "x1": 498,
+        "y1": 709,
+        "x2": 583,
+        "y2": 733
+      },
+      "confidence": 0.92,
+      "language": "kh"
+    },
+    {
+      "text": "|",
+      "box": {
+        "x1": 582,
+        "y1": 701,
+        "x2": 593,
+        "y2": 740
+      },
+      "confidence": 0.93,
+      "language": "unknown"
+    },
+    {
+      "text": "គ្រ៉ាប",
+      "box": {
+        "x1": 605,
+        "y1": 706,
+        "x2": 641,
+        "y2": 727
+      },
+      "confidence": 0.96,
+      "language": "kh"
+    },
+    {
+      "text": "រ៉ាជធានីភ្នំពេញ,ថ្ងៃៃទី",
+      "box": {
+        "x1": 567,
+        "y1": 760,
+        "x2": 708,
+        "y2": 790
+      },
+      "confidence": 0.89,
+      "language": "kh"
+    },
+    {
+      "text": "22/06/2025",
+      "box": {
+        "x1": 715,
+        "y1": 760,
+        "x2": 805,
+        "y2": 780
+      },
+      "confidence": 0.88,
+      "language": "unknown"
+    },
+    {
+      "text": "14:47",
+      "box": {
+        "x1": 812,
+        "y1": 757,
+        "x2": 855,
+        "y2": 774
+      },
+      "confidence": 0.92,
+      "language": "unknown"
+    },
+    {
+      "text": "គ្រពេទ្យព្យាបាល",
+      "box": {
+        "x1": 655,
+        "y1": 803,
+        "x2": 772,
+        "y2": 830
+      },
+      "confidence": 0.91,
+      "language": "kh"
+    },
+    {
+      "text": "សូមយកវេជ្ជបញ្ជាមកវិញ",
+      "box": {
+        "x1": 83,
+        "y1": 925,
+        "x2": 261,
+        "y2": 970
+      },
+      "confidence": 0.67,
+      "language": "kh"
+    },
+    {
+      "text": "ពេលពិនិត្យលើកក្រោយ",
+      "box": {
+        "x1": 268,
+        "y1": 917,
+        "x2": 440,
+        "y2": 961
+      },
+      "confidence": 0.9,
+      "language": "kh"
+    },
+    {
+      "text": "វេជ្ជបណ្ឌិត",
+      "box": {
+        "x1": 630,
+        "y1": 913,
+        "x2": 704,
+        "y2": 941
+      },
+      "confidence": 0.95,
+      "language": "kh"
+    },
+    {
+      "text": "ហឹង",
+      "box": {
+        "x1": 710,
+        "y1": 909,
+        "x2": 740,
+        "y2": 930
+      },
+      "confidence": 0.93,
+      "language": "kh"
+    },
+    {
+      "text": "គឹមអ៊ាង",
+      "box": {
+        "x1": 747,
+        "y1": 907,
+        "x2": 801,
+        "y2": 928
+      },
+      "confidence": 0.9,
+      "language": "kh"
+    },
+    {
+      "text": "lé",
+      "box": {
+        "x1": 19,
+        "y1": 1001,
+        "x2": 23,
+        "y2": 1013
+      },
+      "confidence": 0.3,
+      "language": "en"
+    }
+  ]
+}
