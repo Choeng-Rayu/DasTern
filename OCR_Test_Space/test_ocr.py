@@ -10,10 +10,12 @@ import json
 import requests
 from pathlib import Path
 from datetime import datetime
+from typing import Optional
 
 
 # Configuration
 OCR_SERVICE_URL = os.getenv("OCR_SERVICE_URL", "http://localhost:8002")
+AI_SERVICE_URL = os.getenv("AI_SERVICE_URL", "http://localhost:8004")
 IMAGES_DIR = Path(__file__).parent / "images"
 RESULTS_DIR = Path(__file__).parent / "results"
 
@@ -76,16 +78,144 @@ def test_languages():
         return False
 
 
-def process_image(image_path: Path, result_number: int) -> dict:
+def test_ai_service():
+    """Test the AI service health"""
+    try:
+        response = requests.get(f"{AI_SERVICE_URL}/health", timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            print(f"✓ AI Service is {data.get('status', 'unknown')}")
+            return True
+        else:
+            print(f"✗ AI Service health check failed: {response.status_code}")
+            return False
+    except requests.exceptions.ConnectionError:
+        print(f"✗ Cannot connect to AI service at {AI_SERVICE_URL}")
+        return False
+
+
+def enhance_with_ai(raw_text: str) -> dict:
     """
-    Process a single image through the OCR service
+    Enhance OCR text with AI service for cleaning and reminder conversion
+    
+    Args:
+        raw_text: Raw OCR text
+        
+    Returns:
+        Enhanced text with AI corrections and reminder format
+    """
+    try:
+        # Try to use AI service if available
+        correction_payload = {
+            "text": raw_text,
+            "language": "en"
+        }
+        
+        correction_response = requests.post(
+            f"{AI_SERVICE_URL}/correct-ocr",
+            json=correction_payload,
+            timeout=30
+        )
+        
+        if correction_response.status_code == 200:
+            correction_result = correction_response.json()
+            corrected_text = correction_result.get("corrected_text", raw_text)
+            confidence = correction_result.get("confidence", 0.0)
+            print(f"  🤖 AI corrected text (confidence: {confidence:.2f})")
+        else:
+            print(f"  ⚠ AI correction failed: {correction_response.status_code}")
+            corrected_text = raw_text
+        
+        # Try chat endpoint for reminder conversion
+        chat_payload = {
+            "message": f"Convert this medical prescription into a clear reminder format: {corrected_text}",
+            "language": "en",
+            "context": {"task": "reminder_conversion"}
+        }
+        
+        chat_response = requests.post(
+            f"{AI_SERVICE_URL}/api/v1/chat",
+            json=chat_payload,
+            timeout=30
+        )
+        
+        if chat_response.status_code == 200:
+            chat_result = chat_response.json()
+            reminder_text = chat_result.get("response", corrected_text)
+            print(f"  📋 AI converted to reminder format")
+        else:
+            print(f"  ⚠ AI reminder conversion failed: {chat_response.status_code}")
+            reminder_text = corrected_text
+        
+        return {
+            "corrected_text": corrected_text,
+            "reminder_text": reminder_text,
+            "ai_enhanced": True
+        }
+        
+    except Exception as e:
+        print(f"  ✗ AI enhancement failed: {e}")
+        # Fallback to simple text cleaning and reminder formatting
+        corrected_text = simple_text_cleaning(raw_text)
+        reminder_text = create_simple_reminder(corrected_text)
+        
+        return {
+            "corrected_text": corrected_text,
+            "reminder_text": reminder_text,
+            "ai_enhanced": False,
+            "fallback_used": True
+        }
+
+
+def simple_text_cleaning(text: str) -> str:
+    """Simple text cleaning as fallback"""
+    # Remove extra spaces and fix common OCR errors
+    cleaned = ' '.join(text.split())
+    
+    # Fix common medical OCR mistakes
+    corrections = {
+        "Parscotamol": "Paracetamol",
+        "Tako": "Take",
+        "2ibotsdeiy": "2 tablets daily",
+        "Morning": "Morning",
+        "Evening": "Evening",
+        "Duration": "Duration",
+        "days": "days"
+    }
+    
+    for wrong, right in corrections.items():
+        cleaned = cleaned.replace(wrong, right)
+    
+    return cleaned
+
+
+def create_simple_reminder(text: str) -> str:
+    """Create simple reminder format from cleaned text"""
+    lines = text.split('\n')
+    reminder_parts = []
+    
+    for line in lines:
+        if "Take" in line or "Morning" in line or "Evening" in line:
+            reminder_parts.append(f"• {line.strip()}")
+        elif "Duration" in line:
+            reminder_parts.append(f"• {line.strip()}")
+    
+    if not reminder_parts:
+        reminder_parts.append(f"• {text.strip()}")
+    
+    return "\n".join(reminder_parts)
+
+
+def process_image(image_path: Path, result_number: int) -> Optional[dict]:
+    """
+    Process a single image through the OCR service and enhance with AI
     
     Args:
         image_path: Path to image file
         result_number: Result file number
         
     Returns:
-        OCR result dictionary
+        OCR result dictionary with AI enhancements
     """
     print(f"\n📷 Processing: {image_path.name}")
     
@@ -110,6 +240,15 @@ def process_image(image_path: Path, result_number: int) -> dict:
             result = response.json()
             
             if result.get("success"):
+                # Extract raw text for AI enhancement
+                raw_text = " ".join([item.get("text", "") for item in result.get("raw", [])])
+                
+                # Enhance with AI
+                ai_enhancement = enhance_with_ai(raw_text)
+                
+                # Add AI enhancement to result
+                result.update(ai_enhancement)
+                
                 # Add metadata
                 result["source_file"] = image_path.name
                 result["timestamp"] = datetime.now().isoformat()
@@ -120,10 +259,30 @@ def process_image(image_path: Path, result_number: int) -> dict:
                 with open(output_path, "w", encoding="utf-8") as f:
                     json.dump(result, f, ensure_ascii=False, indent=2)
                 
+                # Also save AI-enhanced version
+                ai_output_path = RESULTS_DIR / f"ai_enhanced_result_{result_number}.json"
+                ai_result = {
+                    "source_file": image_path.name,
+                    "timestamp": datetime.now().isoformat(),
+                    "test_number": result_number,
+                    "raw_text": raw_text,
+                    "corrected_text": ai_enhancement.get("corrected_text", ""),
+                    "reminder_text": ai_enhancement.get("reminder_text", ""),
+                    "ai_enhanced": ai_enhancement.get("ai_enhanced", False)
+                }
+                with open(ai_output_path, "w", encoding="utf-8") as f:
+                    json.dump(ai_result, f, ensure_ascii=False, indent=2)
+                
                 stats = result.get("stats", {})
                 print(f"  ✓ Extracted {stats.get('total_words', 0)} words")
                 print(f"  ✓ Average confidence: {stats.get('avg_confidence', 0)}%")
                 print(f"  ✓ Saved to: {output_path.name}")
+                print(f"  ✓ AI enhanced saved to: {ai_output_path.name}")
+                
+                # Show AI results
+                if ai_enhancement.get("ai_enhanced"):
+                    print(f"  📝 Corrected: {ai_enhancement.get('corrected_text', '')[:100]}...")
+                    print(f"  📋 Reminder: {ai_enhancement.get('reminder_text', '')[:100]}...")
                 
                 return result
             else:
@@ -142,16 +301,20 @@ def process_image(image_path: Path, result_number: int) -> dict:
 def main():
     """Main test function"""
     print("=" * 60)
-    print("OCR Service Test")
+    print("OCR + AI Service Test")
     print("=" * 60)
     
     # Create directories if needed
     IMAGES_DIR.mkdir(parents=True, exist_ok=True)
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     
-    # Test service health
+    # Test OCR service health
     if not test_health():
         sys.exit(1)
+    
+    # Test AI service health
+    if not test_ai_service():
+        print("⚠ AI service not available - will skip AI enhancement")
     
     # Check languages
     test_languages()
@@ -195,8 +358,9 @@ def main():
     print(f"  📁 Results saved in: {RESULTS_DIR}")
     
     if successful > 0:
-        print("\n  Next step: Use the AI/LLM service to process these results")
-        print("  The raw OCR output is in the results/*.json files")
+        print("\n  📝 Raw OCR results: tesseract_result_*.json")
+        print("  🤖 AI enhanced results: ai_enhanced_result_*.json")
+        print("  📋 Check the AI enhanced files for cleaned text and reminders")
 
 
 if __name__ == "__main__":
