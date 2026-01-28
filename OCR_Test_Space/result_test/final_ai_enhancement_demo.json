@@ -1,0 +1,66 @@
+{
+    "success": true,
+    "ai_enhanced": true,
+    "data": {
+        "success": true,
+        "blocks": [
+            {
+                "text": "Amoxicillin",
+                "confidence": 0.95
+            },
+            {
+                "text": "500mg",
+                "confidence": 0.92
+            },
+            {
+                "text": "Take 1 tablet",
+                "confidence": 0.88
+            },
+            {
+                "text": "3 times daily",
+                "confidence": 0.9
+            },
+            {
+                "text": "for 7 days",
+                "confidence": 0.89
+            }
+        ],
+        "overall_confidence": 0.91,
+        "structured_data": {
+            "medications": [
+                {
+                    "name": "Amoxicillin",
+                    "strength": "500mg",
+                    "dosage": "1 tablet",
+                    "frequency": "3 times daily",
+                    "duration": "7 days",
+                    "sequence": 1,
+                    "ai_description": null
+                }
+            ],
+            "patient_name": "សុខ ដានី",
+            "date": "2025-01-27"
+        },
+        "primary_language": "en",
+        "ai_enhanced": true,
+        "ai_error": null,
+        "prescription_summary": "Hello Sroch Danai! Your prescription is empty today, which means you don't need to pick up any new medications from the pharmacy at this time. Please let us know if you have any questions or concerns about your medication list."
+    },
+    "prescription_summary": "Hello Sroch Danai! Your prescription is empty today, which means you don't need to pick up any new medications from the pharmacy at this time. Please let us know if you have any questions or concerns about your medication list.",
+    "validation": {
+        "is_valid": true,
+        "warnings": [
+            "amoxicillin: Dosage schedule not specified"
+        ],
+        "errors": [],
+        "medication_validations": [
+            {
+                "medication": "Amoxicillin",
+                "warnings": [
+                    "amoxicillin: Dosage schedule not specified"
+                ],
+                "errors": []
+            }
+        ]
+    }
+}

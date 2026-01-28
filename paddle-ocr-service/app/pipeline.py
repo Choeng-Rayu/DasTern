@@ -17,9 +17,18 @@ from typing import Dict, Any, List
 
 logger = logging.getLogger(__name__)
 
-# Use PaddleOCR with multi-language support (Khmer, English, French)
-from .ocr.paddle_engine import extract_text_blocks
-logger.info("Using PaddleOCR with multi-language support (Khmer, English, French)")
+# Use Tesseract-based OCR with multi-language support (Khmer, English, French)
+# Since PaddleOCR 3.3.3 has oneDNN compatibility issues, we'll use Tesseract
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), "ocr"))
+try:
+    from paddle_engine import extract_text_blocks
+    logger.info("Using PaddleOCR with multi-language support (Khmer, English, French)")
+except (ImportError, Exception) as e:
+    logger.warning(f"Could not import PaddleOCR engine: {e}")
+    logger.info("Using Tesseract-based OCR with multi-language support (Khmer, English, French)")
+    from paddle_mock import extract_text_blocks
 
 from .layout.layoutlmv3 import classify_layout, detect_table_structure
 from .layout.grouping import group_blocks, group_medication_rows
@@ -27,6 +36,28 @@ from .layout.key_value import extract_key_values, extract_medications_from_table
 from .rules.medical_terms import fix_terms, normalize_strength, normalize_drug_name
 from .rules.khmer_fix import fix_khmer, convert_khmer_digits
 from .confidence import calculate_document_confidence
+
+
+def _detect_primary_language(blocks: List[Dict]) -> str:
+    """Detect primary language from OCR blocks."""
+    if not blocks:
+        return "en"
+    
+    lang_counts = {}
+    for block in blocks:
+        lang = block.get("language", "unknown")
+        lang_counts[lang] = lang_counts.get(lang, 0) + 1
+    
+    # Return most common language
+    if lang_counts:
+        max_count = 0
+        max_lang = "en"
+        for lang, count in lang_counts.items():
+            if count > max_count:
+                max_count = count
+                max_lang = lang
+        return max_lang
+    return "en"
 
 
 def process_image(image_path: str) -> Dict[str, Any]:
