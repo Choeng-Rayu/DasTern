@@ -1,187 +1,244 @@
 """
-Confidence Scoring Module
-
-Evaluates OCR result quality for:
-- User warnings
-- Manual review triggers
-- Quality metrics
+Confidence Scoring
+Responsibility: Calculate and expose uncertainty
+Medical system MUST show confidence levels
 """
 
-from typing import Dict, List, Tuple
-import re
+import logging
+from typing import List, Dict, Any, Tuple
+
+logger = logging.getLogger(__name__)
+
+# Confidence thresholds for medical documents
+THRESHOLDS = {
+    "high": 0.90,       # Very confident - safe to use
+    "medium": 0.75,     # Needs review but usable
+    "low": 0.60,        # Requires manual verification
+    "critical": 0.40,   # Likely incorrect - must review
+}
+
+# Block type importance weights (higher = more critical)
+BLOCK_WEIGHTS = {
+    "medication": 1.5,      # Most critical - drug names
+    "dosage": 1.4,          # Very important - dosage info
+    "patient_info": 1.2,    # Important - patient details
+    "table_row": 1.1,       # Important - medication table
+    "header": 0.9,          # Less critical
+    "body": 1.0,            # Default
+    "footer": 0.7,          # Least critical
+    "unknown": 1.0,
+}
 
 
-def calculate_text_similarity(text1: str, text2: str) -> float:
+def calculate_confidence(blocks: List[Dict[str, Any]]) -> float:
     """
-    Calculate similarity between two texts using character-level comparison.
-    Used to measure OCR correction impact.
-    """
-    if not text1 and not text2:
-        return 1.0
-    if not text1 or not text2:
-        return 0.0
-    
-    # Simple Levenshtein-based ratio
-    len1, len2 = len(text1), len(text2)
-    max_len = max(len1, len2)
-    
-    if max_len == 0:
-        return 1.0
-    
-    # Count matching characters (order-aware)
-    matches = 0
-    for i, c1 in enumerate(text1):
-        if i < len2 and text1[i] == text2[i]:
-            matches += 1
-    
-    return matches / max_len
+    Calculate overall confidence score from OCR blocks.
+    Uses weighted average based on block importance.
 
-
-def score_text_quality(text: str) -> float:
-    """
-    Score the quality of extracted text.
-    Returns value between 0.0 and 1.0.
-    """
-    if not text or not text.strip():
-        return 0.0
-    
-    score = 1.0
-    
-    # Penalize very short text
-    if len(text) < 10:
-        score *= 0.5
-    
-    # Penalize excessive special characters
-    special_ratio = len(re.findall(r'[^a-zA-Z0-9\s\u1780-\u17FF]', text)) / len(text)
-    if special_ratio > 0.3:
-        score *= 0.7
-    
-    # Penalize excessive numbers without letters
-    if re.match(r'^[\d\s]+$', text):
-        score *= 0.6
-    
-    # Penalize repeated characters
-    if re.search(r'(.)\1{4,}', text):
-        score *= 0.8
-    
-    # Bonus for recognizable patterns
-    if re.search(r'\d+\s*(mg|ml|mcg|g)\b', text, re.IGNORECASE):
-        score = min(1.0, score * 1.1)
-    
-    return round(score, 2)
-
-
-def score_ocr_confidence(raw: str, corrected: str, tesseract_conf: float = None) -> float:
-    """
-    Calculate overall confidence score for OCR result.
-    
     Args:
-        raw: Raw OCR output
-        corrected: Post-correction text
-        tesseract_conf: Optional Tesseract confidence score
-        
+        blocks: OCR blocks with individual confidence scores
+
     Returns:
-        Confidence score between 0.0 and 1.0
+        Weighted average confidence score (0.0 to 1.0)
     """
-    if not raw and not corrected:
+    if not blocks:
         return 0.0
-    
-    # Base score from text quality
-    quality_score = score_text_quality(corrected if corrected else raw)
-    
-    # Similarity between raw and corrected
-    # High similarity = OCR was good, low = lots of corrections needed
-    if raw and corrected:
-        similarity = calculate_text_similarity(raw, corrected)
-        # We want moderate corrections, not too much or too little
-        if similarity < 0.3:
-            # Too many corrections - unreliable
-            correction_factor = 0.5
-        elif similarity > 0.95:
-            # Almost no corrections - good OCR
-            correction_factor = 1.0
-        else:
-            # Moderate corrections - expected
-            correction_factor = 0.8
-    else:
-        correction_factor = 0.7
-    
-    # Incorporate Tesseract confidence if available
-    if tesseract_conf is not None:
-        tesseract_factor = tesseract_conf / 100.0
-    else:
-        tesseract_factor = 0.7  # Default assumption
-    
-    # Weighted combination
-    final_score = (quality_score * 0.4 + correction_factor * 0.3 + tesseract_factor * 0.3)
-    
-    return round(max(0.0, min(1.0, final_score)), 2)
 
+    total_weighted_conf = 0.0
+    total_weight = 0.0
 
-def score(text: str, original: str) -> float:
-    """
-    Simple confidence score based on text length difference.
-    Backward-compatible function.
-    """
-    if not text:
+    for block in blocks:
+        conf = block.get("confidence", 0.0)
+        block_type = block.get("block_type", "unknown")
+        weight = BLOCK_WEIGHTS.get(block_type, 1.0)
+
+        total_weighted_conf += conf * weight
+        total_weight += weight
+
+    if total_weight == 0:
         return 0.0
-    if not original:
-        return 0.6
-    
-    diff = abs(len(text) - len(original))
-    base_score = max(0.6, 1 - diff / max(len(original), 1))
-    
-    return round(base_score, 2)
+
+    return total_weighted_conf / total_weight
 
 
-def needs_manual_review(confidence: float, threshold: float = 0.6) -> bool:
-    """Check if result needs manual review based on confidence."""
-    return confidence < threshold
-
-
-def calculate_region_confidences(regions: List[Dict]) -> List[Dict]:
+def get_low_confidence_blocks(
+    blocks: List[Dict[str, Any]],
+    threshold: float = 0.7
+) -> List[Dict[str, Any]]:
     """
-    Calculate confidence scores for all regions.
+    Identify blocks with low confidence that need review.
+
+    Args:
+        blocks: OCR blocks
+        threshold: Minimum acceptable confidence
+
+    Returns:
+        List of blocks below threshold, sorted by confidence (lowest first)
     """
-    for region in regions:
-        raw = region.get("raw", "")
-        final = region.get("final", "")
-        tesseract_conf = region.get("tesseract_confidence")
-        
-        conf = score_ocr_confidence(raw, final, tesseract_conf)
-        region["confidence"] = conf
-        region["needs_review"] = needs_manual_review(conf)
-    
-    return regions
+    low_conf_blocks = []
+
+    for idx, block in enumerate(blocks):
+        conf = block.get("confidence", 0.0)
+        if conf < threshold:
+            low_conf_blocks.append({
+                "index": idx,
+                "text": block.get("text", ""),
+                "confidence": conf,
+                "block_type": block.get("block_type", "unknown"),
+                "box": block.get("box", {}),
+            })
+
+    # Sort by confidence (lowest first)
+    low_conf_blocks.sort(key=lambda x: x["confidence"])
+
+    return low_conf_blocks
 
 
-def calculate_document_confidence(regions: List[Dict]) -> Dict:
+def get_confidence_level(confidence: float) -> str:
     """
-    Calculate overall document confidence from region scores.
+    Convert confidence score to categorical level.
+
+    Args:
+        confidence: Confidence score (0.0 to 1.0)
+
+    Returns:
+        Confidence level string
     """
-    if not regions:
-        return {
-            "overall_confidence": 0.0,
-            "needs_review": True,
-            "review_regions": []
-        }
-    
-    confidences = [r.get("confidence", 0.5) for r in regions]
-    avg_conf = sum(confidences) / len(confidences)
-    min_conf = min(confidences)
-    
-    # Document confidence is weighted average with penalty for low regions
-    overall = avg_conf * 0.7 + min_conf * 0.3
-    
-    review_regions = [
-        i for i, r in enumerate(regions) 
-        if r.get("needs_review", False)
-    ]
-    
-    return {
-        "overall_confidence": round(overall, 2),
-        "region_confidences": confidences,
-        "needs_review": overall < 0.7 or len(review_regions) > 0,
-        "review_regions": review_regions
+    if confidence >= THRESHOLDS["high"]:
+        return "high"
+    elif confidence >= THRESHOLDS["medium"]:
+        return "medium"
+    elif confidence >= THRESHOLDS["low"]:
+        return "low"
+    else:
+        return "critical"
+
+
+def needs_manual_review(
+    blocks: List[Dict[str, Any]],
+    threshold: float = 0.7
+) -> Tuple[bool, List[str]]:
+    """
+    Determine if document needs manual review.
+
+    Args:
+        blocks: OCR blocks
+        threshold: Confidence threshold
+
+    Returns:
+        Tuple of (needs_review: bool, reasons: List[str])
+    """
+    reasons = []
+
+    # Calculate overall confidence
+    overall_conf = calculate_confidence(blocks)
+    if overall_conf < THRESHOLDS["medium"]:
+        reasons.append(f"Overall confidence too low: {overall_conf:.2%}")
+
+    # Check for low confidence blocks
+    low_conf = get_low_confidence_blocks(blocks, threshold)
+    if len(low_conf) > len(blocks) * 0.2:  # More than 20% low confidence
+        reasons.append(f"{len(low_conf)} blocks have low confidence")
+
+    # Check for critical medication/dosage blocks
+    for block in blocks:
+        block_type = block.get("block_type", "")
+        conf = block.get("confidence", 0.0)
+
+        if block_type in ("medication", "dosage") and conf < THRESHOLDS["medium"]:
+            reasons.append(f"Critical block '{block.get('text', '')[:30]}...' has low confidence: {conf:.2%}")
+
+    return len(reasons) > 0, reasons
+
+
+def calculate_document_confidence(
+    blocks: List[Dict[str, Any]],
+    medications: List[Dict[str, Any]] = None
+) -> Dict[str, Any]:
+    """
+    Calculate comprehensive document confidence metrics.
+
+    Args:
+        blocks: OCR blocks
+        medications: Extracted medications
+
+    Returns:
+        Comprehensive confidence report
+    """
+    report = {
+        "overall_confidence": 0.0,
+        "confidence_level": "critical",
+        "needs_review": True,
+        "review_reasons": [],
+        "block_metrics": {
+            "total": 0,
+            "high_confidence": 0,
+            "medium_confidence": 0,
+            "low_confidence": 0,
+            "critical_confidence": 0,
+        },
+        "medication_confidence": 0.0,
+        "low_confidence_blocks": [],
     }
 
+    if not blocks:
+        return report
+
+    # Calculate overall confidence
+    report["overall_confidence"] = calculate_confidence(blocks)
+    report["confidence_level"] = get_confidence_level(report["overall_confidence"])
+
+    # Block metrics
+    report["block_metrics"]["total"] = len(blocks)
+    for block in blocks:
+        conf = block.get("confidence", 0.0)
+        level = get_confidence_level(conf)
+        report["block_metrics"][f"{level}_confidence"] += 1
+
+    # Low confidence blocks
+    report["low_confidence_blocks"] = get_low_confidence_blocks(blocks)
+
+    # Check if review needed
+    needs_review, reasons = needs_manual_review(blocks)
+    report["needs_review"] = needs_review
+    report["review_reasons"] = reasons
+
+    # Medication-specific confidence
+    if medications:
+        med_confidences = [m.get("confidence", 0.0) for m in medications if m.get("confidence")]
+        if med_confidences:
+            report["medication_confidence"] = sum(med_confidences) / len(med_confidences)
+
+    return report
+
+
+def score_extraction_quality(
+    extracted: Dict[str, Any],
+    expected_fields: List[str] = None
+) -> float:
+    """
+    Score the quality of structured extraction.
+
+    Args:
+        extracted: Extracted structured data
+        expected_fields: List of expected field names
+
+    Returns:
+        Quality score (0.0 to 1.0)
+    """
+    if expected_fields is None:
+        expected_fields = [
+            "hospital_name", "patient_name", "date",
+            "medications", "doctor_name"
+        ]
+
+    if not extracted:
+        return 0.0
+
+    filled_count = 0
+    for field in expected_fields:
+        value = extracted.get(field)
+        if value and (not isinstance(value, list) or len(value) > 0):
+            filled_count += 1
+
+    return filled_count / len(expected_fields) if expected_fields else 0.0

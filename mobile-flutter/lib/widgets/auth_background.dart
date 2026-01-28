@@ -24,8 +24,25 @@ class AuthBackground extends StatelessWidget {
           ),
         Positioned.fill(
           child: Container(
-              color: const Color.fromARGB(255, 191, 238, 255)
-                  .withOpacity(overlayOpacity)),
+              color: const Color(0xFF41b6e6).withOpacity(overlayOpacity)),
+        ),
+        // Add a white-to-transparent gradient for a 'smoke' effect
+        Positioned.fill(
+          child: IgnorePointer(
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.white54,
+                    Colors.transparent,
+                  ],
+                  stops: [0.0, 0.7],
+                ),
+              ),
+            ),
+          ),
         ),
         if (logo != null)
           SafeArea(

@@ -19,16 +19,40 @@ class HospitalLogo extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        CircleAvatar(
-          radius: radius,
-          backgroundColor: Colors.blue.shade100,
-          child: Icon(Icons.local_hospital, color: Colors.blue, size: radius),
+        Container(
+          width: radius * 2,
+          height: radius * 2,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+            border: Border.all(
+              color: Colors.blue.shade300,
+              width: 3,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.15),
+                blurRadius: 6,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: ClipOval(
+              child: Image.asset(
+                'assets/images/doctor.png',
+                width: (radius - 6) * 2,
+                height: (radius - 6) * 2,
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
         ),
         SizedBox(width: spacing),
         Text(
           name,
-          style:
-              textStyle ??
+          style: textStyle ??
               const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,

@@ -66,15 +66,17 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            // Centered welcome message
+            // Centered doctor image and welcome message
             Center(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    const SizedBox(height: 24),
                     Text(
-                      AppLocalizations.of(context)?.welcomeTitle ?? 'Welcome',
+                      AppLocalizations.of(context)?.welcomeTitle ??
+                          'Welcome To DasTern',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontSize: 22,
@@ -89,7 +91,29 @@ class WelcomeScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 16),
+                    Container(
+                      width: 290,
+                      height: 370,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.08),
+                            blurRadius: 16,
+                            offset: Offset(0, 6),
+                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(40),
+                        child: Image.asset(
+                          'assets/images/welcome_doctor_image.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
                     Text(
                       AppLocalizations.of(context)?.welcomeMessage ?? '',
                       textAlign: TextAlign.center,
