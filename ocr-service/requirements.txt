@@ -1,30 +1,22 @@
-# FastAPI and Server
-fastapi>=0.104.0
-uvicorn[standard]>=0.24.0
-python-multipart>=0.0.6  # Required for file uploads
+# OCR Service Dependencies
+# Tesseract-based multilingual OCR
 
-# OCR Engine - PaddleOCR 3.x
-# Note: paddleocr 3.3.x requires paddlepaddle 3.2.0 (not 3.3.0) to avoid
-# "ConvertPirAttribute2RuntimeAttribute not support" error
-paddleocr>=3.3.0
-paddlepaddle==3.2.0  # CPU version, pinned for compatibility with paddleocr 3.3.x
+# FastAPI framework
+fastapi==0.109.2
+uvicorn[standard]==0.27.1
+python-multipart==0.0.9
 
-# Image Processing
-pillow>=10.0.0
-opencv-python>=4.8.0
-numpy>=1.24.0
+# Pydantic for data validation
+pydantic==2.6.1
+pydantic-settings==2.1.0
 
-# Layout Understanding (LayoutLMv3)
-transformers>=4.35.0
-torch>=2.0.0  # Use CPU version initially, optimize later
+# Image processing
+opencv-python-headless==4.9.0.80
+numpy==1.26.4
+Pillow==10.2.0
 
-# Data Validation
-pydantic>=2.0.0
+# Tesseract OCR
+pytesseract==0.3.10
 
-# Optional: Language Detection
-langdetect>=1.0.9
-
-# Testing (optional)
-pytest>=7.4.0
-pytest-asyncio>=0.21.0
-httpx>=0.25.0
+# HTTP client (for testing)
+httpx==0.26.0
