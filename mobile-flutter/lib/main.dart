@@ -1,18 +1,12 @@
-<<<<<<< HEAD
-=======
 import 'package:dastern_mobile/l10n/app_localizations.dart';
->>>>>>> b9785ac3fa91a819816d12ecd403d69590035bbd
 import 'package:flutter/material.dart';
-import 'screens/tab/main_navigation.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'screens/welcome_screen.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-<<<<<<< HEAD
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-=======
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -33,17 +27,24 @@ class _MyAppState extends State<MyApp> {
       _locale = locale;
     });
   }
->>>>>>> b9785ac3fa91a819816d12ecd403d69590035bbd
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-<<<<<<< HEAD
+      locale: _locale,
+      supportedLocales: const [Locale('en'), Locale('km')],
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       title: 'DasTern - Medical Reminder',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         primaryColor: const Color(0xFF2196F3),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
         appBarTheme: const AppBarTheme(
           centerTitle: true,
@@ -64,23 +65,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
-      home: const MainNavigation(),
-=======
-      locale: _locale,
-      supportedLocales: const [Locale('en'), Locale('km')],
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      title: 'DasTern',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
       home: WelcomeScreen(onLocaleChange: (locale) => setLocale(locale)),
->>>>>>> b9785ac3fa91a819816d12ecd403d69590035bbd
     );
   }
 }
