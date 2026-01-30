@@ -1,87 +1,25 @@
 {
   "test_info": {
-    "test_number": 2,
-    "test_name": "Image 2: Sok Heng Polyclinic (Asthénie)",
-    "timestamp": "2026-01-30T14:00:04.703729",
-    "ai_service_url": "http://localhost:8001"
+    "result_number": 2,
+    "image_name": "Sok Heng Polyclinic (Asthénie)",
+    "image_file": "image2.png",
+    "timestamp": "2026-01-30T20:28:59.699149",
+    "ocr_service": "http://localhost:8000",
+    "ai_service": "http://localhost:8001"
   },
-  "raw_ocr_input": {
-    "description": "Original OCR data extracted from prescription image",
-    "data": {
-      "text": "org org org org org org org org org\nSOK HENG POLYCLINIC\norg org org 235 org org org org org org org org org org org org org org org org\norg org org: 089/098 688 685\norg org org org\norg org org: org org org org org org: org org org org: 47 org org\norg org org org org: org org org org org org org org org org\norg org org org org org, org org org org org org org org org\norg org org org org org : 1534 - Asthénie\norg org org: 05/01/2026\norg org org org org org: P25000720\norg org org org org org org: 0891509\norg org | org org org org | org org | org org | org org | org org | org org org | org org org\n1. | Calcium amp Tablet | 1 amp | - | - | - | - | org org org org | 4 Amps\n2. | Multivitamine Tablet | 1 org org | - | 1 org org | - | - | org org org org | 10 org org\n3. | Amitriptyline 10mg | - | - | - | 1 org org | - | org org org org | 5 org org\n- TA:100/65 mmHg,\n- P:90 /min\n- T°: 36.7°C\norg org org org org org org\norg org org org org org org org org org org org org org org org org org org org org",
-      "confidence": 0.68,
-      "source_file": "image2.png",
-      "language": "khmer"
-    }
+  "step_1_ocr_output": {
+    "description": "Raw OCR output from OCR Service (Step 1)",
+    "success": false,
+    "total_elements": 0,
+    "stats": {},
+    "languages_used": [],
+    "raw_data": []
   },
-  "ai_enhanced_output": {
-    "description": "AI-processed structured reminder data",
-    "data": {
-      "medications": [
-        {
-          "name": "Asthénie",
-          "dosage": "",
-          "times": [
-            "night"
-          ],
-          "times_24h": [
-            "21:00"
-          ],
-          "repeat": "daily",
-          "duration_days": null,
-          "notes": "1534 - Asthénie\norg org org | 05/01/2026\norg org org org org: P25000720\norg org org org org org: 0891509"
-        },
-        {
-          "name": "Calcium amp Tablet",
-          "dosage": "",
-          "times": [
-            "morning"
-          ],
-          "times_24h": [
-            "08:00"
-          ],
-          "repeat": "daily",
-          "duration_days": null,
-          "notes": "org org org org | 4 Amps\n1. | Calcium amp Tablet | 1 amp | - | - | - | - | org org org org | 4 Amps"
-        },
-        {
-          "name": "Multivitamine Tablet",
-          "dosage": "",
-          "times": [
-            "noon"
-          ],
-          "times_24h": [
-            "12:00"
-          ],
-          "repeat": "daily",
-          "duration_days": null,
-          "notes": "org org | -\n2. | Multivitamine Tablet | 1 org org | - | 1 org org | - | - | org org org org | 10 org org"
-        },
-        {
-          "name": "Amitriptyline 10mg",
-          "dosage": "",
-          "times": [
-            "evening"
-          ],
-          "times_24h": [
-            "18:00"
-          ],
-          "repeat": "daily",
-          "duration_days": null,
-          "notes": "- TA:100/65 mmHg,\n- P:90 /min\n- T°: 36.7°C\norg org org org | -\n3. | Amitriptyline 10mg | - | - | - | 1 org org | - | org org org org | 5 org org"
-        }
-      ],
-      "success": true,
-      "error": null,
-      "metadata": {
-        "model": "llama3.2:3b",
-        "attempts": 1,
-        "raw_response": "{\n  \"medications\": [\n    {\n      \"name\": \"Asthénie\",\n      \"times\": [\"night\"],\n      \"times_24h\": [\"21:00\"],\n      \"repeat\": \"daily\",\n      \"duration_days\": null,\n      \"notes\": \"1534 - Asthénie\\norg org org | 05/01/2026\\norg org org org org: P25000720\\norg org org org org org: 0891509\"\n    },\n    {\n      \"name\": \"Calcium amp Tablet\",\n      \"times\": [\"morning\"],\n      \"times_24h\": [\"08:00\"],\n      \"repeat\": \"daily\",\n      \"duration_days\": null,\n      \"notes\": \"org org org org | 4 Amps\\n1. | Calc"
-      }
-    }
-  },
-  "ai_raw_response": {
-    "description": "Raw text response from AI before JSON parsing",
-    "text": "{\n  \"medications\": [\n    {\n      \"name\": \"Asthénie\",\n      \"times\": [\"night\"],\n      \"times_24h\": [\"21:00\"],\n      \"repeat\": \"daily\",\n      \"duration_days\": null,\n      \"notes\": \"1534 - Asthénie\\norg org org | 05/01/2026\\norg org org org org: P25000720\\norg org org org org org: 0891509\"\n    },\n    {\n      \"name\": \"Calcium amp Tablet\",\n      \"times\": [\"morning\"],\n      \"times_24h\": [\"08:00\"],\n      \"repeat\": \"daily\",\n      \"duration_days\": null,\n      \"notes\": \"org org org org | 4 Amps\\n1. | Calc"
+  "step_2_ai_output": {
+    "description": "AI-enhanced structured reminders from AI Service (Step 2)",
+    "success": false,
+    "medications": [],
+    "error": "No AI result",
+    "metadata": {}
   }
 }

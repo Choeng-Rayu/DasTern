@@ -26,39 +26,57 @@ def parse_ocr_data(
     threshold = min_confidence if min_confidence is not None else settings.OCR_CONFIDENCE_THRESHOLD
     
     results = []
+    
+    # Check if data has required keys
+    if not data or "text" not in data:
+        logger.warning("OCR data is empty or missing 'text' key")
+        return results
+    
+    # Check for required keys
+    required_keys = ["text", "conf", "left", "top", "width", "height", "block_num", "par_num", "line_num", "word_num"]
+    missing_keys = [k for k in required_keys if k not in data]
+    if missing_keys:
+        logger.error(f"OCR data missing required keys: {missing_keys}")
+        logger.error(f"Available keys: {list(data.keys())}")
+        return results
+    
     n = len(data["text"])
     
     for i in range(n):
-        text = data["text"][i].strip()
-        
-        # Skip empty text
-        if not text:
+        try:
+            text = data["text"][i].strip()
+            
+            # Skip empty text
+            if not text:
+                continue
+            
+            # Get confidence (Tesseract returns -1 for non-text elements)
+            conf = int(data["conf"][i])
+            
+            # Skip if below threshold (unless we include all)
+            if not include_low_confidence and conf < threshold and conf >= 0:
+                continue
+            
+            # Build result object
+            result = {
+                "text": text,
+                "confidence": conf,
+                "bbox": {
+                    "x": data["left"][i],
+                    "y": data["top"][i],
+                    "w": data["width"][i],
+                    "h": data["height"][i],
+                },
+                "block": data["block_num"][i],
+                "paragraph": data["par_num"][i],
+                "line": data["line_num"][i],
+                "word": data["word_num"][i],
+            }
+            
+            results.append(result)
+        except (IndexError, KeyError, ValueError) as e:
+            logger.warning(f"Error parsing OCR element {i}: {e}")
             continue
-        
-        # Get confidence (Tesseract returns -1 for non-text elements)
-        conf = int(data["conf"][i])
-        
-        # Skip if below threshold (unless we include all)
-        if not include_low_confidence and conf < threshold and conf >= 0:
-            continue
-        
-        # Build result object
-        result = {
-            "text": text,
-            "confidence": conf,
-            "bbox": {
-                "x": data["left"][i],
-                "y": data["top"][i],
-                "w": data["width"][i],
-                "h": data["height"][i],
-            },
-            "block": data["block_num"][i],
-            "paragraph": data["par_num"][i],
-            "line": data["line_num"][i],
-            "word": data["word_num"][i],
-        }
-        
-        results.append(result)
     
     logger.debug(f"Parsed {len(results)} text elements from {n} total elements")
     

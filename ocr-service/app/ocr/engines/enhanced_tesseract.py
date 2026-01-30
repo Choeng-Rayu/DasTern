@@ -2,6 +2,7 @@
 Enhanced Tesseract OCR Engine for Cambodian Prescriptions
 Optimized preprocessing for better mixed-language accuracy
 """
+import os
 import pytesseract
 import cv2
 import numpy as np
@@ -341,12 +342,10 @@ def run_enhanced_ocr(
         "--dpi 300",
         # Enable character whitelist for common prescription characters
         "-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzកខគឃងចឆជឈញដឋឌឍណតថទធនបផពមយរលវសហឡអឣឤឥឦឧឪឮឰឲឳ឴឵ិីឹឺុូួើឿ.,-+|/:()[]",
-        # Better word recognition
-        "--user-words"
     ]
     
-    # Add user words if available
-    if user_words:
+    # Add user words if available and file exists
+    if user_words and os.path.exists(user_words):
         config_parts.append(f"--user-words {user_words}")
     
     config = " ".join(config_parts)
