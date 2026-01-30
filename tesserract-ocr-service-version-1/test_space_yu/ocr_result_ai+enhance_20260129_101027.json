@@ -1,0 +1,23 @@
+{
+  "raw_ocr": {
+    "success": true,
+    "languages": [
+      "eng",
+      "khm",
+      "fra"
+    ],
+    "full_text": "a វ = —— ee — $e = យ ឃា” ne ee: J ណា a —_—— SO L— លាយ 7 រូ / គរ ------ = 4 = > ព្រះរាជាណាចក្រកម្ព្ភុជា: ជាត សាសនា ព្រះមហាក្សត្រ យ ម មន្ទីរសុខាភិបាលខេត្តកណ្តាល ep ee. = មន្ទ័រពេទ្យបង្អែកជ័យជំនះ | OTT —— មៈ ផ្នែកទឹកនោមផ្អែម 27 + ថ្ម ឈ្មោះអ្នកជំងឺ On AGA. ភេទ AL. ៥55) a រោគវិនិឆ្ឆ័យ DIABETE TYPE | ២7 ក \"see រ ព្រឹក ថ្ង ល្ងាច យប់ សរុប + ខន AI) flag a cis - Glibenclamide Smg. i 39 i le,, + |: BAM: Lisinopril tome 7 ប S| - Amitriptyline 25m at = at 7 ន ស ន. Pie ted sonnel +» ត----/ at oO រ - Insuline TO | Fs ន តអ ស: By Abs. see ae pe ts nl ee => ក យ ស ស យយ សប | មន្ទរព: ថ្ងៃទី ាំ ២៣ ! ~~. § ពទ្យបង្អែកជ័យជំន័ះ GS tele bod. | mee | គ្រូពទ្យព្យាបាល ខ៍មយកវេជ្ជបញ្ជាមកវិញនៅពេលពិនិត្យលើក៏ក្រោយ កី វេជ្ជបណ្ឌិតទិន សុគា\nយយ",
+    "overall_confidence": 0.64,
+    "text_blocks_count": 2
+  },
+  "ai_enhanced": {
+    "response": ", improve formatting, and return clean text: a វ = —— ee — $e = យ គា” ne ee: J ណា a —_—— SO L— លាយ 7 រូ / ខរ ------ = 4 = > ព្រះរាជាណា... Corrected:",
+    "language": "eng",
+    "confidence": 0.85,
+    "metadata": {
+      "model": "llama3.1:8b",
+      "service": "ollama-ai-service"
+    }
+  },
+  "processing_timestamp": "20260129_101027"
+}

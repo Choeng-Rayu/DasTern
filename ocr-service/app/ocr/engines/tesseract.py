@@ -1,6 +1,6 @@
 """
-Tesseract OCR Engine
-Extracts RAW text with bounding boxes and confidence scores
+Enhanced Tesseract OCR Engine for Cambodian Prescriptions
+Optimized for mixed-language prescription OCR with improved accuracy
 Languages: Khmer (khm) + English (eng) + French (fra)
 """
 import pytesseract
@@ -19,7 +19,7 @@ def run_ocr(
     user_words_path: Optional[str] = None
 ) -> Dict[str, List]:
     """
-    Run Tesseract OCR on an image
+    Run enhanced Tesseract OCR for Cambodian prescriptions
     
     Args:
         image: Preprocessed image (numpy array)
@@ -31,39 +31,12 @@ def run_ocr(
     Returns:
         Dictionary containing OCR data with text, confidence, and positions
     """
-    # Use settings defaults if not provided
-    lang = languages or settings.OCR_LANGUAGES
-    engine_mode = oem if oem is not None else settings.OCR_OEM
-    page_seg_mode = psm if psm is not None else settings.OCR_PSM
-    user_words = user_words_path or settings.USER_WORDS_PATH
+    # Import enhanced OCR function
+    from .enhanced_tesseract import run_enhanced_ocr
     
-    # Build config string
-    config_parts = [f"--oem {engine_mode}", f"--psm {page_seg_mode}"]
+    logger.info("Using enhanced OCR for prescription processing")
     
-    # Add user words if available
-    if user_words:
-        config_parts.append(f"--user-words {user_words}")
-    
-    config = " ".join(config_parts)
-    
-    logger.info(f"Running OCR with lang={lang}, config={config}")
-    
-    try:
-        # Get detailed OCR data with bounding boxes
-        data = pytesseract.image_to_data(
-            image,
-            lang=lang,
-            output_type=Output.DICT,
-            config=config
-        )
-        
-        logger.info(f"OCR completed. Found {len(data['text'])} elements")
-        
-        return data
-        
-    except Exception as e:
-        logger.error(f"OCR failed: {str(e)}")
-        raise
+    return run_enhanced_ocr(image, languages, oem, psm, user_words_path)
 
 
 def get_full_text(
