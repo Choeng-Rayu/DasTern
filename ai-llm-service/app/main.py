@@ -151,7 +151,7 @@ async def chat(request: ChatRequest):
         result = chat_with_assistant(
             message=request.message,
             language=request.language,
-            context=request.context
+            context=request.context or {}
         )
         
         return ChatResponse(**result)
@@ -159,6 +159,47 @@ async def chat(request: ChatRequest):
     except Exception as e:
         logger.error(f"Error in chat: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/v1/prescription/process")
+async def process_prescription(request: dict):
+    """
+    Process prescription OCR data for mobile app integration
+    - Enhances OCR accuracy
+    - Generates clean, structured JSON for reminder creation
+    - Extracts complete medical information for history
+    
+    Args:
+        request: Dict with 'raw_ocr_json' containing OCR data
+        
+    Returns:
+        Structured prescription data with medications and patient info
+    """
+    try:
+        from .core.ollama_client import OllamaClient
+        from .features.prescription.processor import PrescriptionProcessor
+        
+        raw_ocr_json = request.get("raw_ocr_json", {})
+        if not raw_ocr_json:
+            raise HTTPException(status_code=400, detail="No OCR data provided")
+        
+        # Initialize processor
+        ollama_client = OllamaClient()
+        processor = PrescriptionProcessor(ollama_client)
+        
+        # Process prescription
+        result = processor.process_prescription(raw_ocr_json)
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Error processing prescription: {str(e)}")
+        return {
+            "patient_info": {"name": "", "id": "", "age": None, "gender": "", "hospital_code": ""},
+            "medical_info": {"diagnosis": "", "doctor": "", "date": "", "department": ""},
+            "medications": [],
+            "success": False,
+            "error": str(e)
+        }
 
 @app.get("/health")
 async def health_check():

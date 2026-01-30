@@ -1,0 +1,58 @@
+{
+  "success": true,
+  "languages": [
+    "eng",
+    "khm",
+    "fra"
+  ],
+  "text_blocks": [
+    {
+      "raw_text": "a វ = —— ee — $e = យ\nឃា” ne ee : J ណា a —_——\nSO L— លាយ 7\nរូ\n/ គរ ------ = 4 =\n> ព្រះរាជាណាចក្រកម្ព្ភុជា :\nជាត សាសនា ព្រះមហាក្សត្រ យ ម\nមន្ទីរសុខាភិបាលខេត្តកណ្តាល ep ee.\n= មន្ទ័រពេទ្យបង្អែកជ័យជំនះ | OTT ——\nមៈ ផ្នែកទឹកនោមផ្អែម 27 + ថ្ម\nឈ្មោះអ្នកជំងឺ On AGA. ភេទ AL. ៥55)\na រោគវិនិឆ្ឆ័យ DIABETE TYPE | ២7 ក \"see រ\nព្រឹក ថ្ងៃ ល្ងាច យប់ សរុប\n+ ខន AI) flag a cis\n- Glibenclamide Smg. i 39 i le, , + | : BAM:\nLisinopril tome 7 បេ S|\n- Amitriptyline 25m at = at 7 ន ស\nន . Pie ted sonnel +» ត----/ at oO រ\n- Insuline TO | Fs ន តអ ស\n: By Abs. see ae pe ts nl ee => ក\nយ ស ស យយ សប\n| មន្ទរព : ថ្ងៃទី ាំ ២៣  ! ~~\n. § ពទ្យបង្អែកជ័យជំន័ះ GS tele bod. |\nmee | គ្រូពទ្យព្យាបាល\nខ៍មយកវេជ្ជបញ្ជាមកវិញនៅពេលពិនិត្យលើក៏ក្រោយ កី វេជ្ជបណ្ឌិតទិន សុគា",
+      "corrected_text": "a វ = —— ee — $e = យ\nឃា” ne ee : J ណា a —_——\nSO L— លាយ 7\nរូ\n/ គរ ------ = 4 =\n> ព្រះរាជាណាចក្រកម្ព្ភុជា :\nជាត សាសនា ព្រះមហាក្សត្រ យ ម\nមន្ទីរសុខាភិបាលខេត្តកណ្តាល ep ee.\n= មន្ទ័រពេទ្យបង្អែកជ័យជំនះ | OTT ——\nមៈ ផ្នែកទឹកនោមផ្អែម 27 + ថ្ម\nឈ្មោះអ្នកជំងឺ On AGA. ភេទ AL. ៥55)\na រោគវិនិឆ្ឆ័យ DIABETE TYPE | ២7 ក \"see រ\nព្រឹក ថ្ងៃ ល្ងាច យប់ សរុប\n+ ខន AI) flag a cis\n- Glibenclamide Smg. i 39 i le, , + | : BAM:\nLisinopril tome 7 បេ S|\n- Amitriptyline 25m at = at 7 ន ស\nន . Pie ted sonnel +» ត----/ at oO រ\n- Insuline TO | Fs ន តអ ស\n: By Abs. see ae pe ts nl ee => ក\nយ ស ស យយ សប\n| មន្ទរព : ថ្ងៃទី ាំ ២៣  ! ~~\n. § ពទ្យបង្អែកជ័យជំន័ះ GS tele bod. |\nmee | គ្រូពទ្យព្យាបាល\nខ៍មយកវេជ្ជបញ្ជាមកវិញនៅពេលពិនិត្យលើក៏ក្រោយ កី វេជ្ជបណ្ឌិតទិន សុគា",
+      "final_text": "a វ = —— ee — $e = យ ឃា” ne ee: J ណា a —_—— SO L— លាយ 7 រូ / គរ ------ = 4 = > ព្រះរាជាណាចក្រកម្ព្ភុជា: ជាត សាសនា ព្រះមហាក្សត្រ យ ម មន្ទីរសុខាភិបាលខេត្តកណ្តាល ep ee. = មន្ទ័រពេទ្យបង្អែកជ័យជំនះ | OTT —— មៈ ផ្នែកទឹកនោមផ្អែម 27 + ថ្ម ឈ្មោះអ្នកជំងឺ On AGA. ភេទ AL. ៥55) a រោគវិនិឆ្ឆ័យ DIABETE TYPE | ២7 ក \"see រ ព្រឹក ថ្ង ល្ងាច យប់ សរុប + ខន AI) flag a cis - Glibenclamide Smg. i 39 i le,, + |: BAM: Lisinopril tome 7 ប S| - Amitriptyline 25m at = at 7 ន ស ន. Pie ted sonnel +» ត----/ at oO រ - Insuline TO | Fs ន តអ ស: By Abs. see ae pe ts nl ee => ក យ ស ស យយ សប | មន្ទរព: ថ្ងៃទី ាំ ២៣ ! ~~. § ពទ្យបង្អែកជ័យជំន័ះ GS tele bod. | mee | គ្រូពទ្យព្យាបាល ខ៍មយកវេជ្ជបញ្ជាមកវិញនៅពេលពិនិត្យលើក៏ក្រោយ កី វេជ្ជបណ្ឌិតទិន សុគា",
+      "confidence": 0.62,
+      "region_type": "header",
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 3024,
+        "height": 4032
+      },
+      "detected_language": "khm",
+      "needs_review": false
+    },
+    {
+      "raw_text": "យយ",
+      "corrected_text": "យយ",
+      "final_text": "យយ",
+      "confidence": 0.66,
+      "region_type": "footer",
+      "bounding_box": {
+        "x": 1863,
+        "y": 3809,
+        "width": 358,
+        "height": 83
+      },
+      "detected_language": "khm",
+      "needs_review": false
+    }
+  ],
+  "full_text": "a វ = —— ee — $e = យ ឃា” ne ee: J ណា a —_—— SO L— លាយ 7 រូ / គរ ------ = 4 = > ព្រះរាជាណាចក្រកម្ព្ភុជា: ជាត សាសនា ព្រះមហាក្សត្រ យ ម មន្ទីរសុខាភិបាលខេត្តកណ្តាល ep ee. = មន្ទ័រពេទ្យបង្អែកជ័យជំនះ | OTT —— មៈ ផ្នែកទឹកនោមផ្អែម 27 + ថ្ម ឈ្មោះអ្នកជំងឺ On AGA. ភេទ AL. ៥55) a រោគវិនិឆ្ឆ័យ DIABETE TYPE | ២7 ក \"see រ ព្រឹក ថ្ង ល្ងាច យប់ សរុប + ខន AI) flag a cis - Glibenclamide Smg. i 39 i le,, + |: BAM: Lisinopril tome 7 ប S| - Amitriptyline 25m at = at 7 ន ស ន. Pie ted sonnel +» ត----/ at oO រ - Insuline TO | Fs ន តអ ស: By Abs. see ae pe ts nl ee => ក យ ស ស យយ សប | មន្ទរព: ថ្ងៃទី ាំ ២៣ ! ~~. § ពទ្យបង្អែកជ័យជំន័ះ GS tele bod. | mee | គ្រូពទ្យព្យាបាល ខ៍មយកវេជ្ជបញ្ជាមកវិញនៅពេលពិនិត្យលើក៏ក្រោយ កី វេជ្ជបណ្ឌិតទិន សុគា\nយយ",
+  "medications": [],
+  "overall_confidence": 0.64,
+  "needs_review": true,
+  "quality_metrics": {
+    "blur_score": 254.82,
+    "brightness": 141.84,
+    "resolution": {
+      "height": 4032,
+      "width": 3024
+    },
+    "contrast": 51.78,
+    "passed": true,
+    "message": "Image quality acceptable"
+  },
+  "processing_time_ms": 24862,
+  "error": null,
+  "timestamp": "2026-01-28T16:12:10.803875"
+}

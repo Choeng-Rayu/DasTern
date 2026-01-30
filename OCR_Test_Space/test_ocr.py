@@ -15,7 +15,7 @@ from typing import Optional
 
 # Configuration
 OCR_SERVICE_URL = os.getenv("OCR_SERVICE_URL", "http://localhost:8002")
-AI_SERVICE_URL = os.getenv("AI_SERVICE_URL", "http://localhost:8004")
+AI_SERVICE_URL = os.getenv("AI_SERVICE_URL", "http://localhost:8001")
 IMAGES_DIR = Path(__file__).parent / "images"
 RESULTS_DIR = Path(__file__).parent / "results"
 

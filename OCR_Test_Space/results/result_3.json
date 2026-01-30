@@ -1,0 +1,93 @@
+{
+  "test_info": {
+    "test_number": 3,
+    "test_name": "Image 3: Khmer-Soviet Hospital (Multiple diagnoses)",
+    "timestamp": "2026-01-30T14:02:01.597116",
+    "ai_service_url": "http://localhost:8001"
+  },
+  "raw_ocr_input": {
+    "description": "Original OCR data extracted from prescription image",
+    "data": {
+      "text": "org org org org org org org org org org org\nKhmer-Soviet Friendship Hospital\nH-EQIP\norg org org org : HAKF1354164 org org org org org org : org org org org org org: 19 org org org org: org org\norg org org org org org org org : org org org org org org org org / 20051002-0409 org org org\norg org org org org org org : 1. Chronic Cystitis\n2. Encour ménorhée\norg org org : org org org org org org org org org - org org org org org 5\norg org org org org\norg org | org org org org org | org org org | org org org | org org | (11-12) | org org | (08-10)\n(6-8) | org org | (05-06)\n1 | Butylscopolamine 10mg | 14 org org | | 1 | - | 1 | -\n2 | Multivitamine | 10 org org | | 1 | | | -\n3 | Esome 20mg | 7 org org org org | PO | 1 | - | - | -\norg org | org org org org org\n4 | Paracetamol 500mg | 15 org org | PO | 1 | 1 | 1 org org org org org org\norg org | org org org org org | org org |\norg org org org org org org,org org org 22/06/2025 14:47\norg org org org org org org\norg org org org org org org org org org org org org org org org org org org org org org org org org org org",
+      "confidence": 0.71,
+      "source_file": "image3.png",
+      "language": "khmer"
+    }
+  },
+  "ai_enhanced_output": {
+    "description": "AI-processed structured reminder data",
+    "data": {
+      "medications": [
+        {
+          "name": "Butylscopolamine",
+          "dosage": "",
+          "times": [
+            "evening",
+            "night"
+          ],
+          "times_24h": [
+            "18:00",
+            "21:00"
+          ],
+          "repeat": "daily",
+          "duration_days": null,
+          "notes": "ល្ងាច | យប់"
+        },
+        {
+          "name": "Multivitamine",
+          "dosage": "",
+          "times": [
+            "noon"
+          ],
+          "times_24h": [
+            "12:00"
+          ],
+          "repeat": "daily",
+          "duration_days": null,
+          "notes": "ថ្ងៃ | យប់"
+        },
+        {
+          "name": "Esomeprazole",
+          "dosage": "",
+          "times": [
+            "evening"
+          ],
+          "times_24h": [
+            "18:00"
+          ],
+          "repeat": "daily",
+          "duration_days": null,
+          "notes": "(05-06)"
+        },
+        {
+          "name": "Paracetamol",
+          "dosage": "",
+          "times": [
+            "morning",
+            "noon",
+            "evening"
+          ],
+          "times_24h": [
+            "08:00",
+            "12:00",
+            "18:00"
+          ],
+          "repeat": "daily",
+          "duration_days": null,
+          "notes": "ព្រឹក | ថ្ងៃ | ល្ងាច"
+        }
+      ],
+      "success": true,
+      "error": null,
+      "metadata": {
+        "model": "llama3.2:3b",
+        "attempts": 1,
+        "raw_response": "{\n  \"medications\": [\n    {\n      \"name\": \"Butylscopolamine\",\n      \"times\": [\"evening\", \"night\"],\n      \"times_24h\": [\"18:00\", \"21:00\"],\n      \"repeat\": \"daily\",\n      \"duration_days\": null,\n      \"notes\": \"ល្ងាច | យប់\"\n    },\n    {\n      \"name\": \"Multivitamine\",\n      \"times\": [\"noon\"],\n      \"times_24h\": [\"12:00\"],\n      \"repeat\": \"daily\",\n      \"duration_days\": null,\n      \"notes\": \"ថ្ងៃ | យប់\"\n    },\n    {\n      \"name\": \"Esomeprazole\",\n      \"times\": [\"evening\"],\n      \"times_24h\": [\"18:00\"]"
+      }
+    }
+  },
+  "ai_raw_response": {
+    "description": "Raw text response from AI before JSON parsing",
+    "text": "{\n  \"medications\": [\n    {\n      \"name\": \"Butylscopolamine\",\n      \"times\": [\"evening\", \"night\"],\n      \"times_24h\": [\"18:00\", \"21:00\"],\n      \"repeat\": \"daily\",\n      \"duration_days\": null,\n      \"notes\": \"ល្ងាច | យប់\"\n    },\n    {\n      \"name\": \"Multivitamine\",\n      \"times\": [\"noon\"],\n      \"times_24h\": [\"12:00\"],\n      \"repeat\": \"daily\",\n      \"duration_days\": null,\n      \"notes\": \"ថ្ងៃ | យប់\"\n    },\n    {\n      \"name\": \"Esomeprazole\",\n      \"times\": [\"evening\"],\n      \"times_24h\": [\"18:00\"]"
+  }
+}
