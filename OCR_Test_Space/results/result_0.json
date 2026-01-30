@@ -1,0 +1,24 @@
+{
+  "test_info": {
+    "test_number": 0,
+    "test_name": "Simple Test",
+    "timestamp": "2026-01-30T13:55:13.474510",
+    "ai_service_url": "http://localhost:8001"
+  },
+  "raw_ocr_input": {
+    "description": "Original OCR data extracted from prescription image",
+    "data": {
+      "text": "Butylscopolami 5 viên | ល្ងាច | យប់",
+      "confidence": 0.8,
+      "source_file": "simple_test.txt"
+    }
+  },
+  "ai_enhanced_output": {
+    "description": "AI-processed structured reminder data",
+    "data": {
+      "success": false,
+      "error": "Request timeout after 180 seconds",
+      "medications": []
+    }
+  }
+}

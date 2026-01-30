@@ -12,10 +12,10 @@
                     ┌─────────┴─────────┐
                     │                   │
             ┌───────▼────────┐  ┌──────▼────────┐
-            │  OCR Service   │  │  AI Service   │
-            │   (Python)     │  │    (MT5)      │
+            │  OCR Service   │  │  AI Service(ollama)   │
+            │   (Python)     │  │    (llama)      │
             └────────────────┘  └───────────────┘
-```
+```   
 
 ### 1.2 Service Responsibilities
 
@@ -25,7 +25,7 @@
 - Offline data viewing
 - Push notifications for reminders
 - Local data caching
-
+  
 #### Next.js Backend (Control Tower)
 - Authentication and authorization
 - Subscription management and validation
