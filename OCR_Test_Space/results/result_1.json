@@ -1,0 +1,137 @@
+{
+  "test_info": {
+    "test_number": 1,
+    "test_name": "Image 1: Khmer-Soviet Hospital (Chronic Cystitis)",
+    "timestamp": "2026-01-30T13:58:10.621158",
+    "ai_service_url": "http://localhost:8001"
+  },
+  "raw_ocr_input": {
+    "description": "Original OCR data extracted from prescription image",
+    "data": {
+      "prescription_id": "HAKF1354164",
+      "diagnosis": "Chronic Cystitis",
+      "date": "15/06/2025",
+      "medications": [
+        {
+          "row": 1,
+          "name": "Butylscopolamine 10mg",
+          "quantity": "14 គorg org",
+          "morning": "1",
+          "noon": "-",
+          "evening": "1",
+          "night": "-"
+        },
+        {
+          "row": 2,
+          "name": "Celcoxx 100mg",
+          "quantity": "14 org org org org",
+          "morning": "1",
+          "noon": "-",
+          "evening": "1",
+          "night": "-"
+        },
+        {
+          "row": 3,
+          "name": "Omeprazole 20mg",
+          "quantity": "14 org org",
+          "morning": "1",
+          "noon": "-",
+          "evening": "1",
+          "night": "-"
+        },
+        {
+          "row": 4,
+          "name": "Multivitamine",
+          "quantity": "21 org org",
+          "morning": "1",
+          "noon": "1",
+          "evening": "1",
+          "night": "-"
+        }
+      ],
+      "text": "Butylscopolamine morning 1 evening 1 | Celcoxx morning 1 evening 1 | Omeprazole morning evening | Multivitamine morning noon evening"
+    }
+  },
+  "ai_enhanced_output": {
+    "description": "AI-processed structured reminder data",
+    "data": {
+      "medications": [
+        {
+          "name": "Butylscopolamine",
+          "dosage": "",
+          "times": [
+            "morning",
+            "evening",
+            "night"
+          ],
+          "times_24h": [
+            "08:00",
+            "18:00",
+            "21:00"
+          ],
+          "repeat": "daily",
+          "duration_days": null,
+          "notes": "ព្រឹក | ល្ងាច | យប់"
+        },
+        {
+          "name": "Celcoxx",
+          "dosage": "",
+          "times": [
+            "morning",
+            "evening"
+          ],
+          "times_24h": [
+            "08:00",
+            "18:00"
+          ],
+          "repeat": "daily",
+          "duration_days": null,
+          "notes": "ព្រឹក | ល្ងាច"
+        },
+        {
+          "name": "Omeprazole",
+          "dosage": "",
+          "times": [
+            "morning",
+            "evening"
+          ],
+          "times_24h": [
+            "08:00",
+            "18:00"
+          ],
+          "repeat": "daily",
+          "duration_days": null,
+          "notes": "ព្រឹក | សោម"
+        },
+        {
+          "name": "Multivitamine",
+          "dosage": "",
+          "times": [
+            "morning",
+            "noon",
+            "evening"
+          ],
+          "times_24h": [
+            "08:00",
+            "12:00",
+            "18:00"
+          ],
+          "repeat": "daily",
+          "duration_days": null,
+          "notes": "ព្រឹក | ថ្ងៃ | ល្ងាច"
+        }
+      ],
+      "success": true,
+      "error": null,
+      "metadata": {
+        "model": "llama3.2:3b",
+        "attempts": 2,
+        "raw_response": "{\n  \"medications\": [\n    {\n      \"name\": \"Butylscopolamine\",\n      \"times\": [\"morning\", \"evening\", \"night\"],\n      \"times_24h\": [\"08:00\", \"18:00\", \"21:00\"],\n      \"repeat\": \"daily\",\n      \"duration_days\": null,\n      \"notes\": \"ព្រឹក | ល្ងាច | យប់\"\n    },\n    {\n      \"name\": \"Celcoxx\",\n      \"times\": [\"morning\", \"evening\"],\n      \"times_24h\": [\"08:00\", \"18:00\"],\n      \"repeat\": \"daily\",\n      \"duration_days\": null,\n      \"notes\": \"ព្រឹក | ល្ងាច\"\n    },\n    {\n      \"name\": \"Omeprazole\",\n      \"tim"
+      }
+    }
+  },
+  "ai_raw_response": {
+    "description": "Raw text response from AI before JSON parsing",
+    "text": "{\n  \"medications\": [\n    {\n      \"name\": \"Butylscopolamine\",\n      \"times\": [\"morning\", \"evening\", \"night\"],\n      \"times_24h\": [\"08:00\", \"18:00\", \"21:00\"],\n      \"repeat\": \"daily\",\n      \"duration_days\": null,\n      \"notes\": \"ព្រឹក | ល្ងាច | យប់\"\n    },\n    {\n      \"name\": \"Celcoxx\",\n      \"times\": [\"morning\", \"evening\"],\n      \"times_24h\": [\"08:00\", \"18:00\"],\n      \"repeat\": \"daily\",\n      \"duration_days\": null,\n      \"notes\": \"ព្រឹក | ល្ងាច\"\n    },\n    {\n      \"name\": \"Omeprazole\",\n      \"tim"
+  }
+}
