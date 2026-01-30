@@ -9,7 +9,7 @@ class UserHeader extends StatelessWidget {
     Key? key,
     required this.userName,
     required this.userRole,
-    this.height = 200.0,
+    this.height = 10,
   }) : super(key: key);
 
   @override
@@ -24,34 +24,38 @@ class UserHeader extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        child: Container(
-          padding: const EdgeInsets.all(16.0),
-          decoration: BoxDecoration(
-            // Dark overlay to make text readable
-            color: Colors.black.withOpacity(0.3),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                userName,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+        child: ListView(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                // Dark overlay to make text readable
+                color: Colors.black.withOpacity(0.3),
               ),
-              const SizedBox(height: 8),
-              Text(
-                userRole,
-                style: const TextStyle(
-                  fontSize: 18,
-                  color: Colors.white,
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    userName,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    userRole,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

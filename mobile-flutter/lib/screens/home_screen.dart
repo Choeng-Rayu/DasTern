@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dastern_mobile/widgets/background_homepage.dart';
+import 'package:dastern_mobile/widgets/user_header.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        elevation: 0,
+        elevation: 10,
         title: const Text(
           'Home',
           style: TextStyle(color: Colors.white),
@@ -29,157 +30,125 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: BackgroundHomepage(
-        child: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Welcome Card
-                Card(
-                  elevation: 2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Row(
+      body: Column(
+        children: [
+          // User Header with Background Image
+          const UserHeader(
+            userName: 'Dr. John Doe',
+            userRole: 'Medical Doctor',
+            height: 200.0,
+          ),
+
+          // Content Section with Background
+          Expanded(
+            child: BackgroundHomepage(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 24),
+
+                    // Today's Reminders Section
+                    const Text(
+                      'Today\'s Medication Reminders',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    _buildReminderCard(
+                      context,
+                      'Morning Medication',
+                      '08:00 AM',
+                      'Paracetamol 500mg',
+                      Icons.wb_sunny,
+                      Colors.orange,
+                      true,
+                    ),
+                    _buildReminderCard(
+                      context,
+                      'Afternoon Medication',
+                      '02:00 PM',
+                      'Vitamin C 1000mg',
+                      Icons.wb_cloudy,
+                      Colors.blue,
+                      false,
+                    ),
+                    _buildReminderCard(
+                      context,
+                      'Evening Medication',
+                      '07:00 PM',
+                      'Aspirin 100mg',
+                      Icons.nights_stay,
+                      Colors.purple,
+                      false,
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Quick Stats Section
+                    const Text(
+                      'Quick Stats',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
                       children: [
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundColor:
-                              Theme.of(context).primaryColor.withOpacity(0.1),
-                          child: Icon(
-                            Icons.person,
-                            size: 35,
-                            color: Theme.of(context).primaryColor,
+                        Expanded(
+                          child: _buildStatCard(
+                            context,
+                            '12',
+                            'Active Patients',
+                            Icons.people,
+                            Colors.blue,
                           ),
                         ),
-                        const SizedBox(width: 16),
-                        const Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Welcome back!',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                              SizedBox(height: 4),
-                              Text(
-                                'Dr. John Doe',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: _buildStatCard(
+                            context,
+                            '5',
+                            'Pending',
+                            Icons.pending_actions,
+                            Colors.orange,
                           ),
                         ),
                       ],
                     ),
-                  ),
-                ),
-                const SizedBox(height: 24),
-
-                // Today's Reminders Section
-                const Text(
-                  'Today\'s Medication Reminders',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                _buildReminderCard(
-                  context,
-                  'Morning Medication',
-                  '08:00 AM',
-                  'Paracetamol 500mg',
-                  Icons.wb_sunny,
-                  Colors.orange,
-                  true,
-                ),
-                _buildReminderCard(
-                  context,
-                  'Afternoon Medication',
-                  '02:00 PM',
-                  'Vitamin C 1000mg',
-                  Icons.wb_cloudy,
-                  Colors.blue,
-                  false,
-                ),
-                _buildReminderCard(
-                  context,
-                  'Evening Medication',
-                  '07:00 PM',
-                  'Aspirin 100mg',
-                  Icons.nights_stay,
-                  Colors.purple,
-                  false,
-                ),
-                const SizedBox(height: 24),
-
-                // Quick Stats Section
-                const Text(
-                  'Quick Stats',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Expanded(
-                      child: _buildStatCard(
-                        context,
-                        '12',
-                        'Active Patients',
-                        Icons.people,
-                        Colors.blue,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: _buildStatCard(
-                        context,
-                        '5',
-                        'Pending',
-                        Icons.pending_actions,
-                        Colors.orange,
-                      ),
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildStatCard(
+                            context,
+                            '28',
+                            'Prescriptions',
+                            Icons.description,
+                            Colors.green,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: _buildStatCard(
+                            context,
+                            '95%',
+                            'Adherence',
+                            Icons.check_circle,
+                            Colors.teal,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Expanded(
-                      child: _buildStatCard(
-                        context,
-                        '28',
-                        'Prescriptions',
-                        Icons.description,
-                        Colors.green,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: _buildStatCard(
-                        context,
-                        '95%',
-                        'Adherence',
-                        Icons.check_circle,
-                        Colors.teal,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
