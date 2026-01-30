@@ -11,10 +11,14 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 -- Create custom types
 CREATE TYPE user_role AS ENUM ('patient', 'doctor', 'admin');
 CREATE TYPE subscription_tier AS ENUM ('free', 'premium');
-CREATE TYPE prescription_status AS ENUM ('processing', 'completed', 'error', 'archived');
+CREATE TYPE prescription_status AS ENUM ('pending', 'processing', 'ocr_completed', 'ai_processed', 'completed', 'error', 'archived');
 CREATE TYPE relationship_status AS ENUM ('pending', 'active', 'inactive', 'blocked');
 CREATE TYPE notification_type AS ENUM ('reminder', 'alert', 'message', 'system');
 CREATE TYPE payment_status AS ENUM ('pending', 'completed', 'failed', 'refunded');
+CREATE TYPE medication_form AS ENUM ('tablet', 'capsule', 'syrup', 'injection', 'cream', 'drops', 'inhaler', 'patch', 'other');
+CREATE TYPE time_slot AS ENUM ('morning', 'noon', 'afternoon', 'evening', 'night');
+CREATE TYPE reminder_log_status AS ENUM ('pending', 'taken', 'missed', 'snoozed', 'skipped');
+CREATE TYPE report_type AS ENUM ('medical_summary', 'risk_analysis', 'trend_analysis', 'prescription_history', 'medication_adherence');
 
 -- =============================================
 -- CORE USER MANAGEMENT TABLES
@@ -88,41 +92,49 @@ CREATE TABLE prescriptions (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     patient_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     doctor_id UUID REFERENCES users(id) ON DELETE SET NULL,
-    
+
     -- Image and OCR data
     original_image_url VARCHAR(500) NOT NULL,
     thumbnail_url VARCHAR(500),
     image_metadata JSONB, -- size, format, dimensions, etc.
-    
+
     -- OCR processing results
     ocr_raw_text TEXT,
     ocr_corrected_text TEXT,
+    ocr_structured_data JSONB, -- Structured extraction from OCR
     ocr_confidence_score DECIMAL(5,4), -- 0.0000 to 1.0000
     ocr_language_detected VARCHAR(10),
     ocr_processing_time INTEGER, -- milliseconds
-    
+
     -- AI processing results (premium feature)
     ai_report JSONB,
     ai_confidence_score DECIMAL(5,4),
     ai_processing_time INTEGER,
     ai_warnings TEXT[],
-    
-    -- Prescription metadata
-    prescription_date DATE,
-    pharmacy_name VARCHAR(200),
-    pharmacy_address TEXT,
+
+    -- Prescription metadata extracted from document
+    hospital_name VARCHAR(300),
+    hospital_address TEXT,
     prescription_number VARCHAR(100),
-    
+    patient_name_on_doc VARCHAR(200), -- Name as written on prescription
+    patient_age INTEGER,
+    patient_gender VARCHAR(20),
+    diagnosis TEXT,
+    department VARCHAR(200),
+    prescribing_doctor_name VARCHAR(200),
+    prescription_date DATE,
+
     -- Status and workflow
-    status prescription_status DEFAULT 'processing',
+    status prescription_status DEFAULT 'pending',
     processing_started_at TIMESTAMP,
     processing_completed_at TIMESTAMP,
-    
+    error_message TEXT,
+
     -- System fields
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW(),
-    
-    -- Indexes will be added separately
+
+    -- Constraints
     CONSTRAINT valid_confidence_score CHECK (ocr_confidence_score IS NULL OR (ocr_confidence_score >= 0 AND ocr_confidence_score <= 1)),
     CONSTRAINT valid_ai_confidence CHECK (ai_confidence_score IS NULL OR (ai_confidence_score >= 0 AND ai_confidence_score <= 1))
 );
@@ -131,74 +143,105 @@ CREATE TABLE prescriptions (
 CREATE TABLE medications (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     prescription_id UUID NOT NULL REFERENCES prescriptions(id) ON DELETE CASCADE,
-    
+    sequence_number INTEGER DEFAULT 1, -- Order in prescription (1, 2, 3, 4...)
+
     -- Medication details
     name VARCHAR(200) NOT NULL,
     generic_name VARCHAR(200),
     brand_name VARCHAR(200),
-    strength VARCHAR(100), -- e.g., "500mg", "10ml"
-    form VARCHAR(50), -- tablet, capsule, syrup, injection, etc.
-    
-    -- Dosage information
-    dosage VARCHAR(200), -- e.g., "1 tablet", "5ml"
-    frequency VARCHAR(100), -- e.g., "twice daily", "every 8 hours"
-    duration VARCHAR(100), -- e.g., "7 days", "until finished"
-    instructions TEXT, -- special instructions
-    
-    -- Timing
-    take_with_food BOOLEAN,
-    take_before_meal BOOLEAN,
-    take_after_meal BOOLEAN,
-    
+    strength VARCHAR(100), -- e.g., "10mg", "100mg", "20mg"
+    form medication_form DEFAULT 'tablet',
+
+    -- Quantity and duration
+    quantity INTEGER, -- Total quantity prescribed (e.g., 14, 21)
+    quantity_unit VARCHAR(50), -- e.g., "គ្រាប់" (tablets), "គ្រាប់ស្រាប" (tablets+syrup)
+    duration_days INTEGER, -- Treatment duration in days
+
+    -- Dosage schedule (structured JSON matching Cambodian prescription format)
+    -- Format: { morning: {dose: 1}, noon: {dose: 1}, afternoon: {dose: 1}, night: {dose: 1} }
+    dosage_schedule JSONB NOT NULL DEFAULT '{}',
+
+    -- Additional instructions
+    instructions TEXT,
+    take_with_food BOOLEAN DEFAULT FALSE,
+    take_before_meal BOOLEAN DEFAULT FALSE,
+    take_after_meal BOOLEAN DEFAULT FALSE,
+
     -- AI analysis (premium feature)
     ai_drug_interactions TEXT[],
     ai_side_effects TEXT[],
     ai_warnings TEXT[],
     ai_contraindications TEXT[],
-    
+    ai_description TEXT, -- AI-generated description of the medication
+
+    -- Status
+    is_active BOOLEAN DEFAULT TRUE,
+
     -- System fields
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
 );
 
--- Medication reminders
+-- Medication reminders (one per time slot per medication)
 CREATE TABLE medication_reminders (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     medication_id UUID NOT NULL REFERENCES medications(id) ON DELETE CASCADE,
+    prescription_id UUID NOT NULL REFERENCES prescriptions(id) ON DELETE CASCADE,
     patient_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    
-    -- Reminder configuration
-    reminder_times TIME[] NOT NULL, -- array of times like ['08:00', '20:00']
+
+    -- Reminder configuration (one reminder per time slot)
+    time_slot time_slot NOT NULL, -- morning, noon, afternoon, evening, night
+    scheduled_time TIME NOT NULL, -- e.g., '07:00', '11:30', '17:30', '20:00'
+    dose_amount DECIMAL(10,2) NOT NULL, -- How many to take at this time
+    dose_unit VARCHAR(50), -- e.g., "tablet", "ml"
+
+    -- Schedule
     days_of_week INTEGER[] DEFAULT '{1,2,3,4,5,6,7}', -- 1=Monday, 7=Sunday
     start_date DATE NOT NULL,
     end_date DATE,
-    
+
     -- Reminder settings
     is_active BOOLEAN DEFAULT TRUE,
-    snooze_duration INTEGER DEFAULT 10, -- minutes
+    snooze_duration_minutes INTEGER DEFAULT 10,
+    advance_notification_minutes INTEGER DEFAULT 15,
     notification_sound VARCHAR(100),
-    
-    -- Tracking
-    total_doses INTEGER,
+
+    -- Tracking statistics
+    total_doses INTEGER DEFAULT 0,
     completed_doses INTEGER DEFAULT 0,
     missed_doses INTEGER DEFAULT 0,
-    
+    adherence_rate DECIMAL(5,2), -- Percentage 0-100
+
+    -- Last activity timestamps
+    last_taken_at TIMESTAMP,
+    last_missed_at TIMESTAMP,
+    next_reminder_at TIMESTAMP,
+
     -- System fields
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
 );
 
--- Medication reminder logs
+-- Medication reminder logs (tracks each dose taken/missed/skipped)
 CREATE TABLE medication_reminder_logs (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     reminder_id UUID NOT NULL REFERENCES medication_reminders(id) ON DELETE CASCADE,
-    
+    medication_id UUID NOT NULL REFERENCES medications(id) ON DELETE CASCADE,
+    patient_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+
     -- Log details
-    scheduled_time TIMESTAMP NOT NULL,
+    scheduled_date DATE NOT NULL,
+    scheduled_time TIME,
     actual_time TIMESTAMP,
-    status VARCHAR(20) NOT NULL, -- 'taken', 'missed', 'snoozed', 'skipped'
+    status reminder_log_status NOT NULL DEFAULT 'pending',
+
+    -- Additional info
     notes TEXT,
-    
+    dose_taken DECIMAL(10,2),
+    skipped_reason TEXT,
+    snoozed_until TIMESTAMP,
+    logged_from_device VARCHAR(100),
+
     created_at TIMESTAMP DEFAULT NOW()
 );
 
@@ -236,26 +279,56 @@ CREATE TABLE doctor_patient_relationships (
     UNIQUE(doctor_id, patient_id)
 );
 
+-- Family/Caregiver relationships
+CREATE TABLE family_relationships (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    patient_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    family_member_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+
+    -- Relationship details
+    relationship_type VARCHAR(50) NOT NULL, -- 'parent', 'child', 'spouse', 'sibling', 'caregiver', 'other'
+    status relationship_status DEFAULT 'pending',
+
+    -- Permissions (what the family member can do)
+    can_view_prescriptions BOOLEAN DEFAULT TRUE,
+    can_view_reminders BOOLEAN DEFAULT TRUE,
+    can_view_reports BOOLEAN DEFAULT FALSE,
+    can_receive_alerts BOOLEAN DEFAULT TRUE,
+    can_log_medications BOOLEAN DEFAULT FALSE,
+
+    -- Invitation
+    invitation_code VARCHAR(50) UNIQUE,
+    invitation_expires_at TIMESTAMP,
+
+    -- System fields
+    established_at TIMESTAMP,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW(),
+
+    -- Ensure unique relationships
+    UNIQUE(patient_id, family_member_id)
+);
+
 -- Clinical notes by doctors
 CREATE TABLE clinical_notes (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     doctor_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     patient_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     prescription_id UUID REFERENCES prescriptions(id) ON DELETE SET NULL,
-    
+
     -- Note content
     title VARCHAR(200),
     content TEXT NOT NULL,
     note_type VARCHAR(50), -- 'observation', 'recommendation', 'follow-up', etc.
-    
+
     -- AI assistance (premium feature)
     ai_generated BOOLEAN DEFAULT FALSE,
     ai_suggestions TEXT[],
-    
+
     -- Visibility and sharing
     is_private BOOLEAN DEFAULT FALSE,
     shared_with_patient BOOLEAN DEFAULT TRUE,
-    
+
     -- System fields
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
@@ -304,21 +377,55 @@ CREATE TABLE ai_reports (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     prescription_id UUID NOT NULL REFERENCES prescriptions(id) ON DELETE CASCADE,
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    
-    -- Report content
-    report_type VARCHAR(50) NOT NULL, -- 'medical_summary', 'risk_analysis', 'trend_analysis'
-    report_data JSONB NOT NULL,
-    
+
+    -- Report type and content
+    report_type report_type NOT NULL,
+    summary TEXT, -- Human-readable summary
+    detailed_analysis JSONB, -- Structured detailed analysis
+    recommendations TEXT[], -- Array of recommendations
+    warnings JSONB, -- Array of warning objects with severity
+
     -- AI metadata
     ai_model_version VARCHAR(50),
     ai_confidence_score DECIMAL(5,4),
     generation_time INTEGER, -- milliseconds
-    
+    language VARCHAR(10) DEFAULT 'en',
+
     -- Export and sharing
     exported_at TIMESTAMP,
     export_format VARCHAR(20), -- 'pdf', 'json', 'html'
+    export_url VARCHAR(500),
     shared_with_doctor BOOLEAN DEFAULT FALSE,
-    
+    shared_with_family BOOLEAN DEFAULT FALSE,
+
+    -- System fields
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Medication schedule templates (for default reminder times)
+CREATE TABLE medication_schedule_templates (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+
+    -- Template details
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+
+    -- Time slot configuration (default times for each slot)
+    morning_time TIME DEFAULT '07:00',
+    noon_time TIME DEFAULT '11:30',
+    afternoon_time TIME DEFAULT '17:30',
+    evening_time TIME DEFAULT '20:00',
+    night_time TIME DEFAULT '21:00',
+
+    -- Settings
+    advance_notification_minutes INTEGER DEFAULT 15,
+    snooze_duration_minutes INTEGER DEFAULT 10,
+
+    -- Ownership
+    user_id UUID REFERENCES users(id) ON DELETE CASCADE, -- NULL means system default
+    is_default BOOLEAN DEFAULT FALSE,
+
     -- System fields
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
@@ -496,16 +603,35 @@ CREATE INDEX idx_prescriptions_prescription_date ON prescriptions(prescription_d
 -- Medications table indexes
 CREATE INDEX idx_medications_prescription_id ON medications(prescription_id);
 CREATE INDEX idx_medications_name ON medications(name);
+CREATE INDEX idx_medications_is_active ON medications(is_active);
+CREATE INDEX idx_medications_sequence ON medications(prescription_id, sequence_number);
 
 -- Medication reminders indexes
 CREATE INDEX idx_medication_reminders_patient_id ON medication_reminders(patient_id);
+CREATE INDEX idx_medication_reminders_medication_id ON medication_reminders(medication_id);
+CREATE INDEX idx_medication_reminders_prescription_id ON medication_reminders(prescription_id);
 CREATE INDEX idx_medication_reminders_is_active ON medication_reminders(is_active);
+CREATE INDEX idx_medication_reminders_time_slot ON medication_reminders(time_slot);
+CREATE INDEX idx_medication_reminders_scheduled_time ON medication_reminders(scheduled_time);
 CREATE INDEX idx_medication_reminders_start_date ON medication_reminders(start_date);
+CREATE INDEX idx_medication_reminders_next_reminder ON medication_reminders(next_reminder_at);
+
+-- Medication reminder logs indexes
+CREATE INDEX idx_reminder_logs_reminder_id ON medication_reminder_logs(reminder_id);
+CREATE INDEX idx_reminder_logs_medication_id ON medication_reminder_logs(medication_id);
+CREATE INDEX idx_reminder_logs_patient_id ON medication_reminder_logs(patient_id);
+CREATE INDEX idx_reminder_logs_scheduled_date ON medication_reminder_logs(scheduled_date);
+CREATE INDEX idx_reminder_logs_status ON medication_reminder_logs(status);
 
 -- Doctor-patient relationships indexes
 CREATE INDEX idx_doctor_patient_doctor_id ON doctor_patient_relationships(doctor_id);
 CREATE INDEX idx_doctor_patient_patient_id ON doctor_patient_relationships(patient_id);
 CREATE INDEX idx_doctor_patient_status ON doctor_patient_relationships(status);
+
+-- Family relationships indexes
+CREATE INDEX idx_family_patient_id ON family_relationships(patient_id);
+CREATE INDEX idx_family_member_id ON family_relationships(family_member_id);
+CREATE INDEX idx_family_status ON family_relationships(status);
 
 -- Clinical notes indexes
 CREATE INDEX idx_clinical_notes_doctor_id ON clinical_notes(doctor_id);
@@ -550,9 +676,11 @@ CREATE TRIGGER update_prescriptions_updated_at BEFORE UPDATE ON prescriptions FO
 CREATE TRIGGER update_medications_updated_at BEFORE UPDATE ON medications FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_medication_reminders_updated_at BEFORE UPDATE ON medication_reminders FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_doctor_patient_relationships_updated_at BEFORE UPDATE ON doctor_patient_relationships FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_family_relationships_updated_at BEFORE UPDATE ON family_relationships FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_clinical_notes_updated_at BEFORE UPDATE ON clinical_notes FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_ai_chat_conversations_updated_at BEFORE UPDATE ON ai_chat_conversations FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_ai_reports_updated_at BEFORE UPDATE ON ai_reports FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_medication_schedule_templates_updated_at BEFORE UPDATE ON medication_schedule_templates FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_subscription_plans_updated_at BEFORE UPDATE ON subscription_plans FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_user_subscriptions_updated_at BEFORE UPDATE ON user_subscriptions FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_payment_transactions_updated_at BEFORE UPDATE ON payment_transactions FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
@@ -602,7 +730,7 @@ GROUP BY p.id, u_patient.first_name, u_patient.last_name, u_doctor.first_name, u
 
 -- View for active doctor-patient relationships
 CREATE VIEW active_doctor_patient_relationships AS
-SELECT 
+SELECT
     dpr.id,
     dpr.doctor_id,
     dpr.patient_id,
@@ -616,9 +744,64 @@ JOIN users u_doctor ON dpr.doctor_id = u_doctor.id
 JOIN users u_patient ON dpr.patient_id = u_patient.id
 WHERE dpr.status = 'active';
 
+-- View for today's medication reminders
+CREATE VIEW todays_reminders AS
+SELECT
+    mr.id as reminder_id,
+    mr.medication_id,
+    mr.prescription_id,
+    mr.patient_id,
+    m.name as medication_name,
+    m.strength as medication_strength,
+    m.form as medication_form,
+    mr.time_slot,
+    mr.scheduled_time,
+    mr.dose_amount,
+    mr.dose_unit,
+    mr.adherence_rate,
+    p.hospital_name,
+    p.diagnosis
+FROM medication_reminders mr
+JOIN medications m ON mr.medication_id = m.id
+JOIN prescriptions p ON mr.prescription_id = p.id
+WHERE mr.is_active = TRUE
+  AND EXTRACT(DOW FROM CURRENT_DATE) = ANY(
+      CASE WHEN EXTRACT(DOW FROM CURRENT_DATE) = 0 THEN ARRAY[7]
+           ELSE ARRAY[EXTRACT(DOW FROM CURRENT_DATE)::INTEGER] END
+  )
+  AND (mr.start_date <= CURRENT_DATE)
+  AND (mr.end_date IS NULL OR mr.end_date >= CURRENT_DATE);
+
+-- View for patient adherence summary
+CREATE VIEW patient_adherence_summary AS
+SELECT
+    mr.patient_id,
+    u.first_name || ' ' || u.last_name as patient_name,
+    COUNT(DISTINCT mr.id) as active_reminders,
+    SUM(mr.total_doses) as total_doses,
+    SUM(mr.completed_doses) as completed_doses,
+    SUM(mr.missed_doses) as missed_doses,
+    CASE
+        WHEN SUM(mr.total_doses) > 0
+        THEN ROUND(SUM(mr.completed_doses)::DECIMAL / SUM(mr.total_doses) * 100, 2)
+        ELSE 0
+    END as overall_adherence_rate
+FROM medication_reminders mr
+JOIN users u ON mr.patient_id = u.id
+WHERE mr.is_active = TRUE
+GROUP BY mr.patient_id, u.first_name, u.last_name;
+
 -- =============================================
 -- INITIAL DATA SETUP
 -- =============================================
+
+-- Insert default medication schedule template
+INSERT INTO medication_schedule_templates (name, description, is_default)
+VALUES (
+    'Cambodian Standard Schedule',
+    'Default time slots based on Cambodian prescription format: Morning (6-8 AM), Noon (11-12 PM), Afternoon (5-6 PM), Night (8-10 PM)',
+    TRUE
+);
 
 -- Insert default subscription plans
 INSERT INTO subscription_plans (name, tier, price_monthly, price_yearly, features, limits) VALUES

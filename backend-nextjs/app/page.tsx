@@ -78,9 +78,8 @@ export default function Home() {
     try {
       const formData = new FormData();
       formData.append('image', selectedFile);
-      formData.append('patient_id', '00000000-0000-0000-0000-000000000000');
 
-      const response = await fetch('/api/prescriptions/upload', {
+      const response = await fetch('/api/ocr-test', {
         method: 'POST',
         body: formData,
       });

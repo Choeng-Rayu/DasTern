@@ -1,12 +1,11 @@
 import 'package:dastern_mobile/l10n/app_localizations.dart';
+import 'package:dastern_mobile/screens/login_screen.dart';
 import 'package:dastern_mobile/screens/sign_up_screen.dart';
 import 'package:dastern_mobile/widgets/bottom_round_container.dart';
 import 'package:flutter/material.dart';
-// import 'package:ui_for_capstone/ui/screen/signup_screen.dart';
 import '../widgets/hospital_logo.dart';
 import '../widgets/primary_button.dart';
 import '../widgets/background_welcome.dart';
-import '';
 
 class WelcomeScreen extends StatelessWidget {
   final void Function(Locale)? onLocaleChange;
@@ -67,30 +66,54 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            // Centered welcome message
+            // Centered doctor image and welcome message
             Center(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      AppLocalizations.of(context)?.welcomeTitle ?? 'Welcome',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        shadows: [
-                          Shadow(
-                            blurRadius: 8,
-                            color: Colors.black45,
-                            offset: Offset(1, 2),
+                    const SizedBox(height: 24),
+                    // Text(
+                    //   AppLocalizations.of(context)?.welcomeTitle ??
+                    //       'Welcome To DasTern',
+                    //   textAlign: TextAlign.center,
+                    //   style: const TextStyle(
+                    //     fontSize: 22,
+                    //     fontWeight: FontWeight.bold,
+                    //     color: Colors.white,
+                    //     shadows: [
+                    //       Shadow(
+                    //         blurRadius: 8,
+                    //         color: Colors.black45,
+                    //         offset: Offset(1, 2),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    const SizedBox(height: 30),
+                    Container(
+                      width: 290,
+                      height: 370,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.08),
+                            blurRadius: 16,
+                            offset: Offset(0, 6),
                           ),
                         ],
                       ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(40),
+                        child: Image.asset(
+                          'assets/images/welcome_doctor_image.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 24),
                     Text(
                       AppLocalizations.of(context)?.welcomeMessage ?? '',
                       textAlign: TextAlign.center,
@@ -141,7 +164,7 @@ class WelcomeScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const SignupScreen(),
+                            builder: (context) => const LoginScreen(),
                           ),
                         );
                       },
