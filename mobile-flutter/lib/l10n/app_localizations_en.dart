@@ -12,52 +12,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'DasTern';
 
   @override
-  String get createNewAccount => 'Create a new account';
-
-  @override
-  String get lastName => 'Last name / Surname';
-
-  @override
-  String get fillLastName => 'Please fill in your last name';
-
-  @override
-  String get firstName => 'First name / Given name';
-
-  @override
-  String get fillFirstName => 'Please fill in your first name';
-
-  @override
-  String get gender => 'Gender';
-
-  @override
-  String get fillGender => 'Please fill in your gender';
-
-  @override
-  String get dateOfBirth => 'Date of Birth';
-
-  @override
-  String get day => 'Day';
-
-  @override
-  String get month => 'Month';
-
-  @override
-  String get year => 'Year';
-
-  @override
-  String get idCardNumber => 'ID card number / Identification number';
-
-  @override
-  String get fillIdCardNumber => 'Please fill in your ID card number';
-
-  @override
-  String get continueText => 'Continue';
-
-  @override
-  String get alreadyCreatedAccount => 'Already created an account before';
-
-  @override
-  String get goBack => 'Go back';
+  String get fillDetailTitle => 'Information';
 
   @override
   String get phoneNumber => 'Phone Number';
@@ -86,6 +41,54 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get alreadyRead => 'Already read / I have read';
+
+  @override
+  String get createNewAccount => 'Create a new account';
+
+  @override
+  String get lastName => 'Last name';
+
+  @override
+  String get fillLastName => 'Please fill in your last name';
+
+  @override
+  String get firstName => 'First name';
+
+  @override
+  String get fillFirstName => 'Please fill in your first name';
+
+  @override
+  String get gender => 'Gender';
+
+  @override
+  String get fillGender => 'Please fill in your gender';
+
+  @override
+  String get dateOfBirth => 'Date of Birth';
+
+  @override
+  String get day => 'Day';
+
+  @override
+  String get month => 'Month';
+
+  @override
+  String get year => 'Year';
+
+  @override
+  String get idCardNumber => 'ID card number';
+
+  @override
+  String get fillIdCardNumber => 'Please fill in your ID card number';
+
+  @override
+  String get continueText => 'Continue';
+
+  @override
+  String get alreadyCreatedAccount => 'Already created an account before';
+
+  @override
+  String get goBack => 'Go back';
 
   @override
   String get signIn => 'Log in to account / Sign in';

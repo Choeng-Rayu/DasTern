@@ -1,15 +1,65 @@
 
+
 {
   "@@locale": "en",
   "appTitle": "DasTern",
   "@appTitle": {
     "description": "The application title"
   },
+
+        "fillDetailTitle": "Fill information",
+  "@phoneNumber": {
+    "description": "Fill information"
+  },
+
+      "fillDetailTitle": "Information",
+  "@phoneNumber": {
+    "description": "Information"
+  },
+  
+    "phoneNumber": "Phone number",
+  "@phoneNumber": {
+    "description": "Phone number"
+  },
+  "fillPhoneNumber": "Please fill in your phone number",
+  "@fillPhoneNumber": {
+    "description": "Please fill in your phone number"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "Password"
+  },
+  "fillPassword": "Please fill in your password",
+  "@fillPassword": {
+    "description": "Please fill in your password"
+  },
+  "confirmPassword": "Confirm password",
+  "@confirmPassword": {
+    "description": "Confirm password"
+  },
+  "fillConfirmPassword": "Please fill in your password again",
+  "@fillConfirmPassword": {
+    "description": "Please fill in your password again"
+  },
+  "pinCode": "4-digit PIN code",
+  "@pinCode": {
+    "description": "4-digit PIN code"
+  },
+  "readTerms": "Please read the terms and conditions before using the application",
+  "@readTerms": {
+    "description": "Please read the terms and conditions before using the application"
+  },
+  "alreadyRead": "Already read",
+  "@alreadyRead": {
+    "description": "Already read"
+  },
+
+
     "createNewAccount": "Create a new account",
   "@createNewAccount": {
     "description": "Create a new account"
   },
-  "lastName": "Last name / Surname",
+  "lastName": "Last name",
   "@lastName": {
     "description": "Last name or surname label"
   },
@@ -17,7 +67,7 @@
   "@fillLastName": {
     "description": "Prompt to fill in last name"
   },
-  "firstName": "First name / Given name",
+  "firstName": "First name",
   "@firstName": {
     "description": "First name or given name label"
   },
@@ -49,7 +99,7 @@
   "@year": {
     "description": "Year label"
   },
-  "idCardNumber": "ID card number / Identification number",
+  "idCardNumber": "ID card number",
   "@idCardNumber": {
     "description": "ID card or identification number label"
   },

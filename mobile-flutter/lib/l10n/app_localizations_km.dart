@@ -12,6 +12,36 @@ class AppLocalizationsKm extends AppLocalizations {
   String get appTitle => 'DasTern';
 
   @override
+  String get fillDetailTitle => 'Information';
+
+  @override
+  String get phoneNumber => 'លេខទូរស័ព្ទ';
+
+  @override
+  String get fillPhoneNumber => 'សូមបំពេញលេខទូរស័ព្ទរបស់អ្នក';
+
+  @override
+  String get password => 'ពាក្យសម្ងាត់';
+
+  @override
+  String get fillPassword => 'សូមបំពេញលេខកូខសម្ងាត់របស់អ្នក';
+
+  @override
+  String get confirmPassword => 'បញ្ជាក់ពាក្យសម្ងាត់';
+
+  @override
+  String get fillConfirmPassword => 'សូមបំពេញលេខកូខសម្ងាត់របស់អ្នកម្តងទៀត';
+
+  @override
+  String get pinCode => 'លេខកូខ៤ខ្ទង់';
+
+  @override
+  String get readTerms => 'សូមអានលក្ខខណ្ឌ និងច្បាប់មុនពេលប្រើប្រាស់កម្មវិធី';
+
+  @override
+  String get alreadyRead => 'អានរួចរាល់';
+
+  @override
   String get createNewAccount => 'បង្កើតគណនីថ្មី';
 
   @override
@@ -58,33 +88,6 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get goBack => 'ថយក្រោយ';
-
-  @override
-  String get phoneNumber => 'លេខទូរស័ព្ទ';
-
-  @override
-  String get fillPhoneNumber => 'សូមបំពេញលេខទូរស័ព្ទរបស់អ្នក';
-
-  @override
-  String get password => 'ពាក្យសម្ងាត់';
-
-  @override
-  String get fillPassword => 'សូមបំពេញលេខកូខសម្ងាត់របស់អ្នក';
-
-  @override
-  String get confirmPassword => 'បញ្ជាក់ពាក្យសម្ងាត់';
-
-  @override
-  String get fillConfirmPassword => 'សូមបំពេញលេខកូខសម្ងាត់របស់អ្នកម្តងទៀត';
-
-  @override
-  String get pinCode => 'លេខកូខ៤ខ្ទង់';
-
-  @override
-  String get readTerms => 'សូមអានលក្ខខណ្ឌ និងច្បាប់មុនពេលប្រើប្រាស់កម្មវិធី';
-
-  @override
-  String get alreadyRead => 'អានរួចរាល់';
 
   @override
   String get signIn => 'ចូលគណនី';

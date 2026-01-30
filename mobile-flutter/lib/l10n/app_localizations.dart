@@ -104,101 +104,11 @@ abstract class AppLocalizations {
   /// **'DasTern'**
   String get appTitle;
 
-  /// Create a new account
+  /// No description provided for @fillDetailTitle.
   ///
   /// In en, this message translates to:
-  /// **'Create a new account'**
-  String get createNewAccount;
-
-  /// Last name or surname label
-  ///
-  /// In en, this message translates to:
-  /// **'Last name / Surname'**
-  String get lastName;
-
-  /// Prompt to fill in last name
-  ///
-  /// In en, this message translates to:
-  /// **'Please fill in your last name'**
-  String get fillLastName;
-
-  /// First name or given name label
-  ///
-  /// In en, this message translates to:
-  /// **'First name / Given name'**
-  String get firstName;
-
-  /// Prompt to fill in first name
-  ///
-  /// In en, this message translates to:
-  /// **'Please fill in your first name'**
-  String get fillFirstName;
-
-  /// Gender label
-  ///
-  /// In en, this message translates to:
-  /// **'Gender'**
-  String get gender;
-
-  /// Prompt to fill in gender
-  ///
-  /// In en, this message translates to:
-  /// **'Please fill in your gender'**
-  String get fillGender;
-
-  /// Date of birth label
-  ///
-  /// In en, this message translates to:
-  /// **'Date of Birth'**
-  String get dateOfBirth;
-
-  /// Day label
-  ///
-  /// In en, this message translates to:
-  /// **'Day'**
-  String get day;
-
-  /// Month label
-  ///
-  /// In en, this message translates to:
-  /// **'Month'**
-  String get month;
-
-  /// Year label
-  ///
-  /// In en, this message translates to:
-  /// **'Year'**
-  String get year;
-
-  /// ID card or identification number label
-  ///
-  /// In en, this message translates to:
-  /// **'ID card number / Identification number'**
-  String get idCardNumber;
-
-  /// Prompt to fill in ID card number
-  ///
-  /// In en, this message translates to:
-  /// **'Please fill in your ID card number'**
-  String get fillIdCardNumber;
-
-  /// No description provided for @continueText.
-  ///
-  /// In en, this message translates to:
-  /// **'Continue'**
-  String get continueText;
-
-  /// Already created account label
-  ///
-  /// In en, this message translates to:
-  /// **'Already created an account before'**
-  String get alreadyCreatedAccount;
-
-  /// Go back button label
-  ///
-  /// In en, this message translates to:
-  /// **'Go back'**
-  String get goBack;
+  /// **'Information'**
+  String get fillDetailTitle;
 
   /// Phone number label
   ///
@@ -253,6 +163,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Already read / I have read'**
   String get alreadyRead;
+
+  /// Create a new account
+  ///
+  /// In en, this message translates to:
+  /// **'Create a new account'**
+  String get createNewAccount;
+
+  /// Last name or surname label
+  ///
+  /// In en, this message translates to:
+  /// **'Last name'**
+  String get lastName;
+
+  /// Prompt to fill in last name
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in your last name'**
+  String get fillLastName;
+
+  /// First name or given name label
+  ///
+  /// In en, this message translates to:
+  /// **'First name'**
+  String get firstName;
+
+  /// Prompt to fill in first name
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in your first name'**
+  String get fillFirstName;
+
+  /// Gender label
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get gender;
+
+  /// Prompt to fill in gender
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in your gender'**
+  String get fillGender;
+
+  /// Date of birth label
+  ///
+  /// In en, this message translates to:
+  /// **'Date of Birth'**
+  String get dateOfBirth;
+
+  /// Day label
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get day;
+
+  /// Month label
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get month;
+
+  /// Year label
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get year;
+
+  /// ID card or identification number label
+  ///
+  /// In en, this message translates to:
+  /// **'ID card number'**
+  String get idCardNumber;
+
+  /// Prompt to fill in ID card number
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in your ID card number'**
+  String get fillIdCardNumber;
+
+  /// No description provided for @continueText.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continueText;
+
+  /// Already created account label
+  ///
+  /// In en, this message translates to:
+  /// **'Already created an account before'**
+  String get alreadyCreatedAccount;
+
+  /// Go back button label
+  ///
+  /// In en, this message translates to:
+  /// **'Go back'**
+  String get goBack;
 
   /// Sign in or log in label
   ///
