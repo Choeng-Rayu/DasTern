@@ -162,6 +162,15 @@ class AppLocalizationsKm extends AppLocalizations {
   String get hello => 'សួស្តី';
 
   @override
+  String get signin => 'បានបង្កើតគណនីពីមុន';
+
+  @override
+  String get createAccount => 'បង្កើតគណនីថ្មី';
+
+  @override
+  String get hello => 'សួស្តី';
+
+  @override
   String get todaySchedule => 'កាលវិភាគ (ថ្ងៃនេះ)';
 
   @override

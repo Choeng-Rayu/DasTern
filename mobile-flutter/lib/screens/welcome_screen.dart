@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../widgets/hospital_logo.dart';
 import '../widgets/primary_button.dart';
 import '../widgets/background_welcome.dart';
+import '';
 
 class WelcomeScreen extends StatelessWidget {
   final void Function(Locale)? onLocaleChange;
@@ -66,17 +67,15 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            // Centered doctor image and welcome message
+            // Centered welcome message
             Center(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const SizedBox(height: 24),
                     Text(
-                      AppLocalizations.of(context)?.welcomeTitle ??
-                          'Welcome To DasTern',
+                      AppLocalizations.of(context)?.welcomeTitle ?? 'Welcome',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontSize: 22,
@@ -91,29 +90,7 @@ class WelcomeScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    Container(
-                      width: 290,
-                      height: 370,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(40),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.08),
-                            blurRadius: 16,
-                            offset: Offset(0, 6),
-                          ),
-                        ],
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(40),
-                        child: Image.asset(
-                          'assets/images/welcome_doctor_image.png',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 8),
                     Text(
                       AppLocalizations.of(context)?.welcomeMessage ?? '',
                       textAlign: TextAlign.center,
