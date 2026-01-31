@@ -14,29 +14,29 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 10,
-        title: const Text(
-          'Home',
-          style: TextStyle(color: Colors.white),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_outlined, color: Colors.white),
-            onPressed: () {
-              // TODO: Navigate to notifications
-            },
-          ),
-        ],
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.transparent,
+      //   elevation: 10,
+      //   title: const Text(
+      //     'Home',
+      //     style: TextStyle(color: Colors.white),
+      //   ),
+      //   actions: [
+      //     IconButton(
+      //       icon: const Icon(Icons.notifications_outlined, color: Colors.white),
+      //       onPressed: () {
+      //         // TODO: Navigate to notifications
+      //       },
+      //     ),
+      //   ],
+      // ),
       body: Column(
         children: [
           // User Header with Background Image
           const UserHeader(
-            userName: 'Dr. John Doe',
-            userRole: 'Medical Doctor',
-            height: 200.0,
+            userName: 'Hello soklang',
+            userRole: 'Patient',
+            height: 250.0,
           ),
 
           // Content Section with Background

@@ -1,0 +1,1369 @@
+{
+  "success": true,
+  "page": 1,
+  "raw": [
+    {
+      "text": "ER",
+      "confidence": 38,
+      "bbox": {
+        "x": 164,
+        "y": 35,
+        "w": 92,
+        "h": 28
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 1,
+      "word": 1
+    },
+    {
+      "text": "មន្ទីរព",
+      "confidence": 92,
+      "bbox": {
+        "x": 377,
+        "y": 29,
+        "w": 74,
+        "h": 50
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 1,
+      "word": 2
+    },
+    {
+      "text": "ខេហង",
+      "confidence": 88,
+      "bbox": {
+        "x": 621,
+        "y": 44,
+        "w": 95,
+        "h": 23
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 1,
+      "word": 3
+    },
+    {
+      "text": ".",
+      "confidence": 65,
+      "bbox": {
+        "x": 971,
+        "y": 0,
+        "w": 1,
+        "h": 46
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 1,
+      "word": 4
+    },
+    {
+      "text": "មា",
+      "confidence": 42,
+      "bbox": {
+        "x": 151,
+        "y": 59,
+        "w": 124,
+        "h": 26
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 2,
+      "word": 1
+    },
+    {
+      "text": "ន្នីរពហុព្យាបាល",
+      "confidence": 45,
+      "bbox": {
+        "x": 399,
+        "y": 49,
+        "w": 182,
+        "h": 27
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 2,
+      "word": 2
+    },
+    {
+      "text": "សុ",
+      "confidence": 96,
+      "bbox": {
+        "x": 591,
+        "y": 47,
+        "w": 26,
+        "h": 30
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 2,
+      "word": 3
+    },
+    {
+      "text": "|",
+      "confidence": 94,
+      "bbox": {
+        "x": 971,
+        "y": 56,
+        "w": 1,
+        "h": 9
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 2,
+      "word": 4
+    },
+    {
+      "text": "«y",
+      "confidence": 42,
+      "bbox": {
+        "x": 180,
+        "y": 102,
+        "w": 68,
+        "h": 21
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 3,
+      "word": 1
+    },
+    {
+      "text": "SOK",
+      "confidence": 91,
+      "bbox": {
+        "x": 401,
+        "y": 84,
+        "w": 53,
+        "h": 19
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 3,
+      "word": 2
+    },
+    {
+      "text": "HENG",
+      "confidence": 90,
+      "bbox": {
+        "x": 460,
+        "y": 85,
+        "w": 72,
+        "h": 18
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 3,
+      "word": 3
+    },
+    {
+      "text": "POLYCLINIC",
+      "confidence": 90,
+      "bbox": {
+        "x": 540,
+        "y": 83,
+        "w": 154,
+        "h": 20
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 3,
+      "word": 4
+    },
+    {
+      "text": "|",
+      "confidence": 93,
+      "bbox": {
+        "x": 967,
+        "y": 65,
+        "w": 4,
+        "h": 46
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 3,
+      "word": 5
+    },
+    {
+      "text": "ic)",
+      "confidence": 49,
+      "bbox": {
+        "x": 149,
+        "y": 110,
+        "w": 18,
+        "h": 34
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 4,
+      "word": 1
+    },
+    {
+      "text": "SSP",
+      "confidence": 31,
+      "bbox": {
+        "x": 177,
+        "y": 119,
+        "w": 97,
+        "h": 22
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 4,
+      "word": 2
+    },
+    {
+      "text": "08235",
+      "confidence": 53,
+      "bbox": {
+        "x": 302,
+        "y": 116,
+        "w": 80,
+        "h": 19
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 4,
+      "word": 3
+    },
+    {
+      "text": "ភួមិព្រៃទា",
+      "confidence": 79,
+      "bbox": {
+        "x": 388,
+        "y": 113,
+        "w": 58,
+        "h": 21
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 4,
+      "word": 4
+    },
+    {
+      "text": "nimes",
+      "confidence": 6,
+      "bbox": {
+        "x": 452,
+        "y": 114,
+        "w": 116,
+        "h": 19
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 4,
+      "word": 5
+    },
+    {
+      "text": "ខណ្ឌពោធិ៍សែនជ័យ",
+      "confidence": 41,
+      "bbox": {
+        "x": 574,
+        "y": 112,
+        "w": 120,
+        "h": 22
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 4,
+      "word": 6
+    },
+    {
+      "text": "រាជធាន៏ភ្នំពេញ",
+      "confidence": 32,
+      "bbox": {
+        "x": 701,
+        "y": 111,
+        "w": 89,
+        "h": 20
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 4,
+      "word": 7
+    },
+    {
+      "text": "|",
+      "confidence": 53,
+      "bbox": {
+        "x": 971,
+        "y": 114,
+        "w": 1,
+        "h": 7
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 4,
+      "word": 8
+    },
+    {
+      "text": "x",
+      "confidence": 65,
+      "bbox": {
+        "x": 170,
+        "y": 139,
+        "w": 88,
+        "h": 23
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 5,
+      "word": 1
+    },
+    {
+      "text": "MAD.",
+      "confidence": 13,
+      "bbox": {
+        "x": 465,
+        "y": 137,
+        "w": 37,
+        "h": 19
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 5,
+      "word": 2
+    },
+    {
+      "text": "089/098",
+      "confidence": 90,
+      "bbox": {
+        "x": 515,
+        "y": 139,
+        "w": 57,
+        "h": 13
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 5,
+      "word": 3
+    },
+    {
+      "text": "688",
+      "confidence": 86,
+      "bbox": {
+        "x": 577,
+        "y": 140,
+        "w": 26,
+        "h": 12
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 5,
+      "word": 4
+    },
+    {
+      "text": "685",
+      "confidence": 79,
+      "bbox": {
+        "x": 607,
+        "y": 139,
+        "w": 25,
+        "h": 13
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 5,
+      "word": 5
+    },
+    {
+      "text": "|",
+      "confidence": 96,
+      "bbox": {
+        "x": 967,
+        "y": 120,
+        "w": 3,
+        "h": 33
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 5,
+      "word": 6
+    },
+    {
+      "text": "SES",
+      "confidence": 31,
+      "bbox": {
+        "x": 417,
+        "y": 216,
+        "w": 140,
+        "h": 36
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 6,
+      "word": 1
+    },
+    {
+      "text": "|",
+      "confidence": 94,
+      "bbox": {
+        "x": 971,
+        "y": 219,
+        "w": 1,
+        "h": 23
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 6,
+      "word": 2
+    },
+    {
+      "text": "ឈ្មោះ:",
+      "confidence": 8,
+      "bbox": {
+        "x": 20,
+        "y": 283,
+        "w": 60,
+        "h": 23
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 7,
+      "word": 1
+    },
+    {
+      "text": "Ga",
+      "confidence": 59,
+      "bbox": {
+        "x": 86,
+        "y": 280,
+        "w": 29,
+        "h": 28
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 7,
+      "word": 2
+    },
+    {
+      "text": "យាប",
+      "confidence": 80,
+      "bbox": {
+        "x": 121,
+        "y": 283,
+        "w": 42,
+        "h": 15
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 7,
+      "word": 3
+    },
+    {
+      "text": "ER:",
+      "confidence": 53,
+      "bbox": {
+        "x": 181,
+        "y": 283,
+        "w": 41,
+        "h": 15
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 7,
+      "word": 4
+    },
+    {
+      "text": "aid",
+      "confidence": 24,
+      "bbox": {
+        "x": 230,
+        "y": 274,
+        "w": 95,
+        "h": 57
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 7,
+      "word": 5
+    },
+    {
+      "text": "47",
+      "confidence": 92,
+      "bbox": {
+        "x": 332,
+        "y": 282,
+        "w": 24,
+        "h": 15
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 7,
+      "word": 6
+    },
+    {
+      "text": "ឆ្នាំ",
+      "confidence": 92,
+      "bbox": {
+        "x": 361,
+        "y": 274,
+        "w": 20,
+        "h": 31
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 7,
+      "word": 7
+    },
+    {
+      "text": "កាលបរិច្ឆេទ:",
+      "confidence": 29,
+      "bbox": {
+        "x": 617,
+        "y": 269,
+        "w": 99,
+        "h": 31
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 7,
+      "word": 8
+    },
+    {
+      "text": "05/01/2026",
+      "confidence": 95,
+      "bbox": {
+        "x": 723,
+        "y": 274,
+        "w": 111,
+        "h": 18
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 7,
+      "word": 9
+    },
+    {
+      "text": "oo)",
+      "confidence": 42,
+      "bbox": {
+        "x": 865,
+        "y": 263,
+        "w": 76,
+        "h": 56
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 7,
+      "word": 10
+    },
+    {
+      "text": "NGOs:",
+      "confidence": 0,
+      "bbox": {
+        "x": 21,
+        "y": 307,
+        "w": 107,
+        "h": 37
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 8,
+      "word": 1
+    },
+    {
+      "text": "លង្កាត់កួក្កាបទី២",
+      "confidence": 34,
+      "bbox": {
+        "x": 136,
+        "y": 310,
+        "w": 117,
+        "h": 29
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 8,
+      "word": 2
+    },
+    {
+      "text": "ខណ្ឌ",
+      "confidence": 96,
+      "bbox": {
+        "x": 282,
+        "y": 315,
+        "w": 35,
+        "h": 25
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 8,
+      "word": 3
+    },
+    {
+      "text": "លខកូនអ្នកនំនី:",
+      "confidence": 5,
+      "bbox": {
+        "x": 593,
+        "y": 301,
+        "w": 127,
+        "h": 33
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 8,
+      "word": 4
+    },
+    {
+      "text": "P25000720",
+      "confidence": 87,
+      "bbox": {
+        "x": 728,
+        "y": 308,
+        "w": 107,
+        "h": 16
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 8,
+      "word": 5
+    },
+    {
+      "text": "mae",
+      "confidence": 63,
+      "bbox": {
+        "x": 865,
+        "y": 297,
+        "w": 74,
+        "h": 47
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 8,
+      "word": 6
+    },
+    {
+      "text": "ពោធិ៍សែនជ័យ",
+      "confidence": 0,
+      "bbox": {
+        "x": 21,
+        "y": 345,
+        "w": 121,
+        "h": 16
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 9,
+      "word": 1
+    },
+    {
+      "text": "រានធានីភ្នំពញ",
+      "confidence": 17,
+      "bbox": {
+        "x": 151,
+        "y": 336,
+        "w": 121,
+        "h": 31
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 9,
+      "word": 2
+    },
+    {
+      "text": "លេខកូន",
+      "confidence": 56,
+      "bbox": {
+        "x": 604,
+        "y": 341,
+        "w": 65,
+        "h": 25
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 9,
+      "word": 3
+    },
+    {
+      "text": "ប.ស.ល.:",
+      "confidence": 52,
+      "bbox": {
+        "x": 675,
+        "y": 342,
+        "w": 75,
+        "h": 15
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 9,
+      "word": 4
+    },
+    {
+      "text": "0891509",
+      "confidence": 93,
+      "bbox": {
+        "x": 756,
+        "y": 340,
+        "w": 79,
+        "h": 16
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 9,
+      "word": 5
+    },
+    {
+      "text": "|",
+      "confidence": 96,
+      "bbox": {
+        "x": 967,
+        "y": 327,
+        "w": 4,
+        "h": 37
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 9,
+      "word": 6
+    },
+    {
+      "text": "8រានវិនិឆ្ជឺយៈ",
+      "confidence": 11,
+      "bbox": {
+        "x": 22,
+        "y": 369,
+        "w": 104,
+        "h": 33
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 10,
+      "word": 1
+    },
+    {
+      "text": "1534",
+      "confidence": 93,
+      "bbox": {
+        "x": 134,
+        "y": 378,
+        "w": 46,
+        "h": 15
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 10,
+      "word": 2
+    },
+    {
+      "text": "-",
+      "confidence": 92,
+      "bbox": {
+        "x": 186,
+        "y": 385,
+        "w": 8,
+        "h": 3
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 10,
+      "word": 3
+    },
+    {
+      "text": "Asthénie",
+      "confidence": 91,
+      "bbox": {
+        "x": 200,
+        "y": 374,
+        "w": 87,
+        "h": 19
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 10,
+      "word": 4
+    },
+    {
+      "text": "|",
+      "confidence": 93,
+      "bbox": {
+        "x": 967,
+        "y": 354,
+        "w": 4,
+        "h": 44
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 10,
+      "word": 5
+    },
+    {
+      "text": "|",
+      "confidence": 80,
+      "bbox": {
+        "x": 971,
+        "y": 392,
+        "w": 1,
+        "h": 17
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 11,
+      "word": 1
+    },
+    {
+      "text": "កា",
+      "confidence": 9,
+      "bbox": {
+        "x": 25,
+        "y": 423,
+        "w": 918,
+        "h": 71
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 12,
+      "word": 1
+    },
+    {
+      "text": "2",
+      "confidence": 53,
+      "bbox": {
+        "x": 88,
+        "y": 475,
+        "w": 860,
+        "h": 72
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 13,
+      "word": 1
+    },
+    {
+      "text": "pese",
+      "confidence": 39,
+      "bbox": {
+        "x": 0,
+        "y": 563,
+        "w": 305,
+        "h": 7
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 14,
+      "word": 1
+    },
+    {
+      "text": "COLE",
+      "confidence": 20,
+      "bbox": {
+        "x": 354,
+        "y": 511,
+        "w": 335,
+        "h": 118
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 14,
+      "word": 2
+    },
+    {
+      "text": "=",
+      "confidence": 20,
+      "bbox": {
+        "x": 727,
+        "y": 534,
+        "w": 70,
+        "h": 63
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 14,
+      "word": 3
+    },
+    {
+      "text": "pee",
+      "confidence": 14,
+      "bbox": {
+        "x": 26,
+        "y": 587,
+        "w": 218,
+        "h": 95
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 15,
+      "word": 1
+    },
+    {
+      "text": "[TEE",
+      "confidence": 32,
+      "bbox": {
+        "x": 346,
+        "y": 591,
+        "w": 610,
+        "h": 76
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 15,
+      "word": 2
+    },
+    {
+      "text": "ee",
+      "confidence": 66,
+      "bbox": {
+        "x": 726,
+        "y": 587,
+        "w": 80,
+        "h": 95
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 15,
+      "word": 3
+    },
+    {
+      "text": "IE)",
+      "confidence": 26,
+      "bbox": {
+        "x": 971,
+        "y": 641,
+        "w": 1,
+        "h": 18
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 15,
+      "word": 4
+    },
+    {
+      "text": "-",
+      "confidence": 88,
+      "bbox": {
+        "x": 51,
+        "y": 734,
+        "w": 8,
+        "h": 3
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 16,
+      "word": 1
+    },
+    {
+      "text": "TA:100/65",
+      "confidence": 54,
+      "bbox": {
+        "x": 63,
+        "y": 723,
+        "w": 96,
+        "h": 18
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 16,
+      "word": 2
+    },
+    {
+      "text": "mmHg,",
+      "confidence": 90,
+      "bbox": {
+        "x": 166,
+        "y": 721,
+        "w": 69,
+        "h": 20
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 16,
+      "word": 3
+    },
+    {
+      "text": "+",
+      "confidence": 40,
+      "bbox": {
+        "x": 51,
+        "y": 762,
+        "w": 8,
+        "h": 4
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 17,
+      "word": 1
+    },
+    {
+      "text": "P:90",
+      "confidence": 50,
+      "bbox": {
+        "x": 65,
+        "y": 755,
+        "w": 41,
+        "h": 15
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 17,
+      "word": 2
+    },
+    {
+      "text": "/min.",
+      "confidence": 70,
+      "bbox": {
+        "x": 111,
+        "y": 750,
+        "w": 48,
+        "h": 18
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 17,
+      "word": 3
+    },
+    {
+      "text": "|",
+      "confidence": 94,
+      "bbox": {
+        "x": 971,
+        "y": 721,
+        "w": 1,
+        "h": 47
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 17,
+      "word": 4
+    },
+    {
+      "text": "~T?:",
+      "confidence": 10,
+      "bbox": {
+        "x": 51,
+        "y": 785,
+        "w": 41,
+        "h": 14
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 18,
+      "word": 1
+    },
+    {
+      "text": "36,7°C",
+      "confidence": 85,
+      "bbox": {
+        "x": 99,
+        "y": 782,
+        "w": 61,
+        "h": 18
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 18,
+      "word": 2
+    },
+    {
+      "text": "|",
+      "confidence": 94,
+      "bbox": {
+        "x": 971,
+        "y": 769,
+        "w": 1,
+        "h": 30
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 18,
+      "word": 3
+    },
+    {
+      "text": "|",
+      "confidence": 83,
+      "bbox": {
+        "x": 971,
+        "y": 811,
+        "w": 1,
+        "h": 11
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 19,
+      "word": 1
+    },
+    {
+      "text": "BJ",
+      "confidence": 5,
+      "bbox": {
+        "x": 729,
+        "y": 835,
+        "w": 120,
+        "h": 25
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 20,
+      "word": 1
+    },
+    {
+      "text": "“",
+      "confidence": 49,
+      "bbox": {
+        "x": 39,
+        "y": 950,
+        "w": 10,
+        "h": 7
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 21,
+      "word": 1
+    },
+    {
+      "text": "es.",
+      "confidence": 59,
+      "bbox": {
+        "x": 268,
+        "y": 942,
+        "w": 24,
+        "h": 33
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 21,
+      "word": 2
+    },
+    {
+      "text": ".",
+      "confidence": 0,
+      "bbox": {
+        "x": 768,
+        "y": 954,
+        "w": 4,
+        "h": 3
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 21,
+      "word": 3
+    },
+    {
+      "text": "EU",
+      "confidence": 36,
+      "bbox": {
+        "x": 778,
+        "y": 941,
+        "w": 31,
+        "h": 15
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 21,
+      "word": 4
+    },
+    {
+      "text": "រ",
+      "confidence": 73,
+      "bbox": {
+        "x": 815,
+        "y": 940,
+        "w": 8,
+        "h": 15
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 21,
+      "word": 5
+    },
+    {
+      "text": "សូមយគទវដ្ជបញ្ជាមកនាមួយ",
+      "confidence": 16,
+      "bbox": {
+        "x": 29,
+        "y": 960,
+        "w": 195,
+        "h": 38
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 22,
+      "word": 1
+    },
+    {
+      "text": "ាលពិនីគ្ឃលើកក្រាយ។",
+      "confidence": 19,
+      "bbox": {
+        "x": 230,
+        "y": 951,
+        "w": 170,
+        "h": 39
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 22,
+      "word": 2
+    },
+    {
+      "text": "oy,",
+      "confidence": 37,
+      "bbox": {
+        "x": 739,
+        "y": 942,
+        "w": 29,
+        "h": 23
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 22,
+      "word": 3
+    },
+    {
+      "text": "BT",
+      "confidence": 21,
+      "bbox": {
+        "x": 823,
+        "y": 940,
+        "w": 18,
+        "h": 20
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 22,
+      "word": 4
+    },
+    {
+      "text": "|",
+      "confidence": 96,
+      "bbox": {
+        "x": 967,
+        "y": 1008,
+        "w": 4,
+        "h": 37
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 23,
+      "word": 1
+    },
+    {
+      "text": "|",
+      "confidence": 96,
+      "bbox": {
+        "x": 967,
+        "y": 1017,
+        "w": 4,
+        "h": 37
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 24,
+      "word": 1
+    },
+    {
+      "text": "|",
+      "confidence": 96,
+      "bbox": {
+        "x": 967,
+        "y": 1046,
+        "w": 4,
+        "h": 38
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 25,
+      "word": 1
+    },
+    {
+      "text": "|",
+      "confidence": 92,
+      "bbox": {
+        "x": 971,
+        "y": 1085,
+        "w": 1,
+        "h": 12
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 26,
+      "word": 1
+    },
+    {
+      "text": "|",
+      "confidence": 96,
+      "bbox": {
+        "x": 967,
+        "y": 1103,
+        "w": 4,
+        "h": 37
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 27,
+      "word": 1
+    },
+    {
+      "text": "|",
+      "confidence": 81,
+      "bbox": {
+        "x": 971,
+        "y": 1135,
+        "w": 1,
+        "h": 11
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 28,
+      "word": 1
+    },
+    {
+      "text": "|",
+      "confidence": 96,
+      "bbox": {
+        "x": 967,
+        "y": 1149,
+        "w": 4,
+        "h": 37
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 29,
+      "word": 1
+    },
+    {
+      "text": "|",
+      "confidence": 84,
+      "bbox": {
+        "x": 971,
+        "y": 1233,
+        "w": 1,
+        "h": 11
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 30,
+      "word": 1
+    },
+    {
+      "text": "|",
+      "confidence": 75,
+      "bbox": {
+        "x": 971,
+        "y": 1271,
+        "w": 1,
+        "h": 9
+      },
+      "block": 1,
+      "paragraph": 1,
+      "line": 31,
+      "word": 1
+    }
+  ],
+  "stats": {
+    "total_words": 96,
+    "avg_confidence": 58.97,
+    "min_confidence": 0,
+    "max_confidence": 96,
+    "total_blocks": 1,
+    "total_lines": 31,
+    "image_width": 972,
+    "image_height": 1280
+  },
+  "languages_used": "khm+eng+fra",
+  "error": null,
+  "corrected_text": "ER មន្ទីរព ខេហង . មា ន្នីរពហុព្យាបាល សុ | «y SOK HENG POLYCLINIC | ic) SSP 08235 ភួមិព្រៃទា nimes ខណ្ឌពោធិ៍សែនជ័យ រាជធាន៏ភ្នំពេញ | x MAD. 089/098 688 685 | SES | ឈ្មោះ: Ga យាប ER: aid 47 ឆ្នាំ កាលបរិច្ឆេទ: 05/01/2026 oo) NGOs: លង្កាត់កួក្កាបទី២ ខណ្ឌ លខកូនអ្នកនំនី: P25000720 mae ពោធិ៍សែនជ័យ រានធានីភ្នំពញ លេខកូន ប.ស.ល.: 0891509 | 8រានវិនិឆ្ជឺយៈ 1534 - Asthénie | | កា 2 pese COLE = pee [TEE ee IE) - TA:100/65 mmHg, + P:90 /min. | ~T?: 36,7°C | | BJ “ es. . EU រ សូមយគទវដ្ជបញ្ជាមកនាមួយ ាលពិនីគ្ឃលើកក្រាយ។ oy, BT | | | | | | | | |",
+  "reminder_text": "• ER មន្ទីរព ខេហង . មា ន្នីរពហុព្យាបាល សុ | «y SOK HENG POLYCLINIC | ic) SSP 08235 ភួមិព្រៃទា nimes ខណ្ឌពោធិ៍សែនជ័យ រាជធាន៏ភ្នំពេញ | x MAD. 089/098 688 685 | SES | ឈ្មោះ: Ga យាប ER: aid 47 ឆ្នាំ កាលបរិច្ឆេទ: 05/01/2026 oo) NGOs: លង្កាត់កួក្កាបទី២ ខណ្ឌ លខកូនអ្នកនំនី: P25000720 mae ពោធិ៍សែនជ័យ រានធានីភ្នំពញ លេខកូន ប.ស.ល.: 0891509 | 8រានវិនិឆ្ជឺយៈ 1534 - Asthénie | | កា 2 pese COLE = pee [TEE ee IE) - TA:100/65 mmHg, + P:90 /min. | ~T?: 36,7°C | | BJ “ es. . EU រ សូមយគទវដ្ជបញ្ជាមកនាមួយ ាលពិនីគ្ឃលើកក្រាយ។ oy, BT | | | | | | | | |",
+  "ai_enhanced": false,
+  "fallback_used": true,
+  "source_file": "image1.png",
+  "timestamp": "2026-01-29T23:23:41.268347",
+  "test_number": 11
+}

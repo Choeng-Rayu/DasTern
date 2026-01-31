@@ -191,6 +191,91 @@ async def extract_and_save(
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@router.post("/extract-medical")
+async def extract_medical_prescription_endpoint(
+    file: UploadFile = File(..., description="Medical prescription image"),
+    apply_advanced_preprocessing: bool = Form(default=True, description="Apply advanced preprocessing"),
+    detect_tables: bool = Form(default=True, description="Detect and extract tables"),
+    extract_structured: bool = Form(default=True, description="Extract structured data"),
+    upscale_factor: float = Form(default=1.5, description="Image upscale factor"),
+    languages: Optional[str] = Form(default=None, description="OCR languages"),
+    output_name: Optional[str] = Form(default=None, description="Output file name")
+):
+    """
+    Enhanced medical prescription OCR extraction
+    
+    This endpoint provides advanced OCR specifically for medical prescriptions:
+    - Advanced image preprocessing (shadow removal, deskewing, contrast enhancement)
+    - Table detection and extraction
+    - Structured data extraction (medications, patient info, doctor info, dates)
+    - Better handling of poor quality images
+    - Support for multiple languages (Khmer, English, French)
+    
+    Returns comprehensive OCR results with structured medical data.
+    """
+    logger.info(f"Medical OCR request: {file.filename}")
+    
+    # Import here to avoid circular imports
+    from ..ocr.extractors.medical_ocr import extract_medical_prescription
+    
+    # Validate file type
+    if not file.content_type or not file.content_type.startswith("image/"):
+        raise HTTPException(
+            status_code=400,
+            detail=f"Invalid file type: {file.content_type}. Expected image/*"
+        )
+    
+    try:
+        # Read and decode image
+        contents = await file.read()
+        
+        # Check file size
+        file_size_mb = len(contents) / (1024 * 1024)
+        if file_size_mb > settings.MAX_FILE_SIZE_MB:
+            raise HTTPException(
+                status_code=413,
+                detail=f"File too large: {file_size_mb:.2f}MB. Max: {settings.MAX_FILE_SIZE_MB}MB"
+            )
+        
+        image = load_image_from_bytes(contents)
+        logger.info(f"Image loaded: {image.shape}")
+        
+        # Run enhanced medical OCR
+        result = extract_medical_prescription(
+            image,
+            apply_advanced_preprocessing=apply_advanced_preprocessing,
+            detect_tables=detect_tables,
+            extract_structured=extract_structured,
+            languages=languages,
+            upscale_factor=upscale_factor
+        )
+        
+        # Optionally save results
+        if output_name:
+            results_dir = settings.RESULTS_DIR
+            results_dir.mkdir(parents=True, exist_ok=True)
+            output_path = results_dir / f"{output_name}.json"
+            
+            output_data = {
+                "timestamp": datetime.now().isoformat(),
+                "source_file": file.filename,
+                **result
+            }
+            
+            with open(output_path, "w", encoding="utf-8") as f:
+                json.dump(output_data, f, ensure_ascii=False, indent=2)
+            
+            logger.info(f"Results saved to: {output_path}")
+        
+        return JSONResponse(result)
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Medical OCR failed: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @router.get("/languages")
 async def get_languages():
     """
