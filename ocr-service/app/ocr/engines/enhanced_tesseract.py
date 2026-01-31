@@ -244,12 +244,22 @@ def post_process_ocr_results(data: Dict[str, List]) -> Dict[str, List]:
         data: Raw OCR data from Tesseract
         
     Returns:
-        Improved OCR data
+        Improved OCR data in standard Tesseract format
     """
     try:
-        improved_text = []
-        improved_conf = []
-        improved_bbox = []
+        # Initialize improved data structure with all required keys
+        improved_data = {
+            'text': [],
+            'conf': [],
+            'left': [],
+            'top': [],
+            'width': [],
+            'height': [],
+            'block_num': [],
+            'par_num': [],
+            'line_num': [],
+            'word_num': []
+        }
         
         # Process each OCR element
         for i in range(len(data.get('text', []))):
@@ -264,7 +274,6 @@ def post_process_ocr_results(data: Dict[str, List]) -> Dict[str, List]:
             text = text.strip()
             text = fix_khmer_ocr_errors(text)
             text = fix_medical_terms(text)
-            text = fix_common_ocr_errors(text)
             
             # Boost confidence for known medical terms
             if is_medical_term(text):
@@ -272,30 +281,19 @@ def post_process_ocr_results(data: Dict[str, List]) -> Dict[str, List]:
             
             # Keep only improved results
             if conf >= 30 and text:
-                improved_text.append(text)
-                improved_conf.append(conf)
-                if 'left' in data:
-                    improved_bbox.append({
-                        'left': data['left'][i],
-                        'top': data['top'][i], 
-                        'width': data['width'][i],
-                        'height': data['height'][i]
-                    })
+                improved_data['text'].append(text)
+                improved_data['conf'].append(conf)
+                improved_data['left'].append(data.get('left', [])[i] if 'left' in data else 0)
+                improved_data['top'].append(data.get('top', [])[i] if 'top' in data else 0)
+                improved_data['width'].append(data.get('width', [])[i] if 'width' in data else 0)
+                improved_data['height'].append(data.get('height', [])[i] if 'height' in data else 0)
+                improved_data['block_num'].append(data.get('block_num', [])[i] if 'block_num' in data else 0)
+                improved_data['par_num'].append(data.get('par_num', [])[i] if 'par_num' in data else 0)
+                improved_data['line_num'].append(data.get('line_num', [])[i] if 'line_num' in data else 0)
+                improved_data['word_num'].append(data.get('word_num', [])[i] if 'word_num' in data else 0)
         
-        # Build improved data structure
-        improved_data = {
-            'text': improved_text,
-            'conf': improved_conf,
-            'raw_text': ' '.join(improved_text),
-            'avg_confidence': sum(improved_conf) / len(improved_conf) if improved_conf else 0,
-            'total_elements': len(improved_text),
-            'language_detected': detect_dominant_language(improved_text)
-        }
-        
-        if improved_bbox:
-            improved_data['bbox'] = improved_bbox
-            
-        logger.info(f"Post-processed OCR: {len(improved_text)} elements, avg confidence: {improved_data['avg_confidence']:.1f}%")
+        avg_conf = sum(improved_data['conf']) / len(improved_data['conf']) if improved_data['conf'] else 0
+        logger.info(f"Post-processed OCR: {len(improved_data['text'])} elements, avg confidence: {avg_conf:.1f}%")
         
         return improved_data
         

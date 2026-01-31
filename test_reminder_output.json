@@ -1,0 +1,353 @@
+{
+  "prescription": {
+    "patient_info": {
+      "name": "ហុ ចាន",
+      "id": "HAKF1354164",
+      "age": 19,
+      "gender": "ស្រី",
+      "hospital_code": "HAKF"
+    },
+    "medical_info": {
+      "diagnosis": "Chronic Cystitis",
+      "doctor": "Srvheng",
+      "date": "15/06/2025",
+      "department": "បន្ទប់លេខ 5"
+    },
+    "medications": [
+      {
+        "name": "Butylscopolamine 10mg",
+        "dosage": "10mg",
+        "quantity": 14,
+        "unit": "tablet",
+        "schedule": {
+          "times": [
+            "morning",
+            "evening"
+          ],
+          "times_24h": [
+            "08:00",
+            "18:00"
+          ],
+          "frequency": "twice_daily"
+        },
+        "duration_days": 7,
+        "instructions": "Take before meals"
+      },
+      {
+        "name": "Celcoxx 100mg",
+        "dosage": "100mg",
+        "quantity": 14,
+        "unit": "tablet",
+        "schedule": {
+          "times": [
+            "morning",
+            "evening"
+          ],
+          "times_24h": [
+            "08:00",
+            "18:00"
+          ],
+          "frequency": "twice_daily"
+        },
+        "duration_days": 7,
+        "instructions": "Take with food"
+      },
+      {
+        "name": "Omeprazole 20mg",
+        "dosage": "20mg",
+        "quantity": 14,
+        "unit": "tablet",
+        "schedule": {
+          "times": [
+            "morning",
+            "noon",
+            "afternoon"
+          ],
+          "times_24h": [
+            "08:00",
+            "12:00",
+            "18:00"
+          ],
+          "frequency": "three_times_daily"
+        },
+        "duration_days": 7,
+        "instructions": "Take before meals"
+      },
+      {
+        "name": "Multivitamine",
+        "dosage": "",
+        "quantity": 21,
+        "unit": "tablet",
+        "schedule": {
+          "times": [
+            "morning",
+            "noon",
+            "afternoon"
+          ],
+          "times_24h": [
+            "08:00",
+            "12:00",
+            "18:00"
+          ],
+          "frequency": "three_times_daily"
+        },
+        "duration_days": 7,
+        "instructions": "Take after meals"
+      }
+    ]
+  },
+  "reminders": [
+    {
+      "medication_name": "Butylscopolamine 10mg",
+      "medication_dosage": "10mg",
+      "time_slot": "morning",
+      "scheduled_time": "08:00",
+      "dose_amount": 1,
+      "dose_unit": "tablet",
+      "start_date": "2025-06-15",
+      "end_date": "2025-06-22",
+      "instructions": "Take before meals",
+      "notification_title": "Time to take Butylscopolamine 10mg",
+      "notification_body": "Take 1 Butylscopolamine 10mg (10mg) - Take before meals",
+      "days_of_week": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "advance_notification_minutes": 15,
+      "snooze_duration_minutes": 10
+    },
+    {
+      "medication_name": "Butylscopolamine 10mg",
+      "medication_dosage": "10mg",
+      "time_slot": "evening",
+      "scheduled_time": "18:00",
+      "dose_amount": 1,
+      "dose_unit": "tablet",
+      "start_date": "2025-06-15",
+      "end_date": "2025-06-22",
+      "instructions": "Take before meals",
+      "notification_title": "Time to take Butylscopolamine 10mg",
+      "notification_body": "Take 1 Butylscopolamine 10mg (10mg) - Take before meals",
+      "days_of_week": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "advance_notification_minutes": 15,
+      "snooze_duration_minutes": 10
+    },
+    {
+      "medication_name": "Celcoxx 100mg",
+      "medication_dosage": "100mg",
+      "time_slot": "morning",
+      "scheduled_time": "08:00",
+      "dose_amount": 1,
+      "dose_unit": "tablet",
+      "start_date": "2025-06-15",
+      "end_date": "2025-06-22",
+      "instructions": "Take with food",
+      "notification_title": "Time to take Celcoxx 100mg",
+      "notification_body": "Take 1 Celcoxx 100mg (100mg) - Take with food",
+      "days_of_week": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "advance_notification_minutes": 15,
+      "snooze_duration_minutes": 10
+    },
+    {
+      "medication_name": "Celcoxx 100mg",
+      "medication_dosage": "100mg",
+      "time_slot": "evening",
+      "scheduled_time": "18:00",
+      "dose_amount": 1,
+      "dose_unit": "tablet",
+      "start_date": "2025-06-15",
+      "end_date": "2025-06-22",
+      "instructions": "Take with food",
+      "notification_title": "Time to take Celcoxx 100mg",
+      "notification_body": "Take 1 Celcoxx 100mg (100mg) - Take with food",
+      "days_of_week": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "advance_notification_minutes": 15,
+      "snooze_duration_minutes": 10
+    },
+    {
+      "medication_name": "Omeprazole 20mg",
+      "medication_dosage": "20mg",
+      "time_slot": "morning",
+      "scheduled_time": "08:00",
+      "dose_amount": 1,
+      "dose_unit": "tablet",
+      "start_date": "2025-06-15",
+      "end_date": "2025-06-22",
+      "instructions": "Take before meals",
+      "notification_title": "Time to take Omeprazole 20mg",
+      "notification_body": "Take 1 Omeprazole 20mg (20mg) - Take before meals",
+      "days_of_week": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "advance_notification_minutes": 15,
+      "snooze_duration_minutes": 10
+    },
+    {
+      "medication_name": "Omeprazole 20mg",
+      "medication_dosage": "20mg",
+      "time_slot": "noon",
+      "scheduled_time": "12:00",
+      "dose_amount": 1,
+      "dose_unit": "tablet",
+      "start_date": "2025-06-15",
+      "end_date": "2025-06-22",
+      "instructions": "Take before meals",
+      "notification_title": "Time to take Omeprazole 20mg",
+      "notification_body": "Take 1 Omeprazole 20mg (20mg) - Take before meals",
+      "days_of_week": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "advance_notification_minutes": 15,
+      "snooze_duration_minutes": 10
+    },
+    {
+      "medication_name": "Omeprazole 20mg",
+      "medication_dosage": "20mg",
+      "time_slot": "afternoon",
+      "scheduled_time": "18:00",
+      "dose_amount": 1,
+      "dose_unit": "tablet",
+      "start_date": "2025-06-15",
+      "end_date": "2025-06-22",
+      "instructions": "Take before meals",
+      "notification_title": "Time to take Omeprazole 20mg",
+      "notification_body": "Take 1 Omeprazole 20mg (20mg) - Take before meals",
+      "days_of_week": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "advance_notification_minutes": 15,
+      "snooze_duration_minutes": 10
+    },
+    {
+      "medication_name": "Multivitamine",
+      "medication_dosage": "",
+      "time_slot": "morning",
+      "scheduled_time": "08:00",
+      "dose_amount": 1,
+      "dose_unit": "tablet",
+      "start_date": "2025-06-15",
+      "end_date": "2025-06-22",
+      "instructions": "Take after meals",
+      "notification_title": "Time to take Multivitamine",
+      "notification_body": "Take 1 Multivitamine - Take after meals",
+      "days_of_week": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "advance_notification_minutes": 15,
+      "snooze_duration_minutes": 10
+    },
+    {
+      "medication_name": "Multivitamine",
+      "medication_dosage": "",
+      "time_slot": "noon",
+      "scheduled_time": "12:00",
+      "dose_amount": 1,
+      "dose_unit": "tablet",
+      "start_date": "2025-06-15",
+      "end_date": "2025-06-22",
+      "instructions": "Take after meals",
+      "notification_title": "Time to take Multivitamine",
+      "notification_body": "Take 1 Multivitamine - Take after meals",
+      "days_of_week": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "advance_notification_minutes": 15,
+      "snooze_duration_minutes": 10
+    },
+    {
+      "medication_name": "Multivitamine",
+      "medication_dosage": "",
+      "time_slot": "afternoon",
+      "scheduled_time": "18:00",
+      "dose_amount": 1,
+      "dose_unit": "tablet",
+      "start_date": "2025-06-15",
+      "end_date": "2025-06-22",
+      "instructions": "Take after meals",
+      "notification_title": "Time to take Multivitamine",
+      "notification_body": "Take 1 Multivitamine - Take after meals",
+      "days_of_week": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "advance_notification_minutes": 15,
+      "snooze_duration_minutes": 10
+    }
+  ],
+  "metadata": {
+    "total_medications": 4,
+    "total_reminders": 10,
+    "start_date": "2025-06-15",
+    "generated_at": "2026-01-31T11:15:12.943893"
+  },
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "total_reminders": 10
+  }
+}

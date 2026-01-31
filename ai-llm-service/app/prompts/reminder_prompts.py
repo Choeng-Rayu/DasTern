@@ -4,6 +4,34 @@ Optimized for Ollama with llama3.2:3b - concise and explicit
 """
 
 # ============================================================
+# Time Normalization Table for Khmer/French/English
+# ============================================================
+TIME_NORMALIZATION_TABLE = {
+    # Khmer
+    "ព្រឹក": "morning",
+    "ថ្ងៃត្រង់": "noon",
+    "ល្ងាច": "evening",
+    "យប់": "night",
+    # French
+    "matin": "morning",
+    "midi": "noon",
+    "soir": "evening",
+    "nuit": "night",
+    # English
+    "morning": "morning",
+    "noon": "noon",
+    "evening": "evening",
+    "night": "night",
+    # Time ranges
+    "(6-8)": "morning",
+    "(11-12)": "noon",
+    "(05-06)": "evening",
+    "(17-18)": "evening",
+    "(08-10)": "night",
+    "(20-22)": "night",
+}
+
+# ============================================================
 # Simplified System Prompt - concise and direct
 # ============================================================
 REMINDER_SYSTEM_PROMPT = """You are a medication reminder extraction system for Cambodian prescriptions.
@@ -91,3 +119,40 @@ def build_reminder_extraction_prompt(raw_ocr_json: str) -> dict:
         "system": REMINDER_SYSTEM_PROMPT,
         "user": get_user_prompt(raw_ocr_json)
     }
+
+
+# ============================================================
+# Few-shot examples for training
+# ============================================================
+FEW_SHOT_EXAMPLES = [
+    {
+        "input": "1. Butylscopolamine 10mg 14 គ្រាប់ | ព្រឹក 1 | ល្ងាច 1",
+        "output": {
+            "medications": [
+                {
+                    "name": "Butylscopolamine 10mg",
+                    "times": ["morning", "evening"],
+                    "times_24h": ["08:00", "18:00"],
+                    "repeat": "daily",
+                    "duration_days": 7,
+                    "notes": "ព្រឹក 1 | ល្ងាច 1"
+                }
+            ]
+        }
+    },
+    {
+        "input": "2. Calcium amp Tablet 1 amp - - - ព្រឹក 4 Amps",
+        "output": {
+            "medications": [
+                {
+                    "name": "Calcium amp Tablet",
+                    "times": ["morning"],
+                    "times_24h": ["08:00"],
+                    "repeat": "daily",
+                    "duration_days": 4,
+                    "notes": "ព្រឹក 4 Amps"
+                }
+            ]
+        }
+    }
+]
