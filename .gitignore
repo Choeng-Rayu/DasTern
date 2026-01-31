@@ -6,6 +6,9 @@
 .venv/
 venv/
 env/
+*.venv/
+paddle-ocr-service/venv_ocr/
+paddle-ocr-service/venv_ocr_broken_3.3.3/
 
 # Environment variables (NEVER commit!)
 .env

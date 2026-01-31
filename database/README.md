@@ -1,273 +1,232 @@
-# DasTern V2 Database Documentation
+# DasTern Database
 
-## Overview
+PostgreSQL database for the DasTern Medical Prescription & Medication Management Platform.
 
-This directory contains the complete database schema and related files for the DasTern V2 Medical Prescription OCR & AI Assistance Platform. The database is designed using PostgreSQL with a focus on security, performance, and scalability.
+## Quick Start (Docker)
 
-## Database Structure
+```bash
+# Start database
+docker-compose up -d postgres
 
-### Core Tables
+# Run all migrations
+docker exec -i dastern-postgres psql -U dastern -d dastern_db < database/migrations/001_initial_schema.sql
+docker exec -i dastern-postgres psql -U dastern -d dastern_db < database/migrations/002_enhanced_prescriptions.sql
+docker exec -i dastern-postgres psql -U dastern -d dastern_db < database/migrations/003_family_and_reports.sql
+docker exec -i dastern-postgres psql -U dastern -d dastern_db < database/migrations/004_onboarding_status.sql
+docker exec -i dastern-postgres psql -U dastern -d dastern_db < database/migrations/005_role_profiles.sql
+docker exec -i dastern-postgres psql -U dastern -d dastern_db < database/migrations/006_family_invitation_approval.sql
+docker exec -i dastern-postgres psql -U dastern -d dastern_db < database/migrations/007_family_permissions.sql
 
-#### User Management
-- **users** - Core user information (patients, doctors, admins)
-- **user_sessions** - JWT token management and session tracking
-- **user_subscriptions** - Premium subscription management
-- **subscription_plans** - Available subscription tiers and features
+# Load test data (optional)
+docker exec -i dastern-postgres psql -U dastern -d dastern_db < database/seeds/test_users.sql
+```
 
-#### Prescription Management
-- **prescriptions** - Core prescription data with OCR and AI results
-- **medications** - Individual medications extracted from prescriptions
-- **medication_reminders** - User-configured medication reminders
-- **medication_reminder_logs** - Tracking of reminder actions
-
-#### Doctor-Patient Workflow
-- **doctor_patient_relationships** - Doctor-patient connections
-- **clinical_notes** - Doctor notes and observations
-
-#### AI Features (Premium)
-- **ai_chat_conversations** - AI chat sessions
-- **ai_chat_messages** - Individual chat messages
-- **ai_reports** - Generated AI reports and analysis
-
-#### System & Analytics
-- **notifications** - System notifications and alerts
-- **usage_analytics** - User behavior and feature usage tracking
-- **audit_logs** - Security and compliance audit trail
-- **payment_transactions** - Payment processing records
-
-## Files Structure
+## Directory Structure
 
 ```
 database/
-├── schema.sql                 # Complete database schema
-├── migrations/
-│   └── 001_initial_schema.sql # Initial migration
-├── seeds/
-│   └── development_data.sql   # Sample data for development
-├── functions/
-│   └── user_functions.sql     # Custom database functions
-└── README.md                  # This documentation
+├── migrations/           # Sequential schema changes
+│   ├── 001_initial_schema.sql
+│   ├── 002_enhanced_prescriptions.sql
+│   ├── 003_family_and_reports.sql
+│   ├── 004_onboarding_status.sql
+│   ├── 005_role_profiles.sql
+│   ├── 006_family_invitation_approval.sql
+│   └── 007_family_permissions.sql
+├── seeds/                # Test data
+│   ├── development_data.sql
+│   └── test_users.sql
+├── functions/            # Custom SQL functions
+│   └── user_functions.sql
+├── schema.sql            # Legacy full schema
+├── final-schema.sql      # Consolidated schema
+└── Dockerfile
 ```
 
-## Setup Instructions
+## Core Tables
 
-### 1. Initial Database Setup
+| Table | Description |
+|-------|-------------|
+| `users` | User accounts (patient, doctor, family_member, admin) |
+| `patient_profiles` | Patient-specific data (DOB, blood type, allergies) |
+| `doctor_profiles` | Doctor verification (license, hospital, specialty) |
+| `family_member_profiles` | Family member relationship info |
+| `prescriptions` | Prescription records with OCR/AI results |
+| `medications` | Extracted medication details |
+| `medication_reminders` | Scheduled medication reminders |
+| `family_invitations` | Patient-to-family connection codes |
+| `family_connection_requests` | Pending family approval requests |
 
-```bash
-# Create database
-createdb dastern_v2
+## Enums
 
-# Run initial schema
-psql -d dastern_v2 -f database/schema.sql
-
-# Or use migration approach
-psql -d dastern_v2 -f database/migrations/001_initial_schema.sql
+```sql
+user_role: 'patient' | 'doctor' | 'family_member' | 'admin'
+onboarding_status: 'pending' | 'role_selected' | 'profile_pending' | 'active'
+subscription_tier: 'free' | 'premium'
+prescription_status: 'processing' | 'completed' | 'error' | 'archived'
 ```
 
-### 2. Load Development Data
+## Migrations Summary
+
+| # | Migration | Description |
+|---|-----------|-------------|
+| 001 | Initial Schema | Users, prescriptions, medications, reminders |
+| 002 | Enhanced Prescriptions | OCR confidence, doctor fields |
+| 003 | Family & Reports | Family members, AI reports |
+| 004 | Onboarding Status | User onboarding flow tracking |
+| 005 | Role Profiles | Separate profile tables per role |
+| 006 | Family Approval | Connection request workflow |
+| 007 | Family Permissions | JSONB permissions for family access |
+
+## Common Commands
 
 ```bash
-# Load sample data for development
-psql -d dastern_v2 -f database/seeds/development_data.sql
-```
+# Connect to database
+docker exec -it dastern-postgres psql -U dastern -d dastern_db
 
-### 3. Install Custom Functions
+# Check tables
+\dt
 
-```bash
-# Install utility functions
-psql -d dastern_v2 -f database/functions/user_functions.sql
+# Describe table
+\d users
+
+# Check user roles
+SELECT id, email, role, onboarding_status FROM users;
+
+# Check family connections
+SELECT * FROM family_invitations WHERE status = 'accepted';
 ```
 
 ## Key Features
 
-### 1. Security Features
+- **Role-based access**: Patient, Doctor, Family Member, Admin
+- **Onboarding flow**: Tracks user registration progress
+- **Family system**: Invitation codes with approval workflow
+- **Permissions**: JSONB-based granular family access control
+- **Audit logging**: Tracks all data access
 
-#### Row Level Security (RLS)
-- Prescriptions are only accessible to the patient, their doctors, or admins
-- Clinical notes are restricted to the authoring doctor and patient
-- AI chat conversations are private to the user
+# DasTern Database — brief relational architecture
 
-#### Data Encryption
-- Passwords are hashed using bcrypt
-- Sensitive data fields are designed for encryption at rest
-- All connections use TLS encryption
+Purpose
+- PostgreSQL schema for DasTern: prescription OCR ingest, medication extraction, reminders, family/doctor sharing, AI features and billing.
+- This README summarizes tables, core relationships and feature flows so reviewers can grasp the model before deep dives.
 
-#### Audit Trail
-- All data access and modifications are logged
-- User sessions are tracked with device and IP information
-- Payment transactions are fully auditable
+Quick start (Docker)
+```bash
+# Start DB
+docker-compose up -d postgres
 
-### 2. Performance Optimizations
-
-#### Indexes
-- Strategic indexes on frequently queried columns
-- Composite indexes for complex queries
-- Partial indexes for filtered queries
-
-#### Views
-- Pre-computed views for common queries
-- User profile view with subscription information
-- Prescription summary view with medication counts
-
-#### Functions
-- Custom functions for business logic
-- Efficient subscription validation
-- Automated cleanup procedures
-
-### 3. Business Logic
-
-#### Subscription Management
-- Free tier limitations (10 prescriptions max)
-- Premium feature access control
-- Usage tracking and limits
-
-#### Doctor-Patient Relationships
-- Invitation-based connection system
-- Granular permission controls
-- Relationship status management
-
-#### Medication Reminders
-- Flexible scheduling system
-- Comprehensive tracking and logging
-- Statistics and adherence monitoring
-
-## Data Types and Enums
-
-### Custom Types
-```sql
-user_role: 'patient', 'doctor', 'admin'
-subscription_tier: 'free', 'premium'
-prescription_status: 'processing', 'completed', 'error', 'archived'
-relationship_status: 'pending', 'active', 'inactive', 'blocked'
-notification_type: 'reminder', 'alert', 'message', 'system'
-payment_status: 'pending', 'completed', 'failed', 'refunded'
+# Run all migrations (example)
+docker exec -i dastern-postgres psql -U dastern -d dastern_db < database/migrations/001_initial_schema.sql
+# ...run subsequent migration files in order...
 ```
 
-## Sample Queries
+Core concept
+- Single canonical users table. Other domain entities reference users by role (patient, doctor, family_member, admin).
+- Prescriptions are the central document entity. OCR → medications → reminders → adherence logs.
+- Templates, queues, analytics, notifications and audit logs provide operability and observability.
 
-### Get User's Prescriptions with Medications
-```sql
-SELECT 
-    p.id,
-    p.prescription_date,
-    p.pharmacy_name,
-    p.status,
-    array_agg(m.name || ' ' || m.strength) as medications
-FROM prescriptions p
-LEFT JOIN medications m ON p.id = m.prescription_id
-WHERE p.patient_id = $1
-GROUP BY p.id, p.prescription_date, p.pharmacy_name, p.status
-ORDER BY p.created_at DESC;
-```
+Tables (essential columns + short description)
+- users (id, email, role, first_name, last_name, is_active, created_at)
+  - Central actor table for patients, doctors, family, admins.
 
-### Check Premium Feature Access
-```sql
-SELECT user_has_premium_subscription($1) as has_premium,
-       can_make_ai_request($1) as can_use_ai;
-```
+- user_sessions (id, user_id → users, refresh_token, expires_at)
+  - Stores refresh tokens / sessions.
 
-### Get Active Medication Reminders
-```sql
-SELECT * FROM get_active_reminders($1);
-```
+- subscription_plans (id, name, tier, price_monthly)
+  - Catalog of plans (free/premium).
 
-## Maintenance Tasks
+- user_subscriptions (id, user_id → users, plan_id → subscription_plans, status, current_period_end)
+  - User's active subscription record.
 
-### Regular Cleanup
-```sql
--- Clean expired sessions (run daily)
-SELECT cleanup_expired_sessions();
+- payment_transactions (id, user_id → users, subscription_id → user_subscriptions, amount, status, processed_at)
+  - Payment history.
 
--- Archive old prescriptions (run monthly)
-SELECT archive_old_prescriptions(365);
-```
+- prescriptions (id, patient_id → users, doctor_id → users, original_image_url, status, prescription_date, ocr_confidence_score, ai_confidence_score)
+  - Uploaded prescription image + OCR/AI metadata.
 
-### Statistics and Monitoring
-```sql
--- User statistics
-SELECT * FROM get_user_statistics();
+- prescription_processing_queue (id, prescription_id → prescriptions, status, priority, started_at, completed_at)
+  - Async worker queue for OCR/AI processing.
 
--- Prescription statistics
-SELECT * FROM get_prescription_statistics();
-```
+- medications (id, prescription_id → prescriptions, sequence_number, name, strength, form)
+  - Medicines parsed out of a prescription.
 
-## Migration Strategy
+- medication_schedule_templates (id, name, morning_time, noon_time, evening_time, night_time, is_default)
+  - Reusable reminder presets (can be system or user-owned).
 
-### Adding New Columns
-1. Create migration file in `migrations/` directory
-2. Use `ALTER TABLE` statements with default values
-3. Update application code to handle new fields
-4. Test thoroughly in development environment
+- medication_reminders (id, medication_id → medications, patient_id → users, time_slot, scheduled_time, start_date, end_date, is_active, template_id?)
+  - Scheduled reminders for a medication. (Recommended: include template_id + template_snapshot for traceability.)
 
-### Schema Changes
-1. Always backup production data before migrations
-2. Use transactions for atomic changes
-3. Test rollback procedures
-4. Monitor performance after changes
+- medication_reminder_logs (id, reminder_id → medication_reminders, medication_id → medications, patient_id → users, scheduled_date, actual_time, status)
+  - History of reminder events (taken/missed/snoozed).
 
-## Security Considerations
+- doctor_patient_relationships (id, doctor_id → users, patient_id → users, status, permissions)
+  - Links doctors with patients and stores permissions.
 
-### Data Protection
-- Never store plain text passwords
-- Encrypt sensitive medical data
-- Use parameterized queries to prevent SQL injection
-- Implement proper access controls
+- family_relationships (id, patient_id → users, family_member_id → users, relationship_type, status, permissions)
+  - Family access and invitation lifecycle.
 
-### Compliance
-- Log all access to medical data
-- Implement data retention policies
-- Provide data export capabilities for user requests
-- Ensure GDPR compliance features
+- clinical_notes (id, doctor_id → users, patient_id → users, prescription_id → prescriptions, title, content)
+  - Doctor notes (can be shared/hidden).
 
-### Monitoring
-- Monitor failed login attempts
-- Track unusual data access patterns
-- Alert on bulk data operations
-- Regular security audits
+- ai_chat_conversations (id, user_id → users, prescription_id → prescriptions, title, created_at)
+  - AI chat sessions (premium feature).
 
-## Performance Monitoring
+- ai_chat_messages (id, conversation_id → ai_chat_conversations, message_type, content, ai_confidence_score)
+  - Messages within an AI conversation.
 
-### Key Metrics to Monitor
-- Query execution times
-- Index usage statistics
-- Connection pool utilization
-- Database size growth
-- Slow query identification
+- ai_reports (id, prescription_id → prescriptions, user_id → users, report_type, summary, ai_confidence_score)
+  - Generated AI analysis reports tied to prescriptions/users.
 
-### Optimization Tips
-- Regular VACUUM and ANALYZE operations
-- Monitor and optimize slow queries
-- Consider partitioning for large tables
-- Use connection pooling
-- Implement proper caching strategies
+- notifications (id, user_id → users, type, title, message, is_read, created_at)
+  - Push/email/in-app notifications.
 
-## Backup and Recovery
+- usage_analytics (id, user_id → users, event_type, event_data, created_at)
+  - Telemetry/events for monitoring and metrics.
 
-### Backup Strategy
-- Daily full backups
-- Continuous WAL archiving
-- Test restore procedures regularly
-- Store backups in multiple locations
+- audit_logs (id, user_id → users, action, resource_type, resource_id, created_at)
+  - Security and compliance audit trail.
 
-### Recovery Procedures
-- Point-in-time recovery capability
-- Documented recovery steps
-- Regular disaster recovery testing
-- RTO/RPO targets defined
+Primary relationships (textual ERD)
+- users 1..* → prescriptions (patient_id)
+- prescriptions 1..* → medications
+- prescriptions 1..1 → prescription_processing_queue entries (many-to-one possible for retries/history)
+- medications 1..* → medication_reminders
+- medication_reminders 1..* → medication_reminder_logs
+- users 1..* → user_sessions, user_subscriptions, payment_transactions, notifications, usage_analytics, audit_logs
+- users ↔ users via doctor_patient_relationships and family_relationships (both reference users twice)
+- ai_chat_conversations → users and optionally → prescriptions; ai_chat_messages → ai_chat_conversations
+- ai_reports → users and prescriptions
 
-## Development Guidelines
+Feature flows (tables required)
+- Auth & account: users, user_sessions, notifications, audit_logs
+- Subscription & billing: subscription_plans, user_subscriptions, payment_transactions, notifications
+- Prescription ingest (OCR): users, prescriptions, prescription_processing_queue
+- Medication extraction: prescriptions, medications
+- Reminder lifecycle: medications, medication_schedule_templates, medication_reminders, medication_reminder_logs, notifications
+- Doctor workflow: users, doctor_patient_relationships, clinical_notes, prescriptions
+- Family sharing: users, family_relationships, notifications, medication_reminders (viewing)
+- AI features: users, ai_chat_conversations, ai_chat_messages, ai_reports, prescriptions
+- Operations: prescription_processing_queue, usage_analytics, audit_logs
 
-### Naming Conventions
-- Tables: plural nouns (users, prescriptions)
-- Columns: snake_case (first_name, created_at)
-- Indexes: idx_table_column format
-- Functions: descriptive names with underscores
+Design notes / recommendations
+- Templates: keep template_id FK on medication_reminders and also store template_snapshot JSONB at creation for immutability.
+- Permissions: prefer explicit boolean columns for frequent checks plus JSONB for extensible rules.
+- Indexes: add indexes on foreign keys and on time fields (prescription.created_at, reminder.next_reminder_at) for scheduler performance.
+- Audit: write concise audit events for sensitive operations (view prescription, modify reminder).
+- Queue: use FOR UPDATE SKIP LOCKED pattern to pick jobs safely.
 
-### Best Practices
-- Always use transactions for multi-table operations
-- Include created_at and updated_at timestamps
-- Use UUIDs for primary keys
-- Implement proper foreign key constraints
-- Add appropriate check constraints for data validation
+Useful example queries
+- Recent prescriptions for a patient:
+  SELECT * FROM prescriptions WHERE patient_id = '<user_id>' ORDER BY created_at DESC LIMIT 20;
+- Active reminders due soon:
+  SELECT * FROM medication_reminders WHERE patient_id = '<user_id>' AND is_active = TRUE AND next_reminder_at < NOW() + INTERVAL '1 hour';
 
-This database design provides a solid foundation for the DasTern V2 platform, balancing functionality, security, and performance requirements.
+Where to read deeper
+- Migrations: database/migrations/*.sql — authoritative schema changes.
+- Functions: database/functions/user_functions.sql — DB helper logic.
+- Seeds: database/seeds/* — example data for testing.
+
+If you want, I will:
+- produce a one-page simplified ERD SVG for the presentation, or
+- generate the ALTER scripts to add template_id + template_snapshot and appropriate indexes. Which do you prefer?

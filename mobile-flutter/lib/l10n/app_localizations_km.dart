@@ -12,6 +12,87 @@ class AppLocalizationsKm extends AppLocalizations {
   String get appTitle => 'DasTern';
 
   @override
+  String get createNewAccount => 'បង្កើតគណនីថ្មី';
+
+  @override
+  String get lastName => 'នាមត្រកូល';
+
+  @override
+  String get fillLastName => 'សូមបំពេញនាមត្រកូលរបស់អ្នក';
+
+  @override
+  String get firstName => 'នាមខ្លួន';
+
+  @override
+  String get fillFirstName => 'សូមបំពេញនាមខ្លួនរបស់អ្នក';
+
+  @override
+  String get gender => 'ភេទ';
+
+  @override
+  String get fillGender => 'សូមបំពេញភេទរបស់អ្នក';
+
+  @override
+  String get dateOfBirth => 'ថ្ងៃកំណើត';
+
+  @override
+  String get day => 'ថ្ងៃទី';
+
+  @override
+  String get month => 'ខែ';
+
+  @override
+  String get year => 'ឆ្នាំ';
+
+  @override
+  String get idCardNumber => 'លេខអត្តសញ្ញាណប័ណ្ណ';
+
+  @override
+  String get fillIdCardNumber => 'សូមបំពេញលេខអត្តសញ្ញាណប័ណ្ណរបស់អ្នក';
+
+  @override
+  String get continueText => 'បន្ត';
+
+  @override
+  String get alreadyCreatedAccount => 'បានបង្កើតគណនីពីមុន';
+
+  @override
+  String get goBack => 'ថយក្រោយ';
+
+  @override
+  String get phoneNumber => 'លេខទូរស័ព្ទ';
+
+  @override
+  String get fillPhoneNumber => 'សូមបំពេញលេខទូរស័ព្ទរបស់អ្នក';
+
+  @override
+  String get password => 'ពាក្យសម្ងាត់';
+
+  @override
+  String get fillPassword => 'សូមបំពេញលេខកូខសម្ងាត់របស់អ្នក';
+
+  @override
+  String get confirmPassword => 'បញ្ជាក់ពាក្យសម្ងាត់';
+
+  @override
+  String get fillConfirmPassword => 'សូមបំពេញលេខកូខសម្ងាត់របស់អ្នកម្តងទៀត';
+
+  @override
+  String get pinCode => 'លេខកូខ៤ខ្ទង់';
+
+  @override
+  String get readTerms => 'សូមអានលក្ខខណ្ឌ និងច្បាប់មុនពេលប្រើប្រាស់កម្មវិធី';
+
+  @override
+  String get alreadyRead => 'អានរួចរាល់';
+
+  @override
+  String get signIn => 'ចូលគណនី';
+
+  @override
+  String get forgotPassword => 'ភ្លេចពាក្យសម្ងាត់?';
+
+  @override
   String get welcomeTitle => 'សូមស្វាគមន៍មកកាន់ DasTern';
 
   @override
@@ -81,7 +162,13 @@ class AppLocalizationsKm extends AppLocalizations {
   String get hello => 'សួស្តី';
 
   @override
-  String get dateOfBirth => 'ថ្ងៃកំណើត';
+  String get signin => 'បានបង្កើតគណនីពីមុន';
+
+  @override
+  String get createAccount => 'បង្កើតគណនីថ្មី';
+
+  @override
+  String get hello => 'សួស្តី';
 
   @override
   String get todaySchedule => 'កាលវិភាគ (ថ្ងៃនេះ)';
@@ -109,12 +196,6 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get logoutConfirmation => 'តើអ្នកពិតជាចង់ចាកចេញមែនទេ?';
-
-  @override
-  String get phoneNumber => 'លេខទូរស័ព្ទ';
-
-  @override
-  String get password => 'ពាក្យសម្ងាត់';
 
   @override
   String get loginError => 'លេខទូរស័ព្ទ ឬពាក្យសម្ងាត់មិនត្រឹមត្រូវ';
@@ -359,9 +440,6 @@ class AppLocalizationsKm extends AppLocalizations {
   String get address => 'អាសយដ្ឋាន (ស្រេចចិត្ត)';
 
   @override
-  String get confirmPassword => 'បញ្ជាក់ពាក្យសម្ងាត់';
-
-  @override
   String get passwordMismatch => 'ពាក្យសម្ងាត់មិនត្រូវគ្នា';
 
   @override
@@ -387,9 +465,6 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get pleaseEnterFamilyContact => 'សូមបញ្ចូលលេខទូរស័ព្ទគ្រួសារ';
-
-  @override
-  String get forgotPassword => 'ភ្លេចពាក្យសម្ងាត់?';
 
   @override
   String get dontHaveAccount => 'មិនទាន់មានគណនី? ';

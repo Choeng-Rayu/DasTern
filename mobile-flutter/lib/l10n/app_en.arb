@@ -1,8 +1,117 @@
+
 {
   "@@locale": "en",
   "appTitle": "DasTern",
   "@appTitle": {
     "description": "The application title"
+  },
+    "createNewAccount": "Create a new account",
+  "@createNewAccount": {
+    "description": "Create a new account"
+  },
+  "lastName": "Last name / Surname",
+  "@lastName": {
+    "description": "Last name or surname label"
+  },
+  "fillLastName": "Please fill in your last name",
+  "@fillLastName": {
+    "description": "Prompt to fill in last name"
+  },
+  "firstName": "First name / Given name",
+  "@firstName": {
+    "description": "First name or given name label"
+  },
+  "fillFirstName": "Please fill in your first name",
+  "@fillFirstName": {
+    "description": "Prompt to fill in first name"
+  },
+  "gender": "Gender",
+  "@gender": {
+    "description": "Gender label"
+  },
+  "fillGender": "Please fill in your gender",
+  "@fillGender": {
+    "description": "Prompt to fill in gender"
+  },
+  "dateOfBirth": "Date of birth (Day, Month, Year)",
+  "@dateOfBirth": {
+    "description": "Date of birth label"
+  },
+  "day": "Day",
+  "@day": {
+    "description": "Day label"
+  },
+  "month": "Month",
+  "@month": {
+    "description": "Month label"
+  },
+  "year": "Year",
+  "@year": {
+    "description": "Year label"
+  },
+  "idCardNumber": "ID card number / Identification number",
+  "@idCardNumber": {
+    "description": "ID card or identification number label"
+  },
+  "fillIdCardNumber": "Please fill in your ID card number",
+  "@fillIdCardNumber": {
+    "description": "Prompt to fill in ID card number"
+  },
+  "continueText": "Continue",
+  "@continue": {
+    "description": "Continue button label"
+  },
+  "alreadyCreatedAccount": "Already created an account before",
+  "@alreadyCreatedAccount": {
+    "description": "Already created account label"
+  },
+  "goBack": "Go back",
+  "@goBack": {
+    "description": "Go back button label"
+  },
+  "phoneNumber": "Phone number",
+  "@phoneNumber": {
+    "description": "Phone number label"
+  },
+  "fillPhoneNumber": "Please fill in your phone number",
+  "@fillPhoneNumber": {
+    "description": "Prompt to fill in phone number"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "Password label"
+  },
+  "fillPassword": "Please fill in your password",
+  "@fillPassword": {
+    "description": "Prompt to fill in password"
+  },
+  "confirmPassword": "Confirm password",
+  "@confirmPassword": {
+    "description": "Confirm password label"
+  },
+  "fillConfirmPassword": "Please fill in your password again",
+  "@fillConfirmPassword": {
+    "description": "Prompt to fill in password again"
+  },
+  "pinCode": "4-digit PIN code",
+  "@pinCode": {
+    "description": "4-digit PIN code label"
+  },
+  "readTerms": "Please read the terms and conditions before using the application",
+  "@readTerms": {
+    "description": "Prompt to read terms and conditions"
+  },
+  "alreadyRead": "Already read / I have read",
+  "@alreadyRead": {
+    "description": "Already read confirmation label"
+  },
+  "signIn": "Log in to account / Sign in",
+  "@signIn": {
+    "description": "Sign in or log in label"
+  },
+  "forgotPassword": "Forgot password",
+  "@forgotPassword": {
+    "description": "Forgot password label"
   },
   "welcomeTitle": "Welcome to DasTern",
   "@welcomeTitle": {

@@ -1,0 +1,54 @@
+{
+  "test_info": {
+    "result_number": 1,
+    "image_name": "Khmer-Soviet Hospital (Chronic Cystitis)",
+    "image_file": "image1.png",
+    "timestamp": "2026-01-30T21:46:47.363272",
+    "ocr_service": "http://localhost:8000",
+    "ai_service": "http://localhost:8001"
+  },
+  "step_1_ocr_output": {
+    "description": "Raw OCR output from OCR Service",
+    "success": true,
+    "total_elements": 0,
+    "stats": {
+      "total_words": 0,
+      "avg_confidence": 0,
+      "min_confidence": 0,
+      "max_confidence": 0,
+      "total_blocks": 0,
+      "total_lines": 0,
+      "image_width": 972,
+      "image_height": 1280
+    },
+    "languages_used": "khm+eng+fra",
+    "raw_data": []
+  },
+  "step_2_ai_output": {
+    "description": "AI-enhanced structured reminders",
+    "success": true,
+    "medications": [
+      {
+        "name": "Butylscopolamine",
+        "dosage": "",
+        "times": [
+          "evening",
+          "night"
+        ],
+        "times_24h": [
+          "18:00",
+          "21:00"
+        ],
+        "repeat": "daily",
+        "duration_days": null,
+        "notes": "ល្ងាច | យប់"
+      }
+    ],
+    "error": null,
+    "metadata": {
+      "model": "llama3.2:3b",
+      "attempts": 1,
+      "raw_response": "{\n  \"medications\": [\n    {\n      \"name\": \"Butylscopolamine\",\n      \"times\": [\"evening\", \"night\"],\n      \"times_24h\": [\"18:00\", \"21:00\"],\n      \"repeat\": \"daily\",\n      \"duration_days\": null,\n      \"notes\": \"ល្ងាច | យប់\"\n    }\n  ]\n}"
+    }
+  }
+}
