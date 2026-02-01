@@ -1,0 +1,952 @@
+# OCR Service Implementation Plan for Complex Prescription Scanning
+
+## Overview
+
+Building a **layer-by-layer OCR service** for scanning complex Cambodian prescriptions containing mixed **Khmer / English / French** text, tables, stamps, and symbols. The output is raw OCR JSON with bounding boxes, layout-aware, and AI-friendly.
+
+---
+
+## Prescription Analysis (From User Samples)
+
+### Prescription 1: Khmer-Soviet Friendship Hospital (H-EQIP)
+
+![Prescription 1](/home/rayu/.gemini/antigravity/brain/35bea62b-3389-4af0-a2e0-c199857d3b5e/uploaded_media_0_1769932439213.jpg)
+
+| Feature | Details |
+|---------|---------|
+| **Header** | Hospital logo + QR code + "H-EQIP" |
+| **Patient Info** | លេខកូដ: HAKF1354164, ឈ្មោះអ្នកជំងំ: គា ចានី |
+| **Diagnosis** | Chronic Cystitis (English) |
+| **Table** | 7 columns: No., Medicine, Qty, Usage, Morning, Noon, Evening, Night |
+| **Medicines** | Butylscopolamine, Celcoxx, Omeprazole, Multivitamine |
+| **Special** | Circled numbers ②, handwritten signature |
+
+### Prescription 2: Sok Heng Polyclinic
+
+![Prescription 2](/home/rayu/.gemini/antigravity/brain/35bea62b-3389-4af0-a2e0-c199857d3b5e/uploaded_media_1_1769932439213.jpg)
+
+| Feature | Details |
+|---------|---------|
+| **Header** | Blue logo + clinic name (Khmer & English) |
+| **Diagnosis** | 1534 - Asthénie (French) |
+| **Table** | Different columns: ព្រឹក, ថ្ងៃ org org org org org org org org org org org org org org org org org org org org org org org org org org org org, ល្ org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org_orgorg org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org-org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org  org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org, យប org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org; |
+| **Vital Signs** | TA:100/65 mmHg, P:90/min, T°: 36,7°C |
+| **Units** | "Amps" for ampules |
+
+### Challenges Identified
+
+> [!IMPORTANT]
+> These prescriptions require special handling:
+
+| Challenge | Solution |{
+  "patient_info": {
+    "patient_id": "P25000720",
+    "patient_name": "ស៊ុន ចាប់",
+    "diagnosis": "1534 - Asthénie",
+    "prescription_date": "05/01/2026"
+  },
+  "medications": [
+    {
+      "medication_id": "1",
+      "name": "Calcium amp Tablet",
+      "dosage": "1 amp",
+      "duration_days": 4,
+      "start_date": "2026-01-05",
+      "end_date": "2026-01-08",
+      "route": "PO",
+      "route_description": "Oral (by mouth)",
+      "notes": "ត្រើយប្រឡង",
+      "schedule": [
+        {
+          "time_slot": "morning",
+          "time": "07:00",
+          "time_range": "(6-8)",
+          "quantity": 1,
+          "unit": "ampoule(s)"
+        }
+      ]
+    },
+    {
+      "medication_id": "2",
+      "name": "Multivitamine Tablet",
+      "dosage": "1 ត្រាំង",
+      "duration_days": 10,
+      "start_date": "2026-01-05",
+      "end_date": "2026-01-14",
+      "route": "PO",
+      "route_description": "Oral (by mouth)",
+      "notes": "ត្រើយប្រឡង",
+      "schedule": [
+        {
+          "time_slot": "morning",
+          "time": "07:00",
+          "time_range": "(6-8)",
+          "quantity": 1,
+          "unit": "tablet(s)"
+        },
+        {
+          "time_slot": "afternoon",
+          "time": "17:30",
+          "time_range": "(05-06)",
+          "quantity": 1,
+          "unit": "tablet(s)"
+        }
+      ]
+    },
+    {
+      "medication_id": "3",
+      "name": "Amitriptyline",
+      "dosage": "10mg",
+      "duration_days": 5,
+      "start_date": "2026-01-05",
+      "end_date": "2026-01-09",
+      "route": "PO",
+      "route_description": "Oral (by mouth)",
+      "notes": "ត្រើយប្រឡង",
+      "schedule": [
+        {
+          "time_slot": "evening",
+          "time": "20:00",
+          "time_range": "(08-10)",
+          "quantity": 1,
+          "unit": "tablet(s)"
+        }
+      ]
+    }
+  ],
+  "daily_reminders": [
+    {
+      "day_number": 1,
+      "date": "2026-01-05",
+      "day_of_week": "Monday",
+      "reminders": [
+        {
+          "time": "07:00",
+          "time_slot": "morning",
+          "time_range": "(6-8)",
+          "medications_to_take": [
+            {
+              "name": "Calcium amp Tablet",
+              "dosage": "1 amp",
+              "quantity": 1,
+              "unit": "ampoule(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            },
+            {
+              "name": "Multivitamine Tablet",
+              "dosage": "1 ត្រាំង",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        },
+        {
+          "time": "17:30",
+          "time_slot": "afternoon",
+          "time_range": "(05-06)",
+          "medications_to_take": [
+            {
+              "name": "Multivitamine Tablet",
+              "dosage": "1 ត្រាំង",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        },
+        {
+          "time": "20:00",
+          "time_slot": "evening",
+          "time_range": "(08-10)",
+          "medications_to_take": [
+            {
+              "name": "Amitriptyline",
+              "dosage": "10mg",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day_number": 2,
+      "date": "2026-01-06",
+      "day_of_week": "Tuesday",
+      "reminders": [
+        {
+          "time": "07:00",
+          "time_slot": "morning",
+          "time_range": "(6-8)",
+          "medications_to_take": [
+            {
+              "name": "Calcium amp Tablet",
+              "dosage": "1 amp",
+              "quantity": 1,
+              "unit": "ampoule(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            },
+            {
+              "name": "Multivitamine Tablet",
+              "dosage": "1 ត្រាំង",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        },
+        {
+          "time": "17:30",
+          "time_slot": "afternoon",
+          "time_range": "(05-06)",
+          "medications_to_take": [
+            {
+              "name": "Multivitamine Tablet",
+              "dosage": "1 ត្រាំង",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        },
+        {
+          "time": "20:00",
+          "time_slot": "evening",
+          "time_range": "(08-10)",
+          "medications_to_take": [
+            {
+              "name": "Amitriptyline",
+              "dosage": "10mg",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day_number": 3,
+      "date": "2026-01-07",
+      "day_of_week": "Wednesday",
+      "reminders": [
+        {
+          "time": "07:00",
+          "time_slot": "morning",
+          "time_range": "(6-8)",
+          "medications_to_take": [
+            {
+              "name": "Calcium amp Tablet",
+              "dosage": "1 amp",
+              "quantity": 1,
+              "unit": "ampoule(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            },
+            {
+              "name": "Multivitamine Tablet",
+              "dosage": "1 ត្រាំង",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        },
+        {
+          "time": "17:30",
+          "time_slot": "afternoon",
+          "time_range": "(05-06)",
+          "medications_to_take": [
+            {
+              "name": "Multivitamine Tablet",
+              "dosage": "1 ត្រាំង",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        },
+        {
+          "time": "20:00",
+          "time_slot": "evening",
+          "time_range": "(08-10)",
+          "medications_to_take": [
+            {
+              "name": "Amitriptyline",
+              "dosage": "10mg",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day_number": 4,
+      "date": "2026-01-08",
+      "day_of_week": "Thursday",
+      "reminders": [
+        {
+          "time": "07:00",
+          "time_slot": "morning",
+          "time_range": "(6-8)",
+          "medications_to_take": [
+            {
+              "name": "Calcium amp Tablet",
+              "dosage": "1 amp",
+              "quantity": 1,
+              "unit": "ampoule(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            },
+            {
+              "name": "Multivitamine Tablet",
+              "dosage": "1 ត្រាំង",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        },
+        {
+          "time": "17:30",
+          "time_slot": "afternoon",
+          "time_range": "(05-06)",
+          "medications_to_take": [
+            {
+              "name": "Multivitamine Tablet",
+              "dosage": "1 ត្រាំង",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        },
+        {
+          "time": "20:00",
+          "time_slot": "evening",
+          "time_range": "(08-10)",
+          "medications_to_take": [
+            {
+              "name": "Amitriptyline",
+              "dosage": "10mg",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day_number": 5,
+      "date": "2026-01-09",
+      "day_of_week": "Friday",
+      "reminders": [
+        {
+          "time": "07:00",
+          "time_slot": "morning",
+          "time_range": "(6-8)",
+          "medications_to_take": [
+            {
+              "name": "Multivitamine Tablet",
+              "dosage": "1 ត្រាំង",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        },
+        {
+          "time": "17:30",
+          "time_slot": "afternoon",
+          "time_range": "(05-06)",
+          "medications_to_take": [
+            {
+              "name": "Multivitamine Tablet",
+              "dosage": "1 ត្រាំង",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        },
+        {
+          "time": "20:00",
+          "time_slot": "evening",
+          "time_range": "(08-10)",
+          "medications_to_take": [
+            {
+              "name": "Amitriptyline",
+              "dosage": "10mg",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day_number": 6,
+      "date": "2026-01-10",
+      "day_of_week": "Saturday",
+      "reminders": [
+        {
+          "time": "07:00",
+          "time_slot": "morning",
+          "time_range": "(6-8)",
+          "medications_to_take": [
+            {
+              "name": "Multivitamine Tablet",
+              "dosage": "1 ត្រាំង",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        },
+        {
+          "time": "17:30",
+          "time_slot": "afternoon",
+          "time_range": "(05-06)",
+          "medications_to_take": [
+            {
+              "name": "Multivitamine Tablet",
+              "dosage": "1 ត្រាំង",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day_number": 7,
+      "date": "2026-01-11",
+      "day_of_week": "Sunday",
+      "reminders": [
+        {
+          "time": "07:00",
+          "time_slot": "morning",
+          "time_range": "(6-8)",
+          "medications_to_take": [
+            {
+              "name": "Multivitamine Tablet",
+              "dosage": "1 ត្រាំង",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        },
+        {
+          "time": "17:30",
+          "time_slot": "afternoon",
+          "time_range": "(05-06)",
+          "medications_to_take": [
+            {
+              "name": "Multivitamine Tablet",
+              "dosage": "1 ត្រាំង",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day_number": 8,
+      "date": "2026-01-12",
+      "day_of_week": "Monday",
+      "reminders": [
+        {
+          "time": "07:00",
+          "time_slot": "morning",
+          "time_range": "(6-8)",
+          "medications_to_take": [
+            {
+              "name": "Multivitamine Tablet",
+              "dosage": "1 ត្រាំង",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        },
+        {
+          "time": "17:30",
+          "time_slot": "afternoon",
+          "time_range": "(05-06)",
+          "medications_to_take": [
+            {
+              "name": "Multivitamine Tablet",
+              "dosage": "1 ត្រាំង",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day_number": 9,
+      "date": "2026-01-13",
+      "day_of_week": "Tuesday",
+      "reminders": [
+        {
+          "time": "07:00",
+          "time_slot": "morning",
+          "time_range": "(6-8)",
+          "medications_to_take": [
+            {
+              "name": "Multivitamine Tablet",
+              "dosage": "1 ត្រាំង",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        },
+        {
+          "time": "17:30",
+          "time_slot": "afternoon",
+          "time_range": "(05-06)",
+          "medications_to_take": [
+            {
+              "name": "Multivitamine Tablet",
+              "dosage": "1 ត្រាំង",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "day_number": 10,
+      "date": "2026-01-14",
+      "day_of_week": "Wednesday",
+      "reminders": [
+        {
+          "time": "07:00",
+          "time_slot": "morning",
+          "time_range": "(6-8)",
+          "medications_to_take": [
+            {
+              "name": "Multivitamine Tablet",
+              "dosage": "1 ត្រាំង",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        },
+        {
+          "time": "17:30",
+          "time_slot": "afternoon",
+          "time_range": "(05-06)",
+          "medications_to_take": [
+            {
+              "name": "Multivitamine Tablet",
+              "dosage": "1 ត្រាំង",
+              "quantity": 1,
+              "unit": "tablet(s)",
+              "route": "PO",
+              "route_description": "Oral (by mouth)",
+              "medication_notes": "ត្រើយប្រឡង"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total_medications": 3,
+    "max_duration_days": 10,
+    "reminder_times": [
+      "07:00",
+      "17:30",
+      "20:00"
+    ],
+    "routes_used": [
+      "PO"
+    ]
+  }
+}
+|-----------|----------|
+| **Different table formats** | Flexible column detection |
+| **Mixed fonts** | Fine-tuning support |
+| **Circled numbers** | Symbol detection layer |
+| **Handwritten signatures** | Exclude or tag as signature |
+| **QR codes** | Detect and decode separately |
+| **Vital signs section** | Detect as separate block |
+| **Abbreviations** | "គ្រាប org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org "→ tablets, coated tablets |
+
+---
+
+## Updated Architecture
+
+```mermaid
+flowchart TD
+    A[Image Input] --> B[Layer 1: Intake & Validation]
+    B --> C[Layer 2: Quality Analysis]
+    C --> D[Layer 3: Preprocessing]
+    D --> E[Layer 4: Layout Analysis]
+    E --> F[Layer 5: OCR Extraction]
+    F --> G[Layer 6: Post-processing]
+    G --> H[Layer 7: JSON Builder]
+    
+    I[Training Module] --> J[Custom Font Training]
+    J --> F
+    
+    style I fill:#f9f,stroke:#333
+    style J fill:#f9f,stroke:#333
+```
+
+---
+
+## Project Structure (Updated with Training Module)
+
+```
+ocr-service/
+├── app/
+│   ├── __init__.py
+│   ├── main.py                    # FastAPI application
+│   ├── api/
+│   │   ├── __init__.py
+│   │   ├── routes.py              # OCR API endpoints
+│   │   └── training_routes.py     # [NEW] Training API endpoints
+│   ├── core/
+│   │   ├── __init__.py
+│   │   ├── config.py              # Configuration settings
+│   │   ├── exceptions.py          # Custom exceptions
+│   │   ├── logging.py             # Logging setup
+│   │   └── pipeline.py            # Pipeline orchestrator
+│   ├── intake/                    # Layer 1
+│   │   ├── __init__.py
+│   │   └── validator.py
+│   ├── quality/                   # Layer 2
+│   │   ├── __init__.py
+│   │   └── analyzer.py
+│   ├── preprocess/                # Layer 3
+│   │   ├── __init__.py
+│   │   └── enhancer.py
+│   ├── layout/                    # Layer 4
+│   │   ├── __init__.py
+│   │   ├── detector.py
+│   │   ├── table_detector.py      # [NEW] Table-specific detection
+│   │   └── qr_detector.py         # [NEW] QR code detection
+│   ├── ocr/                       # Layer 5
+│   │   ├── __init__.py
+│   │   ├── extractor.py
+│   │   └── language_detector.py   # [NEW] Script detection
+│   ├── postprocess/               # Layer 6
+│   │   ├── __init__.py
+│   │   ├── cleaner.py
+│   │   └── khmer_normalizer.py    # [NEW] Khmer text normalization
+│   ├── builder/                   # Layer 7
+│   │   ├── __init__.py
+│   │   └── json_builder.py
+│   ├── training/                  # [NEW] Fine-tuning module
+│   │   ├── __init__.py
+│   │   ├── trainer.py             # Training orchestrator
+│   │   ├── data_generator.py      # Training data generation
+│   │   ├── annotation_tool.py     # Ground truth annotation
+│   │   └── model_manager.py       # Model versioning
+│   └── schemas/
+│       ├── __init__.py
+│       ├── requests.py
+│       ├── responses.py
+│       └── training.py            # [NEW] Training schemas
+├── training_data/                 # [NEW] Training resources
+│   ├── ground_truth/              # Annotated images
+│   ├── fonts/                     # Custom Khmer fonts
+│   └── models/                    # Fine-tuned models
+├── tests/
+│   ├── __init__.py
+│   ├── conftest.py
+│   ├── test_intake.py
+│   ├── test_quality.py
+│   ├── test_preprocess.py
+│   ├── test_layout.py
+│   ├── test_ocr.py
+│   ├── test_postprocess.py
+│   ├── test_builder.py
+│   ├── test_pipeline.py
+│   └── test_training.py           # [NEW]
+├── scripts/                       # [NEW] Utility scripts
+│   ├── generate_training_data.py
+│   ├── train_tesseract.sh
+│   └── evaluate_model.py
+├── requirements.txt
+├── Dockerfile
+├── docker-compose.yml
+├── .env.example
+└── README.md
+```
+
+---
+
+## New Components for Fine-Tuning
+
+### Training Module Architecture
+
+```mermaid
+flowchart LR
+    A[Sample Images] --> B[Annotation Tool]
+    B --> C[Ground Truth .box/.lstmf]
+    C --> D[Tesseract Training]
+    D --> E[Custom .traineddata]
+    E --> F[Model Manager]
+    F --> G[OCR Extractor]
+```
+
+### [NEW] [trainer.py](file:///home/rayu/ocr-service/app/training/trainer.py)
+- Orchestrates the training pipeline
+- Supports incremental training
+- Model validation and evaluation
+
+### [NEW] [data_generator.py](file:///home/rayu/ocr-service/app/training/data_generator.py)
+- Generates synthetic training images
+- Uses custom Cambodian prescription fonts
+- Creates variations (blur, skew, noise)
+
+### [NEW] [annotation_tool.py](file:///home/rayu/ocr-service/app/training/annotation_tool.py)
+- Creates Tesseract-compatible annotations
+- Generates `.box` and `.lstmf` files
+- Supports manual correction of OCR output
+
+### [NEW] [model_manager.py](file:///home/rayu/ocr-service/app/training/model_manager.py)
+- Version control for trained models
+- A/B testing between models
+- Rollback capability
+
+### [NEW] [training_routes.py](file:///home/rayu/ocr-service/app/api/training_routes.py)
+- `POST /api/v1/training/upload` - Upload training images
+- `POST /api/v1/training/annotate` - Submit corrections
+- `POST /api/v1/training/train` - Trigger training
+- `GET /api/v1/training/models` - List available models
+- `POST /api/v1/training/models/{id}/activate` - Switch model
+
+---
+
+## Enhanced Layer Details
+
+### Layer 4: Layout Analysis (Enhanced)
+
+#### [NEW] [table_detector.py](file:///home/rayu/ocr-service/app/layout/table_detector.py)
+Handles the table variations seen in prescriptions:
+- Detect table boundaries
+- Identify column headers (Khmer)
+- Handle merged cells
+- Extract row/column structure as grid
+
+#### [NEW] [qr_detector.py](file:///home/rayu/ocr-service/app/layout/qr_detector.py)
+- Detect QR codes in prescriptions
+- Decode and include in metadata
+- Exclude from OCR region
+
+### Layer 5: OCR Extraction (Enhanced)
+
+#### [NEW] [language_detector.py](file:///home/rayu/ocr-service/app/ocr/language_detector.py)
+- Detect script per text block (Khmer/Latin)
+- Apply appropriate Tesseract language
+- Improves accuracy for medicine names
+
+### Layer 6: Post-processing (Enhanced)
+
+#### [NEW] [khmer_normalizer.py](file:///home/rayu/ocr-service/app/postprocess/khmer_normalizer.py)
+- Normalize Khmer Unicode sequences
+- Fix common OCR errors in Khmer (ល្ង ច → ល្ org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org ច)
+- Handle broken vowel marks
+
+---
+
+## Training Workflow
+
+### Step 1: Collect Training Data
+```bash
+# Upload prescription images via API
+curl -X POST "http://localhost:8000/api/v1/training/upload" \
+  -F "file=@prescription1.jpg" \
+  -F "file=@prescription2.jpg"
+```
+
+### Step 2: Generate Ground Truth
+```bash
+# Run OCR and generate editable annotations
+curl -X POST "http://localhost:8000/api/v1/training/annotate" \
+  -d '{"image_id": "abc123"}'
+```
+
+### Step 3: Manually Correct (Optional)
+- Edit `.box` files to fix OCR errors
+- Web UI or local files
+
+### Step 4: Train Model
+```bash
+# Trigger LSTM training
+curl -X POST "http://localhost:8000/api/v1/training/train" \
+  -d '{"base_model": "khm", "epochs": 1000}'
+```
+
+### Step 5: Activate New Model
+```bash
+curl -X POST "http://localhost:8000/api/v1/training/models/khm_prescription_v1/activate"
+```
+
+---
+
+## Dependencies (Updated)
+
+```
+# Core
+fastapi>=0.109.0
+uvicorn>=0.27.0
+python-multipart>=0.0.6
+
+# OCR
+pytesseract>=0.3.10
+opencv-python>=4.9.0
+numpy>=1.26.0
+Pillow>=10.2.0
+
+# QR Code
+pyzbar>=0.1.9
+
+# Validation
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+python-dotenv>=1.0.0
+
+# Training (optional)
+fonttools>=4.47.0
+
+# Testing
+pytest>=7.4.0
+pytest-asyncio>=0.23.0
+httpx>=0.26.0
+```
+
+---
+
+## Verification Plan
+
+### Automated Tests
+```bash
+cd /home/rayu/ocr-service
+pip install -r requirements.txt
+pytest tests/ -v
+```
+
+### Manual Testing with Sample Prescriptions
+```bash
+# Test with user's prescription samples
+curl -X POST "http://localhost:8000/api/v1/ocr" \
+  -F "file=@uploaded_media_0_1769932439213.jpg"
+```
+
+### Expected Output Structure
+```json
+{
+  "meta": {
+    "languages": ["kh", "en"],
+    "dpi": 300,
+    "processing_time_ms": 1234,
+    "model_version": "khm_prescription_v1"
+  },
+  "qr_codes": [
+    {"data": "...", "bbox": [x, y, w, h]}
+  ],
+  "blocks": [
+    {
+      "type": "header",
+      "bbox": [0, 0, 800, 100],
+      "lines": [...]
+    },
+    {
+      "type": "table",
+      "bbox": [0, 200, 800, 400],
+      "columns": ["ល org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org.រorg org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org ូorg org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org ថorg org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org", "ឈ org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org org", ...],
+      "rows": [...]
+    },
+    {
+      "type": "signature",
+      "bbox": [...],
+      "tags": ["handwritten", "exclude_from_parsing"]
+    }
+  ]
+}
+```
+
+---
+
+## System Requirements
+
+> [!IMPORTANT]
+> **Tesseract Installation Required**
+> ```bash
+> sudo apt install tesseract-ocr tesseract-ocr-eng tesseract-ocr-khm tesseract-ocr-fra
+> ```
