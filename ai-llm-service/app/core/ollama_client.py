@@ -11,7 +11,8 @@ logger = logging.getLogger(__name__)
 
 # Configuration
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
-DEFAULT_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1:8b")
+# Use llama3.2:3b as default for faster CPU inference
+DEFAULT_MODEL = os.getenv("OLLAMA_MODEL", "llama3.2:3b")
 FAST_MODEL = os.getenv("OLLAMA_FAST_MODEL", "llama3.2:3b")
 
 
