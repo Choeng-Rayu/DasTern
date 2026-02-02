@@ -214,8 +214,9 @@ async def correct_ocr_simple(request: dict):
         text = request.get("text", "")
         language = request.get("language", "en")
         
-        if not text:
-            raise HTTPException(status_code=400, detail="No text provided")
+        if not text or not text.strip():
+            logger.warning(f"Empty text received in OCR correction request: {request}")
+            raise HTTPException(status_code=400, detail="No text provided or text is empty. Please ensure the OCR extracted text before sending for correction.")
         
         logger.info(f"Correcting OCR text with Ollama (length: {len(text)})")
         
