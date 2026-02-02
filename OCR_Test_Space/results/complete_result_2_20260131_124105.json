@@ -1,0 +1,179 @@
+{
+  "test_info": {
+    "result_number": 2,
+    "image_name": "Sok Heng Polyclinic (Asthénie)",
+    "image_file": "image2.png",
+    "timestamp": "2026-01-31T12:41:05.641376",
+    "ocr_service": "http://localhost:8002",
+    "ai_service": "http://localhost:8001"
+  },
+  "step_1_ocr_output": {
+    "description": "Raw OCR output from OCR Service (Step 1)",
+    "success": true,
+    "total_elements": 13,
+    "stats": {
+      "total_words": 13,
+      "avg_confidence": 66.85,
+      "min_confidence": 34,
+      "max_confidence": 97,
+      "total_blocks": 1,
+      "total_lines": 9,
+      "image_width": 930,
+      "image_height": 1280
+    },
+    "languages_used": "khm+eng+fra",
+    "raw_data": [
+      {
+        "text": "ល",
+        "confidence": 86,
+        "bbox": {
+          "x": 640,
+          "y": 81,
+          "w": 19,
+          "h": 14
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 1,
+        "word": 2
+      },
+      {
+        "text": "ក",
+        "confidence": 54,
+        "bbox": {
+          "x": 780,
+          "y": 67,
+          "w": 13,
+          "h": 28
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 1,
+        "word": 3
+      },
+      {
+        "text": "ys",
+        "confidence": 34,
+        "bbox": {
+          "x": 761,
+          "y": 131,
+          "w": 27,
+          "h": 44
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 2,
+        "word": 4
+      },
+      {
+        "text": "ន",
+        "confidence": 60,
+        "bbox": {
+          "x": 804,
+          "y": 227,
+          "w": 60,
+          "h": 34
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 4,
+        "word": 2
+      },
+      {
+        "text": "Es)",
+        "confidence": 36,
+        "bbox": {
+          "x": 804,
+          "y": 243,
+          "w": 66,
+          "h": 52
+        },
+        "block": 1,
+        "paragraph": 2,
+        "line": 1,
+        "word": 2
+      },
+      {
+        "text": "ច",
+        "confidence": 58,
+        "bbox": {
+          "x": 736,
+          "y": 427,
+          "w": 10,
+          "h": 13
+        },
+        "block": 1,
+        "paragraph": 2,
+        "line": 4,
+        "word": 1
+      },
+      {
+        "text": "ot",
+        "confidence": 54,
+        "bbox": {
+          "x": 826,
+          "y": 417,
+          "w": 27,
+          "h": 20
+        },
+        "block": 1,
+        "paragraph": 2,
+        "line": 4,
+        "word": 2
+      },
+      {
+        "text": "40mg",
+        "confidence": 87,
+        "bbox": {
+          "x": 104,
+          "y": 538,
+          "w": 46,
+          "h": 17
+        },
+        "block": 1,
+        "paragraph": 2,
+        "line": 7,
+        "word": 1
+      },
+      {
+        "text": "1",
+        "confidence": 96,
+        "bbox": {
+          "x": 511,
+          "y": 612,
+          "w": 6,
+          "h": 15
+        },
+        "block": 1,
+        "paragraph": 2,
+        "line": 9,
+        "word": 1
+      },
+      {
+        "text": "pe",
+        "confidence": 34,
+        "bbox": {
+          "x": 58,
+          "y": 583,
+          "w": 813,
+          "h": 113
+        },
+        "block": 1,
+        "paragraph": 2,
+        "line": 10,
+        "word": 1
+      }
+    ]
+  },
+  "step_2_ai_output": {
+    "description": "AI-enhanced structured reminders from AI Service (Step 2)",
+    "success": false,
+    "medications": [],
+    "error": "Extraction failed: Ollama API error: 404 - {\"error\":\"model 'llama3.2:3b' not found\"}",
+    "metadata": {
+      "model": "llama3.2:3b",
+      "attempts": 2,
+      "raw_response": null
+    }
+  }
+}

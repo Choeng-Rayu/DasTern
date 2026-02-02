@@ -1,0 +1,19 @@
+{
+  "test_info": {
+    "result_number": 3,
+    "image_name": "Khmer-Soviet Hospital (Second Visit)",
+    "image_file": "image.png",
+    "timestamp": "2026-01-31T12:41:07.222403",
+    "ai_service": "http://localhost:8001"
+  },
+  "ai_output": {
+    "success": false,
+    "medications": [],
+    "error": "Extraction failed: Ollama API error: 404 - {\"error\":\"model 'llama3.2:3b' not found\"}",
+    "metadata": {
+      "model": "llama3.2:3b",
+      "attempts": 2,
+      "raw_response": null
+    }
+  }
+}

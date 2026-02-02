@@ -35,7 +35,7 @@ class ReminderEngine:
         "night": "21:00"
     }
     
-    def __init__(self, ollama_client, model: str = "llama3.2:3b"):
+    def __init__(self, ollama_client, model: str = "llama3.1:8b"):
         """
         Initialize ReminderEngine.
         

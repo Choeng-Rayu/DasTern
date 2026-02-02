@@ -1,0 +1,306 @@
+{
+  "test_info": {
+    "result_number": 1,
+    "image_name": "Khmer-Soviet Hospital (Chronic Cystitis)",
+    "image_file": "image1.png",
+    "timestamp": "2026-01-31T12:44:13.182962",
+    "ocr_service": "http://localhost:8002"
+  },
+  "ocr_output": {
+    "success": true,
+    "total_elements": 24,
+    "stats": {
+      "total_words": 24,
+      "avg_confidence": 80.62,
+      "min_confidence": 31,
+      "max_confidence": 96,
+      "total_blocks": 1,
+      "total_lines": 21,
+      "image_width": 972,
+      "image_height": 1280
+    },
+    "languages_used": "khm+eng+fra",
+    "raw_data": [
+      {
+        "text": "RS",
+        "confidence": 53,
+        "bbox": {
+          "x": 151,
+          "y": 59,
+          "w": 124,
+          "h": 25
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 2,
+        "word": 1
+      },
+      {
+        "text": "|",
+        "confidence": 94,
+        "bbox": {
+          "x": 971,
+          "y": 57,
+          "w": 1,
+          "h": 7
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 2,
+        "word": 3
+      },
+      {
+        "text": "|",
+        "confidence": 95,
+        "bbox": {
+          "x": 967,
+          "y": 66,
+          "w": 4,
+          "h": 45
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 3,
+        "word": 2
+      },
+      {
+        "text": "nr",
+        "confidence": 35,
+        "bbox": {
+          "x": 170,
+          "y": 139,
+          "w": 88,
+          "h": 23
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 5,
+        "word": 1
+      },
+      {
+        "text": "|",
+        "confidence": 96,
+        "bbox": {
+          "x": 967,
+          "y": 118,
+          "w": 3,
+          "h": 33
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 5,
+        "word": 3
+      },
+      {
+        "text": "|",
+        "confidence": 96,
+        "bbox": {
+          "x": 967,
+          "y": 209,
+          "w": 4,
+          "h": 38
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 6,
+        "word": 2
+      },
+      {
+        "text": "47355",
+        "confidence": 50,
+        "bbox": {
+          "x": 332,
+          "y": 274,
+          "w": 49,
+          "h": 30
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 7,
+        "word": 3
+      },
+      {
+        "text": "ol",
+        "confidence": 45,
+        "bbox": {
+          "x": 865,
+          "y": 269,
+          "w": 73,
+          "h": 46
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 7,
+        "word": 5
+      },
+      {
+        "text": "mae",
+        "confidence": 69,
+        "bbox": {
+          "x": 865,
+          "y": 297,
+          "w": 73,
+          "h": 47
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 8,
+        "word": 3
+      },
+      {
+        "text": "|",
+        "confidence": 96,
+        "bbox": {
+          "x": 967,
+          "y": 326,
+          "w": 4,
+          "h": 39
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 9,
+        "word": 3
+      },
+      {
+        "text": "|",
+        "confidence": 95,
+        "bbox": {
+          "x": 967,
+          "y": 355,
+          "w": 4,
+          "h": 42
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 10,
+        "word": 2
+      },
+      {
+        "text": "|",
+        "confidence": 94,
+        "bbox": {
+          "x": 971,
+          "y": 397,
+          "w": 1,
+          "h": 11
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 11,
+        "word": 1
+      },
+      {
+        "text": "|",
+        "confidence": 94,
+        "bbox": {
+          "x": 971,
+          "y": 722,
+          "w": 1,
+          "h": 45
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 17,
+        "word": 2
+      },
+      {
+        "text": "|",
+        "confidence": 96,
+        "bbox": {
+          "x": 967,
+          "y": 766,
+          "w": 3,
+          "h": 36
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 18,
+        "word": 2
+      },
+      {
+        "text": "|",
+        "confidence": 96,
+        "bbox": {
+          "x": 967,
+          "y": 794,
+          "w": 4,
+          "h": 39
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 19,
+        "word": 1
+      },
+      {
+        "text": "|",
+        "confidence": 96,
+        "bbox": {
+          "x": 967,
+          "y": 820,
+          "w": 4,
+          "h": 48
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 20,
+        "word": 2
+      },
+      {
+        "text": "BS",
+        "confidence": 68,
+        "bbox": {
+          "x": 747,
+          "y": 871,
+          "w": 121,
+          "h": 65
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 21,
+        "word": 1
+      },
+      {
+        "text": "os.",
+        "confidence": 57,
+        "bbox": {
+          "x": 268,
+          "y": 942,
+          "w": 28,
+          "h": 34
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 23,
+        "word": 2
+      },
+      {
+        "text": "mee",
+        "confidence": 31,
+        "bbox": {
+          "x": 739,
+          "y": 932,
+          "w": 104,
+          "h": 33
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 24,
+        "word": 3
+      },
+      {
+        "text": "|",
+        "confidence": 95,
+        "bbox": {
+          "x": 971,
+          "y": 1022,
+          "w": 1,
+          "h": 12
+        },
+        "block": 1,
+        "paragraph": 1,
+        "line": 25,
+        "word": 1
+      }
+    ]
+  }
+}

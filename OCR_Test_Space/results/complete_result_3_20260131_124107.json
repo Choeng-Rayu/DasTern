@@ -1,0 +1,179 @@
+{
+  "test_info": {
+    "result_number": 3,
+    "image_name": "Khmer-Soviet Hospital (Second Visit)",
+    "image_file": "image.png",
+    "timestamp": "2026-01-31T12:41:07.222739",
+    "ocr_service": "http://localhost:8002",
+    "ai_service": "http://localhost:8001"
+  },
+  "step_1_ocr_output": {
+    "description": "Raw OCR output from OCR Service (Step 1)",
+    "success": true,
+    "total_elements": 11,
+    "stats": {
+      "total_words": 11,
+      "avg_confidence": 62.82,
+      "min_confidence": 33,
+      "max_confidence": 94,
+      "total_blocks": 1,
+      "total_lines": 6,
+      "image_width": 959,
+      "image_height": 1280
+    },
+    "languages_used": "khm+eng+fra",
+    "raw_data": [
+      {
+        "text": "es",
+        "confidence": 35,
+        "bbox": {
+          "x": 842,
+          "y": 270,
+          "w": 75,
+          "h": 38
+        },
+        "block": 1,
+        "paragraph": 2,
+        "line": 1,
+        "word": 2
+      },
+      {
+        "text": "|",
+        "confidence": 94,
+        "bbox": {
+          "x": 958,
+          "y": 308,
+          "w": 1,
+          "h": 29
+        },
+        "block": 1,
+        "paragraph": 2,
+        "line": 2,
+        "word": 3
+      },
+      {
+        "text": "segue",
+        "confidence": 33,
+        "bbox": {
+          "x": 428,
+          "y": 418,
+          "w": 104,
+          "h": 26
+        },
+        "block": 1,
+        "paragraph": 3,
+        "line": 1,
+        "word": 1
+      },
+      {
+        "text": ":",
+        "confidence": 84,
+        "bbox": {
+          "x": 209,
+          "y": 509,
+          "w": 7,
+          "h": 6
+        },
+        "block": 1,
+        "paragraph": 4,
+        "line": 1,
+        "word": 1
+      },
+      {
+        "text": "un",
+        "confidence": 56,
+        "bbox": {
+          "x": 600,
+          "y": 480,
+          "w": 37,
+          "h": 30
+        },
+        "block": 1,
+        "paragraph": 4,
+        "line": 1,
+        "word": 2
+      },
+      {
+        "text": "ss",
+        "confidence": 45,
+        "bbox": {
+          "x": 40,
+          "y": 480,
+          "w": 54,
+          "h": 82
+        },
+        "block": 1,
+        "paragraph": 4,
+        "line": 2,
+        "word": 1
+      },
+      {
+        "text": "re",
+        "confidence": 57,
+        "bbox": {
+          "x": 503,
+          "y": 469,
+          "w": 81,
+          "h": 84
+        },
+        "block": 1,
+        "paragraph": 4,
+        "line": 2,
+        "word": 4
+      },
+      {
+        "text": "(68)",
+        "confidence": 82,
+        "bbox": {
+          "x": 597,
+          "y": 492,
+          "w": 45,
+          "h": 55
+        },
+        "block": 1,
+        "paragraph": 4,
+        "line": 2,
+        "word": 5
+      },
+      {
+        "text": "(05-06)|(08-10)",
+        "confidence": 38,
+        "bbox": {
+          "x": 755,
+          "y": 514,
+          "w": 162,
+          "h": 25
+        },
+        "block": 1,
+        "paragraph": 4,
+        "line": 2,
+        "word": 6
+      },
+      {
+        "text": "8",
+        "confidence": 87,
+        "bbox": {
+          "x": 107,
+          "y": 573,
+          "w": 13,
+          "h": 17
+        },
+        "block": 1,
+        "paragraph": 5,
+        "line": 1,
+        "word": 1
+      }
+    ]
+  },
+  "step_2_ai_output": {
+    "description": "AI-enhanced structured reminders from AI Service (Step 2)",
+    "success": false,
+    "medications": [],
+    "error": "Extraction failed: Ollama API error: 404 - {\"error\":\"model 'llama3.2:3b' not found\"}",
+    "metadata": {
+      "model": "llama3.2:3b",
+      "attempts": 2,
+      "raw_response": null
+    }
+  }
+}

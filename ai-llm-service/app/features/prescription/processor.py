@@ -120,7 +120,7 @@ OUTPUT ONLY VALID JSON. NO EXPLANATIONS. NO MARKDOWN."""
                 **parsed_data,
                 "success": True,
                 "metadata": {
-                    "model": "llama3.2:3b",
+                    "model": "llama3.1:8b",
                     "raw_text_length": len(raw_text),
                     "language": "mixed_kh_en_fr"
                 }
@@ -161,7 +161,7 @@ OUTPUT ONLY VALID JSON. NO EXPLANATIONS. NO MARKDOWN."""
     def _call_ai(self, user_prompt: str) -> str:
         """Call AI model for processing"""
         payload = {
-            "model": "llama3.2:3b",
+            "model": "llama3.1:8b",
             "system": self.SYSTEM_PROMPT,
             "prompt": user_prompt,
             "stream": False,

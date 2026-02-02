@@ -1,0 +1,19 @@
+{
+  "test_info": {
+    "result_number": 2,
+    "image_name": "Sok Heng Polyclinic (Asthénie)",
+    "image_file": "image2.png",
+    "timestamp": "2026-01-31T12:41:05.641103",
+    "ai_service": "http://localhost:8001"
+  },
+  "ai_output": {
+    "success": false,
+    "medications": [],
+    "error": "Extraction failed: Ollama API error: 404 - {\"error\":\"model 'llama3.2:3b' not found\"}",
+    "metadata": {
+      "model": "llama3.2:3b",
+      "attempts": 2,
+      "raw_response": null
+    }
+  }
+}
