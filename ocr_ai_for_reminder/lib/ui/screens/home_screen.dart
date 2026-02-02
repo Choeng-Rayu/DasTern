@@ -177,6 +177,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () => _pickImage(ImageSource.gallery),
                     backgroundColor: Colors.blue.shade600,
                   ),
+                  const SizedBox(height: 12),
+                  RoundedButton(
+                    label: 'View Saved Prescriptions',
+                    icon: Icons.folder_open,
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/saved-prescriptions');
+                    },
+                    backgroundColor: Colors.green.shade600,
+                  ),
                   const SizedBox(height: 24),
                   // Feature highlights
                   Container(

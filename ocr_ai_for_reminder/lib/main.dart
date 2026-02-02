@@ -3,7 +3,13 @@ import 'package:provider/provider.dart';
 import 'providers/processing_provider.dart';
 import 'ui/screens/home_screen.dart';
 import 'ui/screens/ocr_result_screen.dart';
+import 'ui/screens/ocr_preview_screen.dart';
+import 'ui/screens/ai_enhanced_preview_screen.dart';
+import 'ui/screens/edit_prescription_screen.dart';
+import 'ui/screens/final_preview_screen.dart';
 import 'ui/screens/ai_result_screen.dart';
+import 'ui/screens/saved_prescriptions_screen.dart';
+import 'models/medication.dart';
 
 void main() {
   runApp(const MyApp());
@@ -77,7 +83,21 @@ class MyApp extends StatelessWidget {
               imagePath: imagePath ?? '',
             );
           },
+          '/ocr-preview': (context) => const OCRPreviewScreen(),
+          '/ai-processing': (context) => const AIEnhancedPreviewScreen(),
           '/ai-result': (context) => const AIResultScreen(),
+          '/edit-prescription': (context) {
+            final medications = ModalRoute.of(context)?.settings.arguments
+                as List<MedicationInfo>?;
+            return EditPrescriptionScreen(initialMedications: medications);
+          },
+          '/final-preview': (context) {
+            final medications = ModalRoute.of(context)?.settings.arguments
+                as List<MedicationInfo>?;
+            return FinalPreviewScreen(medications: medications);
+          },
+          '/saved-prescriptions': (context) =>
+              const SavedPrescriptionsScreen(),
         },
       ),
     );

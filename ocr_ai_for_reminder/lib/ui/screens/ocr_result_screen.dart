@@ -41,7 +41,8 @@ class _OCRResultScreenState extends State<OCRResultScreen> {
         context: context,
         builder: (ctx) => ErrorDialog(
           title: 'OCR Processing Failed',
-          message: ocrProvider.processingState.error ?? 'Unknown error occurred',
+          message:
+              ocrProvider.processingState.error ?? 'Unknown error occurred',
           onRetry: _processImage,
           onDismiss: () {
             Navigator.pop(context);
@@ -56,12 +57,8 @@ class _OCRResultScreenState extends State<OCRResultScreen> {
     final aiProvider = context.read<AIProvider>();
 
     if (ocrProvider.extractedText != null && ocrProvider.ocrResponse != null) {
-      aiProvider.setRawOCRData(
-        ocrProvider.extractedText!,
-        ocrProvider.ocrResponse!.toJson(),
-      );
-
-      Navigator.pushNamed(context, '/ai-result');
+      // Navigate to OCR preview first
+      Navigator.pushNamed(context, '/ocr-preview');
     }
   }
 
@@ -82,7 +79,8 @@ class _OCRResultScreenState extends State<OCRResultScreen> {
                 children: [
                   const CircularProgressIndicator(),
                   const SizedBox(height: 16),
-                  Text(ocrProvider.processingState.currentStep ?? 'Processing...'),
+                  Text(ocrProvider.processingState.currentStep ??
+                      'Processing...'),
                   const SizedBox(height: 24),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -104,7 +102,8 @@ class _OCRResultScreenState extends State<OCRResultScreen> {
               child: EmptyStateWidget(
                 icon: Icons.error_outline,
                 title: 'Processing Failed',
-                description: ocrProvider.processingState.error ?? 'Unknown error',
+                description:
+                    ocrProvider.processingState.error ?? 'Unknown error',
                 actionLabel: 'Retry',
                 onActionPressed: _processImage,
               ),
@@ -189,7 +188,8 @@ class _OCRResultScreenState extends State<OCRResultScreen> {
                           blur: metrics['blur'] ?? 'unknown',
                           blurScore: (metrics['blurScore'] ?? 0.0) as double,
                           contrast: metrics['contrast'] ?? 'unknown',
-                          contrastScore: (metrics['contrastScore'] ?? 0.0) as double,
+                          contrastScore:
+                              (metrics['contrastScore'] ?? 0.0) as double,
                           skewAngle: (metrics['skewAngle'] ?? 0.0) as double,
                           processingTime:
                               (metrics['processingTime'] ?? 0.0) as double,

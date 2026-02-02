@@ -82,21 +82,33 @@ class APIClient {
     Map<String, dynamic> ocrData,
   ) async {
     try {
+      // Use the simpler extract-reminders endpoint (works with main_ollama.py)
       final uri = Uri.parse('$baseUrl/extract-reminders');
       final body = {
         'raw_ocr_json': ocrData,
       };
 
       logger.i('Sending reminder extraction request to $uri');
+      logger.d('OCR data keys: ${ocrData.keys.toList()}');
+
       final response = await http.post(
         uri,
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(body),
       );
 
+      logger.i('Response status: ${response.statusCode}');
+
       if (response.statusCode == 200) {
-        return jsonDecode(response.body);
+        final result = jsonDecode(response.body);
+        logger.i(
+            'Extraction result - Success: ${result['success']}, Medications: ${result['medications']?.length ?? 0}');
+
+        // The /extract-reminders endpoint returns {medications: [...], success: bool}
+        return result;
       } else {
+        logger.e(
+            'Failed to extract reminders: ${response.statusCode} - ${response.body}');
         throw Exception(
           'Failed to extract reminders: ${response.statusCode} - ${response.body}',
         );
@@ -112,9 +124,9 @@ class APIClient {
     try {
       final uri = Uri.parse('$baseUrl/');
       final response = await http.get(uri).timeout(
-        const Duration(seconds: 5),
-        onTimeout: () => http.Response('timeout', 408),
-      );
+            const Duration(seconds: 5),
+            onTimeout: () => http.Response('timeout', 408),
+          );
       return response.statusCode == 200;
     } catch (e) {
       logger.w('Health check failed: $e');
