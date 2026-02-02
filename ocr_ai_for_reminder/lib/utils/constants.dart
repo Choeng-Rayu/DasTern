@@ -1,19 +1,41 @@
-class AppConstants {
-  static const String appName = 'OCR AI Reminder';
-  static const String appVersion = '1.0.0';
-
-  static const int maxImageWidth = 1920;
-  static const int maxImageHeight = 1920;
-  static const int imageQuality = 85;
-
+class Constants {
+  // API Configuration
+  static const String apiBaseUrl = 'http://localhost:8000';
   static const Duration apiTimeout = Duration(seconds: 30);
-  static const Duration connectionTimeout = Duration(seconds: 10);
 
-  static const String ocrEndpoint = '/api/v1/ocr/extract';
-  static const String aiEndpoint = '/extract-reminders';
+  // OCR Configuration
+  static const String defaultLanguages = 'eng+khm+fra';
+  static const bool skipEnhancementDefault = false;
 
-  static const String errorNoImage = 'Please select an image first';
-  static const String errorNoConnection = 'No internet connection';
-  static const String errorTimeout = 'Request timed out. Please try again.';
-  static const String errorUnknown = 'An unknown error occurred';
+  // Languages
+  static const Map<String, String> supportedLanguages = {
+    'en': 'English',
+    'km': 'Khmer',
+    'fr': 'French',
+  };
+
+  // UI
+  static const double borderRadius = 8.0;
+  static const double buttonHeight = 50.0;
+  static const double cardElevation = 2.0;
+
+  // Error messages
+  static const String errorServiceUnavailable =
+      'Service is currently unavailable. Please check your connection and try again.';
+  static const String errorInvalidImage = 'Invalid image selected.';
+  static const String errorProcessingFailed = 'Processing failed. Please try again.';
+  static const String errorNoMedications =
+      'No medications found in the prescription.';
+
+  // Success messages
+  static const String successOCRProcessing = 'OCR processing completed successfully.';
+  static const String successAIProcessing = 'Medication extraction completed successfully.';
+  static const String successReminderSaved = 'Reminders saved successfully.';
+}
+
+class AppConfig {
+  static const bool enableDebugLogging = true;
+  static const bool enableAnalytics = false;
+  static const String appVersion = '1.0.0';
+  static const String appName = 'Prescription OCR Scanner';
 }

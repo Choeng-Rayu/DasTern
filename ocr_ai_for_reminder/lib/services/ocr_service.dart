@@ -1,55 +1,84 @@
-import 'dart:convert';
+import 'package:logger/logger.dart';
 import 'dart:io';
-import 'package:http/http.dart' as http;
-import '../models/ocr_response.dart';
+import 'dart:convert';
 import 'api_client.dart';
+import '../models/ocr_response.dart';
 
-class OcrService {
-  final ApiClient _apiClient;
+class OCRService {
+  final APIClient apiClient;
+  final Logger logger = Logger();
 
-  OcrService({ApiClient? apiClient})
-      : _apiClient = apiClient ?? ApiClient(baseUrl: 'http://localhost:8002');
+  OCRService({required this.apiClient});
 
-  Future<OcrResponse> extractTextFromImage(File imageFile) async {
+  /// Process prescription image and return OCR data
+  Future<OCRResponse> processImage(
+    String imagePath, {
+    String languages = 'eng+khm+fra',
+    bool skipEnhancement = false,
+  }) async {
     try {
-      final uri = Uri.parse('${_apiClient.baseUrl}/api/v1/ocr/extract');
+      logger.i('Processing image: $imagePath');
 
-      final request = http.MultipartRequest('POST', uri)
-        ..files.add(await http.MultipartFile.fromPath('file', imageFile.path))
-        ..fields['apply_preprocessing'] = 'true'
-        ..fields['languages'] = 'khm+eng+fra'
-        ..fields['include_low_confidence'] = 'true'
-        ..fields['include_stats'] = 'true';
+      // Validate file exists
+      if (!await File(imagePath).exists()) {
+        throw Exception('Image file not found: $imagePath');
+      }
 
-      final streamedResponse = await request.send().timeout(
-            const Duration(seconds: 30),
-            onTimeout: () => throw Exception('OCR request timed out'),
-          );
-
-      final response = await http.Response.fromStream(streamedResponse);
+      // Upload and process
+      final response = await apiClient.uploadImageForOCR(
+        imagePath,
+        languages: languages,
+        skipEnhancement: skipEnhancement,
+      );
 
       if (response.statusCode == 200) {
-        final jsonData = jsonDecode(response.body);
-        return OcrResponse.fromJson(jsonData);
+        final responseBody = await response.stream.bytesToString();
+        final jsonData = _parseJson(responseBody);
+        logger.i('OCR processing successful');
+        return OCRResponse.fromJson(jsonData);
       } else {
-        return OcrResponse(
-          rawText: '',
-          error: 'OCR service error: ${response.statusCode} - ${response.body}',
+        final errorBody = await response.stream.bytesToString();
+        throw Exception(
+          'OCR processing failed: ${response.statusCode} - $errorBody',
         );
       }
-    } on SocketException catch (_) {
-      return OcrResponse(
-        rawText: '',
-        error:
-            'Network error: Unable to connect to OCR service. Please check your connection.',
-      );
-    } on FormatException catch (_) {
-      return OcrResponse(
-        rawText: '',
-        error: 'Invalid response format from OCR service',
+    } catch (e) {
+      logger.e('Error processing image: $e');
+      rethrow;
+    }
+  }
+
+  /// Extract text from OCR response
+  String extractFullText(OCRResponse ocrResponse) {
+    try {
+      return ocrResponse.fullText;
+    } catch (e) {
+      logger.e('Error extracting text: $e');
+      rethrow;
+    }
+  }
+
+  /// Parse JSON with error handling
+  Map<String, dynamic> _parseJson(String jsonString) {
+    try {
+      return Map<String, dynamic>.from(
+        (jsonDecode(jsonString) as Map).cast<String, dynamic>(),
       );
     } catch (e) {
-      return OcrResponse(rawText: '', error: 'OCR processing error: $e');
+      logger.e('Error parsing JSON: $e');
+      rethrow;
     }
+  }
+
+  /// Get quality metrics from OCR response
+  Map<String, dynamic> getQualityMetrics(OCRResponse ocrResponse) {
+    return {
+      'blur': ocrResponse.quality.blur,
+      'blurScore': ocrResponse.quality.blurScore,
+      'contrast': ocrResponse.quality.contrast,
+      'contrastScore': ocrResponse.quality.contrastScore,
+      'skewAngle': ocrResponse.quality.skewAngle,
+      'processingTime': ocrResponse.meta.processingTimeMs,
+    };
   }
 }

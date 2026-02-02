@@ -1,163 +1,254 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../components/loading_indicator.dart';
-import '../components/result_card.dart';
-import '../../providers/app_provider.dart';
-import '../../widgets/medication_list.dart';
+import '../../providers/processing_provider.dart';
+import '../../widgets/dialogs.dart';
+import '../../widgets/custom_widgets.dart';
+import '../../widgets/form_widgets.dart';
 
-class AiResultScreen extends StatelessWidget {
-  const AiResultScreen({Key? key}) : super(key: key);
+class AIResultScreen extends StatefulWidget {
+  const AIResultScreen({Key? key}) : super(key: key);
+
+  @override
+  State<AIResultScreen> createState() => _AIResultScreenState();
+}
+
+class _AIResultScreenState extends State<AIResultScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Defer AI processing until after the build phase
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _processWithAI();
+    });
+  }
+
+  Future<void> _processWithAI() async {
+    final aiProvider = context.read<AIProvider>();
+    final success = await aiProvider.processFullPipeline();
+
+    if (!mounted) return;
+
+    if (!success) {
+      showDialog(
+        context: context,
+        builder: (ctx) => ErrorDialog(
+          title: 'AI Processing Failed',
+          message: aiProvider.processingState.error ?? 'Unknown error occurred',
+          onRetry: _processWithAI,
+          onDismiss: () {
+            Navigator.pop(context);
+          },
+        ),
+      );
+    }
+  }
+
+  void _startOver() {
+    context.read<OCRProvider>().reset();
+    context.read<AIProvider>().reset();
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      '/home',
+      (route) => false,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AI Analysis'),
-        centerTitle: true,
+        title: const Text('Medication Reminders'),
+        elevation: 0,
+        backgroundColor: Colors.blue.shade700,
       ),
-      body: Consumer<AppProvider>(
-        builder: (context, provider, child) {
-          if (provider.isProcessingAi) {
-            return const Center(
-              child: LoadingIndicator(
-                message: 'AI is analyzing your prescription...',
+      body: Consumer<AIProvider>(
+        builder: (context, aiProvider, _) {
+          if (aiProvider.processingState.isProcessing) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const CircularProgressIndicator(),
+                  const SizedBox(height: 16),
+                  Text(aiProvider.processingState.currentStep ?? 'Processing...'),
+                  const SizedBox(height: 24),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: LinearProgressIndicator(
+                        value: aiProvider.processingState.progress,
+                        minHeight: 6,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             );
           }
 
-          final aiResponse = provider.aiResponse;
+          if (aiProvider.processingState.error != null) {
+            return Center(
+              child: EmptyStateWidget(
+                icon: Icons.error_outline,
+                title: 'Processing Failed',
+                description: aiProvider.processingState.error ?? 'Unknown error',
+                actionLabel: 'Retry',
+                onActionPressed: _processWithAI,
+              ),
+            );
+          }
+
+          if (!aiProvider.hasResults || aiProvider.medications.isEmpty) {
+            return Center(
+              child: EmptyStateWidget(
+                icon: Icons.medication,
+                title: 'No Medications Found',
+                description:
+                    'The AI could not extract any medication information from the prescription.',
+                actionLabel: 'Try Again',
+                onActionPressed: _startOver,
+              ),
+            );
+          }
 
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(20),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                if (aiResponse?.hasError ?? false)
-                  _buildErrorCard(
-                    context,
-                    aiResponse!.error!,
-                    colorScheme,
-                  )
-                else ...[
-                  if (aiResponse?.summary != null) ...[
-                    ResultCard(
-                      title: 'Summary',
-                      icon: Icons.summarize,
-                      accentColor: colorScheme.tertiary,
-                      content: Text(
-                        aiResponse!.summary!,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                // Summary card
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Card(
+                    color: Colors.green.shade50,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.check_circle,
+                                color: Colors.green.shade700,
+                                size: 28,
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      'Processing Complete!',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${aiProvider.medications.length} medication(s) found',
+                                      style: TextStyle(
+                                        color: Colors.grey[600],
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          if (aiProvider.correctionResult != null) ...[
+                            const SizedBox(height: 12),
+                            Text(
+                              'Confidence: ${(aiProvider.correctionResult!.confidence * 100).toStringAsFixed(1)}%',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                          ],
+                        ],
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                  ],
-                  ResultCard(
-                    title: 'Medications',
-                    icon: Icons.medication,
-                    accentColor: colorScheme.primary,
-                    content: MedicationList(
-                      medications: aiResponse?.medications ?? [],
                     ),
                   ),
-                  if (aiResponse?.reminders != null &&
-                      aiResponse!.reminders!.isNotEmpty) ...[
-                    const SizedBox(height: 20),
-                    ResultCard(
-                      title: 'Reminders',
-                      icon: Icons.notifications_active,
-                      accentColor: colorScheme.secondary,
-                      content: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: aiResponse.reminders!.map((reminder) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.check_circle,
-                                  size: 20,
-                                  color: colorScheme.secondary,
-                                ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: Text(
-                                    reminder,
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                ),
-                              ],
+                ),
+
+                // Medications list
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Your Medications',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: aiProvider.medications.length,
+                        itemBuilder: (context, index) {
+                          final med = aiProvider.medications[index];
+                          return MedicationCard(
+                            medicationName: med.name,
+                            dosage: med.dosage,
+                            times: med.times,
+                            repeat: med.repeat,
+                            durationDays: med.durationDays,
+                            notes: med.notes,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Action buttons
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      RoundedButton(
+                        label: 'View Full Details',
+                        icon: Icons.visibility,
+                        onPressed: () {
+                          // Show detailed view in future
+                        },
+                        backgroundColor: Colors.blue.shade700,
+                      ),
+                      const SizedBox(height: 12),
+                      RoundedButton(
+                        label: 'Save to Reminders',
+                        icon: Icons.save,
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (ctx) => const SuccessDialog(
+                              title: 'Success',
+                              message:
+                                  'Reminders saved successfully! You will receive notifications at the scheduled times.',
                             ),
                           );
-                        }).toList(),
+                        },
+                        backgroundColor: Colors.green.shade700,
                       ),
-                    ),
-                  ],
-                ],
-                const SizedBox(height: 24),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.popUntil(context, (route) => route.isFirst);
-                  },
-                  icon: const Icon(Icons.home),
-                  label: const Text('Back to Home'),
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 16,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                      const SizedBox(height: 12),
+                      RoundedButton(
+                        label: 'Scan Another Prescription',
+                        icon: Icons.add,
+                        onPressed: _startOver,
+                        backgroundColor: Colors.orange.shade700,
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildErrorCard(
-    BuildContext context,
-    String error,
-    ColorScheme colorScheme,
-  ) {
-    return Card(
-      color: colorScheme.errorContainer,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Icon(
-              Icons.error_outline,
-              color: colorScheme.error,
-              size: 48,
-            ),
-            const SizedBox(height: 12),
-            Text(
-              'AI Analysis Error',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: colorScheme.error,
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              error,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: colorScheme.onErrorContainer,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

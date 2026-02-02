@@ -1,138 +1,214 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import '../components/image_picker_button.dart';
-import '../components/result_card.dart';
-import '../../providers/app_provider.dart';
-import '../../widgets/prescription_image_viewer.dart';
-import 'ocr_result_screen.dart';
+import '../../providers/processing_provider.dart';
+import '../../widgets/dialogs.dart';
+import '../../widgets/form_widgets.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+  State<HomeScreen> createState() => _HomeScreenState();
+}
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('OCR AI Reminder'),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: colorScheme.surface,
-        foregroundColor: colorScheme.onSurface,
-      ),
-      body: Consumer<AppProvider>(
-        builder: (context, provider, child) {
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _buildHeader(context, colorScheme),
-                const SizedBox(height: 24),
-                if (provider.selectedImage != null) ...[
-                  PrescriptionImageViewer(
-                    imageFile: File(provider.selectedImage!.path),
-                  ),
-                  const SizedBox(height: 20),
-                ],
-                ImagePickerButton(
-                  onImageSelected: (File file) async {
-                    await provider.selectImageFile(file);
-                    if (context.mounted) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const OcrResultScreen(),
-                        ),
-                      );
-                    }
-                  },
-                  isLoading: provider.isProcessingOcr,
-                ),
-                if (provider.hasError) ...[
-                  const SizedBox(height: 20),
-                  _buildErrorCard(
-                      context, provider.errorMessage ?? '', colorScheme),
-                ],
-                const SizedBox(height: 24),
-                _buildInstructions(context, colorScheme),
-              ],
-            ),
-          );
-        },
-      ),
-    );
+class _HomeScreenState extends State<HomeScreen> {
+  final ImagePicker _imagePicker = ImagePicker();
+
+  @override
+  void initState() {
+    super.initState();
+    _checkServiceHealth();
   }
 
-  Widget _buildHeader(BuildContext context, ColorScheme colorScheme) {
-    return Container(
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            colorScheme.primary,
-            colorScheme.primaryContainer,
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+  Future<void> _checkServiceHealth() async {
+    final ocrProvider = context.read<OCRProvider>();
+    await ocrProvider.checkServiceHealth();
+  }
+
+  Future<void> _pickImage(ImageSource source) async {
+    try {
+      final pickedFile = await _imagePicker.pickImage(
+        source: source,
+        imageQuality: 85,
+      );
+
+      if (pickedFile != null) {
+        if (!mounted) return;
+        context.read<OCRProvider>().setImagePath(pickedFile.path);
+
+        if (!mounted) return;
+        Navigator.pushNamed(context, '/ocr-result', arguments: pickedFile.path);
+      }
+    } catch (e) {
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (ctx) => ErrorDialog(
+          title: 'Error',
+          message: 'Failed to pick image: ${e.toString()}',
+          onDismiss: () {},
         ),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        children: [
-          Icon(
-            Icons.document_scanner,
-            size: 64,
-            color: colorScheme.onPrimary,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'Scan Prescription',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: colorScheme.onPrimary,
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Take a photo or upload an image of your prescription to extract medication reminders',
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: colorScheme.onPrimary.withOpacity(0.9),
-                ),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Prescription OCR Scanner'),
+        elevation: 0,
+        backgroundColor: Colors.blue.shade700,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Consumer<OCRProvider>(
+              builder: (context, ocrProvider, _) {
+                return Center(
+                  child: Tooltip(
+                    message: ocrProvider.isServiceHealthy
+                        ? 'Service is online'
+                        : 'Service is offline',
+                    child: Chip(
+                      label: Text(
+                        ocrProvider.isServiceHealthy ? 'Online' : 'Offline',
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                      backgroundColor: ocrProvider.isServiceHealthy
+                          ? Colors.green
+                          : Colors.red,
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildErrorCard(
-    BuildContext context,
-    String error,
-    ColorScheme colorScheme,
-  ) {
-    return Card(
-      color: colorScheme.errorContainer,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
+      body: SingleChildScrollView(
+        child: Column(
           children: [
-            Icon(
-              Icons.error_outline,
-              color: colorScheme.error,
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(
-                error,
-                style: TextStyle(
-                  color: colorScheme.onErrorContainer,
+            // Header banner
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.blue.shade700, Colors.blue.shade500],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
+              ),
+              child: Column(
+                children: [
+                  Icon(
+                    Icons.document_scanner,
+                    size: 64,
+                    color: Colors.white,
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Scan Your Prescription',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Extract medication information and set reminders',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.white70,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+
+            // Main content
+            Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'How to use:',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 16),
+                  const StepCard(
+                    stepNumber: '1',
+                    title: 'Capture or Select',
+                    description:
+                        'Take a photo of your prescription or select from gallery',
+                    icon: Icons.photo_camera,
+                  ),
+                  const SizedBox(height: 12),
+                  const StepCard(
+                    stepNumber: '2',
+                    title: 'OCR Processing',
+                    description:
+                        'Our AI will scan and extract all text from the image',
+                    icon: Icons.psychology,
+                  ),
+                  const SizedBox(height: 12),
+                  const StepCard(
+                    stepNumber: '3',
+                    title: 'Extract Medications',
+                    description:
+                        'Get structured medication information and set reminders',
+                    icon: Icons.medication,
+                  ),
+                  const SizedBox(height: 32),
+                  RoundedButton(
+                    label: 'Take Photo',
+                    icon: Icons.camera_alt,
+                    onPressed: () => _pickImage(ImageSource.camera),
+                    backgroundColor: Colors.blue.shade700,
+                  ),
+                  const SizedBox(height: 12),
+                  RoundedButton(
+                    label: 'Choose from Gallery',
+                    icon: Icons.image,
+                    onPressed: () => _pickImage(ImageSource.gallery),
+                    backgroundColor: Colors.blue.shade600,
+                  ),
+                  const SizedBox(height: 24),
+                  // Feature highlights
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.blue.shade50,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.blue.shade200),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Supported Languages:',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Wrap(
+                          spacing: 8,
+                          children: const [
+                            Chip(label: Text('English')),
+                            Chip(label: Text('Khmer')),
+                            Chip(label: Text('French')),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -140,72 +216,66 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildInstructions(BuildContext context, ColorScheme colorScheme) {
-    return ResultCard(
-      title: 'How it works',
-      icon: Icons.info_outline,
-      accentColor: colorScheme.secondary,
-      content: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildStep(
-            context,
-            '1',
-            'Select or capture an image of your prescription',
-            colorScheme,
-          ),
-          const SizedBox(height: 12),
-          _buildStep(
-            context,
-            '2',
-            'OCR extracts the text from the image',
-            colorScheme,
-          ),
-          const SizedBox(height: 12),
-          _buildStep(
-            context,
-            '3',
-            'AI analyzes and creates medication reminders',
-            colorScheme,
-          ),
-        ],
-      ),
-    );
-  }
+class StepCard extends StatelessWidget {
+  final String stepNumber;
+  final String title;
+  final String description;
+  final IconData icon;
 
-  Widget _buildStep(
-    BuildContext context,
-    String number,
-    String text,
-    ColorScheme colorScheme,
-  ) {
+  const StepCard({
+    Key? key,
+    required this.stepNumber,
+    required this.title,
+    required this.description,
+    required this.icon,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          width: 28,
-          height: 28,
+          width: 40,
+          height: 40,
           decoration: BoxDecoration(
-            color: colorScheme.primary,
-            shape: BoxShape.circle,
+            color: Colors.blue.shade700,
+            borderRadius: BorderRadius.circular(20),
           ),
           child: Center(
             child: Text(
-              number,
-              style: TextStyle(
-                color: colorScheme.onPrimary,
+              stepNumber,
+              style: const TextStyle(
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 14,
+                fontSize: 16,
               ),
             ),
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 16),
         Expanded(
-          child: Text(
-            text,
-            style: Theme.of(context).textTheme.bodyMedium,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                description,
+                style: TextStyle(
+                  fontSize: 13,
+                  color: Colors.grey[600],
+                ),
+              ),
+            ],
           ),
         ),
       ],
