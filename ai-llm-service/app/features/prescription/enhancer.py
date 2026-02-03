@@ -167,12 +167,12 @@ class PrescriptionEnhancer:
             enhanced_result = {
                 "success": True,
                 "ai_enhanced": True,
-                "extraction_method": "few_shot_learning_llama3.1",
+                "extraction_method": "few_shot_learning_llama3.2",
                 "raw_ocr_text": raw_text,
                 "extracted_data": extracted_data,
                 "validation": validation_result,
                 "metadata": {
-                    "model_used": "llama3.1:8b",
+                    "model_used": "llama3.2:3b",
                     "num_examples_used": len(self.few_shot_examples),
                     "confidence": extracted_data.get("confidence_score", 0.0),
                     "language": extracted_data.get("language_detected", "unknown"),
@@ -241,11 +241,61 @@ class PrescriptionEnhancer:
 # Global enhancer instance for API use
 prescription_enhancer = PrescriptionEnhancer()
 
-def enhance_prescription(ocr_data: Dict[str, Any]) -> Dict[str, Any]:
+# Import fast parser for quick extraction
+try:
+    from .fast_parser import FastPrescriptionParser
+    fast_parser = FastPrescriptionParser()
+    FAST_PARSER_AVAILABLE = True
+except ImportError:
+    fast_parser = None
+    FAST_PARSER_AVAILABLE = False
+
+def enhance_prescription(ocr_data: Dict[str, Any], use_fast_mode: bool = True) -> Dict[str, Any]:
     """
     Main function called by your existing API endpoint
     This maintains compatibility with your current main.py
+    
+    Args:
+        ocr_data: OCR output data
+        use_fast_mode: If True, use fast rule-based parser (default)
+                       If False, use LLM-based extraction (slower but potentially more accurate)
     """
+    # Extract raw text first
+    if isinstance(ocr_data, str):
+        raw_text = ocr_data
+    else:
+        raw_text = prescription_enhancer._extract_raw_text_from_ocr(ocr_data)
+    
+    # Use fast parser as primary method for speed
+    if use_fast_mode and FAST_PARSER_AVAILABLE and fast_parser:
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.info("Using fast rule-based parser for quick extraction")
+        
+        try:
+            extracted_data = fast_parser.parse(raw_text)
+            
+            # Validate the extraction
+            validation = prescription_enhancer._validate_extracted_data(extracted_data)
+            
+            return {
+                "success": True,
+                "ai_enhanced": False,  # Fast mode doesn't use AI
+                "extraction_method": "fast_rule_based",
+                "raw_ocr_text": raw_text,
+                "extracted_data": extracted_data,
+                "validation": validation,
+                "metadata": {
+                    "model_used": "rule_based_v1",
+                    "confidence": extracted_data.get("confidence_score", 0.5),
+                    "language": extracted_data.get("language_detected", "unknown"),
+                    "processing_timestamp": prescription_enhancer._get_timestamp()
+                }
+            }
+        except Exception as e:
+            logger.warning(f"Fast parser failed: {e}, falling back to LLM")
+    
+    # Fallback to LLM-based extraction
     return prescription_enhancer.enhance_prescription(ocr_data)
 
 def parse_prescription(raw_text: str) -> Optional[Dict]:
@@ -253,5 +303,8 @@ def parse_prescription(raw_text: str) -> Optional[Dict]:
     Direct parsing function for raw text input
     Useful for testing and development
     """
+    # Use fast parser if available
+    if FAST_PARSER_AVAILABLE and fast_parser:
+        return fast_parser.parse(raw_text)
     return prescription_enhancer.parse_prescription(raw_text)
 

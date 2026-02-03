@@ -11,16 +11,19 @@ logger = logging.getLogger(__name__)
 
 # Configuration
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
-DEFAULT_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1:8b")
+# Use llama3.2:3b as default for faster CPU inference
+DEFAULT_MODEL = os.getenv("OLLAMA_MODEL", "llama3.2:3b")
 FAST_MODEL = os.getenv("OLLAMA_FAST_MODEL", "llama3.2:3b")
 
 
 class OllamaClient:
     """HTTP client for Ollama API calls"""
     
-    def __init__(self, base_url: str = None):
+    def __init__(self, base_url: str = None, timeout: int = None):
         self.base_url = base_url or OLLAMA_BASE_URL
-        logger.info(f"OllamaClient initialized with base_url: {self.base_url}")
+        # Default timeout is 5 minutes for complex medical prescriptions
+        self.timeout = timeout or int(os.getenv("OLLAMA_TIMEOUT", "300"))
+        logger.info(f"OllamaClient initialized with base_url: {self.base_url}, timeout: {self.timeout}s")
     
     def generate_response(self, payload: Dict, use_fast_model: bool = False) -> str:
         """
@@ -41,12 +44,12 @@ class OllamaClient:
             # Ensure stream is disabled for sync call
             payload["stream"] = False
             
-            logger.debug(f"Calling Ollama with model: {payload['model']}")
+            logger.debug(f"Calling Ollama with model: {payload['model']}, timeout: {self.timeout}s")
             
             response = requests.post(
                 f"{self.base_url}/api/generate",
                 json=payload,
-                timeout=120  # 2 minutes for complex prompts
+                timeout=self.timeout
             )
             
             if response.status_code == 200:
@@ -56,8 +59,8 @@ class OllamaClient:
                 raise Exception(f"Ollama API error: {response.status_code} - {response.text}")
                 
         except requests.exceptions.Timeout:
-            logger.error("Ollama request timeout (120s)")
-            raise TimeoutError("Ollama request timed out")
+            logger.error(f"Ollama request timeout ({self.timeout}s)")
+            raise TimeoutError(f"Ollama request timed out after {self.timeout} seconds. Try using a faster model or increase OLLAMA_TIMEOUT.")
         except Exception as e:
             logger.error(f"Ollama call failed: {str(e)}")
             raise
@@ -93,12 +96,12 @@ class OllamaClient:
                 }
             }
             
-            logger.debug(f"Chat request with {len(messages)} messages")
+            logger.debug(f"Chat request with {len(messages)} messages, timeout: {self.timeout}s")
             
             response = requests.post(
                 f"{self.base_url}/api/chat",
                 json=payload,
-                timeout=120
+                timeout=self.timeout
             )
             
             if response.status_code == 200:

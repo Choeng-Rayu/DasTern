@@ -10,7 +10,8 @@ from typing import Dict, Any, Optional
 logger = logging.getLogger(__name__)
 
 OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
-DEFAULT_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1:8b")
+# Use llama3.2:3b for faster CPU inference (2x faster than 8b)
+DEFAULT_MODEL = os.getenv("OLLAMA_MODEL", "llama3.2:3b")
 
 
 def generate(
