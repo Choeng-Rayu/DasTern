@@ -104,6 +104,168 @@ abstract class AppLocalizations {
   /// **'DasTern'**
   String get appTitle;
 
+  /// Create a new account
+  ///
+  /// In en, this message translates to:
+  /// **'Create a new account'**
+  String get createNewAccount;
+
+  /// Last name or surname label
+  ///
+  /// In en, this message translates to:
+  /// **'Last name / Surname'**
+  String get lastName;
+
+  /// Prompt to fill in last name
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in your last name'**
+  String get fillLastName;
+
+  /// First name or given name label
+  ///
+  /// In en, this message translates to:
+  /// **'First name / Given name'**
+  String get firstName;
+
+  /// Prompt to fill in first name
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in your first name'**
+  String get fillFirstName;
+
+  /// Gender label
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get gender;
+
+  /// Prompt to fill in gender
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in your gender'**
+  String get fillGender;
+
+  /// Date of birth label
+  ///
+  /// In en, this message translates to:
+  /// **'Date of Birth'**
+  String get dateOfBirth;
+
+  /// Day label
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get day;
+
+  /// Month label
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get month;
+
+  /// Year label
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get year;
+
+  /// ID card or identification number label
+  ///
+  /// In en, this message translates to:
+  /// **'ID card number / Identification number'**
+  String get idCardNumber;
+
+  /// Prompt to fill in ID card number
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in your ID card number'**
+  String get fillIdCardNumber;
+
+  /// No description provided for @continueText.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continueText;
+
+  /// Already created account label
+  ///
+  /// In en, this message translates to:
+  /// **'Already created an account before'**
+  String get alreadyCreatedAccount;
+
+  /// Go back button label
+  ///
+  /// In en, this message translates to:
+  /// **'Go back'**
+  String get goBack;
+
+  /// Phone number label
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get phoneNumber;
+
+  /// Prompt to fill in phone number
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in your phone number'**
+  String get fillPhoneNumber;
+
+  /// Password label
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// Prompt to fill in password
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in your password'**
+  String get fillPassword;
+
+  /// Confirm password label
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPassword;
+
+  /// Prompt to fill in password again
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in your password again'**
+  String get fillConfirmPassword;
+
+  /// 4-digit PIN code label
+  ///
+  /// In en, this message translates to:
+  /// **'4-digit PIN code'**
+  String get pinCode;
+
+  /// Prompt to read terms and conditions
+  ///
+  /// In en, this message translates to:
+  /// **'Please read the terms and conditions before using the application'**
+  String get readTerms;
+
+  /// Already read confirmation label
+  ///
+  /// In en, this message translates to:
+  /// **'Already read / I have read'**
+  String get alreadyRead;
+
+  /// Sign in or log in label
+  ///
+  /// In en, this message translates to:
+  /// **'Log in to account / Sign in'**
+  String get signIn;
+
+  /// Forgot password link
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get forgotPassword;
+
   /// Title shown on welcome screen
   ///
   /// In en, this message translates to:
@@ -218,17 +380,29 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get cancel;
 
+  /// Button or label for logging in as a doctor
+  ///
+  /// In en, this message translates to:
+  /// **'Login as a Doctor'**
+  String get loginAsDoctor;
+
+  /// Button or label for signing in (already have an account)
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get signin;
+
+  /// Create account message
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get createAccount;
+
   /// Greeting
   ///
   /// In en, this message translates to:
   /// **'Hello'**
   String get hello;
-
-  /// Date of birth label
-  ///
-  /// In en, this message translates to:
-  /// **'Date of Birth'**
-  String get dateOfBirth;
 
   /// Today's schedule title
   ///
@@ -284,18 +458,6 @@ abstract class AppLocalizations {
   /// **'Are you sure you want to logout?'**
   String get logoutConfirmation;
 
-  /// Phone number label
-  ///
-  /// In en, this message translates to:
-  /// **'Phone Number'**
-  String get phoneNumber;
-
-  /// Password label
-  ///
-  /// In en, this message translates to:
-  /// **'Password'**
-  String get password;
-
   /// Login error message
   ///
   /// In en, this message translates to:
@@ -313,12 +475,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Welcome Back'**
   String get welcomeBack;
-
-  /// Create account message
-  ///
-  /// In en, this message translates to:
-  /// **'Create Account'**
-  String get createAccount;
 
   /// Medications screen title
   ///
@@ -782,12 +938,6 @@ abstract class AppLocalizations {
   /// **'Address (Optional)'**
   String get address;
 
-  /// Confirm password label
-  ///
-  /// In en, this message translates to:
-  /// **'Confirm Password'**
-  String get confirmPassword;
-
   /// Password mismatch error
   ///
   /// In en, this message translates to:
@@ -841,12 +991,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please enter family contact'**
   String get pleaseEnterFamilyContact;
-
-  /// Forgot password link
-  ///
-  /// In en, this message translates to:
-  /// **'Forgot Password?'**
-  String get forgotPassword;
 
   /// Don't have account text
   ///
