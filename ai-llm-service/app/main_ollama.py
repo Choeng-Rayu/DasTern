@@ -86,9 +86,22 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Initialize reminder engine
+# Initialize engines
 ollama_client = OllamaClient()
 reminder_engine = ReminderEngine(ollama_client)
+
+# Initialize prescription processor
+try:
+    from .features.prescription.processor import PrescriptionProcessor
+    prescription_processor = PrescriptionProcessor(ollama_client)
+except ImportError:
+    # Fallback import logic
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    parent_dir = os.path.dirname(current_dir)
+    if parent_dir not in sys.path:
+        sys.path.insert(0, parent_dir)
+    from app.features.prescription.processor import PrescriptionProcessor
+    prescription_processor = PrescriptionProcessor(ollama_client)
 
 async def call_ollama(prompt: str, model: str = DEFAULT_MODEL, temperature: float = 0.7) -> str:
     """Make a call to Ollama API with fallback"""
@@ -174,6 +187,31 @@ def extract_reminders(request: ReminderRequest):
         return result
     except Exception as e:
         logger.error(f"Reminder extraction failed: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/v1/prescription/process")
+async def process_prescription(request: ReminderRequest):
+    """
+    Process full prescription (Patient, Medical, Medications) from raw OCR data.
+    """
+    try:
+        # Use PrescriptionProcessor to get full structured data
+        result = prescription_processor.process_prescription(request.raw_ocr_json)
+        
+        if not result.get("success", False):
+            # If processor failed explicitly (but no exception raised)
+            return {
+                "success": False,
+                "error": result.get("error", "Unknown processing error"),
+                "patient_info": {},
+                "medical_info": {},
+                "medications": []
+            }
+            
+        return result
+        
+    except Exception as e:
+        logger.error(f"Prescription processing failed: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/")

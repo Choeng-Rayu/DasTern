@@ -1,84 +1,49 @@
-import 'package:logger/logger.dart';
-import 'dart:io';
 import 'dart:convert';
-import 'api_client.dart';
-import '../models/ocr_response.dart';
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart'; // Add http_parser to pubspec if needed, usually exported by http or needed separately
+import '../core/constants/api_constants.dart';
+import '../data/dtos/ocr_response_dto.dart';
+import '../utils/app_logger.dart';
 
-class OCRService {
-  final APIClient apiClient;
-  final Logger logger = Logger();
+class OcrService {
+  final http.Client _client;
 
-  OCRService({required this.apiClient});
+  OcrService({http.Client? client}) : _client = client ?? http.Client();
 
-  /// Process prescription image and return OCR data
-  Future<OCRResponse> processImage(
-    String imagePath, {
-    String languages = 'eng+khm+fra',
-    bool skipEnhancement = false,
-  }) async {
+  Future<OcrResponseDto> processImage(File imageFile) async {
+    final uri = Uri.parse('${ApiConstants.ocrBaseUrl}${ApiConstants.ocrEndpoint}');
+    
+    AppLogger.i('Uploading image to OCR Service: $uri');
+
     try {
-      logger.i('Processing image: $imagePath');
+      final request = http.MultipartRequest('POST', uri);
+      
+      // Attach file
+      request.files.add(await http.MultipartFile.fromPath(
+        'file',
+        imageFile.path,
+        contentType: MediaType('image', 'jpeg'), // Adjust based on file type if needed
+      ));
 
-      // Validate file exists
-      if (!await File(imagePath).exists()) {
-        throw Exception('Image file not found: $imagePath');
-      }
+      // Optional: Add params
+      // request.fields['languages'] = 'eng+khm'; 
 
-      // Upload and process
-      final response = await apiClient.uploadImageForOCR(
-        imagePath,
-        languages: languages,
-        skipEnhancement: skipEnhancement,
-      );
+      final streamedResponse = await _client.send(request);
+      final response = await http.Response.fromStream(streamedResponse);
+
+      AppLogger.d('OCR Service Response: ${response.statusCode}');
+      AppLogger.d('Body: ${response.body}');
 
       if (response.statusCode == 200) {
-        final responseBody = await response.stream.bytesToString();
-        final jsonData = _parseJson(responseBody);
-        logger.i('OCR processing successful');
-        return OCRResponse.fromJson(jsonData);
+        final jsonMap = json.decode(response.body);
+        return OcrResponseDto.fromJson(jsonMap);
       } else {
-        final errorBody = await response.stream.bytesToString();
-        throw Exception(
-          'OCR processing failed: ${response.statusCode} - $errorBody',
-        );
+        throw Exception('OCR Service Error: ${response.statusCode} - ${response.body}');
       }
-    } catch (e) {
-      logger.e('Error processing image: $e');
+    } catch (e, stack) {
+      AppLogger.e('Failed to process image', e, stack);
       rethrow;
     }
-  }
-
-  /// Extract text from OCR response
-  String extractFullText(OCRResponse ocrResponse) {
-    try {
-      return ocrResponse.fullText;
-    } catch (e) {
-      logger.e('Error extracting text: $e');
-      rethrow;
-    }
-  }
-
-  /// Parse JSON with error handling
-  Map<String, dynamic> _parseJson(String jsonString) {
-    try {
-      return Map<String, dynamic>.from(
-        (jsonDecode(jsonString) as Map).cast<String, dynamic>(),
-      );
-    } catch (e) {
-      logger.e('Error parsing JSON: $e');
-      rethrow;
-    }
-  }
-
-  /// Get quality metrics from OCR response
-  Map<String, dynamic> getQualityMetrics(OCRResponse ocrResponse) {
-    return {
-      'blur': ocrResponse.quality.blur,
-      'blurScore': ocrResponse.quality.blurScore,
-      'contrast': ocrResponse.quality.contrast,
-      'contrastScore': ocrResponse.quality.contrastScore,
-      'skewAngle': ocrResponse.quality.skewAngle,
-      'processingTime': ocrResponse.meta.processingTimeMs,
-    };
   }
 }
