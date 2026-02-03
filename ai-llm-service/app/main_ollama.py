@@ -9,6 +9,10 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Dict, Optional
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 try:
     from .schemas import OCRCorrectionRequest, OCRCorrectionResponse
@@ -31,7 +35,7 @@ logger = logging.getLogger(__name__)
 
 # Ollama configuration
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
-DEFAULT_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1:8b")
+DEFAULT_MODEL = os.getenv("OLLAMA_MODEL", "llama3.2:3b")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -351,4 +355,6 @@ async def chat(request: ChatRequest):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8001)
+    host = os.getenv("AI_SERVICE_HOST", "0.0.0.0")
+    port = int(os.getenv("AI_SERVICE_PORT", "8001"))
+    uvicorn.run(app, host=host, port=port)

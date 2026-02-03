@@ -7,19 +7,25 @@ Usage: python main.py [port]
 import sys
 import os
 import uvicorn
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Add parent directory to path so we can import app package
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 if __name__ == "__main__":
-    port = int(sys.argv[1]) if len(sys.argv) > 1 else 8000
+    # Priority: CLI arg > ENV var > default
+    host = os.getenv("OCR_SERVICE_HOST", "127.0.0.1")
+    port = int(sys.argv[1]) if len(sys.argv) > 1 else int(os.getenv("OCR_SERVICE_PORT", "8000"))
     
-    print(f"🚀 Starting OCR Service on http://127.0.0.1:{port}")
-    print(f"📚 API Documentation: http://127.0.0.1:{port}/docs")
+    print(f"🚀 Starting OCR Service on http://{host}:{port}")
+    print(f"📚 API Documentation: http://{host}:{port}/docs")
     
     uvicorn.run(
         "app.main:app",
-        host="127.0.0.1",
+        host=host,
         port=port,
         reload=True,
     )

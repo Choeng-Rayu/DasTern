@@ -17,6 +17,16 @@ class Settings(BaseSettings):
     debug: bool = Field(default=False, description="Debug mode")
     log_level: str = Field(default="INFO", description="Logging level")
     
+    # Server Configuration
+    ocr_service_host: str = Field(default="0.0.0.0", description="OCR service host")
+    ocr_service_port: int = Field(default=8000, description="OCR service port")
+    
+    # External Service URLs
+    ai_llm_service_url: str = Field(
+        default="http://localhost:8001",
+        description="AI-LLM service URL"
+    )
+    
     # Tesseract Configuration
     tesseract_cmd: str = Field(
         default="/usr/bin/tesseract",
