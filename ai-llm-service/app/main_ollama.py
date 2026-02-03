@@ -86,6 +86,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Import and include extraction routes
+try:
+    from .api.extraction_routes import router as extraction_router
+    app.include_router(extraction_router)
+    logger.info("✅ Fine-tuned extraction routes loaded")
+except ImportError as e:
+    logger.warning(f"⚠️ Fine-tuned extraction routes not available: {e}")
+
 # Initialize reminder engine
 ollama_client = OllamaClient()
 reminder_engine = ReminderEngine(ollama_client)

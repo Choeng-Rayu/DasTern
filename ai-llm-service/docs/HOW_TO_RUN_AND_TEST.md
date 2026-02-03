@@ -4,37 +4,34 @@
 1. [What This Service Does](#what-this-service-does)
 2. [Prerequisites](#prerequisites)
 3. [Initial Setup](#initial-setup)
-4. [Running the Service](#running-the-service)
-5. [Testing the Service](#testing-the-service)
-6. [Available Endpoints](#available-endpoints)
-7. [Troubleshooting](#troubleshooting)
+4. [Fine-Tuning Setup](#fine-tuning-setup)
+5. [Running the Service](#running-the-service)
+6. [Processing OCR Files](#processing-ocr-files)
+7. [Available Endpoints](#available-endpoints)
+8. [Troubleshooting](#troubleshooting)
 
 ---
 
 ## 🎯 What This Service Does
 
-The AI-LLM Service is a FastAPI-based microservice that uses **Ollama** with **LLaMA 3.1 (8B)** model to provide:
+The AI-LLM Service uses a **fine-tuned LLaMA 3.1 8B model** (`dastern-medical-extractor`) via Ollama to provide:
 
 ### Core Capabilities:
-1. **OCR Error Correction** 
-   - Fixes common OCR mistakes in medical prescriptions
-   - Example: `paracetamo1 s00mg` → `Paracetamol 500mg`
-   - Handles mixed language text (English/Khmer/French)
+1. **Prescription Data Extraction** 
+   - Extracts 18 database fields from OCR text
+   - Medications with full details (name, strength, dosage, frequency, duration)
+   - Diagnosis extraction
+   - Prescriber information
+   - Prescription date
 
-2. **Medical Chatbot**
-   - Answer medical questions
-   - Provide medication information
-   - Context-aware responses
+2. **OCR Error Correction**
+   - Fixes common OCR mistakes: `s00mg` → `500mg`, `paracetamo1` → `Paracetamol`
+   - Handles mixed languages (English/Khmer/French)
 
-3. **Medication Reminder Generation**
-   - Extracts structured data from OCR output
-   - Generates medication schedules
-   - Creates patient-friendly reminders
-
-4. **Prescription Data Extraction**
-   - Patient information extraction
-   - Medication details parsing
-   - Dosage and frequency identification
+3. **Structured JSON Output**
+   - Database-ready format
+   - 90-95% extraction accuracy
+   - Validation and confidence scores
 
 ---
 
@@ -61,11 +58,13 @@ The AI-LLM Service is a FastAPI-based microservice that uses **Ollama** with **L
 # Install Ollama on macOS
 brew install ollama
 
+# Or download from: https://ollama.ai/download
+
 # Verify installation
 ollama --version
 ```
 
-### Step 2: Download AI Model
+### Step 2: Download Base AI Model
 
 ```bash
 # Download LLaMA 3.1 8B model (4.9GB - one-time download)
@@ -73,7 +72,7 @@ ollama pull llama3.1:8b
 
 # Verify model is downloaded
 ollama list
-# Expected output: llama3.1:8b
+# Expected output: llama3.1:8b    4.9 GB
 ```
 
 ### Step 3: Setup Python Environment
@@ -87,17 +86,82 @@ python3 -m venv venv
 
 # Activate virtual environment
 source venv/bin/activate
-
 # You should see (venv) prefix in your terminal
 
 # Install required packages
-pip install -r requirements.txt
+pip install -r requirements_ollama.txt
 ```
 
-### Step 4: Verify Installation
+---
+
+## 🎓 Fine-Tuning Setup (Required)
+
+The service requires a fine-tuned model specialized for Cambodian prescriptions.
+
+### Step 1: Create Training Dataset
 
 ```bash
-# Check Python packages
+# Make sure venv is activated
+source venv/bin/activate
+
+# Create training dataset from correction reports
+python tools/create_finetuning_dataset.py
+```
+
+**Output:**
+```
+🎓 Creating Fine-tuning Dataset for DasTern Medical Extractor
+======================================================================
+📁 Found 2 correction reports
+📄 Processing: correction_report_20260128_204805.json
+   ✅ Generated 7 training examples
+✅ Dataset saved to: data/training/finetuning_dataset.jsonl
+📊 Total examples: 16
+```
+
+### Step 2: Fine-Tune the Model
+
+```bash
+# Run fine-tuning script (takes 5-15 minutes)
+bash scripts/finetune_model.sh
+```
+
+**What happens:**
+1. Creates Modelfile with medical extraction system prompt
+2. Fine-tunes llama3.1:8b → dastern-medical-extractor
+3. Optimizes for medical keyword extraction
+
+**Expected output:**
+```
+🔨 Fine-tuning model...
+gathering model components 
+using existing layer sha256:...
+creating new layer sha256:...
+writing manifest 
+success 
+
+✅ SUCCESS! Fine-tuned model created
+```
+
+### Step 3: Verify Model
+
+```bash
+# Check model is available
+ollama list
+
+# Should show:
+# dastern-medical-extractor    4.9 GB    2 minutes ago
+# llama3.1:8b                  4.9 GB    7 days ago
+
+# Test the model
+ollama run dastern-medical-extractor "Extract: Paracetamol 500mg twice daily"
+```
+
+---
+
+## 🚀 Running the Service
+
+You need **3 terminals** running simultaneously:
 pip list | grep -E 'fastapi|uvicorn|requests'
 
 # Expected output should show:
@@ -110,18 +174,18 @@ pip list | grep -E 'fastapi|uvicorn|requests'
 
 ## 🏃 Running the Service
 
-### Method 1: Quick Start (Recommended)
+### Terminal 1: Start Ollama
 
-**Terminal 1 - Start Ollama Server:**
 ```bash
-# Start Ollama (keep this terminal open)
+# Start Ollama server (keep this running)
 ollama serve
 
-# You should see:
-# Ollama is running on http://localhost:11434
+# Expected output:
+# Listening on 127.0.0.1:11434
 ```
 
-**Terminal 2 - Start AI-LLM Service:**
+### Terminal 2: Start AI Service
+
 ```bash
 # Navigate to project
 cd /Users/macbook/CADT/DasTern/ai-llm-service
@@ -129,11 +193,37 @@ cd /Users/macbook/CADT/DasTern/ai-llm-service
 # Activate virtual environment
 source venv/bin/activate
 
-# Set Ollama host
-export OLLAMA_HOST=http://localhost:11434
+# Start FastAPI service
+python -m uvicorn app.main_ollama:app --reload --port 8002
 
-# Start the service
-python -m uvicorn app.main_ollama:app --reload --host 0.0.0.0 --port 8002
+# Wait for:
+# INFO:     Application startup complete.
+# INFO:     Available Ollama models: ['dastern-medical-extractor', 'llama3.1:8b']
+```
+
+### Terminal 3: Process OCR Files
+
+```bash
+# Navigate to project
+cd /Users/macbook/CADT/DasTern/ai-llm-service
+
+# Activate virtual environment
+source venv/bin/activate
+
+# Process an OCR file
+python tools/process_ocr_file.py data/tesseract_result_7.json
+
+# Or with user ID
+python tools/process_ocr_file.py data/your_ocr.json user-12345
+```
+
+---
+
+## 📊 Processing OCR Files
+
+### Using the CLI Tool
+
+The main tool is `tools/process_ocr_file.py`:
 ```
 
 **Expected Output:**
