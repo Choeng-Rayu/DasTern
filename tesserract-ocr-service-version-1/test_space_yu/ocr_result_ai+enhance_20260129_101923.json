@@ -1,0 +1,23 @@
+{
+  "raw_ocr": {
+    "success": true,
+    "languages": [
+      "eng",
+      "khm",
+      "fra"
+    ],
+    "full_text": "eae វ. លេខកូដ HAKF 1354164 ឈ្មោះអ្នកជំងឺ: ង៉ាំ ដានី អាយុ 19ឆ្នាំ ភេទ ស្រី ប្រភេទបង់ប្រាក់ មូលនិធិសមធម៌ / 20051002-0409 អ្នកជំងឺ | រោគវិនិច្ឆ័យ 1 Chronic Cystitis 2. Encour ménorhée ផ្នែក: ពិគ្រោះជំងឺក្រ - បន្ទប់លេខ 5 វេជ្ជបញ្ជា fmm | ol = - - — | យ 10ក9 [uname [er | | តត្រ 1 Secor ses el 1 cf Le elma lore រាជធានីភ្នំពេញ,ថ្ងៃទី 22/06/2025 14 47 គ្រពេទ្យព្យាបាល oe គឹមអ៊ាង ស te\nរោគវិនិច្ឆ័យ 1. Chronic Cystitis 2. Encour ménorhée\n_ វេជ្ជបណ្ឌិត ហឹង គឹមអ៊ាង\nad FN # Py Le a Li\n4 #4 \"+ ~",
+    "overall_confidence": 0.82,
+    "text_blocks_count": 5
+  },
+  "ai_enhanced": {
+    "response": ", improve formatting, and return clean text: eae វ. លេខកូដ HAKF 1354164 ឈ្មោះអ្នកជំងឺ: ង៉ាំ ដានី អាយុ 19ឆ្នាំ ភេទ ស្រី ប្រភេទបង់ប្រាក់... Corrected:",
+    "language": "eng",
+    "confidence": 0.85,
+    "metadata": {
+      "model": "llama3.1:8b",
+      "service": "ollama-ai-service"
+    }
+  },
+  "processing_timestamp": "20260129_101923"
+}

@@ -1,0 +1,5172 @@
+{
+  "result_number": 4,
+  "timestamp": "2026-01-31T09:50:32.351827",
+  "image_name": "image.png",
+  "processing_time_seconds": 34.726746797561646,
+  "ocr_results": {
+    "success": true,
+    "page": 1,
+    "raw": [],
+    "stats": {
+      "total_words": 0,
+      "avg_confidence": 0,
+      "min_confidence": 0,
+      "max_confidence": 0,
+      "total_blocks": 0,
+      "total_lines": 0
+    },
+    "languages_used": "khm+eng+fra",
+    "preprocessing_applied": true,
+    "table_detection": {
+      "enabled": true,
+      "found": true,
+      "data": {
+        "found_table": true,
+        "rows": 52,
+        "columns": 6,
+        "cells": [
+          {
+            "row": 51,
+            "col": 3,
+            "text": "\"en",
+            "confidence": 32.0,
+            "bbox": {
+              "x": 1376,
+              "y": 1907,
+              "w": 37,
+              "h": 29
+            }
+          },
+          {
+            "row": 51,
+            "col": 2,
+            "text": "sn.",
+            "confidence": 40.0,
+            "bbox": {
+              "x": 1187,
+              "y": 1905,
+              "w": 47,
+              "h": 31
+            }
+          },
+          {
+            "row": 51,
+            "col": 1,
+            "text": "rh 4 fn ព “",
+            "confidence": 48.8,
+            "bbox": {
+              "x": 880,
+              "y": 1899,
+              "w": 37,
+              "h": 42
+            }
+          },
+          {
+            "row": 51,
+            "col": 0,
+            "text": "Soe the",
+            "confidence": 47.0,
+            "bbox": {
+              "x": 850,
+              "y": 1899,
+              "w": 29,
+              "h": 42
+            }
+          },
+          {
+            "row": 50,
+            "col": 0,
+            "text": ",, ari",
+            "confidence": 40.5,
+            "bbox": {
+              "x": 639,
+              "y": 1890,
+              "w": 46,
+              "h": 22
+            }
+          },
+          {
+            "row": 50,
+            "col": 1,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 1302,
+              "y": 1885,
+              "w": 47,
+              "h": 51
+            }
+          },
+          {
+            "row": 49,
+            "col": 0,
+            "text": "ee.",
+            "confidence": 22.0,
+            "bbox": {
+              "x": 1197,
+              "y": 1874,
+              "w": 88,
+              "h": 67
+            }
+          },
+          {
+            "row": 48,
+            "col": 3,
+            "text": "221",
+            "confidence": 39.0,
+            "bbox": {
+              "x": 1105,
+              "y": 1872,
+              "w": 29,
+              "h": 36
+            }
+          },
+          {
+            "row": 48,
+            "col": 2,
+            "text": "ets # +\" %៖ ry",
+            "confidence": 36.4,
+            "bbox": {
+              "x": 962,
+              "y": 1863,
+              "w": 72,
+              "h": 59
+            }
+          },
+          {
+            "row": 48,
+            "col": 1,
+            "text": "nee ES ves",
+            "confidence": 35.0,
+            "bbox": {
+              "x": 923,
+              "y": 1863,
+              "w": 38,
+              "h": 66
+            }
+          },
+          {
+            "row": 48,
+            "col": 0,
+            "text": "ES THe rs mr ne, NACRE",
+            "confidence": 26.666666666666668,
+            "bbox": {
+              "x": 741,
+              "y": 1862,
+              "w": 104,
+              "h": 79
+            }
+          },
+          {
+            "row": 47,
+            "col": 1,
+            "text": "son # LCA",
+            "confidence": 32.333333333333336,
+            "bbox": {
+              "x": 846,
+              "y": 1858,
+              "w": 75,
+              "h": 40
+            }
+          },
+          {
+            "row": 47,
+            "col": 0,
+            "text": "* * LU PL",
+            "confidence": 37.75,
+            "bbox": {
+              "x": 317,
+              "y": 1848,
+              "w": 33,
+              "h": 36
+            }
+          },
+          {
+            "row": 46,
+            "col": 1,
+            "text": "Les › ? +.",
+            "confidence": 53.5,
+            "bbox": {
+              "x": 1327,
+              "y": 1806,
+              "w": 51,
+              "h": 25
+            }
+          },
+          {
+            "row": 46,
+            "col": 0,
+            "text": "ag tet",
+            "confidence": 49.0,
+            "bbox": {
+              "x": 335,
+              "y": 1805,
+              "w": 56,
+              "h": 18
+            }
+          },
+          {
+            "row": 45,
+            "col": 0,
+            "text": "ៗ) +, =",
+            "confidence": 42.333333333333336,
+            "bbox": {
+              "x": 63,
+              "y": 1803,
+              "w": 77,
+              "h": 26
+            }
+          },
+          {
+            "row": 45,
+            "col": 3,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 638,
+              "y": 1799,
+              "w": 62,
+              "h": 67
+            }
+          },
+          {
+            "row": 45,
+            "col": 1,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 525,
+              "y": 1797,
+              "w": 41,
+              "h": 31
+            }
+          },
+          {
+            "row": 45,
+            "col": 5,
+            "text": "et",
+            "confidence": 22.0,
+            "bbox": {
+              "x": 1256,
+              "y": 1795,
+              "w": 31,
+              "h": 61
+            }
+          },
+          {
+            "row": 45,
+            "col": 4,
+            "text": "a etes re | ពរ»",
+            "confidence": 30.2,
+            "bbox": {
+              "x": 1174,
+              "y": 1795,
+              "w": 79,
+              "h": 64
+            }
+          },
+          {
+            "row": 45,
+            "col": 2,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 570,
+              "y": 1794,
+              "w": 48,
+              "h": 71
+            }
+          },
+          {
+            "row": 44,
+            "col": 1,
+            "text": "+ ei ae hed LE",
+            "confidence": 39.8,
+            "bbox": {
+              "x": 1295,
+              "y": 1776,
+              "w": 31,
+              "h": 80
+            }
+          },
+          {
+            "row": 44,
+            "col": 2,
+            "text": "ស៊",
+            "confidence": 58.0,
+            "bbox": {
+              "x": 1327,
+              "y": 1772,
+              "w": 51,
+              "h": 33
+            }
+          },
+          {
+            "row": 44,
+            "col": 0,
+            "text": "Mes LE DEN LFP",
+            "confidence": 33.5,
+            "bbox": {
+              "x": 924,
+              "y": 1770,
+              "w": 79,
+              "h": 81
+            }
+          },
+          {
+            "row": 43,
+            "col": 1,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 1006,
+              "y": 1761,
+              "w": 48,
+              "h": 21
+            }
+          },
+          {
+            "row": 43,
+            "col": 2,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 1296,
+              "y": 1755,
+              "w": 82,
+              "h": 15
+            }
+          },
+          {
+            "row": 43,
+            "col": 0,
+            "text": "CA EU His",
+            "confidence": 51.666666666666664,
+            "bbox": {
+              "x": 335,
+              "y": 1754,
+              "w": 71,
+              "h": 47
+            }
+          },
+          {
+            "row": 42,
+            "col": 1,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 1076,
+              "y": 1741,
+              "w": 80,
+              "h": 40
+            }
+          },
+          {
+            "row": 42,
+            "col": 2,
+            "text": "គ is -",
+            "confidence": 36.0,
+            "bbox": {
+              "x": 1296,
+              "y": 1737,
+              "w": 82,
+              "h": 17
+            }
+          },
+          {
+            "row": 42,
+            "col": 0,
+            "text": "severe",
+            "confidence": 10.0,
+            "bbox": {
+              "x": 482,
+              "y": 1735,
+              "w": 79,
+              "h": 32
+            }
+          },
+          {
+            "row": 41,
+            "col": 3,
+            "text": "Fe នយ",
+            "confidence": 46.0,
+            "bbox": {
+              "x": 783,
+              "y": 1726,
+              "w": 43,
+              "h": 55
+            }
+          },
+          {
+            "row": 41,
+            "col": 2,
+            "text": "| | by ន -",
+            "confidence": 51.6,
+            "bbox": {
+              "x": 651,
+              "y": 1726,
+              "w": 23,
+              "h": 71
+            }
+          },
+          {
+            "row": 41,
+            "col": 1,
+            "text": "A a?",
+            "confidence": 58.5,
+            "bbox": {
+              "x": 612,
+              "y": 1726,
+              "w": 25,
+              "h": 41
+            }
+          },
+          {
+            "row": 41,
+            "col": 4,
+            "text": "aoe",
+            "confidence": 31.0,
+            "bbox": {
+              "x": 1158,
+              "y": 1719,
+              "w": 40,
+              "h": 34
+            }
+          },
+          {
+            "row": 41,
+            "col": 0,
+            "text": "ira lil",
+            "confidence": 34.0,
+            "bbox": {
+              "x": 335,
+              "y": 1719,
+              "w": 63,
+              "h": 33
+            }
+          },
+          {
+            "row": 40,
+            "col": 3,
+            "text": "PACE # am:",
+            "confidence": 53.0,
+            "bbox": {
+              "x": 1292,
+              "y": 1713,
+              "w": 86,
+              "h": 22
+            }
+          },
+          {
+            "row": 40,
+            "col": 0,
+            "text": "+\": . Be A7 », wey",
+            "confidence": 28.0,
+            "bbox": {
+              "x": 675,
+              "y": 1713,
+              "w": 107,
+              "h": 127
+            }
+          },
+          {
+            "row": 40,
+            "col": 1,
+            "text": "{ten iy",
+            "confidence": 30.5,
+            "bbox": {
+              "x": 840,
+              "y": 1704,
+              "w": 41,
+              "h": 33
+            }
+          },
+          {
+            "row": 40,
+            "col": 2,
+            "text": "AT + “she ក",
+            "confidence": 47.0,
+            "bbox": {
+              "x": 1200,
+              "y": 1703,
+              "w": 84,
+              "h": 57
+            }
+          },
+          {
+            "row": 39,
+            "col": 1,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 91,
+              "y": 1693,
+              "w": 70,
+              "h": 55
+            }
+          },
+          {
+            "row": 39,
+            "col": 2,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 1292,
+              "y": 1688,
+              "w": 88,
+              "h": 21
+            }
+          },
+          {
+            "row": 39,
+            "col": 0,
+            "text": "› .៖ : +: ~ 1] ee",
+            "confidence": 39.285714285714285,
+            "bbox": {
+              "x": 48,
+              "y": 1685,
+              "w": 40,
+              "h": 70
+            }
+          },
+          {
+            "row": 38,
+            "col": 1,
+            "text": "ង់,\" babe Ye",
+            "confidence": 33.333333333333336,
+            "bbox": {
+              "x": 394,
+              "y": 1673,
+              "w": 39,
+              "h": 31
+            }
+          },
+          {
+            "row": 38,
+            "col": 0,
+            "text": "Ot",
+            "confidence": 48.0,
+            "bbox": {
+              "x": 352,
+              "y": 1673,
+              "w": 41,
+              "h": 28
+            }
+          },
+          {
+            "row": 37,
+            "col": 0,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 102,
+              "y": 1668,
+              "w": 57,
+              "h": 23
+            }
+          },
+          {
+            "row": 37,
+            "col": 2,
+            "text": "Me PVC",
+            "confidence": 73.0,
+            "bbox": {
+              "x": 1244,
+              "y": 1659,
+              "w": 47,
+              "h": 29
+            }
+          },
+          {
+            "row": 37,
+            "col": 1,
+            "text": "ee. EAU)",
+            "confidence": 26.0,
+            "bbox": {
+              "x": 504,
+              "y": 1659,
+              "w": 56,
+              "h": 57
+            }
+          },
+          {
+            "row": 36,
+            "col": 0,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 33,
+              "y": 1645,
+              "w": 63,
+              "h": 27
+            }
+          },
+          {
+            "row": 36,
+            "col": 1,
+            "text": "a sa ក",
+            "confidence": 49.666666666666664,
+            "bbox": {
+              "x": 748,
+              "y": 1643,
+              "w": 37,
+              "h": 38
+            }
+          },
+          {
+            "row": 36,
+            "col": 2,
+            "text": "% , យ ate",
+            "confidence": 50.25,
+            "bbox": {
+              "x": 840,
+              "y": 1642,
+              "w": 41,
+              "h": 47
+            }
+          },
+          {
+            "row": 35,
+            "col": 0,
+            "text": "Ed + =",
+            "confidence": 40.666666666666664,
+            "bbox": {
+              "x": 102,
+              "y": 1638,
+              "w": 52,
+              "h": 24
+            }
+          },
+          {
+            "row": 35,
+            "col": 2,
+            "text": "MAS",
+            "confidence": 28.0,
+            "bbox": {
+              "x": 681,
+              "y": 1634,
+              "w": 63,
+              "h": 42
+            }
+          },
+          {
+            "row": 35,
+            "col": 1,
+            "text": "[DE]",
+            "confidence": 31.0,
+            "bbox": {
+              "x": 624,
+              "y": 1631,
+              "w": 53,
+              "h": 41
+            }
+          },
+          {
+            "row": 34,
+            "col": 0,
+            "text": "Cara",
+            "confidence": 40.0,
+            "bbox": {
+              "x": 98,
+              "y": 1599,
+              "w": 56,
+              "h": 22
+            }
+          },
+          {
+            "row": 33,
+            "col": 1,
+            "text": "see",
+            "confidence": 47.0,
+            "bbox": {
+              "x": 539,
+              "y": 1581,
+              "w": 30,
+              "h": 37
+            }
+          },
+          {
+            "row": 33,
+            "col": 0,
+            "text": "=}",
+            "confidence": 23.0,
+            "bbox": {
+              "x": 204,
+              "y": 1579,
+              "w": 55,
+              "h": 30
+            }
+          },
+          {
+            "row": 32,
+            "col": 1,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 1116,
+              "y": 1556,
+              "w": 30,
+              "h": 43
+            }
+          },
+          {
+            "row": 32,
+            "col": 0,
+            "text": "យុ",
+            "confidence": 84.0,
+            "bbox": {
+              "x": 1081,
+              "y": 1556,
+              "w": 31,
+              "h": 39
+            }
+          },
+          {
+            "row": 31,
+            "col": 4,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 1004,
+              "y": 1548,
+              "w": 41,
+              "h": 46
+            }
+          },
+          {
+            "row": 31,
+            "col": 3,
+            "text": "ប!",
+            "confidence": 77.0,
+            "bbox": {
+              "x": 978,
+              "y": 1548,
+              "w": 25,
+              "h": 46
+            }
+          },
+          {
+            "row": 31,
+            "col": 5,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 1158,
+              "y": 1545,
+              "w": 31,
+              "h": 50
+            }
+          },
+          {
+            "row": 31,
+            "col": 2,
+            "text": "ក្រា",
+            "confidence": 40.0,
+            "bbox": {
+              "x": 653,
+              "y": 1544,
+              "w": 45,
+              "h": 66
+            }
+          },
+          {
+            "row": 31,
+            "col": 1,
+            "text": "ញ្ជា",
+            "confidence": 91.0,
+            "bbox": {
+              "x": 288,
+              "y": 1541,
+              "w": 39,
+              "h": 37
+            }
+          },
+          {
+            "row": 31,
+            "col": 0,
+            "text": "+សូវ",
+            "confidence": 63.0,
+            "bbox": {
+              "x": 94,
+              "y": 1541,
+              "w": 46,
+              "h": 36
+            }
+          },
+          {
+            "row": 30,
+            "col": 3,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 586,
+              "y": 1532,
+              "w": 54,
+              "h": 62
+            }
+          },
+          {
+            "row": 30,
+            "col": 5,
+            "text": "LA 2 LI",
+            "confidence": 58.0,
+            "bbox": {
+              "x": 978,
+              "y": 1528,
+              "w": 67,
+              "h": 16
+            }
+          },
+          {
+            "row": 30,
+            "col": 1,
+            "text": "al",
+            "confidence": 76.0,
+            "bbox": {
+              "x": 355,
+              "y": 1528,
+              "w": 32,
+              "h": 49
+            }
+          },
+          {
+            "row": 30,
+            "col": 4,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 700,
+              "y": 1527,
+              "w": 65,
+              "h": 68
+            }
+          },
+          {
+            "row": 30,
+            "col": 2,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 539,
+              "y": 1527,
+              "w": 45,
+              "h": 53
+            }
+          },
+          {
+            "row": 30,
+            "col": 0,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 198,
+              "y": 1526,
+              "w": 62,
+              "h": 52
+            }
+          },
+          {
+            "row": 29,
+            "col": 1,
+            "text": "គយ",
+            "confidence": 31.0,
+            "bbox": {
+              "x": 642,
+              "y": 1506,
+              "w": 55,
+              "h": 19
+            }
+          },
+          {
+            "row": 29,
+            "col": 0,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 464,
+              "y": 1502,
+              "w": 50,
+              "h": 28
+            }
+          },
+          {
+            "row": 28,
+            "col": 0,
+            "text": "eo,",
+            "confidence": 57.0,
+            "bbox": {
+              "x": 288,
+              "y": 1494,
+              "w": 66,
+              "h": 25
+            }
+          },
+          {
+            "row": 28,
+            "col": 1,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 1079,
+              "y": 1485,
+              "w": 55,
+              "h": 53
+            }
+          },
+          {
+            "row": 27,
+            "col": 1,
+            "text": "Fr 4",
+            "confidence": 51.0,
+            "bbox": {
+              "x": 806,
+              "y": 1478,
+              "w": 30,
+              "h": 47
+            }
+          },
+          {
+            "row": 27,
+            "col": 0,
+            "text": "| *",
+            "confidence": 62.5,
+            "bbox": {
+              "x": 101,
+              "y": 1468,
+              "w": 35,
+              "h": 29
+            }
+          },
+          {
+            "row": 26,
+            "col": 4,
+            "text": "a ony",
+            "confidence": 32.5,
+            "bbox": {
+              "x": 921,
+              "y": 1456,
+              "w": 41,
+              "h": 28
+            }
+          },
+          {
+            "row": 26,
+            "col": 3,
+            "text": "#4",
+            "confidence": 49.0,
+            "bbox": {
+              "x": 851,
+              "y": 1456,
+              "w": 50,
+              "h": 41
+            }
+          },
+          {
+            "row": 26,
+            "col": 1,
+            "text": "CA DE à",
+            "confidence": 43.666666666666664,
+            "bbox": {
+              "x": 534,
+              "y": 1454,
+              "w": 34,
+              "h": 30
+            }
+          },
+          {
+            "row": 26,
+            "col": 2,
+            "text": "កនៅ ស : Pret owas = +» “ae DL",
+            "confidence": 27.666666666666668,
+            "bbox": {
+              "x": 623,
+              "y": 1452,
+              "w": 157,
+              "h": 72
+            }
+          },
+          {
+            "row": 26,
+            "col": 0,
+            "text": "t= LE",
+            "confidence": 41.5,
+            "bbox": {
+              "x": 442,
+              "y": 1446,
+              "w": 73,
+              "h": 46
+            }
+          },
+          {
+            "row": 25,
+            "col": 1,
+            "text": "Spe 4. ee 0 |",
+            "confidence": 34.8,
+            "bbox": {
+              "x": 279,
+              "y": 1441,
+              "w": 94,
+              "h": 51
+            }
+          },
+          {
+            "row": 25,
+            "col": 2,
+            "text": "ial ពីរ",
+            "confidence": 31.5,
+            "bbox": {
+              "x": 304,
+              "y": 1434,
+              "w": 52,
+              "h": 21
+            }
+          },
+          {
+            "row": 25,
+            "col": 4,
+            "text": "h",
+            "confidence": 73.0,
+            "bbox": {
+              "x": 1065,
+              "y": 1432,
+              "w": 28,
+              "h": 49
+            }
+          },
+          {
+            "row": 25,
+            "col": 3,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 945,
+              "y": 1432,
+              "w": 114,
+              "h": 71
+            }
+          },
+          {
+            "row": 25,
+            "col": 0,
+            "text": "nae",
+            "confidence": 34.0,
+            "bbox": {
+              "x": 210,
+              "y": 1432,
+              "w": 33,
+              "h": 51
+            }
+          },
+          {
+            "row": 24,
+            "col": 0,
+            "text": "ee ; រ “+?",
+            "confidence": 51.0,
+            "bbox": {
+              "x": 450,
+              "y": 1409,
+              "w": 43,
+              "h": 30
+            }
+          },
+          {
+            "row": 24,
+            "col": 1,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 1094,
+              "y": 1399,
+              "w": 149,
+              "h": 143
+            }
+          },
+          {
+            "row": 23,
+            "col": 0,
+            "text": "à",
+            "confidence": 30.0,
+            "bbox": {
+              "x": 623,
+              "y": 1382,
+              "w": 39,
+              "h": 59
+            }
+          },
+          {
+            "row": 22,
+            "col": 2,
+            "text": "ព្យា",
+            "confidence": 87.0,
+            "bbox": {
+              "x": 1096,
+              "y": 1364,
+              "w": 43,
+              "h": 36
+            }
+          },
+          {
+            "row": 22,
+            "col": 1,
+            "text": "ទ្យ |",
+            "confidence": 84.0,
+            "bbox": {
+              "x": 1064,
+              "y": 1364,
+              "w": 30,
+              "h": 36
+            }
+          },
+          {
+            "row": 22,
+            "col": 3,
+            "text": "ល:",
+            "confidence": 68.0,
+            "bbox": {
+              "x": 1173,
+              "y": 1363,
+              "w": 42,
+              "h": 27
+            }
+          },
+          {
+            "row": 22,
+            "col": 0,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 971,
+              "y": 1362,
+              "w": 53,
+              "h": 38
+            }
+          },
+          {
+            "row": 21,
+            "col": 0,
+            "text": "2222: &: aye Ce +",
+            "confidence": 55.8,
+            "bbox": {
+              "x": 116,
+              "y": 1345,
+              "w": 58,
+              "h": 33
+            }
+          },
+          {
+            "row": 21,
+            "col": 1,
+            "text": "se. ov aim",
+            "confidence": 49.666666666666664,
+            "bbox": {
+              "x": 818,
+              "y": 1342,
+              "w": 55,
+              "h": 26
+            }
+          },
+          {
+            "row": 20,
+            "col": 0,
+            "text": "per ais",
+            "confidence": 54.5,
+            "bbox": {
+              "x": 321,
+              "y": 1331,
+              "w": 42,
+              "h": 35
+            }
+          },
+          {
+            "row": 19,
+            "col": 1,
+            "text": "*..:( of 2h, a:",
+            "confidence": 49.0,
+            "bbox": {
+              "x": 1235,
+              "y": 1323,
+              "w": 31,
+              "h": 57
+            }
+          },
+          {
+            "row": 19,
+            "col": 0,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 139,
+              "y": 1318,
+              "w": 57,
+              "h": 23
+            }
+          },
+          {
+            "row": 18,
+            "col": 0,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 579,
+              "y": 1298,
+              "w": 29,
+              "h": 40
+            }
+          },
+          {
+            "row": 17,
+            "col": 1,
+            "text": "6/2.",
+            "confidence": 59.0,
+            "bbox": {
+              "x": 1170,
+              "y": 1285,
+              "w": 45,
+              "h": 26
+            }
+          },
+          {
+            "row": 17,
+            "col": 0,
+            "text": "ពេញ bi",
+            "confidence": 62.5,
+            "bbox": {
+              "x": 971,
+              "y": 1285,
+              "w": 56,
+              "h": 73
+            }
+          },
+          {
+            "row": 16,
+            "col": 0,
+            "text": "ខ្បា",
+            "confidence": 39.0,
+            "bbox": {
+              "x": 725,
+              "y": 1281,
+              "w": 44,
+              "h": 27
+            }
+          },
+          {
+            "row": 16,
+            "col": 1,
+            "text": "ag",
+            "confidence": 65.0,
+            "bbox": {
+              "x": 1030,
+              "y": 1272,
+              "w": 40,
+              "h": 53
+            }
+          },
+          {
+            "row": 15,
+            "col": 0,
+            "text": "ET",
+            "confidence": 22.0,
+            "bbox": {
+              "x": 549,
+              "y": 1252,
+              "w": 82,
+              "h": 25
+            }
+          },
+          {
+            "row": 14,
+            "col": 1,
+            "text": "Fa et",
+            "confidence": 48.5,
+            "bbox": {
+              "x": 725,
+              "y": 1242,
+              "w": 63,
+              "h": 27
+            }
+          },
+          {
+            "row": 14,
+            "col": 0,
+            "text": "bit",
+            "confidence": 32.0,
+            "bbox": {
+              "x": 645,
+              "y": 1240,
+              "w": 47,
+              "h": 27
+            }
+          },
+          {
+            "row": 13,
+            "col": 2,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 1423,
+              "y": 716,
+              "w": 27,
+              "h": 505
+            }
+          },
+          {
+            "row": 13,
+            "col": 0,
+            "text": "mp Bee: -...| 6887. -|:វិធីរ ii |. Bee LRQ EEE il Pr =, នន fe វិធីប្រើ ‘(6-8):| (11-12) | (05-06) | (08-10) | : | Butiséopolamine. :::|. 44 -\" LES el | eee DES mom | ន 5 es SR ON ies lors",
+            "confidence": 45.51162790697674,
+            "bbox": {
+              "x": 80,
+              "y": 716,
+              "w": 1337,
+              "h": 508
+            }
+          },
+          {
+            "row": 13,
+            "col": 1,
+            "text": "Ce ne",
+            "confidence": 10.0,
+            "bbox": {
+              "x": 735,
+              "y": 706,
+              "w": 144,
+              "h": 11
+            }
+          },
+          {
+            "row": 12,
+            "col": 1,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 765,
+              "y": 640,
+              "w": 65,
+              "h": 38
+            }
+          },
+          {
+            "row": 12,
+            "col": 0,
+            "text": "វជ្ជ",
+            "confidence": 89.0,
+            "bbox": {
+              "x": 678,
+              "y": 638,
+              "w": 55,
+              "h": 40
+            }
+          },
+          {
+            "row": 11,
+            "col": 1,
+            "text": "ក្រា",
+            "confidence": 82.0,
+            "bbox": {
+              "x": 321,
+              "y": 563,
+              "w": 41,
+              "h": 40
+            }
+          },
+          {
+            "row": 11,
+            "col": 0,
+            "text": "គ្រា",
+            "confidence": 83.0,
+            "bbox": {
+              "x": 207,
+              "y": 562,
+              "w": 40,
+              "h": 43
+            }
+          },
+          {
+            "row": 10,
+            "col": 0,
+            "text": "hro:",
+            "confidence": 78.0,
+            "bbox": {
+              "x": 286,
+              "y": 475,
+              "w": 44,
+              "h": 26
+            }
+          },
+          {
+            "row": 9,
+            "col": 0,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 1289,
+              "y": 427,
+              "w": 113,
+              "h": 108
+            }
+          },
+          {
+            "row": 8,
+            "col": 0,
+            "text": "ប្រ",
+            "confidence": 71.0,
+            "bbox": {
+              "x": 94,
+              "y": 371,
+              "w": 30,
+              "h": 36
+            }
+          },
+          {
+            "row": 8,
+            "col": 1,
+            "text": "ប្រា",
+            "confidence": 87.0,
+            "bbox": {
+              "x": 226,
+              "y": 362,
+              "w": 40,
+              "h": 44
+            }
+          },
+          {
+            "row": 7,
+            "col": 0,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 1243,
+              "y": 343,
+              "w": 154,
+              "h": 77
+            }
+          },
+          {
+            "row": 6,
+            "col": 0,
+            "text": "លេ",
+            "confidence": 82.0,
+            "bbox": {
+              "x": 96,
+              "y": 295,
+              "w": 41,
+              "h": 25
+            }
+          },
+          {
+            "row": 6,
+            "col": 2,
+            "text": "sun",
+            "confidence": 79.0,
+            "bbox": {
+              "x": 603,
+              "y": 294,
+              "w": 48,
+              "h": 36
+            }
+          },
+          {
+            "row": 6,
+            "col": 1,
+            "text": "AK",
+            "confidence": 75.0,
+            "bbox": {
+              "x": 246,
+              "y": 294,
+              "w": 42,
+              "h": 26
+            }
+          },
+          {
+            "row": 5,
+            "col": 2,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 1245,
+              "y": 285,
+              "w": 46,
+              "h": 43
+            }
+          },
+          {
+            "row": 5,
+            "col": 1,
+            "text": "ឆ្នាំ",
+            "confidence": 92.0,
+            "bbox": {
+              "x": 1135,
+              "y": 284,
+              "w": 29,
+              "h": 44
+            }
+          },
+          {
+            "row": 5,
+            "col": 0,
+            "text": "Hi",
+            "confidence": 71.0,
+            "bbox": {
+              "x": 776,
+              "y": 282,
+              "w": 29,
+              "h": 47
+            }
+          },
+          {
+            "row": 4,
+            "col": 0,
+            "text": "+ » + ក uy , x , ] * .",
+            "confidence": 40.0,
+            "bbox": {
+              "x": 1438,
+              "y": 193,
+              "w": 29,
+              "h": 1748
+            }
+          },
+          {
+            "row": 3,
+            "col": 2,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 1199,
+              "y": 125,
+              "w": 58,
+              "h": 109
+            }
+          },
+          {
+            "row": 3,
+            "col": 1,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 1160,
+              "y": 122,
+              "w": 37,
+              "h": 112
+            }
+          },
+          {
+            "row": 3,
+            "col": 0,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 1083,
+              "y": 118,
+              "w": 74,
+              "h": 140
+            }
+          },
+          {
+            "row": 2,
+            "col": 3,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 1017,
+              "y": 113,
+              "w": 63,
+              "h": 113
+            }
+          },
+          {
+            "row": 2,
+            "col": 1,
+            "text": "+ , RS HT NTs | KhmerSo",
+            "confidence": 36.142857142857146,
+            "bbox": {
+              "x": 92,
+              "y": 110,
+              "w": 177,
+              "h": 107
+            }
+          },
+          {
+            "row": 2,
+            "col": 0,
+            "text": "នស",
+            "confidence": 38.0,
+            "bbox": {
+              "x": 76,
+              "y": 110,
+              "w": 72,
+              "h": 32
+            }
+          },
+          {
+            "row": 2,
+            "col": 2,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 905,
+              "y": 107,
+              "w": 110,
+              "h": 115
+            }
+          },
+          {
+            "row": 1,
+            "col": 0,
+            "text": "47.",
+            "confidence": 73.0,
+            "bbox": {
+              "x": 234,
+              "y": 82,
+              "w": 45,
+              "h": 35
+            }
+          },
+          {
+            "row": 0,
+            "col": 0,
+            "text": "",
+            "confidence": 0,
+            "bbox": {
+              "x": 516,
+              "y": 43,
+              "w": 33,
+              "h": 48
+            }
+          }
+        ],
+        "table_grid": [
+          [
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 516,
+                "y": 43,
+                "w": 33,
+                "h": 48
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "47.",
+              "confidence": 73.0,
+              "bbox": {
+                "x": 234,
+                "y": 82,
+                "w": 45,
+                "h": 35
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "នស",
+              "confidence": 38.0,
+              "bbox": {
+                "x": 76,
+                "y": 110,
+                "w": 72,
+                "h": 32
+              }
+            },
+            {
+              "text": "+ , RS HT NTs | KhmerSo",
+              "confidence": 36.142857142857146,
+              "bbox": {
+                "x": 92,
+                "y": 110,
+                "w": 177,
+                "h": 107
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 905,
+                "y": 107,
+                "w": 110,
+                "h": 115
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 1017,
+                "y": 113,
+                "w": 63,
+                "h": 113
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 1083,
+                "y": 118,
+                "w": 74,
+                "h": 140
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 1160,
+                "y": 122,
+                "w": 37,
+                "h": 112
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 1199,
+                "y": 125,
+                "w": 58,
+                "h": 109
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "+ » + ក uy , x , ] * .",
+              "confidence": 40.0,
+              "bbox": {
+                "x": 1438,
+                "y": 193,
+                "w": 29,
+                "h": 1748
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "Hi",
+              "confidence": 71.0,
+              "bbox": {
+                "x": 776,
+                "y": 282,
+                "w": 29,
+                "h": 47
+              }
+            },
+            {
+              "text": "ឆ្នាំ",
+              "confidence": 92.0,
+              "bbox": {
+                "x": 1135,
+                "y": 284,
+                "w": 29,
+                "h": 44
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 1245,
+                "y": 285,
+                "w": 46,
+                "h": 43
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "លេ",
+              "confidence": 82.0,
+              "bbox": {
+                "x": 96,
+                "y": 295,
+                "w": 41,
+                "h": 25
+              }
+            },
+            {
+              "text": "AK",
+              "confidence": 75.0,
+              "bbox": {
+                "x": 246,
+                "y": 294,
+                "w": 42,
+                "h": 26
+              }
+            },
+            {
+              "text": "sun",
+              "confidence": 79.0,
+              "bbox": {
+                "x": 603,
+                "y": 294,
+                "w": 48,
+                "h": 36
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 1243,
+                "y": 343,
+                "w": 154,
+                "h": 77
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "ប្រ",
+              "confidence": 71.0,
+              "bbox": {
+                "x": 94,
+                "y": 371,
+                "w": 30,
+                "h": 36
+              }
+            },
+            {
+              "text": "ប្រា",
+              "confidence": 87.0,
+              "bbox": {
+                "x": 226,
+                "y": 362,
+                "w": 40,
+                "h": 44
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 1289,
+                "y": 427,
+                "w": 113,
+                "h": 108
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "hro:",
+              "confidence": 78.0,
+              "bbox": {
+                "x": 286,
+                "y": 475,
+                "w": 44,
+                "h": 26
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "គ្រា",
+              "confidence": 83.0,
+              "bbox": {
+                "x": 207,
+                "y": 562,
+                "w": 40,
+                "h": 43
+              }
+            },
+            {
+              "text": "ក្រា",
+              "confidence": 82.0,
+              "bbox": {
+                "x": 321,
+                "y": 563,
+                "w": 41,
+                "h": 40
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "វជ្ជ",
+              "confidence": 89.0,
+              "bbox": {
+                "x": 678,
+                "y": 638,
+                "w": 55,
+                "h": 40
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 765,
+                "y": 640,
+                "w": 65,
+                "h": 38
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "mp Bee: -...| 6887. -|:វិធីរ ii |. Bee LRQ EEE il Pr =, នន fe វិធីប្រើ ‘(6-8):| (11-12) | (05-06) | (08-10) | : | Butiséopolamine. :::|. 44 -\" LES el | eee DES mom | ន 5 es SR ON ies lors",
+              "confidence": 45.51162790697674,
+              "bbox": {
+                "x": 80,
+                "y": 716,
+                "w": 1337,
+                "h": 508
+              }
+            },
+            {
+              "text": "Ce ne",
+              "confidence": 10.0,
+              "bbox": {
+                "x": 735,
+                "y": 706,
+                "w": 144,
+                "h": 11
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 1423,
+                "y": 716,
+                "w": 27,
+                "h": 505
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "bit",
+              "confidence": 32.0,
+              "bbox": {
+                "x": 645,
+                "y": 1240,
+                "w": 47,
+                "h": 27
+              }
+            },
+            {
+              "text": "Fa et",
+              "confidence": 48.5,
+              "bbox": {
+                "x": 725,
+                "y": 1242,
+                "w": 63,
+                "h": 27
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "ET",
+              "confidence": 22.0,
+              "bbox": {
+                "x": 549,
+                "y": 1252,
+                "w": 82,
+                "h": 25
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "ខ្បា",
+              "confidence": 39.0,
+              "bbox": {
+                "x": 725,
+                "y": 1281,
+                "w": 44,
+                "h": 27
+              }
+            },
+            {
+              "text": "ag",
+              "confidence": 65.0,
+              "bbox": {
+                "x": 1030,
+                "y": 1272,
+                "w": 40,
+                "h": 53
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "ពេញ bi",
+              "confidence": 62.5,
+              "bbox": {
+                "x": 971,
+                "y": 1285,
+                "w": 56,
+                "h": 73
+              }
+            },
+            {
+              "text": "6/2.",
+              "confidence": 59.0,
+              "bbox": {
+                "x": 1170,
+                "y": 1285,
+                "w": 45,
+                "h": 26
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 579,
+                "y": 1298,
+                "w": 29,
+                "h": 40
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 139,
+                "y": 1318,
+                "w": 57,
+                "h": 23
+              }
+            },
+            {
+              "text": "*..:( of 2h, a:",
+              "confidence": 49.0,
+              "bbox": {
+                "x": 1235,
+                "y": 1323,
+                "w": 31,
+                "h": 57
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "per ais",
+              "confidence": 54.5,
+              "bbox": {
+                "x": 321,
+                "y": 1331,
+                "w": 42,
+                "h": 35
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "2222: &: aye Ce +",
+              "confidence": 55.8,
+              "bbox": {
+                "x": 116,
+                "y": 1345,
+                "w": 58,
+                "h": 33
+              }
+            },
+            {
+              "text": "se. ov aim",
+              "confidence": 49.666666666666664,
+              "bbox": {
+                "x": 818,
+                "y": 1342,
+                "w": 55,
+                "h": 26
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 971,
+                "y": 1362,
+                "w": 53,
+                "h": 38
+              }
+            },
+            {
+              "text": "ទ្យ |",
+              "confidence": 84.0,
+              "bbox": {
+                "x": 1064,
+                "y": 1364,
+                "w": 30,
+                "h": 36
+              }
+            },
+            {
+              "text": "ព្យា",
+              "confidence": 87.0,
+              "bbox": {
+                "x": 1096,
+                "y": 1364,
+                "w": 43,
+                "h": 36
+              }
+            },
+            {
+              "text": "ល:",
+              "confidence": 68.0,
+              "bbox": {
+                "x": 1173,
+                "y": 1363,
+                "w": 42,
+                "h": 27
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "à",
+              "confidence": 30.0,
+              "bbox": {
+                "x": 623,
+                "y": 1382,
+                "w": 39,
+                "h": 59
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "ee ; រ “+?",
+              "confidence": 51.0,
+              "bbox": {
+                "x": 450,
+                "y": 1409,
+                "w": 43,
+                "h": 30
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 1094,
+                "y": 1399,
+                "w": 149,
+                "h": 143
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "nae",
+              "confidence": 34.0,
+              "bbox": {
+                "x": 210,
+                "y": 1432,
+                "w": 33,
+                "h": 51
+              }
+            },
+            {
+              "text": "Spe 4. ee 0 |",
+              "confidence": 34.8,
+              "bbox": {
+                "x": 279,
+                "y": 1441,
+                "w": 94,
+                "h": 51
+              }
+            },
+            {
+              "text": "ial ពីរ",
+              "confidence": 31.5,
+              "bbox": {
+                "x": 304,
+                "y": 1434,
+                "w": 52,
+                "h": 21
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 945,
+                "y": 1432,
+                "w": 114,
+                "h": 71
+              }
+            },
+            {
+              "text": "h",
+              "confidence": 73.0,
+              "bbox": {
+                "x": 1065,
+                "y": 1432,
+                "w": 28,
+                "h": 49
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "t= LE",
+              "confidence": 41.5,
+              "bbox": {
+                "x": 442,
+                "y": 1446,
+                "w": 73,
+                "h": 46
+              }
+            },
+            {
+              "text": "CA DE à",
+              "confidence": 43.666666666666664,
+              "bbox": {
+                "x": 534,
+                "y": 1454,
+                "w": 34,
+                "h": 30
+              }
+            },
+            {
+              "text": "កនៅ ស : Pret owas = +» “ae DL",
+              "confidence": 27.666666666666668,
+              "bbox": {
+                "x": 623,
+                "y": 1452,
+                "w": 157,
+                "h": 72
+              }
+            },
+            {
+              "text": "#4",
+              "confidence": 49.0,
+              "bbox": {
+                "x": 851,
+                "y": 1456,
+                "w": 50,
+                "h": 41
+              }
+            },
+            {
+              "text": "a ony",
+              "confidence": 32.5,
+              "bbox": {
+                "x": 921,
+                "y": 1456,
+                "w": 41,
+                "h": 28
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "| *",
+              "confidence": 62.5,
+              "bbox": {
+                "x": 101,
+                "y": 1468,
+                "w": 35,
+                "h": 29
+              }
+            },
+            {
+              "text": "Fr 4",
+              "confidence": 51.0,
+              "bbox": {
+                "x": 806,
+                "y": 1478,
+                "w": 30,
+                "h": 47
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "eo,",
+              "confidence": 57.0,
+              "bbox": {
+                "x": 288,
+                "y": 1494,
+                "w": 66,
+                "h": 25
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 1079,
+                "y": 1485,
+                "w": 55,
+                "h": 53
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 464,
+                "y": 1502,
+                "w": 50,
+                "h": 28
+              }
+            },
+            {
+              "text": "គយ",
+              "confidence": 31.0,
+              "bbox": {
+                "x": 642,
+                "y": 1506,
+                "w": 55,
+                "h": 19
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 198,
+                "y": 1526,
+                "w": 62,
+                "h": 52
+              }
+            },
+            {
+              "text": "al",
+              "confidence": 76.0,
+              "bbox": {
+                "x": 355,
+                "y": 1528,
+                "w": 32,
+                "h": 49
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 539,
+                "y": 1527,
+                "w": 45,
+                "h": 53
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 586,
+                "y": 1532,
+                "w": 54,
+                "h": 62
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 700,
+                "y": 1527,
+                "w": 65,
+                "h": 68
+              }
+            },
+            {
+              "text": "LA 2 LI",
+              "confidence": 58.0,
+              "bbox": {
+                "x": 978,
+                "y": 1528,
+                "w": 67,
+                "h": 16
+              }
+            }
+          ],
+          [
+            {
+              "text": "+សូវ",
+              "confidence": 63.0,
+              "bbox": {
+                "x": 94,
+                "y": 1541,
+                "w": 46,
+                "h": 36
+              }
+            },
+            {
+              "text": "ញ្ជា",
+              "confidence": 91.0,
+              "bbox": {
+                "x": 288,
+                "y": 1541,
+                "w": 39,
+                "h": 37
+              }
+            },
+            {
+              "text": "ក្រា",
+              "confidence": 40.0,
+              "bbox": {
+                "x": 653,
+                "y": 1544,
+                "w": 45,
+                "h": 66
+              }
+            },
+            {
+              "text": "ប!",
+              "confidence": 77.0,
+              "bbox": {
+                "x": 978,
+                "y": 1548,
+                "w": 25,
+                "h": 46
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 1004,
+                "y": 1548,
+                "w": 41,
+                "h": 46
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 1158,
+                "y": 1545,
+                "w": 31,
+                "h": 50
+              }
+            }
+          ],
+          [
+            {
+              "text": "យុ",
+              "confidence": 84.0,
+              "bbox": {
+                "x": 1081,
+                "y": 1556,
+                "w": 31,
+                "h": 39
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 1116,
+                "y": 1556,
+                "w": 30,
+                "h": 43
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "=}",
+              "confidence": 23.0,
+              "bbox": {
+                "x": 204,
+                "y": 1579,
+                "w": 55,
+                "h": 30
+              }
+            },
+            {
+              "text": "see",
+              "confidence": 47.0,
+              "bbox": {
+                "x": 539,
+                "y": 1581,
+                "w": 30,
+                "h": 37
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "Cara",
+              "confidence": 40.0,
+              "bbox": {
+                "x": 98,
+                "y": 1599,
+                "w": 56,
+                "h": 22
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "Ed + =",
+              "confidence": 40.666666666666664,
+              "bbox": {
+                "x": 102,
+                "y": 1638,
+                "w": 52,
+                "h": 24
+              }
+            },
+            {
+              "text": "[DE]",
+              "confidence": 31.0,
+              "bbox": {
+                "x": 624,
+                "y": 1631,
+                "w": 53,
+                "h": 41
+              }
+            },
+            {
+              "text": "MAS",
+              "confidence": 28.0,
+              "bbox": {
+                "x": 681,
+                "y": 1634,
+                "w": 63,
+                "h": 42
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 33,
+                "y": 1645,
+                "w": 63,
+                "h": 27
+              }
+            },
+            {
+              "text": "a sa ក",
+              "confidence": 49.666666666666664,
+              "bbox": {
+                "x": 748,
+                "y": 1643,
+                "w": 37,
+                "h": 38
+              }
+            },
+            {
+              "text": "% , យ ate",
+              "confidence": 50.25,
+              "bbox": {
+                "x": 840,
+                "y": 1642,
+                "w": 41,
+                "h": 47
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 102,
+                "y": 1668,
+                "w": 57,
+                "h": 23
+              }
+            },
+            {
+              "text": "ee. EAU)",
+              "confidence": 26.0,
+              "bbox": {
+                "x": 504,
+                "y": 1659,
+                "w": 56,
+                "h": 57
+              }
+            },
+            {
+              "text": "Me PVC",
+              "confidence": 73.0,
+              "bbox": {
+                "x": 1244,
+                "y": 1659,
+                "w": 47,
+                "h": 29
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "Ot",
+              "confidence": 48.0,
+              "bbox": {
+                "x": 352,
+                "y": 1673,
+                "w": 41,
+                "h": 28
+              }
+            },
+            {
+              "text": "ង់,\" babe Ye",
+              "confidence": 33.333333333333336,
+              "bbox": {
+                "x": 394,
+                "y": 1673,
+                "w": 39,
+                "h": 31
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "› .៖ : +: ~ 1] ee",
+              "confidence": 39.285714285714285,
+              "bbox": {
+                "x": 48,
+                "y": 1685,
+                "w": 40,
+                "h": 70
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 91,
+                "y": 1693,
+                "w": 70,
+                "h": 55
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 1292,
+                "y": 1688,
+                "w": 88,
+                "h": 21
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "+\": . Be A7 », wey",
+              "confidence": 28.0,
+              "bbox": {
+                "x": 675,
+                "y": 1713,
+                "w": 107,
+                "h": 127
+              }
+            },
+            {
+              "text": "{ten iy",
+              "confidence": 30.5,
+              "bbox": {
+                "x": 840,
+                "y": 1704,
+                "w": 41,
+                "h": 33
+              }
+            },
+            {
+              "text": "AT + “she ក",
+              "confidence": 47.0,
+              "bbox": {
+                "x": 1200,
+                "y": 1703,
+                "w": 84,
+                "h": 57
+              }
+            },
+            {
+              "text": "PACE # am:",
+              "confidence": 53.0,
+              "bbox": {
+                "x": 1292,
+                "y": 1713,
+                "w": 86,
+                "h": 22
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "ira lil",
+              "confidence": 34.0,
+              "bbox": {
+                "x": 335,
+                "y": 1719,
+                "w": 63,
+                "h": 33
+              }
+            },
+            {
+              "text": "A a?",
+              "confidence": 58.5,
+              "bbox": {
+                "x": 612,
+                "y": 1726,
+                "w": 25,
+                "h": 41
+              }
+            },
+            {
+              "text": "| | by ន -",
+              "confidence": 51.6,
+              "bbox": {
+                "x": 651,
+                "y": 1726,
+                "w": 23,
+                "h": 71
+              }
+            },
+            {
+              "text": "Fe នយ",
+              "confidence": 46.0,
+              "bbox": {
+                "x": 783,
+                "y": 1726,
+                "w": 43,
+                "h": 55
+              }
+            },
+            {
+              "text": "aoe",
+              "confidence": 31.0,
+              "bbox": {
+                "x": 1158,
+                "y": 1719,
+                "w": 40,
+                "h": 34
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "severe",
+              "confidence": 10.0,
+              "bbox": {
+                "x": 482,
+                "y": 1735,
+                "w": 79,
+                "h": 32
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 1076,
+                "y": 1741,
+                "w": 80,
+                "h": 40
+              }
+            },
+            {
+              "text": "គ is -",
+              "confidence": 36.0,
+              "bbox": {
+                "x": 1296,
+                "y": 1737,
+                "w": 82,
+                "h": 17
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "CA EU His",
+              "confidence": 51.666666666666664,
+              "bbox": {
+                "x": 335,
+                "y": 1754,
+                "w": 71,
+                "h": 47
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 1006,
+                "y": 1761,
+                "w": 48,
+                "h": 21
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 1296,
+                "y": 1755,
+                "w": 82,
+                "h": 15
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "Mes LE DEN LFP",
+              "confidence": 33.5,
+              "bbox": {
+                "x": 924,
+                "y": 1770,
+                "w": 79,
+                "h": 81
+              }
+            },
+            {
+              "text": "+ ei ae hed LE",
+              "confidence": 39.8,
+              "bbox": {
+                "x": 1295,
+                "y": 1776,
+                "w": 31,
+                "h": 80
+              }
+            },
+            {
+              "text": "ស៊",
+              "confidence": 58.0,
+              "bbox": {
+                "x": 1327,
+                "y": 1772,
+                "w": 51,
+                "h": 33
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "ៗ) +, =",
+              "confidence": 42.333333333333336,
+              "bbox": {
+                "x": 63,
+                "y": 1803,
+                "w": 77,
+                "h": 26
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 525,
+                "y": 1797,
+                "w": 41,
+                "h": 31
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 570,
+                "y": 1794,
+                "w": 48,
+                "h": 71
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 638,
+                "y": 1799,
+                "w": 62,
+                "h": 67
+              }
+            },
+            {
+              "text": "a etes re | ពរ»",
+              "confidence": 30.2,
+              "bbox": {
+                "x": 1174,
+                "y": 1795,
+                "w": 79,
+                "h": 64
+              }
+            },
+            {
+              "text": "et",
+              "confidence": 22.0,
+              "bbox": {
+                "x": 1256,
+                "y": 1795,
+                "w": 31,
+                "h": 61
+              }
+            }
+          ],
+          [
+            {
+              "text": "ag tet",
+              "confidence": 49.0,
+              "bbox": {
+                "x": 335,
+                "y": 1805,
+                "w": 56,
+                "h": 18
+              }
+            },
+            {
+              "text": "Les › ? +.",
+              "confidence": 53.5,
+              "bbox": {
+                "x": 1327,
+                "y": 1806,
+                "w": 51,
+                "h": 25
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "* * LU PL",
+              "confidence": 37.75,
+              "bbox": {
+                "x": 317,
+                "y": 1848,
+                "w": 33,
+                "h": 36
+              }
+            },
+            {
+              "text": "son # LCA",
+              "confidence": 32.333333333333336,
+              "bbox": {
+                "x": 846,
+                "y": 1858,
+                "w": 75,
+                "h": 40
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "ES THe rs mr ne, NACRE",
+              "confidence": 26.666666666666668,
+              "bbox": {
+                "x": 741,
+                "y": 1862,
+                "w": 104,
+                "h": 79
+              }
+            },
+            {
+              "text": "nee ES ves",
+              "confidence": 35.0,
+              "bbox": {
+                "x": 923,
+                "y": 1863,
+                "w": 38,
+                "h": 66
+              }
+            },
+            {
+              "text": "ets # +\" %៖ ry",
+              "confidence": 36.4,
+              "bbox": {
+                "x": 962,
+                "y": 1863,
+                "w": 72,
+                "h": 59
+              }
+            },
+            {
+              "text": "221",
+              "confidence": 39.0,
+              "bbox": {
+                "x": 1105,
+                "y": 1872,
+                "w": 29,
+                "h": 36
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "ee.",
+              "confidence": 22.0,
+              "bbox": {
+                "x": 1197,
+                "y": 1874,
+                "w": 88,
+                "h": 67
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": ",, ari",
+              "confidence": 40.5,
+              "bbox": {
+                "x": 639,
+                "y": 1890,
+                "w": 46,
+                "h": 22
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 1302,
+                "y": 1885,
+                "w": 47,
+                "h": 51
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ],
+          [
+            {
+              "text": "Soe the",
+              "confidence": 47.0,
+              "bbox": {
+                "x": 850,
+                "y": 1899,
+                "w": 29,
+                "h": 42
+              }
+            },
+            {
+              "text": "rh 4 fn ព “",
+              "confidence": 48.8,
+              "bbox": {
+                "x": 880,
+                "y": 1899,
+                "w": 37,
+                "h": 42
+              }
+            },
+            {
+              "text": "sn.",
+              "confidence": 40.0,
+              "bbox": {
+                "x": 1187,
+                "y": 1905,
+                "w": 47,
+                "h": 31
+              }
+            },
+            {
+              "text": "\"en",
+              "confidence": 32.0,
+              "bbox": {
+                "x": 1376,
+                "y": 1907,
+                "w": 37,
+                "h": 29
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            },
+            {
+              "text": "",
+              "confidence": 0,
+              "bbox": {
+                "x": 0,
+                "y": 0,
+                "w": 0,
+                "h": 0
+              }
+            }
+          ]
+        ]
+      }
+    },
+    "structured_data": {
+      "patient": {
+        "name": null,
+        "id": null,
+        "age": null,
+        "gender": null
+      },
+      "doctor": {
+        "name": null,
+        "signature": false
+      },
+      "medications": [],
+      "dates": [],
+      "times": [],
+      "time_of_day": [],
+      "table_detected": true,
+      "table_medications": [
+        {
+          "name": "47.",
+          "dosage": "",
+          "frequency": "",
+          "row": 1,
+          "source": "table"
+        },
+        {
+          "name": "នស",
+          "dosage": "+ , RS HT NTs | KhmerSo",
+          "frequency": "",
+          "row": 2,
+          "source": "table"
+        },
+        {
+          "name": "+ » + ក uy , x , ] * .",
+          "dosage": "",
+          "frequency": "",
+          "row": 4,
+          "source": "table"
+        },
+        {
+          "name": "Hi",
+          "dosage": "ឆ្នាំ",
+          "frequency": "",
+          "row": 5,
+          "source": "table"
+        },
+        {
+          "name": "លេ",
+          "dosage": "AK",
+          "frequency": "sun",
+          "row": 6,
+          "source": "table"
+        },
+        {
+          "name": "ប្រ",
+          "dosage": "ប្រា",
+          "frequency": "",
+          "row": 8,
+          "source": "table"
+        },
+        {
+          "name": "hro:",
+          "dosage": "",
+          "frequency": "",
+          "row": 10,
+          "source": "table"
+        },
+        {
+          "name": "គ្រា",
+          "dosage": "ក្រា",
+          "frequency": "",
+          "row": 11,
+          "source": "table"
+        },
+        {
+          "name": "វជ្ជ",
+          "dosage": "",
+          "frequency": "",
+          "row": 12,
+          "source": "table"
+        },
+        {
+          "name": "mp Bee: -...| 6887. -|:វិធីរ ii |. Bee LRQ EEE il Pr =, នន fe វិធីប្រើ ‘(6-8):| (11-12) | (05-06) | (08-10) | : | Butiséopolamine. :::|. 44 -\" LES el | eee DES mom | ន 5 es SR ON ies lors",
+          "dosage": "Ce ne",
+          "frequency": "",
+          "row": 13,
+          "source": "table"
+        },
+        {
+          "name": "bit",
+          "dosage": "Fa et",
+          "frequency": "",
+          "row": 14,
+          "source": "table"
+        },
+        {
+          "name": "ET",
+          "dosage": "",
+          "frequency": "",
+          "row": 15,
+          "source": "table"
+        },
+        {
+          "name": "ខ្បា",
+          "dosage": "ag",
+          "frequency": "",
+          "row": 16,
+          "source": "table"
+        },
+        {
+          "name": "ពេញ bi",
+          "dosage": "6/2.",
+          "frequency": "",
+          "row": 17,
+          "source": "table"
+        },
+        {
+          "name": "per ais",
+          "dosage": "",
+          "frequency": "",
+          "row": 20,
+          "source": "table"
+        },
+        {
+          "name": "2222: &: aye Ce +",
+          "dosage": "se. ov aim",
+          "frequency": "",
+          "row": 21,
+          "source": "table"
+        },
+        {
+          "name": "à",
+          "dosage": "",
+          "frequency": "",
+          "row": 23,
+          "source": "table"
+        },
+        {
+          "name": "ee ; រ “+?",
+          "dosage": "",
+          "frequency": "",
+          "row": 24,
+          "source": "table"
+        },
+        {
+          "name": "nae",
+          "dosage": "Spe 4. ee 0 |",
+          "frequency": "ial ពីរ",
+          "row": 25,
+          "source": "table"
+        },
+        {
+          "name": "t= LE",
+          "dosage": "CA DE à",
+          "frequency": "កនៅ ស : Pret owas = +» “ae DL",
+          "row": 26,
+          "source": "table"
+        },
+        {
+          "name": "| *",
+          "dosage": "Fr 4",
+          "frequency": "",
+          "row": 27,
+          "source": "table"
+        },
+        {
+          "name": "eo,",
+          "dosage": "",
+          "frequency": "",
+          "row": 28,
+          "source": "table"
+        },
+        {
+          "name": "+សូវ",
+          "dosage": "ញ្ជា",
+          "frequency": "ក្រា",
+          "row": 31,
+          "source": "table"
+        },
+        {
+          "name": "យុ",
+          "dosage": "",
+          "frequency": "",
+          "row": 32,
+          "source": "table"
+        },
+        {
+          "name": "=}",
+          "dosage": "see",
+          "frequency": "",
+          "row": 33,
+          "source": "table"
+        },
+        {
+          "name": "Cara",
+          "dosage": "",
+          "frequency": "",
+          "row": 34,
+          "source": "table"
+        },
+        {
+          "name": "Ed + =",
+          "dosage": "[DE]",
+          "frequency": "MAS",
+          "row": 35,
+          "source": "table"
+        },
+        {
+          "name": "Ot",
+          "dosage": "ង់,\" babe Ye",
+          "frequency": "",
+          "row": 38,
+          "source": "table"
+        },
+        {
+          "name": "› .៖ : +: ~ 1] ee",
+          "dosage": "",
+          "frequency": "",
+          "row": 39,
+          "source": "table"
+        },
+        {
+          "name": "+\": . Be A7 », wey",
+          "dosage": "{ten iy",
+          "frequency": "AT + “she ក",
+          "row": 40,
+          "source": "table"
+        },
+        {
+          "name": "ira lil",
+          "dosage": "A a?",
+          "frequency": "| | by ន -",
+          "row": 41,
+          "source": "table"
+        },
+        {
+          "name": "severe",
+          "dosage": "",
+          "frequency": "គ is -",
+          "row": 42,
+          "source": "table"
+        },
+        {
+          "name": "CA EU His",
+          "dosage": "",
+          "frequency": "",
+          "row": 43,
+          "source": "table"
+        },
+        {
+          "name": "Mes LE DEN LFP",
+          "dosage": "+ ei ae hed LE",
+          "frequency": "ស៊",
+          "row": 44,
+          "source": "table"
+        },
+        {
+          "name": "ៗ) +, =",
+          "dosage": "",
+          "frequency": "",
+          "row": 45,
+          "source": "table"
+        },
+        {
+          "name": "ag tet",
+          "dosage": "Les › ? +.",
+          "frequency": "",
+          "row": 46,
+          "source": "table"
+        },
+        {
+          "name": "* * LU PL",
+          "dosage": "son # LCA",
+          "frequency": "",
+          "row": 47,
+          "source": "table"
+        },
+        {
+          "name": "ES THe rs mr ne, NACRE",
+          "dosage": "nee ES ves",
+          "frequency": "ets # +\" %៖ ry",
+          "row": 48,
+          "source": "table"
+        },
+        {
+          "name": "ee.",
+          "dosage": "",
+          "frequency": "",
+          "row": 49,
+          "source": "table"
+        },
+        {
+          "name": ",, ari",
+          "dosage": "",
+          "frequency": "",
+          "row": 50,
+          "source": "table"
+        },
+        {
+          "name": "Soe the",
+          "dosage": "rh 4 fn ព “",
+          "frequency": "sn.",
+          "row": 51,
+          "source": "table"
+        }
+      ]
+    }
+  }
+}
