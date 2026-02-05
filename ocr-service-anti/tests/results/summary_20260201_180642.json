@@ -1,0 +1,47 @@
+{
+  "session_id": "20260201_180642",
+  "test_date": "2026-02-01T18:15:53.346451",
+  "total_images": 3,
+  "ocr_success_count": 3,
+  "ai_success_count": 0,
+  "format_valid_count": 0,
+  "average_ocr_time_ms": 3130.066666666667,
+  "results": [
+    {
+      "image": "image.png",
+      "ocr_success": true,
+      "ai_success": false,
+      "ocr_time_ms": 4366.32,
+      "ai_time_ms": 180088.56,
+      "format_valid": false,
+      "validation_errors": [
+        "AI service timeout (180s)"
+      ],
+      "timestamp": "2026-02-01T18:09:48.195997"
+    },
+    {
+      "image": "image1.png",
+      "ocr_success": true,
+      "ai_success": false,
+      "ocr_time_ms": 3056.86,
+      "ai_time_ms": 180026.17,
+      "format_valid": false,
+      "validation_errors": [
+        "AI service timeout (180s)"
+      ],
+      "timestamp": "2026-02-01T18:12:51.282117"
+    },
+    {
+      "image": "image2.png",
+      "ocr_success": true,
+      "ai_success": false,
+      "ocr_time_ms": 1967.02,
+      "ai_time_ms": 180094.4,
+      "format_valid": false,
+      "validation_errors": [
+        "AI service timeout (180s)"
+      ],
+      "timestamp": "2026-02-01T18:15:53.346413"
+    }
+  ]
+}

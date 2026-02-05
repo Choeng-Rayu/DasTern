@@ -1,2 +1,1 @@
-"""Core LLM functionality"""
-
+"""Core AI generation module"""

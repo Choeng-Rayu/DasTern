@@ -1,0 +1,47 @@
+{
+  "session_id": "20260201_175239",
+  "test_date": "2026-02-01T17:52:46.802041",
+  "total_images": 3,
+  "ocr_success_count": 0,
+  "ai_success_count": 0,
+  "format_valid_count": 0,
+  "average_ocr_time_ms": 2282.0066666666667,
+  "results": [
+    {
+      "image": "image.png",
+      "ocr_success": false,
+      "ai_success": false,
+      "ocr_time_ms": 2813.12,
+      "ai_time_ms": null,
+      "format_valid": false,
+      "validation_errors": [
+        "OCR failed or AI not available"
+      ],
+      "timestamp": "2026-02-01T17:52:42.767975"
+    },
+    {
+      "image": "image1.png",
+      "ocr_success": false,
+      "ai_success": false,
+      "ocr_time_ms": 2291.55,
+      "ai_time_ms": null,
+      "format_valid": false,
+      "validation_errors": [
+        "OCR failed or AI not available"
+      ],
+      "timestamp": "2026-02-01T17:52:45.060177"
+    },
+    {
+      "image": "image2.png",
+      "ocr_success": false,
+      "ai_success": false,
+      "ocr_time_ms": 1741.35,
+      "ai_time_ms": null,
+      "format_valid": false,
+      "validation_errors": [
+        "OCR failed or AI not available"
+      ],
+      "timestamp": "2026-02-01T17:52:46.802011"
+    }
+  ]
+}
