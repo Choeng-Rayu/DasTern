@@ -4,6 +4,10 @@ import bcrypt from 'bcryptjs';
 import { signJwt } from '@/lib/jwt';
 import { validateRegister } from '@/lib/validators/auth.validator';
 import { successResponse, errorResponse, validationError } from '@/lib/utils/response';
+<<<<<<< Updated upstream
+=======
+import { toPostgresDate } from '@/lib/utils/date.utils';
+>>>>>>> Stashed changes
 
 export async function POST(req: NextRequest) {
   try {
@@ -15,7 +19,13 @@ export async function POST(req: NextRequest) {
       return validationError(validation.errors);
     }
 
+<<<<<<< Updated upstream
     const { email, telephone, password, first_name, last_name } = body;
+=======
+    const { email, telephone, password, first_name, last_name, gender, date_of_birth } = body;
+
+    const formattedDob = toPostgresDate(date_of_birth);
+>>>>>>> Stashed changes
 
     // Check if user exists
     const exists = await query(
@@ -37,6 +47,7 @@ export async function POST(req: NextRequest) {
     // Create user (no role yet - will be selected in next step)
     const result = await query(
       `INSERT INTO users (
+<<<<<<< Updated upstream
         id, email, first_name, last_name, phone_number, password_hash,
         role, onboarding_status, created_at, updated_at
       ) VALUES (
@@ -45,6 +56,16 @@ export async function POST(req: NextRequest) {
       )
       RETURNING id, email, first_name, last_name, phone_number, role, onboarding_status, created_at`,
       [email.toLowerCase(), first_name, last_name, telephone, passwordHash]
+=======
+        id, email, first_name, last_name, phone_number, gender, date_of_birth, password_hash, 
+        role, onboarding_status, created_at, updated_at
+      ) VALUES (
+        uuid_generate_v4(), $1, $2, $3, $4, $5, $6, $7,
+        'patient', 'registered', NOW(), NOW()
+      )
+      RETURNING id, email, first_name, last_name, phone_number, gender, date_of_birth, role, onboarding_status, created_at`,
+      [email.toLowerCase(), first_name, last_name, telephone, gender, formattedDob, passwordHash]
+>>>>>>> Stashed changes
     );
 
     const user = result.rows[0];
@@ -74,6 +95,11 @@ export async function POST(req: NextRequest) {
           first_name: user.first_name,
           last_name: user.last_name,
           telephone: user.phone_number,
+<<<<<<< Updated upstream
+=======
+          gender: user.gender,
+          birth_of_date: user.date_of_birth,
+>>>>>>> Stashed changes
           role: user.role,
           onboarding_status: user.onboarding_status
         }
