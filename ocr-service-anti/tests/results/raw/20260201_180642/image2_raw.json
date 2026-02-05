@@ -1,0 +1,252 @@
+{
+  "success": true,
+  "data": {
+    "meta": {
+      "languages": [
+        "eng",
+        "khm",
+        "fra"
+      ],
+      "dpi": 71,
+      "processing_time_ms": 1950.8693218231201,
+      "model_version": "default",
+      "stage_times": {
+        "validation": 61.61642074584961,
+        "quality_analysis": 84.52868461608887,
+        "preprocessing": 23.05316925048828,
+        "layout_analysis": 176.3908863067627,
+        "ocr_extraction": 1601.2091636657715,
+        "postprocessing": 3.793954849243164
+      },
+      "image_size": {
+        "width": 930,
+        "height": 1280
+      }
+    },
+    "quality": {
+      "blur": "low",
+      "blur_score": 1802.9228543629022,
+      "contrast": "ok",
+      "contrast_score": 44.68520600625875,
+      "skew_angle": -2.0825652797308845,
+      "dpi": 71,
+      "is_grayscale": false
+    },
+    "qr_codes": [],
+    "blocks": [
+      {
+        "type": "text",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 975,
+          "height": 1312
+        },
+        "lines": [
+          {
+            "text": "DCE H. យ វ EP |",
+            "bbox": {
+              "x": 96,
+              "y": 34,
+              "width": 879,
+              "height": 153
+            },
+            "confidence": 0.58,
+            "language": "en",
+            "tags": []
+          },
+          {
+            "text": "KhmerSovet កករ Horn",
+            "bbox": {
+              "x": 156,
+              "y": 109,
+              "width": 168,
+              "height": 37
+            },
+            "confidence": 0.22,
+            "language": "en",
+            "tags": []
+          },
+          {
+            "text": "លេខកូដ: HAKF1354164 ឈ្មោះអ្នកជំងឺ: ង៉ាំ ដានី អាយុ: 19 ឆ្នាំ ភេទ: ស្រី |",
+            "bbox": {
+              "x": 92,
+              "y": 166,
+              "width": 877,
+              "height": 37
+            },
+            "confidence": 0.9245454545454546,
+            "language": "kh",
+            "tags": []
+          },
+          {
+            "text": "ប្រភេទបង់ប្រាក់ : មូលនិធិសមធម៌ / 20051002-0409 |",
+            "bbox": {
+              "x": 91,
+              "y": 207,
+              "width": 878,
+              "height": 34
+            },
+            "confidence": 0.81,
+            "language": "kh",
+            "tags": []
+          },
+          {
+            "text": "រោគវិនិច្ឆ័យ : 1. Chronic Cystitis",
+            "bbox": {
+              "x": 90,
+              "y": 254,
+              "width": 253,
+              "height": 28
+            },
+            "confidence": 0.9380000000000001,
+            "language": "en",
+            "tags": []
+          },
+          {
+            "text": "2. Encour ménorhée",
+            "bbox": {
+              "x": 191,
+              "y": 291,
+              "width": 170,
+              "height": 17
+            },
+            "confidence": 0.9266666666666667,
+            "language": "fr",
+            "tags": []
+          },
+          {
+            "text": "ផ្នែក : ពិគ្រោះជំងឺក្រៅ - បន្ទប់លេខ 5 :",
+            "bbox": {
+              "x": 88,
+              "y": 342,
+              "width": 862,
+              "height": 39
+            },
+            "confidence": 0.8528571428571429,
+            "language": "kh",
+            "tags": []
+          },
+          {
+            "text": "វេជ្ជបញ្ជា ស",
+            "bbox": {
+              "x": 456,
+              "y": 386,
+              "width": 439,
+              "height": 46
+            },
+            "confidence": 0.655,
+            "language": "kh",
+            "tags": []
+          },
+          {
+            "text": "ក ie",
+            "bbox": {
+              "x": 821,
+              "y": 498,
+              "width": 134,
+              "height": 27
+            },
+            "confidence": 0.27,
+            "language": "en",
+            "tags": []
+          },
+          {
+            "text": "ពី យ",
+            "bbox": {
+              "x": 130,
+              "y": 502,
+              "width": 645,
+              "height": 64
+            },
+            "confidence": 0.155,
+            "language": "kh",
+            "tags": []
+          },
+          {
+            "text": "10៣9 —— _",
+            "bbox": {
+              "x": 130,
+              "y": 541,
+              "width": 816,
+              "height": 37
+            },
+            "confidence": 0.73,
+            "language": "kh",
+            "tags": []
+          },
+          {
+            "text": "eo [| ae",
+            "bbox": {
+              "x": 81,
+              "y": 545,
+              "width": 871,
+              "height": 104
+            },
+            "confidence": 0.4166666666666667,
+            "language": "en",
+            "tags": []
+          },
+          {
+            "text": "Esome 20mg |7 គ្រាប់ស្រោប| PO |គ្រាប់ ក្រោយបាយ ន",
+            "bbox": {
+              "x": 128,
+              "y": 636,
+              "width": 700,
+              "height": 48
+            },
+            "confidence": 0.74625,
+            "language": "kh",
+            "tags": [
+              "time_candidate",
+              "quantity_candidate"
+            ]
+          },
+          {
+            "text": "= 2 1 | កោ ហៈ ក",
+            "bbox": {
+              "x": 126,
+              "y": 689,
+              "width": 676,
+              "height": 72
+            },
+            "confidence": 0.42,
+            "language": "kh",
+            "tags": []
+          },
+          {
+            "text": "ara យ បយ",
+            "bbox": {
+              "x": 138,
+              "y": 712,
+              "width": 639,
+              "height": 33
+            },
+            "confidence": 0.7166666666666667,
+            "language": "en",
+            "tags": []
+          },
+          {
+            "text": "- ; រាជធានីភ្នំពេញ,ថ្ងៃទី 22/06/2",
+            "bbox": {
+              "x": 382,
+              "y": 783,
+              "width": 410,
+              "height": 36
+            },
+            "confidence": 0.595,
+            "language": "kh",
+            "tags": [
+              "time_candidate"
+            ]
+          }
+        ],
+        "table": null,
+        "raw_text": "DCE H. យ វ EP |\nKhmerSovet កករ Horn\nលេខកូដ: HAKF1354164 ឈ្មោះអ្នកជំងឺ: ង៉ាំ ដានី អាយុ: 19 ឆ្នាំ ភេទ: ស្រី |\nប្រភេទបង់ប្រាក់ : មូលនិធិសមធម៌ / 20051002-0409 |\nរោគវិនិច្ឆ័យ : 1. Chronic Cystitis\n2. Encour ménorhée\nផ្នែក : ពិគ្រោះជំងឺក្រៅ - បន្ទប់លេខ 5 :\nវេជ្ជបញ្ជា ស\nក ie\nពី យ\n10៣9 —— _\neo [| ae\nEsome 20mg |7 គ្រាប់ស្រោប| PO |គ្រាប់ ក្រោយបាយ ន\n= 2 1 | កោ ហៈ ក\nara យ បយ\n- ; រាជធានីភ្នំពេញ,ថ្ងៃទី 22/06/2"
+      }
+    ],
+    "raw_text": "DCE H. យ វ EP |\nKhmerSovet កករ Horn\nលេខកូដ: HAKF1354164 ឈ្មោះអ្នកជំងឺ: ង៉ាំ ដានី អាយុ: 19 ឆ្នាំ ភេទ: ស្រី |\nប្រភេទបង់ប្រាក់ : មូលនិធិសមធម៌ / 20051002-0409 |\nរោគវិនិច្ឆ័យ : 1. Chronic Cystitis\n2. Encour ménorhée\nផ្នែក : ពិគ្រោះជំងឺក្រៅ - បន្ទប់លេខ 5 :\nវេជ្ជបញ្ជា ស\nក ie\nពី យ\n10៣9 —— _\neo [| ae\nEsome 20mg |7 គ្រាប់ស្រោប| PO |គ្រាប់ ក្រោយបាយ ន\n= 2 1 | កោ ហៈ ក\nara យ បយ\n- ; រាជធានីភ្នំពេញ,ថ្ងៃទី 22/06/2"
+  },
+  "processing_time_seconds": 1.9670178890228271,
+  "image_name": "image2.png"
+}
