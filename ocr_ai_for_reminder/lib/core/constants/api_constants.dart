@@ -5,13 +5,13 @@ class ApiConstants {
   // Find it with: ip addr show | grep "inet " (on Linux)
   // For emulator: use '10.0.2.2'
   // For physical device on WiFi: use your computer's IP (e.g., '192.168.0.164')
-  static const String hostIpAddress = '192.168.0.164'; // UPDATE THIS FOR YOUR NETWORK
+  static const String hostIpAddress = '172.23.5.229'; // UPDATE THIS FOR YOUR NETWORK
   
   // Ports must match docker-compose.yml
   static const String defaultOcrPort = 
-      String.fromEnvironment('OCR_SERVICE_PORT', defaultValue: '8006');
+      String.fromEnvironment('OCR_SERVICE_PORT', defaultValue: '8000');
   static const String defaultAiPort =
-      String.fromEnvironment('AI_SERVICE_PORT', defaultValue: '8005');
+      String.fromEnvironment('AI_SERVICE_PORT', defaultValue: '8001');
 
   // Use hostIpAddress for physical device, 10.0.2.2 for emulator, 127.0.0.1 for iOS/Desktop
   static String get baseUrl {
