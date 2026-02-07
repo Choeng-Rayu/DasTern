@@ -1,0 +1,1 @@
+1.3G	/home/rayu/DasTern/.venv
