@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' hide DayPeriod;
 import '../models/day_period.dart';
-import 'time_chip.dart';
+import 'scedule_widget.dart';
 
 class MedicationShift extends StatelessWidget {
   final DayPeriod period;
@@ -32,7 +32,7 @@ class MedicationShift extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           color: Colors.black.withOpacity(0.35),
         ),
-        child: Row(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(

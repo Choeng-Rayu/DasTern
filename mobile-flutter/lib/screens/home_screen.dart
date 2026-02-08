@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: BackgroundHomepage(
               child: SingleChildScrollView(
                 padding: EdgeInsets.all(16),
-                child: Column(
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 24),

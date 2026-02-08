@@ -55,14 +55,14 @@ class MedicationShift extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           color: Colors.black.withOpacity(0.35),
         ),
-        child: Column(
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               period.label,
               style: const TextStyle(
                 color: Colors.white,
-                fontSize: 22,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
