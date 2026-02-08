@@ -1,20 +1,26 @@
 """
 Ollama-based AI Service for OCR Correction and Medical Assistance
+Enhanced with comprehensive logging for debugging OCR-to-AI flow.
 """
 import os
 import sys
-import logging
+import time
 import requests
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Dict, Optional
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 try:
     from .schemas import OCRCorrectionRequest, OCRCorrectionResponse
     from .schemas import ChatRequest, ChatResponse
     from .schemas import ReminderRequest, ReminderResponse
     from .features.reminder_engine import ReminderEngine
+    from .core.logging_config import setup_logging, get_logger, set_request_id, truncate_for_log
 except ImportError:
     current_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(current_dir)
@@ -24,10 +30,11 @@ except ImportError:
     from app.schemas import ChatRequest, ChatResponse
     from app.schemas import ReminderRequest, ReminderResponse
     from app.features.reminder_engine import ReminderEngine
+    from app.core.logging_config import setup_logging, get_logger, set_request_id, truncate_for_log
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+# Initialize structured logging
+setup_logging(service_name="ai-llm-service")
+logger = get_logger(__name__)
 
 # Ollama configuration
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
@@ -86,12 +93,25 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Initialize reminder engine
+# Initialize engines
 ollama_client = OllamaClient()
 reminder_engine = ReminderEngine(ollama_client)
 
-async def call_ollama(prompt: str, model: str = DEFAULT_MODEL, temperature: float = 0.7) -> str:
-    """Make a call to Ollama API with fallback"""
+# Initialize prescription processor
+try:
+    from .features.prescription.processor import PrescriptionProcessor
+    prescription_processor = PrescriptionProcessor(ollama_client)
+except ImportError:
+    # Fallback import logic
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    parent_dir = os.path.dirname(current_dir)
+    if parent_dir not in sys.path:
+        sys.path.insert(0, parent_dir)
+    from app.features.prescription.processor import PrescriptionProcessor
+    prescription_processor = PrescriptionProcessor(ollama_client)
+
+async def call_ollama(prompt: str, model: str = DEFAULT_MODEL, temperature: float = 0.3) -> str:
+    """Make a call to Ollama API with fallback - optimized for 10-20s response"""
     try:
         payload = {
             "model": model,
@@ -100,15 +120,15 @@ async def call_ollama(prompt: str, model: str = DEFAULT_MODEL, temperature: floa
             "options": {
                 "temperature": temperature,
                 "top_p": 0.9,
-                "max_tokens": 100,
-                "num_ctx": 512
+                "num_ctx": 1024,
+                "num_predict": 150
             }
         }
         
         response = requests.post(
             f"{OLLAMA_BASE_URL}/api/generate",
             json=payload,
-            timeout=30  # Reduced timeout
+            timeout=20
         )
         
         if response.status_code == 200:
@@ -120,7 +140,6 @@ async def call_ollama(prompt: str, model: str = DEFAULT_MODEL, temperature: floa
     
     except requests.exceptions.Timeout:
         logger.error("Ollama request timeout - using fallback")
-        # Use simple fallback for timeout
         return await simple_fallback(prompt)
     except Exception as e:
         logger.error(f"Error calling Ollama: {e}")
@@ -169,11 +188,58 @@ async def simple_fallback(prompt: str) -> str:
 @app.post("/extract-reminders")
 def extract_reminders(request: ReminderRequest):
     """Extract structured reminders from raw OCR data"""
+    request_id = set_request_id()
+    start_time = time.time()
+    
+    logger.info(f"[ENDPOINT] /extract-reminders - START")
+    logger.debug(f"[ENDPOINT] OCR data preview: {truncate_for_log(str(request.raw_ocr_json), 200)}")
+    
     try:
         result = reminder_engine.extract_reminders(request)
+        elapsed = time.time() - start_time
+        
+        med_count = len(result.medications) if hasattr(result, 'medications') else 0
+        logger.info(f"[ENDPOINT] /extract-reminders - COMPLETE - {elapsed:.1f}s - medications={med_count}")
+        
         return result
     except Exception as e:
-        logger.error(f"Reminder extraction failed: {str(e)}")
+        elapsed = time.time() - start_time
+        logger.error(f"[ENDPOINT] /extract-reminders - FAILED - {elapsed:.1f}s - {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/v1/prescription/process")
+async def process_prescription(request: ReminderRequest):
+    """
+    Process full prescription (Patient, Medical, Medications) from raw OCR data.
+    """
+    request_id = set_request_id()
+    start_time = time.time()
+    
+    logger.info(f"[ENDPOINT] /api/v1/prescription/process - START")
+    logger.debug(f"[ENDPOINT] OCR data preview: {truncate_for_log(str(request.raw_ocr_json), 200)}")
+    
+    try:
+        # Use PrescriptionProcessor to get full structured data
+        result = prescription_processor.process_prescription(request.raw_ocr_json)
+        elapsed = time.time() - start_time
+        
+        if not result.get("success", False):
+            logger.warning(f"[ENDPOINT] /api/v1/prescription/process - INCOMPLETE - {elapsed:.1f}s - {result.get('error', 'Unknown')}")
+            return {
+                "success": False,
+                "error": result.get("error", "Unknown processing error"),
+                "patient_info": {},
+                "medical_info": {},
+                "medications": []
+            }
+        
+        med_count = len(result.get("medications", []))
+        logger.info(f"[ENDPOINT] /api/v1/prescription/process - COMPLETE - {elapsed:.1f}s - medications={med_count}")
+        return result
+        
+    except Exception as e:
+        elapsed = time.time() - start_time
+        logger.error(f"[ENDPOINT] /api/v1/prescription/process - FAILED - {elapsed:.1f}s - {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/")
@@ -214,24 +280,33 @@ async def correct_ocr_simple(request: dict):
         text = request.get("text", "")
         language = request.get("language", "en")
         
-        if not text:
-            raise HTTPException(status_code=400, detail="No text provided")
+        if not text or not text.strip():
+            logger.warning(f"Empty text received in OCR correction request: {request}")
+            raise HTTPException(status_code=400, detail="No text provided or text is empty. Please ensure the OCR extracted text before sending for correction.")
         
         logger.info(f"Correcting OCR text with Ollama (length: {len(text)})")
         
         # Truncate text if too long for faster processing
+        original_text = text
         if len(text) > 200:
             text = text[:200] + "..."
             
-        # Create simple OCR correction prompt
-        prompt = f"Fix OCR errors in this medical prescription text: {text}\n\nCorrected:"
+        # Create simple OCR correction prompt - just return the correction
+        prompt = f"Fix typos in this text and return ONLY the corrected text, nothing else:\n\n{text}\n\nFixed:"
 
-        corrected_text = await call_ollama(prompt, temperature=0.3)  # Lower temperature for more deterministic correction
+        corrected_text = await call_ollama(prompt, temperature=0.2)
+        
+        # Clean up the response - remove the "Fixed:" prefix if present
+        corrected_text = corrected_text.replace("Fixed:", "").strip()
+        
+        # Calculate simple diff
+        corrections_made = sum(1 for a, b in zip(original_text, corrected_text) if a != b)
+        corrections_made += abs(len(original_text) - len(corrected_text))
         
         return {
             "corrected_text": corrected_text,
-            "confidence": 0.85,  # Ollama doesn't provide confidence scores
-            "corrections_made": 1 if corrected_text != text else 0,
+            "confidence": 0.85,
+            "corrections_made": corrections_made,
             "model_used": DEFAULT_MODEL
         }
         
@@ -294,15 +369,15 @@ async def chat(request: ChatRequest):
         if len(message) > 200:
             message = message[:200] + "..."
         
-        # Create simple prompt for faster processing
-        prompt = f"Fix OCR errors and summarize medical text: {message}\n\nCorrected:"
+        # Create medical assistant prompt
+        prompt = f"You are a helpful medical assistant. Answer briefly:\n\nUser: {message}\n\nAssistant:"
 
-        response_text = await call_ollama(prompt)
+        response_text = await call_ollama(prompt, temperature=0.4)
         
         return ChatResponse(
             response=response_text,
             language=request.language,
-            confidence=0.85,  # Default confidence since Ollama doesn't provide it
+            confidence=0.85,
             metadata={"model": DEFAULT_MODEL, "service": "ollama-ai-service"}
         )
         
@@ -312,4 +387,6 @@ async def chat(request: ChatRequest):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8001)
+    host = os.getenv("AI_SERVICE_HOST", "0.0.0.0")
+    port = int(os.getenv("AI_SERVICE_PORT", "8001"))
+    uvicorn.run(app, host=host, port=port)

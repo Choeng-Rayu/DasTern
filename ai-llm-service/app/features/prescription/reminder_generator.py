@@ -279,3 +279,285 @@ def generate_reminders_from_prescription(
     result["validation"] = validation
     
     return result
+
+
+# ============================================================
+# Unified Reminder Generation with Khmer Instructions
+# ============================================================
+
+# Import Khmer instructions module
+try:
+    from .khmer_instructions import (
+        generate_khmer_instruction,
+        KHMER_TIME_CONTEXT
+    )
+    KHMER_INSTRUCTIONS_AVAILABLE = True
+except ImportError:
+    KHMER_INSTRUCTIONS_AVAILABLE = False
+    logger.warning("Khmer instructions module not available")
+
+
+# Standard time slot mapping
+STANDARD_TIME_SLOTS = {
+    "morning": {"time_24h": "08:00", "display": "Morning"},
+    "noon": {"time_24h": "12:00", "display": "Noon"},
+    "afternoon": {"time_24h": "18:00", "display": "Evening"},
+    "evening": {"time_24h": "18:00", "display": "Evening"},
+    "night": {"time_24h": "21:00", "display": "Night"},
+    # Khmer time slots
+    "ព្រឹក": {"time_24h": "08:00", "display": "Morning"},
+    "ថ្ងៃត្រង់": {"time_24h": "12:00", "display": "Noon"},
+    "រសៀល": {"time_24h": "18:00", "display": "Evening"},
+    "ល្ងាច": {"time_24h": "18:00", "display": "Evening"},
+    "យប់": {"time_24h": "21:00", "display": "Night"},
+}
+
+
+def generate_unified_reminders(
+    prescription_data: Dict[str, Any],
+    patient_name: str = "",
+    source: str = "",
+    visit_date: str = ""
+) -> Dict[str, Any]:
+    """
+    Generate unified prescription JSON with Khmer instructions.
+    
+    This produces the target format:
+    {
+      "prescription_data": {
+        "patients": [{
+          "name": "patient name",
+          "source": "hospital name",
+          "visit_date": "DD/MM/YYYY",
+          "medicines": [{
+            "name": "Medication 20mg",
+            "total_quantity": 14,
+            "unit": "Tablet",
+            "reminders": [{
+              "time": "Morning",
+              "dosage_quantity": 1,
+              "dosage_unit": "Tablet",
+              "instruction_kh": "លេប ១ គ្រាប់"
+            }]
+          }]
+        }]
+      }
+    }
+    
+    Args:
+        prescription_data: Structured prescription data from AI processing
+        patient_name: Patient name (optional, extracted from data if missing)
+        source: Hospital/clinic name (optional)
+        visit_date: Visit date in DD/MM/YYYY format (optional)
+        
+    Returns:
+        Unified prescription JSON with Khmer instructions
+    """
+    try:
+        # Extract patient info
+        patient_info = prescription_data.get("patient_info", {})
+        medical_info = prescription_data.get("medical_info", {})
+        medications = prescription_data.get("medications", [])
+        
+        # Use provided values or extract from data
+        final_patient_name = patient_name or patient_info.get("name", "Unknown")
+        final_source = source or patient_info.get("hospital_code", "") or medical_info.get("department", "Unknown")
+        final_visit_date = visit_date or medical_info.get("date", datetime.now().strftime("%d/%m/%Y"))
+        
+        # Process each medication
+        medicines_with_reminders = []
+        
+        for med in medications:
+            medicine = _process_medication_for_unified(med)
+            if medicine:
+                medicines_with_reminders.append(medicine)
+        
+        # Build patient prescription
+        patient_prescription = {
+            "name": final_patient_name,
+            "source": final_source,
+            "visit_date": final_visit_date,
+            "medicines": medicines_with_reminders
+        }
+        
+        # Add optional diagnosis and doctor
+        if medical_info.get("diagnosis"):
+            patient_prescription["diagnosis"] = medical_info["diagnosis"]
+        if medical_info.get("doctor"):
+            patient_prescription["doctor"] = medical_info["doctor"]
+        
+        return {
+            "success": True,
+            "prescription_data": {
+                "patients": [patient_prescription]
+            },
+            "metadata": {
+                "total_medicines": len(medicines_with_reminders),
+                "total_reminders": sum(len(m.get("reminders", [])) for m in medicines_with_reminders),
+                "khmer_instructions_enabled": KHMER_INSTRUCTIONS_AVAILABLE,
+                "generated_at": datetime.now().isoformat()
+            }
+        }
+        
+    except Exception as e:
+        logger.error(f"Unified reminder generation failed: {e}")
+        return {
+            "success": False,
+            "prescription_data": {"patients": []},
+            "error": str(e),
+            "metadata": {"generated_at": datetime.now().isoformat()}
+        }
+
+
+def _process_medication_for_unified(medication: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    """
+    Process a single medication into the unified format with Khmer instructions.
+    
+    Args:
+        medication: Medication data from prescription
+        
+    Returns:
+        Medicine with reminders in unified format
+    """
+    try:
+        # Extract medication details
+        name = medication.get("name", "")
+        dosage = medication.get("dosage", "")
+        
+        # Combine name and dosage if separate
+        if dosage and dosage not in name:
+            full_name = f"{name} {dosage}".strip()
+        else:
+            full_name = name
+        
+        # Get quantity and unit
+        total_quantity = medication.get("quantity", 0) or medication.get("total_quantity", 0)
+        unit = medication.get("unit", "Tablet")
+        
+        # Capitalize unit for display
+        unit = unit.capitalize() if unit else "Tablet"
+        
+        # Get schedule
+        schedule = medication.get("schedule", {})
+        times = schedule.get("times", []) or medication.get("times", [])
+        
+        # If no times specified, check for individual time flags
+        if not times:
+            times = []
+            if medication.get("morning") or schedule.get("morning"):
+                times.append("morning")
+            if medication.get("noon") or schedule.get("noon"):
+                times.append("noon")
+            if medication.get("evening") or medication.get("afternoon") or schedule.get("evening"):
+                times.append("evening")
+            if medication.get("night") or schedule.get("night"):
+                times.append("night")
+        
+        # Skip if no times
+        if not times:
+            logger.warning(f"No schedule times for medication: {name}")
+            return None
+        
+        # Get meal context if available
+        notes = medication.get("notes", "") or medication.get("instructions", "")
+        meal_context = None
+        if "ក្រោយបាយ" in notes or "after meal" in notes.lower():
+            meal_context = "after_meal"
+        elif "មុនបាយ" in notes or "before meal" in notes.lower():
+            meal_context = "before_meal"
+        
+        # Determine dose amount per time
+        dose_amount = medication.get("dose", 1) or schedule.get("dose_per_time", 1)
+        
+        # Build reminders for each time slot
+        reminders = []
+        for time_slot in times:
+            time_lower = time_slot.lower() if isinstance(time_slot, str) else str(time_slot)
+            slot_info = STANDARD_TIME_SLOTS.get(time_lower, {"time_24h": "08:00", "display": "Morning"})
+            
+            # Generate Khmer instruction (includes meal context directly)
+            instruction_kh = ""
+            if KHMER_INSTRUCTIONS_AVAILABLE:
+                instruction_kh = generate_khmer_instruction(
+                    quantity=dose_amount,
+                    unit=unit,
+                    context=meal_context  # Context is included in instruction_kh
+                )
+            else:
+                instruction_kh = f"Take {dose_amount} {unit}"
+                if meal_context == "after_meal":
+                    instruction_kh += " after meal"
+                elif meal_context == "before_meal":
+                    instruction_kh += " before meal"
+            
+            reminder = {
+                "time": slot_info["display"],
+                "time_24h": slot_info["time_24h"],
+                "dosage_quantity": dose_amount,
+                "dosage_unit": unit,
+                "instruction_kh": instruction_kh
+            }
+            
+            reminders.append(reminder)
+        
+        # Build medicine entry
+        medicine = {
+            "name": full_name,
+            "total_quantity": total_quantity,
+            "unit": unit,
+            "reminders": reminders
+        }
+        
+        # Add optional fields
+        duration = medication.get("duration_days")
+        if duration:
+            medicine["duration_days"] = duration
+        
+        if notes and not meal_context:
+            medicine["notes"] = notes
+        
+        return medicine
+        
+    except Exception as e:
+        logger.error(f"Error processing medication: {e}")
+        return None
+
+
+def combine_prescriptions(
+    prescriptions: List[Dict[str, Any]]
+) -> Dict[str, Any]:
+    """
+    Combine multiple prescription results into a single unified response.
+    
+    Args:
+        prescriptions: List of individual prescription processing results
+        
+    Returns:
+        Combined prescription_data with all patients
+    """
+    all_patients = []
+    total_medicines = 0
+    total_reminders = 0
+    
+    for rx in prescriptions:
+        if rx.get("success"):
+            patients = rx.get("prescription_data", {}).get("patients", [])
+            all_patients.extend(patients)
+            metadata = rx.get("metadata", {})
+            total_medicines += metadata.get("total_medicines", 0)
+            total_reminders += metadata.get("total_reminders", 0)
+    
+    return {
+        "success": True,
+        "prescription_data": {
+            "patients": all_patients
+        },
+        "metadata": {
+            "total_prescriptions": len(prescriptions),
+            "total_patients": len(all_patients),
+            "total_medicines": total_medicines,
+            "total_reminders": total_reminders,
+            "generated_at": datetime.now().isoformat()
+        }
+    }
+
