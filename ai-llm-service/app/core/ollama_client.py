@@ -21,17 +21,17 @@ class OllamaClient:
     
     def __init__(self, base_url: str = None, timeout: int = None):
         self.base_url = base_url or OLLAMA_BASE_URL
-        # Default timeout is 5 minutes for complex medical prescriptions
-        self.timeout = timeout or int(os.getenv("OLLAMA_TIMEOUT", "300"))
-        logger.info(f"OllamaClient initialized with base_url: {self.base_url}, timeout: {self.timeout}s")
+        # Default timeout is 60 seconds for fast 3B model
+        self.timeout = timeout or int(os.getenv("OLLAMA_TIMEOUT", "60"))
+        logger.info(f"OllamaClient initialized with base_url: {self.base_url}, timeout: {self.timeout}s (3B optimized)")
     
     def generate_response(self, payload: Dict, use_fast_model: bool = False) -> str:
         """
-        Generate response using Ollama /api/generate endpoint.
+        Generate response using Ollama /api/generate endpoint (3B optimized).
         
         Args:
             payload: Request payload with model, prompt, options
-            use_fast_model: If True, use faster 3B model instead of 8B
+            use_fast_model: If True, use faster 3B model instead of default
             
         Returns:
             Generated text response
@@ -44,7 +44,15 @@ class OllamaClient:
             # Ensure stream is disabled for sync call
             payload["stream"] = False
             
-            logger.debug(f"Calling Ollama with model: {payload['model']}, timeout: {self.timeout}s")
+            # Add optimization options for 3B model
+            if "options" not in payload:
+                payload["options"] = {}
+            if "top_k" not in payload["options"]:
+                payload["options"]["top_k"] = 40
+            if "top_p" not in payload["options"]:
+                payload["options"]["top_p"] = 0.9
+            
+            logger.debug(f"Calling Ollama with 3B model: {payload['model']}, timeout: {self.timeout}s")
             
             response = requests.post(
                 f"{self.base_url}/api/generate",
