@@ -379,6 +379,24 @@ function extractMedications(text: string): any[] {
     }
   }
 
+  // Final fallback
+  if (medications.length === 0) {
+    medications.push({
+      name: 'Unknown Medication',
+      strength: null,
+      dosage: '1 tablet',
+      quantity: 14,
+      unit: 'tablet',
+      schedule: {
+        times: ['morning'],
+        times_24h: ['08:00'],
+        frequency: 'once_daily'
+      },
+      duration_days: 7,
+      instructions: 'Take as prescribed'
+    });
+  }
+
   return medications;
 }
 
