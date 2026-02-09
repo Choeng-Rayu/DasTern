@@ -1,0 +1,114 @@
+{
+  "prescription_name": "H-EQIP Hospital Prescription 2",
+  "ocr_text": "H-EQIP\nHAKF1354164\n\nលេខ ឈ្មោះថ្នាំ ចំនួន ព្រឹក ថ្ងៃ ល្ងាច យប់\n1 Butylscopolamine 10mg 14 ថ្នាំ 1 - 1 -\n2 Celcoxx 100mg 14 ថ្នាំបញ្ចុះ 1 - 1 -\n3 Omeprazole 20mg 14 ថ្នាំ 1 - 1 -\n4 Multivitamine 21 ថ្នាំ 1 1 1 -",
+  "medications": [
+    {
+      "name": "Butylscopolamine",
+      "strength": "10mg",
+      "dosage": "14 tablet",
+      "frequency": "four times daily",
+      "duration": "7 days",
+      "timing": {
+        "morning": true,
+        "noon": true,
+        "evening": true,
+        "night": true
+      }
+    },
+    {
+      "name": "Celcoxx",
+      "strength": "100mg",
+      "dosage": "14 tablet",
+      "frequency": "four times daily",
+      "duration": "7 days",
+      "timing": {
+        "morning": true,
+        "noon": true,
+        "evening": true,
+        "night": true
+      }
+    },
+    {
+      "name": "Omeprazole",
+      "strength": "20mg",
+      "dosage": "14 tablet",
+      "frequency": "four times daily",
+      "duration": "7 days",
+      "timing": {
+        "morning": true,
+        "noon": true,
+        "evening": true,
+        "night": true
+      }
+    },
+    {
+      "name": "Multivitamine",
+      "strength": null,
+      "dosage": "21 tablet",
+      "frequency": "four times daily",
+      "duration": "7 days",
+      "timing": {
+        "morning": true,
+        "noon": true,
+        "evening": true,
+        "night": true
+      }
+    }
+  ],
+  "reminders": [
+    {
+      "medication_name": "Butylscopolamine",
+      "strength": "10mg",
+      "dosage": "14 tablet",
+      "reminder_times": [
+        "08:00",
+        "12:00",
+        "18:00",
+        "22:00"
+      ],
+      "duration_days": 7,
+      "frequency": "four times daily"
+    },
+    {
+      "medication_name": "Celcoxx",
+      "strength": "100mg",
+      "dosage": "14 tablet",
+      "reminder_times": [
+        "08:00",
+        "12:00",
+        "18:00",
+        "22:00"
+      ],
+      "duration_days": 7,
+      "frequency": "four times daily"
+    },
+    {
+      "medication_name": "Omeprazole",
+      "strength": "20mg",
+      "dosage": "14 tablet",
+      "reminder_times": [
+        "08:00",
+        "12:00",
+        "18:00",
+        "22:00"
+      ],
+      "duration_days": 7,
+      "frequency": "four times daily"
+    },
+    {
+      "medication_name": "Multivitamine",
+      "strength": null,
+      "dosage": "21 tablet",
+      "reminder_times": [
+        "08:00",
+        "12:00",
+        "18:00",
+        "22:00"
+      ],
+      "duration_days": 7,
+      "frequency": "four times daily"
+    }
+  ],
+  "test_passed": true,
+  "timestamp": "2026-01-23 09:35:19"
+}
