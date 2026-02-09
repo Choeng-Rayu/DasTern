@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'providers/processing_provider.dart';
 import 'ui/screens/home_screen.dart';
 import 'ui/screens/ocr_result_screen.dart';
@@ -10,6 +11,11 @@ import 'ui/screens/final_preview_screen.dart';
 import 'ui/screens/ai_result_screen.dart';
 import 'ui/screens/saved_prescriptions_screen.dart';
 import 'models/medication.dart';
+
+import 'providers/scan_provider.dart';
+import 'ui/theme/app_theme.dart';
+import 'ui/screens/home/home_view.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -22,6 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+
         ChangeNotifierProvider(
           create: (_) => OCRProvider(),
         ),
@@ -99,6 +106,15 @@ class MyApp extends StatelessWidget {
           '/saved-prescriptions': (context) =>
               const SavedPrescriptionsScreen(),
         },
+
+        ChangeNotifierProvider(create: (_) => ScanProvider()),
+      ],
+      child: MaterialApp(
+        title: 'Prescription OCR',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.lightTheme,
+        home: const HomeView(),
+
       ),
     );
   }
