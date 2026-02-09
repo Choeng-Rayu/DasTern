@@ -47,7 +47,7 @@ class ReminderEngine:
         self.ollama_client = ollama_client
         self.model = model
         self.max_retries = 2
-        logger.info(f"ReminderEngine initialized with model: {model}")
+        logger.info(f"ReminderEngine initialized with model: {model}, timeout: {getattr(ollama_client, 'timeout', 300)}s")
     
     def extract_reminders(self, request: ReminderRequest) -> ReminderResponse:
         """
@@ -65,9 +65,16 @@ class ReminderEngine:
             
             # Convert to JSON string for prompt
             if isinstance(raw_ocr, dict):
-                raw_ocr_str = json.dumps(raw_ocr, ensure_ascii=False, indent=2)
+                # Reduce size by removing unnecessary fields
+                simplified_ocr = self._simplify_ocr_data(raw_ocr)
+                raw_ocr_str = json.dumps(simplified_ocr, ensure_ascii=False, indent=2)
             else:
                 raw_ocr_str = str(raw_ocr)
+            
+            # Truncate if too large (keep first 3000 chars to avoid timeout)
+            if len(raw_ocr_str) > 3000:
+                logger.warning(f"OCR data too large ({len(raw_ocr_str)} chars), truncating to 3000")
+                raw_ocr_str = raw_ocr_str[:3000] + "\n... (truncated)"
             
             logger.info(f"Processing OCR data: {raw_ocr_str[:200]}...")
             
@@ -135,6 +142,40 @@ class ReminderEngine:
                 error=str(e),
                 metadata={"model": self.model}
             )
+    
+    def _simplify_ocr_data(self, ocr_data: Dict) -> Dict:
+        """
+        Simplify OCR data to reduce prompt size and processing time.
+        Keep only essential fields: raw_text, blocks with text, remove bounding boxes.
+        """
+        simplified = {}
+        
+        # Keep raw_text if present
+        if "raw_text" in ocr_data:
+            simplified["raw_text"] = ocr_data["raw_text"]
+        
+        # Simplify blocks - keep only text content
+        if "blocks" in ocr_data and isinstance(ocr_data["blocks"], list):
+            simplified_blocks = []
+            for block in ocr_data["blocks"]:
+                if isinstance(block, dict):
+                    block_text = []
+                    if "lines" in block:
+                        for line in block["lines"]:
+                            if isinstance(line, dict) and "text" in line:
+                                block_text.append(line["text"])
+                    if block_text:
+                        simplified_blocks.append({"text": " ".join(block_text)})
+            if simplified_blocks:
+                simplified["blocks"] = simplified_blocks
+        
+        # Keep meta if present (but remove stage_times)
+        if "meta" in ocr_data:
+            meta = ocr_data["meta"].copy() if isinstance(ocr_data["meta"], dict) else {}
+            meta.pop("stage_times", None)
+            simplified["meta"] = meta
+        
+        return simplified if simplified else ocr_data
     
     def _call_ollama(self, system_prompt: str, user_prompt: str) -> str:
         """

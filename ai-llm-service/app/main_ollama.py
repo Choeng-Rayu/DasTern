@@ -31,13 +31,13 @@ logger = logging.getLogger(__name__)
 
 # Ollama configuration
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
-DEFAULT_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1:8b")
+DEFAULT_MODEL = os.getenv("OLLAMA_MODEL", "llama3.2:3b")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info("Starting Ollama AI Service...")
+    logger.info("Starting Ollama AI Service (3B Optimized)...")
     logger.info(f"Ollama endpoint: {OLLAMA_BASE_URL}")
-    logger.info(f"Default model: {DEFAULT_MODEL}")
+    logger.info(f"Default model (3B): {DEFAULT_MODEL}")
     
     # Test Ollama connection
     try:
@@ -61,8 +61,8 @@ async def lifespan(app: FastAPI):
 
 # Initialize FastAPI
 app = FastAPI(
-    title="Ollama AI Service",
-    description="Ollama-based OCR correction and medical chatbot assistant",
+    title="Ollama AI Service - 3B Optimized",
+    description="Ollama-based OCR correction and medical chatbot assistant (3B optimized)",
     version="1.0.0",
     lifespan=lifespan
 )
@@ -85,6 +85,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Import and include extraction routes
+try:
+    from .api.extraction_routes import router as extraction_router
+    app.include_router(extraction_router)
+    logger.info("✅ Fine-tuned extraction routes loaded")
+except ImportError as e:
+    logger.warning(f"⚠️ Fine-tuned extraction routes not available: {e}")
 
 # Initialize reminder engine
 ollama_client = OllamaClient()
@@ -214,8 +222,9 @@ async def correct_ocr_simple(request: dict):
         text = request.get("text", "")
         language = request.get("language", "en")
         
-        if not text:
-            raise HTTPException(status_code=400, detail="No text provided")
+        if not text or not text.strip():
+            logger.warning(f"Empty text received in OCR correction request: {request}")
+            raise HTTPException(status_code=400, detail="No text provided or text is empty. Please ensure the OCR extracted text before sending for correction.")
         
         logger.info(f"Correcting OCR text with Ollama (length: {len(text)})")
         
