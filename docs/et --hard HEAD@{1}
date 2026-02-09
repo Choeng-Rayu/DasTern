@@ -1,0 +1,24 @@
+[33m458890f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbackend[m[33m, [m[1;31morigin/develop[m[33m)[m HEAD@{0}: reset: moving to ORIG_HEAD
+[33m458890f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbackend[m[33m, [m[1;31morigin/develop[m[33m)[m HEAD@{1}: reset: moving to ORIG_HEAD
+[33m458890f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbackend[m[33m, [m[1;31morigin/develop[m[33m)[m HEAD@{2}: reset: moving to HEAD
+[33m458890f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbackend[m[33m, [m[1;31morigin/develop[m[33m)[m HEAD@{3}: pull origin develop: Fast-forward
+[33m97c7f02[m[33m ([m[1;31morigin/backend[m[33m)[m HEAD@{4}: reset: moving to HEAD
+[33m97c7f02[m[33m ([m[1;31morigin/backend[m[33m)[m HEAD@{5}: commit: update database readme
+[33m4e275fc[m HEAD@{6}: pull origin develop: Fast-forward
+[33m9b7043f[m HEAD@{7}: checkout: moving from mengheng to backend
+[33m471ec94[m[33m ([m[1;32mmengheng[m[33m)[m HEAD@{8}: checkout: moving from backend to mengheng
+[33m9b7043f[m HEAD@{9}: pull origin develop: Fast-forward
+[33m9e40ada[m HEAD@{10}: commit: update database readme
+[33m418b247[m HEAD@{11}: commit: API implementation for Authentication and Family linking
+[33m471ec94[m[33m ([m[1;32mmengheng[m[33m)[m HEAD@{12}: checkout: moving from mengheng to backend
+[33m471ec94[m[33m ([m[1;32mmengheng[m[33m)[m HEAD@{13}: pull origin develop: Fast-forward
+[33m9f99eaf[m HEAD@{14}: pull origin develop: Fast-forward
+[33ma50e3fc[m HEAD@{15}: pull origin develop: Fast-forward
+[33m1b1e7aa[m HEAD@{16}: pull origin develop: Fast-forward
+[33m0614310[m HEAD@{17}: reset: moving to HEAD
+[33m0614310[m HEAD@{18}: pull origin develop: Fast-forward
+[33m042266f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{19}: reset: moving to HEAD
+[33m042266f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{20}: pull origin main: Fast-forward
+[33m43e0ab1[m[33m ([m[1;32mmain[m[33m)[m HEAD@{21}: reset: moving to HEAD
+[33m43e0ab1[m[33m ([m[1;32mmain[m[33m)[m HEAD@{22}: checkout: moving from main to mengheng
+[33m43e0ab1[m[33m ([m[1;32mmain[m[33m)[m HEAD@{23}: clone: from https://github.com/Choeng-Rayu/DasTern.git

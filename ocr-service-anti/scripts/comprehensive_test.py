@@ -28,6 +28,11 @@ from datetime import datetime, timedelta
 from typing import Dict, Any, List, Optional
 import logging
 import sys
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Allow nested event loops
 nest_asyncio.apply()
@@ -43,9 +48,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Configuration
-OCR_SERVICE_URL = "http://localhost:8000"
-AI_LLM_SERVICE_URL = "http://localhost:8001"
+# Configuration - read from environment with defaults
+OCR_SERVICE_URL = os.getenv("OCR_SERVICE_URL", "http://localhost:8000")
+AI_LLM_SERVICE_URL = os.getenv("AI_LLM_SERVICE_URL", "http://localhost:8001")
 OCR_LANGUAGES = "eng+khm+fra"
 
 # Directories

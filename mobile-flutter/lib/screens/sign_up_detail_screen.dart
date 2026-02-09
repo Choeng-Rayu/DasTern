@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:ui_for_capstone/data/survey_data.dart';
 // import 'package:ui_for_capstone/ui/screen/survey_flow_screen.dart';
-import '../widgets/hospital_logo.dart';
+import '../widgets/header_widgets.dart';
 import '../widgets/bottom_round_container.dart';
 import '../widgets/primary_button.dart';
 import '../widgets/auth_background.dart';
@@ -60,7 +60,8 @@ class SignupDetailScreen extends StatelessWidget {
                   const Label('លេខសំគាល់'),
                   const CustomInputField(hint: 'សូមបញ្ចូលលេខសំគាល់របស់អ្នក'),
                   const Label('លេខសំគាល់សំខាន់'),
-                  const CustomInputField(hint: 'សូមបញ្ចូលលេខសំគាល់សំខាន់របស់អ្នក'),
+                  const CustomInputField(
+                      hint: 'សូមបញ្ចូលលេខសំគាល់សំខាន់របស់អ្នក'),
                   const Label('អាសយដ្ឋានបច្ចុប្បន្ន'),
                   const CustomInputField(
                     hint: 'សូមបញ្ចូលអាសយដ្ឋានបច្ចុប្បន្នរបស់អ្នក',

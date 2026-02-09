@@ -1,27 +1,40 @@
 """
 HTTP Client for Ollama API
-Supports both simple generate and chat-style completion
+Supports both simple generate and chat-style completion.
+Enhanced with comprehensive logging for debugging.
 """
 import requests
 import logging
 import os
+import time
 from typing import Dict, Optional
 
-logger = logging.getLogger(__name__)
+try:
+    from .logging_config import get_logger, truncate_for_log
+except ImportError:
+    from logging import getLogger as get_logger
+    def truncate_for_log(data, max_length=200):
+        return data[:max_length] + "..." if len(data) > max_length else data
+
+logger = get_logger(__name__)
 
 # Configuration
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
-# Use llama3.2:3b as default for faster CPU inference
-DEFAULT_MODEL = os.getenv("OLLAMA_MODEL", "llama3.2:3b")
+# Use llama3.1:8b as default (available model)
+DEFAULT_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1:8b")
 FAST_MODEL = os.getenv("OLLAMA_FAST_MODEL", "llama3.2:3b")
 
 
 class OllamaClient:
-    """HTTP client for Ollama API calls"""
+    """HTTP client for Ollama API calls with enhanced logging"""
     
-    def __init__(self, base_url: str = None):
+    def __init__(self, base_url: str = None, timeout: int = None):
         self.base_url = base_url or OLLAMA_BASE_URL
-        logger.info(f"OllamaClient initialized with base_url: {self.base_url}")
+        # Default timeout 120s for faster failure detection (was 300s)
+        self.timeout = timeout or int(os.getenv("OLLAMA_TIMEOUT", "120"))
+        self.default_model = DEFAULT_MODEL
+        self.fast_model = FAST_MODEL
+        logger.info(f"OllamaClient initialized: url={self.base_url}, timeout={self.timeout}s, model={DEFAULT_MODEL}")
     
     def generate_response(self, payload: Dict, use_fast_model: bool = False) -> str:
         """
@@ -34,33 +47,52 @@ class OllamaClient:
         Returns:
             Generated text response
         """
+        start_time = time.time()
+        
         try:
             # Use model from payload or default
             if "model" not in payload:
-                payload["model"] = FAST_MODEL if use_fast_model else DEFAULT_MODEL
+                payload["model"] = self.fast_model if use_fast_model else self.default_model
             
             # Ensure stream is disabled for sync call
             payload["stream"] = False
             
-            logger.debug(f"Calling Ollama with model: {payload['model']}")
+            model = payload.get("model", "unknown")
+            prompt_preview = truncate_for_log(payload.get("prompt", ""), 150)
+            options = payload.get("options", {})
+            
+            logger.info(f"[OLLAMA-START] model={model}, timeout={self.timeout}s")
+            logger.debug(f"[OLLAMA-PROMPT] {prompt_preview}")
+            logger.debug(f"[OLLAMA-OPTIONS] {options}")
             
             response = requests.post(
                 f"{self.base_url}/api/generate",
                 json=payload,
-                timeout=120  # 2 minutes for complex prompts
+                timeout=self.timeout
             )
+            
+            elapsed = time.time() - start_time
             
             if response.status_code == 200:
                 result = response.json()
-                return result.get("response", "").strip()
+                response_text = result.get("response", "").strip()
+                response_preview = truncate_for_log(response_text, 200)
+                
+                logger.info(f"[OLLAMA-COMPLETE] {elapsed:.1f}s - response_len={len(response_text)}")
+                logger.debug(f"[OLLAMA-RESPONSE] {response_preview}")
+                
+                return response_text
             else:
+                logger.error(f"[OLLAMA-ERROR] {elapsed:.1f}s - status={response.status_code}")
                 raise Exception(f"Ollama API error: {response.status_code} - {response.text}")
                 
         except requests.exceptions.Timeout:
-            logger.error("Ollama request timeout (120s)")
-            raise TimeoutError("Ollama request timed out")
+            elapsed = time.time() - start_time
+            logger.error(f"[OLLAMA-TIMEOUT] {elapsed:.1f}s - Request timed out after {self.timeout}s")
+            raise TimeoutError(f"Ollama request timed out after {self.timeout} seconds. Try using a faster model or increase OLLAMA_TIMEOUT.")
         except Exception as e:
-            logger.error(f"Ollama call failed: {str(e)}")
+            elapsed = time.time() - start_time
+            logger.error(f"[OLLAMA-FAILED] {elapsed:.1f}s - {str(e)}")
             raise
     
     def chat(
@@ -94,12 +126,12 @@ class OllamaClient:
                 }
             }
             
-            logger.debug(f"Chat request with {len(messages)} messages")
+            logger.debug(f"Chat request with {len(messages)} messages, timeout: {self.timeout}s")
             
             response = requests.post(
                 f"{self.base_url}/api/chat",
                 json=payload,
-                timeout=120
+                timeout=self.timeout
             )
             
             if response.status_code == 200:
