@@ -14,41 +14,53 @@ class MedicationShift extends StatelessWidget {
     required this.times,
   });
 
+  static const double cardWidth = 280;
+  static const double cardHeight = 140;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 150,
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      decoration: BoxDecoration(
+    return SizedBox(
+      width: cardWidth,
+      height: cardHeight,
+      child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
-        image: DecorationImage(
-          image: AssetImage(backgroundImage),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: Colors.black.withOpacity(0.35),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
+          fit: StackFit.expand,
           children: [
-            Text(
-              period.label,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
+            // Background Image
+            Image.asset(
+              backgroundImage,
+              fit: BoxFit.cover,
             ),
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 8,
-              runSpacing: 6,
-              children:
-                  times.map<Widget>((time) => TimeChip(time: time)).toList(),
+
+            // Dark overlay for readability (optional but recommended)
+            Container(
+              color: Colors.black.withOpacity(0.25),
+            ),
+
+            // Content
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    period.label,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 6,
+                    children:
+                        times.map((time) => TimeChip(time: time)).toList(),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
