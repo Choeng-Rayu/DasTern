@@ -12,7 +12,7 @@ class OcrService {
   OcrService({http.Client? client}) : _client = client ?? http.Client();
 
   Future<OcrResponseDto> processImage(File imageFile) async {
-    final uri = Uri.parse('${ApiConstants.ocrBaseUrl}${ApiConstants.ocrEndpoint}');
+    final uri = Uri.parse('${ApiConstants.ocrBaseUrl}${ApiConstants.ocrEndpoint}'); // http://192.168.0.164:8006/api/v1/ocr
     
     AppLogger.i('Uploading image to OCR Service: $uri');
 

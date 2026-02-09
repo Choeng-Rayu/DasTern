@@ -1,22 +1,34 @@
 import 'dart:io';
 
 class ApiConstants {
-  // Use 10.0.2.2 for Android Emulator to access localhost of the host machine.
-  // Use 127.0.0.1 for iOS Simulator or Desktop.
+  // IMPORTANT: Set this to your computer's local IP when testing on physical device
+  // Find it with: ip addr show | grep "inet " (on Linux)
+  // For emulator: use '10.0.2.2'
+  // For physical device on WiFi: use your computer's IP (e.g., '192.168.0.164')
+  static const String hostIpAddress = '172.23.5.229'; // UPDATE THIS FOR YOUR NETWORK
+  
+  // Ports must match docker-compose.yml
+  static const String defaultOcrPort = 
+      String.fromEnvironment('OCR_SERVICE_PORT', defaultValue: '8000');
+  static const String defaultAiPort =
+      String.fromEnvironment('AI_SERVICE_PORT', defaultValue: '8001');
+
+  // Use hostIpAddress for physical device, 10.0.2.2 for emulator, 127.0.0.1 for iOS/Desktop
   static String get baseUrl {
     if (Platform.isAndroid) {
-      return 'http://10.0.2.2';
+      // Change this to 'http://10.0.2.2' if using emulator
+      return 'http://$hostIpAddress';
     }
     return 'http://127.0.0.1';
   }
 
-  // OCR Service (Port 8000)
-  static String get ocrBaseUrl => '$baseUrl:8000/api/v1';
-  static const String ocrEndpoint = '/ocr';
+  // OCR Service (Port configurable)
+  static String get ocrBaseUrl => '$baseUrl:$defaultOcrPort/api/v1'; // http://192.168.0.164:8006/api/v1
+  static const String ocrEndpoint = '/ocr'; // POST to /ocr to process images
   static const String ocrHealthEndpoint = '/health';
 
-  // AI Service (Port 8001)
-  static String get aiBaseUrl => '$baseUrl:8001/api/v1';
+  // AI Service (Port configurable)
+  static String get aiBaseUrl => '$baseUrl:$defaultAiPort/api/v1';
   static const String prescriptionProcessEndpoint = '/prescription/process';
   static const String chatEndpoint = '/chat';
 

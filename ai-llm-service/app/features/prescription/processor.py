@@ -161,14 +161,15 @@ OUTPUT ONLY VALID JSON. NO EXPLANATIONS. NO MARKDOWN."""
     def _call_ai(self, user_prompt: str) -> str:
         """Call AI model for processing"""
         payload = {
-            "model": "llama3.2:3b",
+            "model": "llama3.1:8b",
             "system": self.SYSTEM_PROMPT,
             "prompt": user_prompt,
             "stream": False,
             "options": {
                 "temperature": 0.1,
                 "top_p": 0.9,
-                "max_tokens": 1000
+                "num_ctx": 2048,
+                "num_predict": 800
             }
         }
         
