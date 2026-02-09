@@ -3,16 +3,26 @@ Reminder Engine - Extracts medication reminders from OCR data using LLaMA via Ol
 
 This module implements the AI-only flow:
 RAW OCR JSON → Normalization Prompt → LLaMA 8B → Strict JSON Output → Reminder Engine
+
+Enhanced with comprehensive logging for debugging the OCR-to-AI flow.
 """
 import json
-import logging
 import re
+import time
 from typing import Dict, List, Optional, Any
+
+try:
+    from ..core.logging_config import get_logger, truncate_for_log
+except ImportError:
+    import logging
+    def get_logger(name): return logging.getLogger(name)
+    def truncate_for_log(data, max_length=200):
+        return data[:max_length] + "..." if len(data) > max_length else data
 
 from ..schemas import ReminderRequest, ReminderResponse, MedicationInfo
 from ..prompts.reminder_prompts import build_reminder_extraction_prompt, REMINDER_SYSTEM_PROMPT
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 
 class ReminderEngine:
@@ -35,7 +45,7 @@ class ReminderEngine:
         "night": "21:00"
     }
     
-    def __init__(self, ollama_client, model: str = "llama3.2:3b"):
+    def __init__(self, ollama_client, model: str = "llama3.1:8b"):
         """
         Initialize ReminderEngine.
         
@@ -59,24 +69,29 @@ class ReminderEngine:
         Returns:
             ReminderResponse with medications list
         """
+        start_time = time.time()
+        logger.info("[REMINDER-START] Beginning reminder extraction from OCR data")
+        
         try:
             # Get raw OCR data
             raw_ocr = request.raw_ocr_json
+            logger.debug(f"[REMINDER-INPUT] OCR data type: {type(raw_ocr).__name__}")
             
             # Convert to JSON string for prompt
             if isinstance(raw_ocr, dict):
                 # Reduce size by removing unnecessary fields
                 simplified_ocr = self._simplify_ocr_data(raw_ocr)
                 raw_ocr_str = json.dumps(simplified_ocr, ensure_ascii=False, indent=2)
+                logger.info(f"[REMINDER-SIMPLIFY] Simplified OCR: {len(str(raw_ocr))} -> {len(raw_ocr_str)} chars")
             else:
                 raw_ocr_str = str(raw_ocr)
             
-            # Truncate if too large (keep first 3000 chars to avoid timeout)
-            if len(raw_ocr_str) > 3000:
-                logger.warning(f"OCR data too large ({len(raw_ocr_str)} chars), truncating to 3000")
-                raw_ocr_str = raw_ocr_str[:3000] + "\n... (truncated)"
+            # Truncate if too large (reduced from 3000 to 2000 for faster processing)
+            if len(raw_ocr_str) > 2000:
+                logger.warning(f"[REMINDER-TRUNCATE] OCR data too large ({len(raw_ocr_str)} chars), truncating to 2000")
+                raw_ocr_str = raw_ocr_str[:2000] + "\n... (truncated)"
             
-            logger.info(f"Processing OCR data: {raw_ocr_str[:200]}...")
+            logger.debug(f"[REMINDER-OCR-PREVIEW] {truncate_for_log(raw_ocr_str, 300)}")
             
             # Build prompts
             prompts = build_reminder_extraction_prompt(raw_ocr_str)
@@ -180,28 +195,35 @@ class ReminderEngine:
     def _call_ollama(self, system_prompt: str, user_prompt: str) -> str:
         """
         Call Ollama API with proper settings for reminder extraction.
-        
-        STEP 8: Low temperature (0.2) for stable reminders.
+        Optimized for 10-20s response time with reduced context and prediction limits.
         """
-        # Build the combined prompt for Ollama
-        combined_prompt = f"""<|system|>
-{system_prompt}
-<|user|>
-{user_prompt}
-<|assistant|>"""
+        logger.info(f"[REMINDER-OLLAMA] Calling Ollama with model: {self.model}")
         
+        # Build the combined prompt for Ollama
+        combined_prompt = f"""{system_prompt}
+
+{user_prompt}"""
+        
+        prompt_len = len(combined_prompt)
+        logger.debug(f"[REMINDER-PROMPT-SIZE] {prompt_len} chars (system: {len(system_prompt)}, user: {len(user_prompt)})")
+        
+        # Optimized options for faster response (10-20s target)
+        # Reduced num_ctx: 2048 -> 1024, num_predict: 500 -> 300
         payload = {
             "model": self.model,
             "prompt": combined_prompt,
             "stream": False,
             "options": {
-                "temperature": 0.2,  # Low temperature for stable output
+                "temperature": 0.2,
                 "top_p": 0.9,
-                "num_ctx": 4096,  # Larger context for prescriptions
+                "num_ctx": 1024,     # Reduced from 2048 for faster processing
+                "num_predict": 300   # Reduced from 500 for shorter responses
             }
         }
         
         response = self.ollama_client.generate_response(payload)
+        logger.info(f"[REMINDER-OLLAMA-DONE] Response length: {len(response)} chars")
+        logger.debug(f"[REMINDER-RESPONSE-PREVIEW] {truncate_for_log(response, 300)}")
         return response
     
     def _parse_response(self, response_text: str) -> List[Dict[str, Any]]:
