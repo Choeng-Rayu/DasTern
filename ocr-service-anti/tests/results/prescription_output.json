@@ -1,0 +1,355 @@
+{
+  "meta": {
+    "languages": [
+      "eng",
+      "khm",
+      "fra"
+    ],
+    "dpi": null,
+    "processing_time_ms": 1163.525104522705,
+    "model_version": "default",
+    "stage_times": {
+      "validation": 33.22124481201172,
+      "quality_analysis": 35.60805320739746,
+      "preprocessing": 12.513399124145508,
+      "layout_analysis": 41.16249084472656,
+      "ocr_extraction": 1038.4624004364014,
+      "postprocessing": 2.447843551635742
+    },
+    "image_size": {
+      "width": 767,
+      "height": 1024
+    }
+  },
+  "quality": {
+    "blur": "low",
+    "blur_score": 1914.6018922348746,
+    "contrast": "ok",
+    "contrast_score": 44.46941338828871,
+    "skew_angle": -0.8969286654745334,
+    "dpi": null,
+    "is_grayscale": false
+  },
+  "qr_codes": [],
+  "blocks": [
+    {
+      "type": "text",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 782,
+        "height": 1035
+      },
+      "lines": [
+        {
+          "text": "tem H-EQIP",
+          "bbox": {
+            "x": 58,
+            "y": 57,
+            "width": 611,
+            "height": 65
+          },
+          "confidence": 0.55,
+          "language": "en",
+          "tags": []
+        },
+        {
+          "text": "លេខកូដ: HAKF 1354164 ឈ្មោះអ្នកជំងឺ: ង៉ាំ ដានី អាយុ: 19 ឆ្នាំ ភេទ: ស្រី",
+          "bbox": {
+            "x": 50,
+            "y": 146,
+            "width": 642,
+            "height": 33
+          },
+          "confidence": 0.7854545454545455,
+          "language": "kh",
+          "tags": []
+        },
+        {
+          "text": "ប្រភេទបង់ប្រាក់ : មូលនិធិសមធម៌ / 20051002-0409 | អ្នកជំងឺ |",
+          "bbox": {
+            "x": 45,
+            "y": 184,
+            "width": 699,
+            "height": 42
+          },
+          "confidence": 0.9125,
+          "language": "kh",
+          "tags": []
+        },
+        {
+          "text": "A0]",
+          "bbox": {
+            "x": 715,
+            "y": 227,
+            "width": 31,
+            "height": 15
+          },
+          "confidence": 0.26,
+          "language": "en",
+          "tags": []
+        },
+        {
+          "text": "រោគវិនិច្ឆ័យ : Chronic Cystitis",
+          "bbox": {
+            "x": 49,
+            "y": 246,
+            "width": 208,
+            "height": 25
+          },
+          "confidence": 0.9275,
+          "language": "en",
+          "tags": []
+        },
+        {
+          "text": "ign : ពិគ្រោះជំងឺក្រៅ - បន្ទប់លេខ 5",
+          "bbox": {
+            "x": 48,
+            "y": 296,
+            "width": 244,
+            "height": 25
+          },
+          "confidence": 0.9183333333333333,
+          "language": "kh",
+          "tags": []
+        },
+        {
+          "text": "វេជ្ជបញ្ជា",
+          "bbox": {
+            "x": 353,
+            "y": 340,
+            "width": 83,
+            "height": 21
+          },
+          "confidence": 0.96,
+          "language": "kh",
+          "tags": []
+        },
+        {
+          "text": "ន ព្រឹក ថ្ងៃត្រង់] ល្ងាច យប់",
+          "bbox": {
+            "x": 177,
+            "y": 382,
+            "width": 554,
+            "height": 33
+          },
+          "confidence": 0.61,
+          "language": "kh",
+          "tags": [
+            "time_candidate"
+          ]
+        },
+        {
+          "text": "យ យ celle (6-8) | (11-12) | (05-06) | (08-10)",
+          "bbox": {
+            "x": 44,
+            "y": 388,
+            "width": 700,
+            "height": 61
+          },
+          "confidence": 0.8099999999999999,
+          "language": "en",
+          "tags": []
+        },
+        {
+          "text": "DE RE EE EE",
+          "bbox": {
+            "x": 45,
+            "y": 416,
+            "width": 704,
+            "height": 123
+          },
+          "confidence": 0.29500000000000004,
+          "language": "en",
+          "tags": []
+        },
+        {
+          "text": "Butyl ami .",
+          "bbox": {
+            "x": 95,
+            "y": 459,
+            "width": 277,
+            "height": 17
+          },
+          "confidence": 0.57,
+          "language": "en",
+          "tags": []
+        },
+        {
+          "text": "Berner | ToL fs [|",
+          "bbox": {
+            "x": 44,
+            "y": 480,
+            "width": 709,
+            "height": 91
+          },
+          "confidence": 0.316,
+          "language": "en",
+          "tags": []
+        },
+        {
+          "text": "[omnes | uw | fu",
+          "bbox": {
+            "x": 44,
+            "y": 526,
+            "width": 708,
+            "height": 94
+          },
+          "confidence": 0.348,
+          "language": "en",
+          "tags": []
+        },
+        {
+          "text": "oe MORE ES",
+          "bbox": {
+            "x": 44,
+            "y": 576,
+            "width": 709,
+            "height": 94
+          },
+          "confidence": 0.05333333333333334,
+          "language": "en",
+          "tags": []
+        },
+        {
+          "text": "រាជធានីភ្នំពេញ,ថ្ងៃទី 15/06/2025 14:20",
+          "bbox": {
+            "x": 446,
+            "y": 677,
+            "width": 281,
+            "height": 27
+          },
+          "confidence": 0.9133333333333334,
+          "language": "kh",
+          "tags": [
+            "time_candidate"
+          ]
+        },
+        {
+          "text": "គ្រពេទ្យព្យាបាល",
+          "bbox": {
+            "x": 529,
+            "y": 726,
+            "width": 114,
+            "height": 20
+          },
+          "confidence": 0.9,
+          "language": "kh",
+          "tags": []
+        },
+        {
+          "text": "Suh",
+          "bbox": {
+            "x": 513,
+            "y": 746,
+            "width": 133,
+            "height": 73
+          },
+          "confidence": 0.05,
+          "language": "en",
+          "tags": []
+        },
+        {
+          "text": "សូមយកវេជ្ជបញ្ជាមកវិញ ពេលពិនិត្យលើកក្រោយ វេជ្ជបណ្ឌិត យុយ ស៊ីវហេង",
+          "bbox": {
+            "x": 57,
+            "y": 815,
+            "width": 619,
+            "height": 35
+          },
+          "confidence": 0.9120000000000001,
+          "language": "kh",
+          "tags": []
+        },
+        {
+          "text": "|",
+          "bbox": {
+            "x": 767,
+            "y": 957,
+            "width": 1,
+            "height": 22
+          },
+          "confidence": 0.91,
+          "language": null,
+          "tags": []
+        }
+      ],
+      "table": null,
+      "raw_text": "tem H-EQIP\nលេខកូដ: HAKF 1354164 ឈ្មោះអ្នកជំងឺ: ង៉ាំ ដានី អាយុ: 19 ឆ្នាំ ភេទ: ស្រី\nប្រភេទបង់ប្រាក់ : មូលនិធិសមធម៌ / 20051002-0409 | អ្នកជំងឺ |\nA0]\nរោគវិនិច្ឆ័យ : Chronic Cystitis\nign : ពិគ្រោះជំងឺក្រៅ - បន្ទប់លេខ 5\nវេជ្ជបញ្ជា\nន ព្រឹក ថ្ងៃត្រង់] ល្ងាច យប់\nយ យ celle (6-8) | (11-12) | (05-06) | (08-10)\nDE RE EE EE\nButyl ami .\nBerner | ToL fs [|\n[omnes | uw | fu\noe MORE ES\nរាជធានីភ្នំពេញ,ថ្ងៃទី 15/06/2025 14:20\nគ្រពេទ្យព្យាបាល\nSuh\nសូមយកវេជ្ជបញ្ជាមកវិញ ពេលពិនិត្យលើកក្រោយ វេជ្ជបណ្ឌិត យុយ ស៊ីវហេង\n|"
+    },
+    {
+      "type": "table",
+      "bbox": {
+        "x": 45,
+        "y": 383,
+        "width": 714,
+        "height": 270
+      },
+      "lines": [
+        {
+          "text": "# រ“",
+          "bbox": {
+            "x": 52,
+            "y": 390,
+            "width": 617,
+            "height": 51
+          },
+          "confidence": 0.49,
+          "language": "kh",
+          "tags": []
+        },
+        {
+          "text": "រ foe សញ",
+          "bbox": {
+            "x": 61,
+            "y": 400,
+            "width": 688,
+            "height": 140
+          },
+          "confidence": 0.05666666666666667,
+          "language": "en",
+          "tags": []
+        },
+        {
+          "text": "277 ស",
+          "bbox": {
+            "x": 60,
+            "y": 466,
+            "width": 692,
+            "height": 105
+          },
+          "confidence": 0.33999999999999997,
+          "language": "kh",
+          "tags": []
+        },
+        {
+          "text": "យស 7",
+          "bbox": {
+            "x": 85,
+            "y": 512,
+            "width": 667,
+            "height": 107
+          },
+          "confidence": 0.1,
+          "language": "kh",
+          "tags": []
+        },
+        {
+          "text": "oe a ee កីក៏ប-",
+          "bbox": {
+            "x": 59,
+            "y": 600,
+            "width": 694,
+            "height": 49
+          },
+          "confidence": 0.2225,
+          "language": "en",
+          "tags": []
+        }
+      ],
+      "table": null,
+      "raw_text": "# រ“\nរ foe សញ\n277 ស\nយស 7\noe a ee កីក៏ប-"
+    }
+  ],
+  "raw_text": "tem H-EQIP\nលេខកូដ: HAKF 1354164 ឈ្មោះអ្នកជំងឺ: ង៉ាំ ដានី អាយុ: 19 ឆ្នាំ ភេទ: ស្រី\nប្រភេទបង់ប្រាក់ : មូលនិធិសមធម៌ / 20051002-0409 | អ្នកជំងឺ |\nA0]\nរោគវិនិច្ឆ័យ : Chronic Cystitis\nign : ពិគ្រោះជំងឺក្រៅ - បន្ទប់លេខ 5\nវេជ្ជបញ្ជា\nន ព្រឹក ថ្ងៃត្រង់] ល្ងាច យប់\nយ យ celle (6-8) | (11-12) | (05-06) | (08-10)\nDE RE EE EE\nButyl ami .\nBerner | ToL fs [|\n[omnes | uw | fu\noe MORE ES\nរាជធានីភ្នំពេញ,ថ្ងៃទី 15/06/2025 14:20\nគ្រពេទ្យព្យាបាល\nSuh\nសូមយកវេជ្ជបញ្ជាមកវិញ ពេលពិនិត្យលើកក្រោយ វេជ្ជបណ្ឌិត យុយ ស៊ីវហេង\n|\n\n# រ“\nរ foe សញ\n277 ស\nយស 7\noe a ee កីក៏ប-"
+}

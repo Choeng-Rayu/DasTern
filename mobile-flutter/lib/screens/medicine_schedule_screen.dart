@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../models/medicine.dart';
 
 class MedicineScheduleScreen extends StatelessWidget {

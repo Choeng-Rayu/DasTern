@@ -80,60 +80,34 @@ class SignupDetailScreen extends StatelessWidget {
                       hint: AppLocalizations.of(context)?.fillConfirmPassword ??
                           'សូមបំពេញលេខកូខសម្ងាត់របស់អ្នកម្តងទៀត'),
 
-                  Label(AppLocalizations.of(context)?.pinCode ??
-                      'លេខកូខ៤ខ្ទង់'),
+                  Label(
+                      AppLocalizations.of(context)?.pinCode ?? 'លេខកូខ៤ខ្ទង់'),
                   const Row(
                     children: [
-                      Expanded(
-                          child: CustomInputField(hint: '', maxLength: 1)),
+                      Expanded(child: CustomInputField(hint: '', maxLength: 1)),
                       SizedBox(width: 10),
-                      Expanded(
-                          child: CustomInputField(hint: '', maxLength: 1)),
+                      Expanded(child: CustomInputField(hint: '', maxLength: 1)),
                       SizedBox(width: 10),
-                      Expanded(
-                          child: CustomInputField(hint: '', maxLength: 1)),
+                      Expanded(child: CustomInputField(hint: '', maxLength: 1)),
                       SizedBox(width: 10),
-                      Expanded(
-                          child: CustomInputField(hint: '', maxLength: 1)),
+                      Expanded(child: CustomInputField(hint: '', maxLength: 1)),
                     ],
                   ),
 
-                  // Label(AppLocalizations.of(context)?.password ??
-                  //     'លេខកូខសម្ងាត់'),
-                  // const Row(
-                  //   children: [
-                  //     Expanded(
-                  //         child: CustomInputField(hint: '១', maxLength: 1)),
-                  //     SizedBox(width: 8),
-                  //     Expanded(
-                  //         child: CustomInputField(hint: '២', maxLength: 1)),
-                  //     SizedBox(width: 8),
-                  //     Expanded(
-                  //         child: CustomInputField(hint: '៣', maxLength: 1)),
-                  //     SizedBox(width: 8),
-                  //     Expanded(
-                  //         child: CustomInputField(hint: '៤', maxLength: 1)),
-                  //   ],
-                  // ),
                   const SizedBox(height: 16),
                   Label(AppLocalizations.of(context)?.readTerms ??
                       'សូមអានលក្ខខណ្ឌ និងច្បាប់មុនពេលប្រើប្រាស់កម្មវិធី'),
 
-                  // Label(AppLocalizations.of(context)?.address ?? 'អាសយដ្ឋាន'),
-                  // CustomInputField(
-                  //     hint: AppLocalizations.of(context)?.enterAddressHint ??
-                  //         'អាសយដ្ឋាន'),
-
                   const SizedBox(height: 18),
-                    PrimaryButton(
-                    text: 'បញ្ចូល',
+                  PrimaryButton(
+                    text: AppLocalizations.of(context)?.continueText ?? 'បន្ត',
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              SurveyFlowScreen(surveys: surveys),
-                        ),
+                          MaterialPageRoute(
+                            builder:
+                            (context) => SurveyFlowScreen(surveys: surveys),
+                        )
                       );
                     },
                   ),

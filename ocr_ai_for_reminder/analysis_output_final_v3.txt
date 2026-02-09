@@ -1,0 +1,97 @@
+Analyzing ocr_ai_for_reminder...                                
+
+warning • The annotation 'JsonKey' can only be used on fields or getters • lib/data/dtos/ai_response_dto.dart:11:6 • invalid_annotation_target
+warning • The annotation 'JsonKey' can only be used on fields or getters • lib/data/dtos/ai_response_dto.dart:12:6 • invalid_annotation_target
+warning • The annotation 'JsonKey' can only be used on fields or getters • lib/data/dtos/ai_response_dto.dart:13:6 • invalid_annotation_target
+warning • The annotation 'JsonKey' can only be used on fields or getters • lib/data/dtos/ai_response_dto.dart:28:6 • invalid_annotation_target
+warning • The annotation 'JsonKey' can only be used on fields or getters • lib/data/dtos/ocr_response_dto.dart:9:6 • invalid_annotation_target
+warning • The annotation 'JsonKey' can only be used on fields or getters • lib/data/dtos/ocr_response_dto.dart:24:6 • invalid_annotation_target
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/ui/screens/preview/preview_view.dart:48:43 • deprecated_member_use
+   info • Unnecessary use of string interpolation • lib/ui/screens/preview/preview_view.dart:109:54 • unnecessary_string_interpolations
+   info • Use 'const' with the constructor to improve performance • lib/ui/screens/preview/preview_view.dart:134:33 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/ui/screens/preview/preview_view.dart:135:35 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/ui/screens/preview/preview_view.dart:136:33 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/ui/screens/preview/preview_view.dart:137:31 • prefer_const_constructors
+   info • 'background' is deprecated and shouldn't be used. Use surface instead. This feature was deprecated after v3.18.0-0.1.pre • lib/ui/theme/app_theme.dart:29:9 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/ui/theme/app_theme.dart:98:51 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/ui/theme/app_theme.dart:104:35 • deprecated_member_use
+   info • Don't invoke 'print' in production code • lib_copilot/data/prescription_storage.dart:26:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib_copilot/data/prescription_storage.dart:46:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib_copilot/data/prescription_storage.dart:73:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib_copilot/data/prescription_storage.dart:88:7 • avoid_print
+   info • Parameter 'key' could be a super parameter • lib_copilot/main.dart:19:9 • use_super_parameters
+   info • Dangling library doc comment • lib_copilot/models/ai_response.dart:1:1 • dangling_library_doc_comments
+   info • Dangling library doc comment • lib_copilot/models/medication.dart:2:1 • dangling_library_doc_comments
+   info • Parameter 'key' could be a super parameter • lib_copilot/ui/components/common.dart:9:9 • use_super_parameters
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib_copilot/ui/components/common.dart:28:41 • deprecated_member_use
+   info • Parameter 'key' could be a super parameter • lib_copilot/ui/components/common.dart:81:9 • use_super_parameters
+   info • Parameter 'key' could be a super parameter • lib_copilot/ui/components/common.dart:122:9 • use_super_parameters
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib_copilot/ui/components/common.dart:149:33 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib_copilot/ui/components/common.dart:160:39 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib_copilot/ui/components/common.dart:183:45 • deprecated_member_use
+   info • Parameter 'key' could be a super parameter • lib_copilot/ui/screens/ai_enhanced_preview_screen.dart:8:9 • use_super_parameters
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib_copilot/ui/screens/ai_enhanced_preview_screen.dart:208:37 • deprecated_member_use
+   info • Parameter 'key' could be a super parameter • lib_copilot/ui/screens/ai_result_screen.dart:9:9 • use_super_parameters
+   info • Parameter 'key' could be a super parameter • lib_copilot/ui/screens/final_preview_screen.dart:8:9 • use_super_parameters
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib_copilot/ui/screens/final_preview_screen.dart:83:39 • deprecated_member_use
+   info • Use 'const' with the constructor to improve performance • lib_copilot/ui/screens/final_preview_screen.dart:138:12 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib_copilot/ui/screens/final_preview_screen.dart:139:14 • prefer_const_constructors
+   info • Use 'const' literals as arguments to constructors of '@immutable' classes • lib_copilot/ui/screens/final_preview_screen.dart:141:19 • prefer_const_literals_to_create_immutables
+   info • Use 'const' with the constructor to improve performance • lib_copilot/ui/screens/final_preview_screen.dart:142:11 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib_copilot/ui/screens/final_preview_screen.dart:143:11 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib_copilot/ui/screens/final_preview_screen.dart:144:11 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib_copilot/ui/screens/final_preview_screen.dart:145:22 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib_copilot/ui/screens/final_preview_screen.dart:146:11 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib_copilot/ui/screens/final_preview_screen.dart:147:11 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib_copilot/ui/screens/final_preview_screen.dart:147:49 • prefer_const_constructors
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib_copilot/ui/screens/final_preview_screen.dart:294:26 • deprecated_member_use
+   info • Parameter 'key' could be a super parameter • lib_copilot/ui/screens/home_screen.dart:9:9 • use_super_parameters
+   info • Use 'const' with the constructor to improve performance • lib_copilot/ui/screens/home_screen.dart:103:22 • prefer_const_constructors
+   info • Use 'const' literals as arguments to constructors of '@immutable' classes • lib_copilot/ui/screens/home_screen.dart:104:27 • prefer_const_literals_to_create_immutables
+   info • Use 'const' with the constructor to improve performance • lib_copilot/ui/screens/home_screen.dart:105:19 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib_copilot/ui/screens/home_screen.dart:198:28 • prefer_const_constructors
+   info • Use 'const' literals as arguments to constructors of '@immutable' classes • lib_copilot/ui/screens/home_screen.dart:200:33 • prefer_const_literals_to_create_immutables
+   info • Use 'const' with the constructor to improve performance • lib_copilot/ui/screens/home_screen.dart:209:25 • prefer_const_constructors
+   info • Parameter 'key' could be a super parameter • lib_copilot/ui/screens/home_screen.dart:236:9 • use_super_parameters
+   info • Parameter 'key' could be a super parameter • lib_copilot/ui/screens/ocr_preview_screen.dart:8:9 • use_super_parameters
+warning • The receiver can't be null, so the null-aware operator '?.' is unnecessary • lib_copilot/ui/screens/ocr_preview_screen.dart:61:62 • invalid_null_aware_operator
+warning • The receiver can't be null, so the null-aware operator '?.' is unnecessary • lib_copilot/ui/screens/ocr_preview_screen.dart:64:40 • invalid_null_aware_operator
+warning • The receiver can't be null, so the null-aware operator '?.' is unnecessary • lib_copilot/ui/screens/ocr_preview_screen.dart:64:81 • invalid_null_aware_operator
+warning • The receiver can't be null, so the null-aware operator '?.' is unnecessary • lib_copilot/ui/screens/ocr_preview_screen.dart:72:35 • invalid_null_aware_operator
+warning • The receiver can't be 'null' because of short-circuiting, so the null-aware operator '?.' can't be used • lib_copilot/ui/screens/ocr_preview_screen.dart:72:46 • invalid_null_aware_operator
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib_copilot/ui/screens/ocr_preview_screen.dart:113:39 • deprecated_member_use
+warning • The operand can't be 'null', so the condition is always 'false' • lib_copilot/ui/screens/ocr_preview_screen.dart:321:28 • unnecessary_null_comparison
+warning • The '!' will have no effect because the receiver can't be null • lib_copilot/ui/screens/ocr_preview_screen.dart:321:57 • unnecessary_non_null_assertion
+warning • The '!' will have no effect because the receiver can't be null • lib_copilot/ui/screens/ocr_preview_screen.dart:328:41 • unnecessary_non_null_assertion
+   info • Parameter 'key' could be a super parameter • lib_copilot/ui/screens/ocr_result_screen.dart:12:9 • use_super_parameters
+warning • The value of the local variable 'aiProvider' isn't used • lib_copilot/ui/screens/ocr_result_screen.dart:57:11 • unused_local_variable
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib_copilot/ui/screens/saved_prescriptions_screen.dart:139:42 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib_copilot/ui/screens/saved_prescriptions_screen.dart:179:42 • deprecated_member_use
+   info • Use interpolation to compose strings and values • lib_copilot/ui/screens/saved_prescriptions_screen.dart:336:40 • prefer_interpolation_to_compose_strings
+   info • Use interpolation to compose strings and values • lib_copilot/ui/screens/saved_prescriptions_screen.dart:336:73 • prefer_interpolation_to_compose_strings
+   info • Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check • lib_copilot/ui/screens/saved_prescriptions_screen.dart:413:38 • use_build_context_synchronously
+   info • Parameter 'key' could be a super parameter • lib_copilot/widgets/custom_widgets.dart:14:9 • use_super_parameters
+   info • The 'child' argument should be last in widget constructor invocations • lib_copilot/widgets/custom_widgets.dart:69:25 • sort_child_properties_last
+   info • The 'child' argument should be last in widget constructor invocations • lib_copilot/widgets/custom_widgets.dart:73:25 • sort_child_properties_last
+   info • Unnecessary use of string interpolation • lib_copilot/widgets/custom_widgets.dart:99:24 • unnecessary_string_interpolations
+   info • Parameter 'key' could be a super parameter • lib_copilot/widgets/custom_widgets.dart:137:9 • use_super_parameters
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib_copilot/widgets/custom_widgets.dart:234:28 • deprecated_member_use
+   info • Parameter 'key' could be a super parameter • lib_copilot/widgets/dialogs.dart:7:9 • use_super_parameters
+   info • 'WillPopScope' is deprecated and shouldn't be used. Use PopScope instead. The Android predictive back feature will not work with WillPopScope. This feature was deprecated after v3.12.0-1.0.pre • lib_copilot/widgets/dialogs.dart:15:12 • deprecated_member_use
+   info • 'WillPopScope.new' is deprecated and shouldn't be used. Use PopScope instead. The Android predictive back feature will not work with WillPopScope. This feature was deprecated after v3.12.0-1.0.pre • lib_copilot/widgets/dialogs.dart:15:12 • deprecated_member_use
+   info • Parameter 'key' could be a super parameter • lib_copilot/widgets/dialogs.dart:44:9 • use_super_parameters
+   info • Parameter 'key' could be a super parameter • lib_copilot/widgets/dialogs.dart:85:9 • use_super_parameters
+   info • Use 'const' with the constructor to improve performance • lib_copilot/widgets/dialogs.dart:97:11 • prefer_const_constructors
+   info • Parameter 'key' could be a super parameter • lib_copilot/widgets/form_widgets.dart:14:9 • use_super_parameters
+   info • Parameter 'key' could be a super parameter • lib_copilot/widgets/form_widgets.dart:72:9 • use_super_parameters
+   info • Parameter 'key' could be a super parameter • lib_copilot/widgets/form_widgets.dart:141:9 • use_super_parameters
+   info • Parameter 'key' could be a super parameter • lib_copilot/widgets/medication_list.dart:7:9 • use_super_parameters
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib_copilot/widgets/medication_list.dart:70:40 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib_copilot/widgets/medication_list.dart:84:50 • deprecated_member_use
+   info • Parameter 'key' could be a super parameter • lib_copilot/widgets/ocr_text_display.dart:7:9 • use_super_parameters
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib_copilot/widgets/ocr_text_display.dart:31:54 • deprecated_member_use
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib_copilot/widgets/ocr_text_display.dart:61:42 • deprecated_member_use
+   info • Parameter 'key' could be a super parameter • lib_copilot/widgets/prescription_image_viewer.dart:7:9 • use_super_parameters
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib_copilot/widgets/prescription_image_viewer.dart:19:33 • deprecated_member_use
+
+93 issues found. (ran in 1.2s)

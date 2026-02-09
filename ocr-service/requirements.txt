@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # FastAPI and Server
 fastapi>=0.104.0
 uvicorn[standard]>=0.24.0
@@ -28,3 +29,27 @@ langdetect>=1.0.9
 pytest>=7.4.0
 pytest-asyncio>=0.21.0
 httpx>=0.25.0
+=======
+# OCR Service Dependencies
+# Tesseract-based multilingual OCR
+
+# FastAPI framework
+fastapi==0.109.2
+uvicorn[standard]==0.27.1
+python-multipart==0.0.9
+
+# Pydantic for data validation
+pydantic==2.6.1
+pydantic-settings==2.1.0
+
+# Image processing
+opencv-python-headless==4.9.0.80
+numpy==1.26.4
+Pillow==10.2.0
+
+# Tesseract OCR
+pytesseract==0.3.10
+
+# HTTP client (for testing)
+httpx==0.26.0
+>>>>>>> 479e2f047f47a189e6575eb2c4ec1dee4038fac6

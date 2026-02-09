@@ -2,6 +2,8 @@
 
 {
   "@@locale": "km",
+  "yourAccount" : "គណនីរបស់​អ្នក",
+  "next": "បន្ទាប់",
     "phoneNumber": "លេខទូរស័ព្ទ",
     "fillDetailTitle ": "បញ្ចូលពត៌មាន",
   "fillPhoneNumber": "សូមបំពេញលេខទូរស័ព្ទរបស់អ្នក",

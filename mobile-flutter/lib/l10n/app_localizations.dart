@@ -104,6 +104,18 @@ abstract class AppLocalizations {
   /// **'DasTern'**
   String get appTitle;
 
+  /// yourAccount
+  ///
+  /// In en, this message translates to:
+  /// **'Your Account'**
+  String get yourAccount;
+
+  /// Next
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
+
   /// No description provided for @fillDetailTitle.
   ///
   /// In en, this message translates to:

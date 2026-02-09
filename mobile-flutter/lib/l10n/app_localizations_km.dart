@@ -12,6 +12,12 @@ class AppLocalizationsKm extends AppLocalizations {
   String get appTitle => 'DasTern';
 
   @override
+  String get yourAccount => 'គណនីរបស់​អ្នក';
+
+  @override
+  String get next => 'បន្ទាប់';
+
+  @override
   String get fillDetailTitle => 'Information';
 
   @override

@@ -1,0 +1,81 @@
+[
+  {
+    "id": "1770046213332",
+    "createdAt": "2026-02-02T22:30:13.332976",
+    "medications": [
+      {
+        "name": "Paracetamol",
+        "dosage": "500mg",
+        "times": [
+          "08:00",
+          "14:00",
+          "20:00"
+        ],
+        "times24h": [
+          8,
+          14,
+          20
+        ],
+        "repeat": "daily",
+        "durationDays": 7,
+        "notes": "Take with food"
+      },
+      {
+        "name": "Amoxicillin",
+        "dosage": "500mg",
+        "times": [
+          "08:00",
+          "20:00"
+        ],
+        "times24h": [
+          8,
+          20
+        ],
+        "repeat": "daily",
+        "durationDays": 7,
+        "notes": "Antibiotic for infection"
+      },
+      {
+        "name": "Vitamin B Complex",
+        "dosage": "1 tablet",
+        "times": [
+          "08:00"
+        ],
+        "times24h": [
+          8
+        ],
+        "repeat": "daily",
+        "durationDays": 14,
+        "notes": "For energy and fatigue"
+      }
+    ],
+    "patientName": "SOK HENG",
+    "age": 35,
+    "diagnosis": "Asthénie (Fatigue)",
+    "rawOcrData": {
+      "meta": {
+        "languages": [
+          "eng",
+          "khm",
+          "fra"
+        ],
+        "dpi": 71,
+        "processing_time_ms": 2297.294855117798
+      },
+      "quality": {
+        "blur": "low",
+        "contrast": "ok"
+      },
+      "blocks": [
+        {
+          "raw_text": "LPS 2 | SOK HENG POLYCLINIC\nฟPrescription\nPatient: Age ~35\nDiagnosis: Asthénie\n- TA:100/65 mmHg\n- P:90 /min\n- T°: 36,7°C"
+        }
+      ]
+    },
+    "aiMetadata": {
+      "model": "llama3.2:3b",
+      "processingTime": 2500,
+      "confidence": 0.85
+    }
+  }
+]
