@@ -246,9 +246,15 @@ function extractMedications(text: string) {
       name: 'Unknown Medication',
       strength: null,
       dosage: '1 tablet',
-      frequency: 'once daily',
-      duration: '7 days',
-      timing: { morning: true, noon: false, evening: false, night: false }
+      quantity: 14,
+      unit: 'tablet',
+      schedule: {
+        times: ['morning'],
+        times_24h: ['08:00'],
+        frequency: 'once_daily'
+      },
+      duration_days: 7,
+      instructions: 'Take as prescribed'
     });
   }
 
