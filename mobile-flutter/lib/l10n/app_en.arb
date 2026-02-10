@@ -707,5 +707,75 @@
   "enterAddressHint": "Street, District, Province",
   "@enterAddressHint": {
     "description": "Address hint"
+  },
+
+  "familyAlert": "Family Functions",
+  "@familyAlert": {
+    "description": "Family alert screen title"
+  },
+  "searchMember": "Search member",
+  "@searchMember": {
+    "description": "Search member placeholder"
+  },
+  "age": "Age",
+  "@age": {
+    "description": "Age label"
+  },
+  "years": "years",
+  "@years": {
+    "description": "Years unit"
+  },
+  "phone": "Phone",
+  "@phone": {
+    "description": "Phone label"
+  },
+  "pendingPrescription": "Waiting for medication",
+  "@pendingPrescription": {
+    "description": "Pending prescription status"
+  },
+  "viewPrescription": "View Prescription",
+  "@viewPrescription": {
+    "description": "View prescription button"
+  },
+  "prescriptionDate": "Prescription Date",
+  "@prescriptionDate": {
+    "description": "Prescription date label"
+  },
+  "medicine": "Medicine",
+  "@medicine": {
+    "description": "Medicine column header"
+  },
+  "quantity": "Qty",
+  "@quantity": {
+    "description": "Quantity column header"
+  },
+  "usage": "Usage",
+  "@usage": {
+    "description": "Usage column header"
+  },
+  "home": "Home",
+  "@home": {
+    "description": "Home navigation label"
+  },
+  "patients": "Patients",
+  "@patients": {
+    "description": "Patients navigation label"
+  },
+  "prescription": "Prescription",
+  "@prescription": {
+    "description": "Prescription navigation label"
+  },
+  "morningTime": "Morning",
+  "@morningTime": {
+    "description": "Morning time indicator"
+  },
+  "eveningTime": "Evening",
+  "@eveningTime": {
+    "description": "Evening time indicator"
+  },
+  "morningAndEvening": "Morning & Evening",
+  "@morningAndEvening": {
+    "description": "Morning and evening usage"
   }
+
 }

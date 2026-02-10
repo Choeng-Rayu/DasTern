@@ -483,4 +483,56 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get enterAddressHint => 'ភូមិ កុម សង្កាត់';
+
+  @override
+  String get familyAlert => 'មុខងារគ្រួសារ';
+
+  @override
+  String get searchMember => 'រកមើលអ្នកជិតស្និទ្ធ';
+
+  @override
+  String get age => 'អាយុ';
+
+  @override
+  String get years => 'ឆ្នាំ';
+
+  @override
+  String get phone => 'លេខទូរស័ព្ទ';
+
+  @override
+  String get pendingPrescription => 'រង់ចាំទទួលថ្នាំ';
+
+  @override
+  String get viewPrescription => 'មើលវេជ្ជបញ្ជា';
+
+  @override
+  String get prescriptionDate => 'របង្កើតថ្ងៃថ្នាំ';
+
+  @override
+  String get medicine => 'ថ្នាំ';
+
+  @override
+  String get quantity => 'ចំនួន';
+
+  @override
+  String get usage => 'ប្រើប្រាស់';
+
+  @override
+  String get home => 'ទំព័រដើម';
+
+  @override
+  String get patients => 'កាលីប្រតិ​បត្​តិ​ការ';
+
+  @override
+  String get prescription =>
+      'វេជ្ជបញ្ជា​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​';
+
+  @override
+  String get morningTime => 'ពេលព្រឹក';
+
+  @override
+  String get eveningTime => 'ពេលល្ងាច';
+
+  @override
+  String get morningAndEvening => 'ព្រឹក និង ល្ងាច';
 }

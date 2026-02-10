@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations_en.dart';
 import 'app_localizations_km.dart';
 
@@ -1044,6 +1045,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Street, District, Province'**
   String get enterAddressHint;
+
+  /// Family alert screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Family Functions'**
+  String get familyAlert;
+
+  /// Search member placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Search member'**
+  String get searchMember;
+
+  /// Age label
+  ///
+  /// In en, this message translates to:
+  /// **'Age'**
+  String get age;
+
+  /// Years unit
+  ///
+  /// In en, this message translates to:
+  /// **'years'**
+  String get years;
+
+  /// Phone label
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get phone;
+
+  /// Pending prescription status
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for medication'**
+  String get pendingPrescription;
+
+  /// View prescription button
+  ///
+  /// In en, this message translates to:
+  /// **'View Prescription'**
+  String get viewPrescription;
+
+  /// Prescription date label
+  ///
+  /// In en, this message translates to:
+  /// **'Prescription Date'**
+  String get prescriptionDate;
+
+  /// Medicine column header
+  ///
+  /// In en, this message translates to:
+  /// **'Medicine'**
+  String get medicine;
+
+  /// Quantity column header
+  ///
+  /// In en, this message translates to:
+  /// **'Qty'**
+  String get quantity;
+
+  /// Usage column header
+  ///
+  /// In en, this message translates to:
+  /// **'Usage'**
+  String get usage;
+
+  /// Home navigation label
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
+  /// Patients navigation label
+  ///
+  /// In en, this message translates to:
+  /// **'Patients'**
+  String get patients;
+
+  /// Prescription navigation label
+  ///
+  /// In en, this message translates to:
+  /// **'Prescription'**
+  String get prescription;
+
+  /// Morning time indicator
+  ///
+  /// In en, this message translates to:
+  /// **'Morning'**
+  String get morningTime;
+
+  /// Evening time indicator
+  ///
+  /// In en, this message translates to:
+  /// **'Evening'**
+  String get eveningTime;
+
+  /// Morning and evening usage
+  ///
+  /// In en, this message translates to:
+  /// **'Morning & Evening'**
+  String get morningAndEvening;
 }
 
 class _AppLocalizationsDelegate

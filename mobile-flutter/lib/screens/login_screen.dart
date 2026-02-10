@@ -1,7 +1,7 @@
 import 'package:dastern_mobile/l10n/app_localizations.dart';
 import 'package:dastern_mobile/widgets/auth_background.dart';
 import 'package:dastern_mobile/widgets/bottom_round_container.dart';
-import 'package:dastern_mobile/widgets/hospital_logo.dart';
+import 'package:dastern_mobile/widgets/header_widgets.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {

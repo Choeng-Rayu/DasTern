@@ -178,5 +178,23 @@
   "enterNameHint": "សុខជាត",
   "enterFamilyContactHint": "098765432",
   "enterWeightHint": "60.0",
-  "enterAddressHint": "ភូមិ កុម សង្កាត់"
+  "enterAddressHint": "ភូមិ កុម សង្កាត់",
+  "familyAlert": "មុខងារគ្រួសារ",
+  "searchMember": "រកមើលអ្នកជិតស្និទ្ធ",
+  "age": "អាយុ",
+  "years": "ឆ្នាំ",
+  "phone": "លេខទូរស័ព្ទ",
+  "pendingPrescription": "រង់ចាំទទួលថ្នាំ",
+  "viewPrescription": "មើលវេជ្ជបញ្ជា",
+  "prescriptionDate": "របង្កើតថ្ងៃថ្នាំ",
+  "medicine": "ថ្នាំ",
+  "quantity": "ចំនួន",
+  "usage": "ប្រើប្រាស់",
+  "home": "ទំព័រដើម",
+  "patients": "កាលីប្រតិ​បត្​តិ​ការ",
+  "prescription": "វេជ្ជបញ្ជា​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​",
+  "morningTime": "ពេលព្រឹក",
+  "eveningTime": "ពេលល្ងាច",
+  "morningAndEvening": "ព្រឹក និង ល្ងាច"
+
 }

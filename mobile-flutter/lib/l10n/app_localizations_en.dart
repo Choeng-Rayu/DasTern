@@ -484,4 +484,55 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get enterAddressHint => 'Street, District, Province';
+
+  @override
+  String get familyAlert => 'Family Functions';
+
+  @override
+  String get searchMember => 'Search member';
+
+  @override
+  String get age => 'Age';
+
+  @override
+  String get years => 'years';
+
+  @override
+  String get phone => 'Phone';
+
+  @override
+  String get pendingPrescription => 'Waiting for medication';
+
+  @override
+  String get viewPrescription => 'View Prescription';
+
+  @override
+  String get prescriptionDate => 'Prescription Date';
+
+  @override
+  String get medicine => 'Medicine';
+
+  @override
+  String get quantity => 'Qty';
+
+  @override
+  String get usage => 'Usage';
+
+  @override
+  String get home => 'Home';
+
+  @override
+  String get patients => 'Patients';
+
+  @override
+  String get prescription => 'Prescription';
+
+  @override
+  String get morningTime => 'Morning';
+
+  @override
+  String get eveningTime => 'Evening';
+
+  @override
+  String get morningAndEvening => 'Morning & Evening';
 }
