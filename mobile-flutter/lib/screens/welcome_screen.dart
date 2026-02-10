@@ -3,7 +3,8 @@ import 'package:dastern_mobile/screens/login_screen.dart';
 import 'package:dastern_mobile/screens/sign_up_screen.dart';
 import 'package:dastern_mobile/widgets/bottom_round_container.dart';
 import 'package:flutter/material.dart';
-import '../widgets/hospital_logo.dart';
+// import 'package:ui_for_capstone/ui/screen/signup_screen.dart';
+import '../widgets/header_widgets.dart';
 import '../widgets/primary_button.dart';
 import '../widgets/background_welcome.dart';
 
