@@ -16,6 +16,12 @@ RUN npm install --prefer-offline --no-audit
 # Copy source
 COPY . .
 
+# Build the Next.js application
+ENV NODE_ENV=production
+ENV TURBOPACK=0
+ENV NEXT_TELEMETRY_DISABLED=1
+RUN npm run build
+
 EXPOSE 3000
 
 # Development mode
