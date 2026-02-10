@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
         role, onboarding_status, created_at, updated_at
       ) VALUES (
         uuid_generate_v4(), $1, $2, $3, $4, $5, $6, $7,
-        'patient', 'registered', NOW(), NOW()
+        NULL, 'registered', NOW(), NOW()
       )
       RETURNING id, email, first_name, last_name, phone_number, gender, date_of_birth, role, onboarding_status, created_at`,
       [email.toLowerCase(), first_name, last_name, telephone, gender, formattedDob, passwordHash]
