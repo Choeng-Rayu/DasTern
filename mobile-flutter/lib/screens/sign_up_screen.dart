@@ -6,6 +6,7 @@ import '../widgets/primary_button.dart';
 import '../widgets/auth_background.dart';
 import '../widgets/label.dart';
 import '../widgets/custom_input_field.dart';
+import 'tab/main_navigation.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -99,12 +100,12 @@ class SignupScreen extends StatelessWidget {
                   PrimaryButton(
                     text: AppLocalizations.of(context)?.continueText ?? 'បន្ត',
                     onPressed: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder:(context) => const SignupDetailScreen(),
-                      //   ),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MainNavigation(),
+                        ),
+                      );
                     },
                   ),
                   const SizedBox(height: 12),
