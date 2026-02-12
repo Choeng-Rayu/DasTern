@@ -1,4 +1,5 @@
 import 'package:dastern_mobile/l10n/app_localizations.dart';
+import 'package:dastern_mobile/screens/login_screen.dart';
 import 'package:dastern_mobile/screens/sign_up_screen.dart';
 import 'package:dastern_mobile/widgets/bottom_round_container.dart';
 import 'package:flutter/material.dart';
@@ -74,24 +75,24 @@ class WelcomeScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const SizedBox(height: 24),
-                    Text(
-                      AppLocalizations.of(context)?.welcomeTitle ??
-                          'Welcome To DasTern',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        shadows: [
-                          Shadow(
-                            blurRadius: 8,
-                            color: Colors.black45,
-                            offset: Offset(1, 2),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 16),
+                    // Text(
+                    //   AppLocalizations.of(context)?.welcomeTitle ??
+                    //       'Welcome To DasTern',
+                    //   textAlign: TextAlign.center,
+                    //   style: const TextStyle(
+                    //     fontSize: 22,
+                    //     fontWeight: FontWeight.bold,
+                    //     color: Colors.white,
+                    //     shadows: [
+                    //       Shadow(
+                    //         blurRadius: 8,
+                    //         color: Colors.black45,
+                    //         offset: Offset(1, 2),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    const SizedBox(height: 30),
                     Container(
                       width: 290,
                       height: 370,
@@ -164,7 +165,7 @@ class WelcomeScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const SignupScreen(),
+                            builder: (context) => const LoginScreen(),
                           ),
                         );
                       },

@@ -1,0 +1,89 @@
+{
+  "ocr_text": "\n    SOK HENG POLYCLINIC\n    តេជោបញ្ញា\n    \n    ឈ្មោះ: ឈុន ចាប់ ភេទ: ស្រី អាយុ: 47 ឆ្នាំ\n    អាស្រ័យដ្ឋាន: សង្កាត់កាកាប់ ខណ្ឌ\n    \n    លេខ ឈ្មោះថ្នាំ ចំនួន ព្រឹក ថ្ងៃ ល្ងាច យប់ សម្គាល់ ថ្ងៃ\n    1. Calcium amp Tablet 1 - - - ថ្នាំបញ្ចុះ 4\n    2. Multivitamine Tablet 1 - 1 - ថ្នាំបញ្ចុះ 10\n    3. Amitriptyline 10mg - - - 1 ថ្នាំបញ្ចុះ 5\n    ",
+  "medications": [
+    {
+      "name": "Calcium",
+      "strength": null,
+      "dosage": "1 tablet",
+      "frequency": "once daily",
+      "duration": "7 days",
+      "instructions": "Take as prescribed"
+    },
+    {
+      "name": "Multivitamine",
+      "strength": null,
+      "dosage": "1 tablet",
+      "frequency": "once daily",
+      "duration": "7 days",
+      "instructions": "Take as prescribed"
+    },
+    {
+      "name": "Amitriptyline",
+      "strength": "10mg",
+      "dosage": "1 tablet",
+      "frequency": "once daily",
+      "duration": "7 days",
+      "instructions": "Take as prescribed"
+    }
+  ],
+  "reminders": [
+    {
+      "medication_name": "Calcium",
+      "strength": null,
+      "dosage": "1 tablet",
+      "reminder_times": [
+        "08:00"
+      ],
+      "days_of_week": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "duration": "7 days",
+      "instructions": "Take as prescribed"
+    },
+    {
+      "medication_name": "Multivitamine",
+      "strength": null,
+      "dosage": "1 tablet",
+      "reminder_times": [
+        "08:00"
+      ],
+      "days_of_week": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "duration": "7 days",
+      "instructions": "Take as prescribed"
+    },
+    {
+      "medication_name": "Amitriptyline",
+      "strength": "10mg",
+      "dosage": "1 tablet",
+      "reminder_times": [
+        "08:00"
+      ],
+      "days_of_week": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "duration": "7 days",
+      "instructions": "Take as prescribed"
+    }
+  ],
+  "timestamp": "2026-01-23T10:00:00Z"
+}

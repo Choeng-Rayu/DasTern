@@ -12,6 +12,36 @@ class AppLocalizationsKm extends AppLocalizations {
   String get appTitle => 'DasTern';
 
   @override
+  String get fillDetailTitle => 'Information';
+
+  @override
+  String get phoneNumber => 'លេខទូរស័ព្ទ';
+
+  @override
+  String get fillPhoneNumber => 'សូមបំពេញលេខទូរស័ព្ទរបស់អ្នក';
+
+  @override
+  String get password => 'ពាក្យសម្ងាត់';
+
+  @override
+  String get fillPassword => 'សូមបំពេញលេខកូខសម្ងាត់របស់អ្នក';
+
+  @override
+  String get confirmPassword => 'បញ្ជាក់ពាក្យសម្ងាត់';
+
+  @override
+  String get fillConfirmPassword => 'សូមបំពេញលេខកូខសម្ងាត់របស់អ្នកម្តងទៀត';
+
+  @override
+  String get pinCode => 'លេខកូខ៤ខ្ទង់';
+
+  @override
+  String get readTerms => 'សូមអានលក្ខខណ្ឌ និងច្បាប់មុនពេលប្រើប្រាស់កម្មវិធី';
+
+  @override
+  String get alreadyRead => 'អានរួចរាល់';
+
+  @override
   String get createNewAccount => 'បង្កើតគណនីថ្មី';
 
   @override
@@ -58,33 +88,6 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get goBack => 'ថយក្រោយ';
-
-  @override
-  String get phoneNumber => 'លេខទូរស័ព្ទ';
-
-  @override
-  String get fillPhoneNumber => 'សូមបំពេញលេខទូរស័ព្ទរបស់អ្នក';
-
-  @override
-  String get password => 'ពាក្យសម្ងាត់';
-
-  @override
-  String get fillPassword => 'សូមបំពេញលេខកូខសម្ងាត់របស់អ្នក';
-
-  @override
-  String get confirmPassword => 'បញ្ជាក់ពាក្យសម្ងាត់';
-
-  @override
-  String get fillConfirmPassword => 'សូមបំពេញលេខកូខសម្ងាត់របស់អ្នកម្តងទៀត';
-
-  @override
-  String get pinCode => 'លេខកូខ៤ខ្ទង់';
-
-  @override
-  String get readTerms => 'សូមអានលក្ខខណ្ឌ និងច្បាប់មុនពេលប្រើប្រាស់កម្មវិធី';
-
-  @override
-  String get alreadyRead => 'អានរួចរាល់';
 
   @override
   String get signIn => 'ចូលគណនី';
@@ -480,4 +483,56 @@ class AppLocalizationsKm extends AppLocalizations {
 
   @override
   String get enterAddressHint => 'ភូមិ កុម សង្កាត់';
+
+  @override
+  String get familyAlert => 'មុខងារគ្រួសារ';
+
+  @override
+  String get searchMember => 'រកមើលអ្នកជិតស្និទ្ធ';
+
+  @override
+  String get age => 'អាយុ';
+
+  @override
+  String get years => 'ឆ្នាំ';
+
+  @override
+  String get phone => 'លេខទូរស័ព្ទ';
+
+  @override
+  String get pendingPrescription => 'រង់ចាំទទួលថ្នាំ';
+
+  @override
+  String get viewPrescription => 'មើលវេជ្ជបញ្ជា';
+
+  @override
+  String get prescriptionDate => 'របង្កើតថ្ងៃថ្នាំ';
+
+  @override
+  String get medicine => 'ថ្នាំ';
+
+  @override
+  String get quantity => 'ចំនួន';
+
+  @override
+  String get usage => 'ប្រើប្រាស់';
+
+  @override
+  String get home => 'ទំព័រដើម';
+
+  @override
+  String get patients => 'កាលីប្រតិ​បត្​តិ​ការ';
+
+  @override
+  String get prescription =>
+      'វេជ្ជបញ្ជា​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​';
+
+  @override
+  String get morningTime => 'ពេលព្រឹក';
+
+  @override
+  String get eveningTime => 'ពេលល្ងាច';
+
+  @override
+  String get morningAndEvening => 'ព្រឹក និង ល្ងាច';
 }
