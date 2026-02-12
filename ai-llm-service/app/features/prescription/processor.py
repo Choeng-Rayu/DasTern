@@ -13,75 +13,33 @@ logger = logging.getLogger(__name__)
 class PrescriptionProcessor:
     """Process prescription OCR data into structured format for reminders"""
     
-    SYSTEM_PROMPT = """You are an expert medical prescription AI specialized in Cambodian healthcare prescriptions.
+    SYSTEM_PROMPT = """You are an expert medical prescription AI for healthcare reminders.
 
-CRITICAL TASK: Extract COMPLETE prescription information for mobile app reminder generation.
+TASK: Extract prescription information for mobile app reminder generation.
 
-LANGUAGE HANDLING:
-- Khmer text: ឈ្មោះ (name), អាយុ (age), ភេទ (gender), ថ្ងៃ (day), ព្រឹក (morning), ល្ងាច (evening), យប់ (night)
-- French text: matin, soir, nuit, comprimé, gélule
-- English text: morning, evening, night, tablet, capsule
+LANGUAGE SUPPORT:
+- Khmer: ឈ្មោះ (name), អាយុ (age), ភេទ (gender), ថ្ងៃ (day)
+- French: matin, soir, nuit, comprimé
+- English: morning, evening, night, tablet
 
-TIME NORMALIZATION (MANDATORY):
-ព្រឹក/ matin / morning → ["morning"] → ["08:00"]
-ថ្ងៃ / midi / noon → ["noon"] → ["12:00"] 
-ល្ងាច / soir / evening → ["evening"] → ["18:00"]
-យប់ / nuit / night → ["night"] → ["21:00"]
+TIME NORMALIZATION:
+ព្រឹក/matin/morning → ["morning"] → ["08:00"]
+ល្ងាច/soir/evening → ["evening"] → ["18:00"]
+យប់/nuit/night → ["night"] → ["21:00"]
 
-MEDICATION INSTRUCTIONS:
-- Extract ALL medications found in prescription
-- Parse dosage: "500mg", "1 tablet", "2 viên"
-- Identify timing: "2 times daily", "before meals", "after food"
-- Duration: "7 days", "2 weeks", "1 month"
+MEDICATION EXTRACTION:
+- Extract ALL medications with dosage and timing
+- Parse times: "2x daily", "before meals", "after food"
+- Duration: "7 days", "2 weeks"
 
-HOSPITAL INFORMATION:
-- Patient IDs: HAKF, patient numbers
-- Hospital codes and department names
-- Doctor names and signatures
-
-PRECISION RULES:
-1. Extract ONLY what is clearly visible in the text
-2. If information is missing, leave fields empty (null)
-3. Convert ALL time references to both times and times_24h arrays
-4. Use exact medication names as written, but fix obvious OCR errors
-5. Maintain original hospital codes and patient IDs
-
-OUTPUT FORMAT (JSON ONLY):
+OUTPUT JSON ONLY:
 {
-  "patient_info": {
-    "name": "exact patient name or empty string",
-    "id": "patient ID or empty string", 
-    "age": number or null,
-    "gender": "M/F/ Male/Female or empty string",
-    "hospital_code": "hospital code or empty string"
-  },
-  "medical_info": {
-    "diagnosis": "diagnosis text or empty string",
-    "doctor": "doctor name or empty string", 
-    "date": "prescription date or empty string",
-    "department": "department name or empty string"
-  },
-  "medications": [
-    {
-      "name": "exact medication name",
-      "dosage": "dosage with units (mg, tablet, etc)",
-      "times": ["morning", "evening", "night"],
-      "times_24h": ["08:00", "18:00", "21:00"],
-      "repeat": "daily/weekly/monthly",
-      "duration_days": number or null,
-      "notes": "additional instructions"
-    }
-  ]
+  "patient_info": {"name": "", "id": "", "age": null, "gender": "", "hospital_code": ""},
+  "medical_info": {"diagnosis": "", "doctor": "", "date": "", "department": ""},
+  "medications": [{"name": "", "dosage": "", "times": [], "times_24h": [], "repeat": "", "duration_days": null, "notes": ""}]
 }
 
-ERROR HANDLING:
-- If no medications found: medications: []
-- If text is unclear: extract what you can, leave rest empty
-- Never guess values - use empty strings or null instead
-
-REMINDER: This data will generate mobile app reminders. Accuracy is critical for patient safety.
-
-OUTPUT ONLY VALID JSON. NO EXPLANATIONS. NO MARKDOWN."""
+RULES: Extract ONLY visible text. Use empty strings for missing data. NO EXPLANATIONS."""
 
     def __init__(self, ollama_client: OllamaClient):
         self.ollama_client = ollama_client
@@ -168,8 +126,13 @@ OUTPUT ONLY VALID JSON. NO EXPLANATIONS. NO MARKDOWN."""
             "options": {
                 "temperature": 0.1,
                 "top_p": 0.9,
+<<<<<<< HEAD
                 "num_ctx": 2048,
                 "num_predict": 800
+=======
+                "top_k": 40,
+                "max_tokens": 500
+>>>>>>> c04fb50ce3d62100ad607cc395b368e4045989f9
             }
         }
         

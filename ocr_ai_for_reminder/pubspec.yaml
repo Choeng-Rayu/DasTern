@@ -36,7 +36,13 @@ dependencies:
   
   # Logging
   logger: ^2.1.0
+<<<<<<< HEAD
   http_parser: ^4.1.2
+=======
+
+  http_parser: ^4.1.2
+
+>>>>>>> c04fb50ce3d62100ad607cc395b368e4045989f9
 
 dev_dependencies:
   flutter_test:
@@ -44,7 +50,13 @@ dev_dependencies:
   flutter_lints: ^3.0.1
   freezed: ^2.5.0
   build_runner: ^2.4.0
+<<<<<<< HEAD
   json_serializable: ^6.9.5
+=======
+
+  json_serializable: ^6.9.5
+
+>>>>>>> c04fb50ce3d62100ad607cc395b368e4045989f9
 
 flutter:
   uses-material-design: true

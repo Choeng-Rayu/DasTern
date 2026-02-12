@@ -67,10 +67,10 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
       // DEVELOPMENT MODE: Skip welcome screen, go straight to tabs
-      home: const MainNavigation(),
+      // home: const MainNavigation(),
 
       // PRODUCTION MODE: Uncomment this line and comment out the line above
-      // home: WelcomeScreen(onLocaleChange: (locale) => setLocale(locale)),
+      home: WelcomeScreen(onLocaleChange: (locale) => setLocale(locale)),
     );
   }
 }
