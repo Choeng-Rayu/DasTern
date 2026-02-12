@@ -82,7 +82,7 @@ class _FamilyAlertScreenState extends State<FamilyAlertScreen> {
                 genderLabel: l10n.gender,
                 genderValue: isKhmer ? 'ប្រុស' : 'Male',
                 generationLabel: isKhmer ? 'អាយុ' : 'Gen',
-                generationValue: isKhmer ? 'ឆ្នាំ១១សា៤' : 'Alpha',
+                generationValue: isKhmer ? 'ឆ្នាំ១១សា៤' : 'Z',
                 ageLabel: isKhmer ? 'អាយុ' : 'Age',
                 ageValue: isKhmer ? '២០ ឆ្នាំ' : '20 years',
                 phoneLabel: isKhmer ? 'លេខទូរស័ព្ទ' : 'Phone',
