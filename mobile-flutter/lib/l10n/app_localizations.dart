@@ -104,101 +104,11 @@ abstract class AppLocalizations {
   /// **'DasTern'**
   String get appTitle;
 
-  /// Create a new account
+  /// No description provided for @fillDetailTitle.
   ///
   /// In en, this message translates to:
-  /// **'Create a new account'**
-  String get createNewAccount;
-
-  /// Last name or surname label
-  ///
-  /// In en, this message translates to:
-  /// **'Last name / Surname'**
-  String get lastName;
-
-  /// Prompt to fill in last name
-  ///
-  /// In en, this message translates to:
-  /// **'Please fill in your last name'**
-  String get fillLastName;
-
-  /// First name or given name label
-  ///
-  /// In en, this message translates to:
-  /// **'First name / Given name'**
-  String get firstName;
-
-  /// Prompt to fill in first name
-  ///
-  /// In en, this message translates to:
-  /// **'Please fill in your first name'**
-  String get fillFirstName;
-
-  /// Gender label
-  ///
-  /// In en, this message translates to:
-  /// **'Gender'**
-  String get gender;
-
-  /// Prompt to fill in gender
-  ///
-  /// In en, this message translates to:
-  /// **'Please fill in your gender'**
-  String get fillGender;
-
-  /// Date of birth label
-  ///
-  /// In en, this message translates to:
-  /// **'Date of Birth'**
-  String get dateOfBirth;
-
-  /// Day label
-  ///
-  /// In en, this message translates to:
-  /// **'Day'**
-  String get day;
-
-  /// Month label
-  ///
-  /// In en, this message translates to:
-  /// **'Month'**
-  String get month;
-
-  /// Year label
-  ///
-  /// In en, this message translates to:
-  /// **'Year'**
-  String get year;
-
-  /// ID card or identification number label
-  ///
-  /// In en, this message translates to:
-  /// **'ID card number / Identification number'**
-  String get idCardNumber;
-
-  /// Prompt to fill in ID card number
-  ///
-  /// In en, this message translates to:
-  /// **'Please fill in your ID card number'**
-  String get fillIdCardNumber;
-
-  /// No description provided for @continueText.
-  ///
-  /// In en, this message translates to:
-  /// **'Continue'**
-  String get continueText;
-
-  /// Already created account label
-  ///
-  /// In en, this message translates to:
-  /// **'Already created an account before'**
-  String get alreadyCreatedAccount;
-
-  /// Go back button label
-  ///
-  /// In en, this message translates to:
-  /// **'Go back'**
-  String get goBack;
+  /// **'Information'**
+  String get fillDetailTitle;
 
   /// Phone number label
   ///
@@ -253,6 +163,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Already read / I have read'**
   String get alreadyRead;
+
+  /// Create a new account
+  ///
+  /// In en, this message translates to:
+  /// **'Create a new account'**
+  String get createNewAccount;
+
+  /// Last name or surname label
+  ///
+  /// In en, this message translates to:
+  /// **'Last name'**
+  String get lastName;
+
+  /// Prompt to fill in last name
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in your last name'**
+  String get fillLastName;
+
+  /// First name or given name label
+  ///
+  /// In en, this message translates to:
+  /// **'First name'**
+  String get firstName;
+
+  /// Prompt to fill in first name
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in your first name'**
+  String get fillFirstName;
+
+  /// Gender label
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get gender;
+
+  /// Prompt to fill in gender
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in your gender'**
+  String get fillGender;
+
+  /// Date of birth label
+  ///
+  /// In en, this message translates to:
+  /// **'Date of Birth'**
+  String get dateOfBirth;
+
+  /// Day label
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get day;
+
+  /// Month label
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get month;
+
+  /// Year label
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get year;
+
+  /// ID card or identification number label
+  ///
+  /// In en, this message translates to:
+  /// **'ID card number'**
+  String get idCardNumber;
+
+  /// Prompt to fill in ID card number
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in your ID card number'**
+  String get fillIdCardNumber;
+
+  /// No description provided for @continueText.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continueText;
+
+  /// Already created account label
+  ///
+  /// In en, this message translates to:
+  /// **'Already created an account before'**
+  String get alreadyCreatedAccount;
+
+  /// Go back button label
+  ///
+  /// In en, this message translates to:
+  /// **'Go back'**
+  String get goBack;
 
   /// Sign in or log in label
   ///
@@ -1039,6 +1045,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Street, District, Province'**
   String get enterAddressHint;
+
+  /// Family alert screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Family Functions'**
+  String get familyAlert;
+
+  /// Search member placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Search member'**
+  String get searchMember;
+
+  /// Age label
+  ///
+  /// In en, this message translates to:
+  /// **'Age'**
+  String get age;
+
+  /// Years unit
+  ///
+  /// In en, this message translates to:
+  /// **'years'**
+  String get years;
+
+  /// Phone label
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get phone;
+
+  /// Pending prescription status
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for medication'**
+  String get pendingPrescription;
+
+  /// View prescription button
+  ///
+  /// In en, this message translates to:
+  /// **'View Prescription'**
+  String get viewPrescription;
+
+  /// Prescription date label
+  ///
+  /// In en, this message translates to:
+  /// **'Prescription Date'**
+  String get prescriptionDate;
+
+  /// Medicine column header
+  ///
+  /// In en, this message translates to:
+  /// **'Medicine'**
+  String get medicine;
+
+  /// Quantity column header
+  ///
+  /// In en, this message translates to:
+  /// **'Qty'**
+  String get quantity;
+
+  /// Usage column header
+  ///
+  /// In en, this message translates to:
+  /// **'Usage'**
+  String get usage;
+
+  /// Home navigation label
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
+  /// Patients navigation label
+  ///
+  /// In en, this message translates to:
+  /// **'Patients'**
+  String get patients;
+
+  /// Prescription navigation label
+  ///
+  /// In en, this message translates to:
+  /// **'Prescription'**
+  String get prescription;
+
+  /// Morning time indicator
+  ///
+  /// In en, this message translates to:
+  /// **'Morning'**
+  String get morningTime;
+
+  /// Evening time indicator
+  ///
+  /// In en, this message translates to:
+  /// **'Evening'**
+  String get eveningTime;
+
+  /// Morning and evening usage
+  ///
+  /// In en, this message translates to:
+  /// **'Morning & Evening'**
+  String get morningAndEvening;
 }
 
 class _AppLocalizationsDelegate

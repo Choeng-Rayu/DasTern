@@ -1,4 +1,5 @@
 import 'package:dastern_mobile/l10n/app_localizations.dart';
+import 'package:dastern_mobile/screens/sign_up_detail_screen.dart';
 import 'package:flutter/material.dart';
 import '../widgets/header_widgets.dart';
 import '../widgets/bottom_round_container.dart';
@@ -100,12 +101,12 @@ class SignupScreen extends StatelessWidget {
                   PrimaryButton(
                     text: AppLocalizations.of(context)?.continueText ?? 'បន្ត',
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MainNavigation(),
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder:(context) => const SignupDetailScreen(),
+                      //   ),
+                      // );
                     },
                   ),
                   const SizedBox(height: 12),

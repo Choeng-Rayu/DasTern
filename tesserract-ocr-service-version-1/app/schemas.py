@@ -1,175 +1,179 @@
 """
-Structured JSON Output Schemas
-
-Defines output format for OCR pipeline results.
+OCR Output Contract - System Backbone
+Defines the structure that LLM service will consume
 """
 
-from typing import List, Dict, Optional, Any
 from pydantic import BaseModel, Field
+from typing import List, Optional
 from enum import Enum
-from datetime import datetime
 
 
-class LanguageCode(str, Enum):
-    ENGLISH = "eng"
-    KHMER = "khm"
-    FRENCH = "fra"
-
-
-class RegionType(str, Enum):
+class BlockType(str, Enum):
+    """Document block classification types"""
     HEADER = "header"
     BODY = "body"
     TABLE = "table"
-    SIGNATURE = "signature"
+    TABLE_HEADER = "table_header"
+    TABLE_ROW = "table_row"
     FOOTER = "footer"
+    MEDICATION = "medication"
+    DOSAGE = "dosage"
+    PATIENT_INFO = "patient_info"
+    DOCTOR_INFO = "doctor_info"
+    UNKNOWN = "unknown"
+
+
+class Language(str, Enum):
+    """Supported languages"""
+    ENGLISH = "en"
+    KHMER = "kh"
+    FRENCH = "fr"
+    MIXED = "mixed"
+    UNKNOWN = "unknown"
 
 
 class BoundingBox(BaseModel):
-    x: int
-    y: int
-    width: int
-    height: int
+    """Coordinates for text block location"""
+    x1: int
+    y1: int
+    x2: int
+    y2: int
+
+    @property
+    def width(self) -> int:
+        return self.x2 - self.x1
+
+    @property
+    def height(self) -> int:
+        return self.y2 - self.y1
+
+    @property
+    def center_y(self) -> int:
+        return (self.y1 + self.y2) // 2
+
+    @property
+    def center_x(self) -> int:
+        return (self.x1 + self.x2) // 2
 
 
-class Medication(BaseModel):
+class OCRBlock(BaseModel):
+    """Single text block with metadata"""
+    text: str
+    box: BoundingBox
+    confidence: float = Field(ge=0.0, le=1.0)
+    block_type: BlockType = BlockType.UNKNOWN
+    language: Optional[Language] = None
+    line_number: Optional[int] = None
+    group_id: Optional[int] = None  # For grouping related blocks
+
+
+class TableCell(BaseModel):
+    """Single cell in a table"""
+    text: str
+    row: int
+    col: int
+    confidence: float = Field(ge=0.0, le=1.0)
+    box: Optional[BoundingBox] = None
+
+
+class TableData(BaseModel):
+    """Structured table data extracted from prescription"""
+    headers: List[str] = []
+    rows: List[List[str]] = []
+    cells: List[TableCell] = []
+    row_count: int = 0
+    col_count: int = 0
+
+
+class DosageSchedule(BaseModel):
+    """Dosage schedule extracted from prescription"""
+    morning: Optional[float] = None
+    noon: Optional[float] = None
+    afternoon: Optional[float] = None
+    evening: Optional[float] = None
+    night: Optional[float] = None
+
+
+class ExtractedMedication(BaseModel):
+    """Single medication extracted from prescription"""
+    sequence: int = 1
     name: str
-    dosage: Optional[str] = None
+    strength: Optional[str] = None
+    quantity: Optional[int] = None
+    quantity_unit: Optional[str] = None
+    dosage_schedule: Optional[DosageSchedule] = None
     instructions: Optional[str] = None
-    confidence: float = 1.0
+    confidence: float = Field(ge=0.0, le=1.0, default=0.0)
 
 
-class TextBlock(BaseModel):
-    raw_text: str = Field(description="Original OCR output")
-    corrected_text: str = Field(description="Rule-based cleaned text (no AI)")
-    final_text: str = Field(description="Post-processed clean text")
-    confidence: float = Field(ge=0.0, le=1.0, description="Confidence score")
-    region_type: RegionType = RegionType.BODY
-    bounding_box: Optional[BoundingBox] = None
-    detected_language: Optional[LanguageCode] = None
-    needs_review: bool = False
+class PatientInfo(BaseModel):
+    """Patient information from prescription"""
+    name: Optional[str] = None
+    age: Optional[int] = None
+    gender: Optional[str] = None
+    medical_id: Optional[str] = None
 
 
-class QualityMetrics(BaseModel):
-    blur_score: float
-    brightness: float
-    contrast: float
-    resolution: Dict[str, int]
-    passed: bool
-    message: str
+class PrescriptionHeader(BaseModel):
+    """Header information from prescription"""
+    hospital_name: Optional[str] = None
+    prescription_number: Optional[str] = None
+    date: Optional[str] = None
+    department: Optional[str] = None
+    doctor_name: Optional[str] = None
+    diagnosis: Optional[str] = None
+
+
+class StructuredPrescription(BaseModel):
+    """Complete structured prescription data"""
+    header: Optional[PrescriptionHeader] = None
+    patient: Optional[PatientInfo] = None
+    medications: List[ExtractedMedication] = []
+    table_data: Optional[TableData] = None
+    notes: Optional[str] = None
 
 
 class OCRResult(BaseModel):
-    """Complete OCR pipeline result."""
-    success: bool
-    languages: List[LanguageCode] = [LanguageCode.ENGLISH, LanguageCode.KHMER, LanguageCode.FRENCH]
-    text_blocks: List[TextBlock] = []
-    full_text: str = Field(description="Concatenated final text from all blocks")
-    medications: List[Medication] = []
-    overall_confidence: float = Field(ge=0.0, le=1.0)
-    needs_review: bool = False
-    quality_metrics: Optional[QualityMetrics] = None
-    processing_time_ms: Optional[int] = None
-    error: Optional[str] = None
-    timestamp: str = Field(default_factory=lambda: datetime.utcnow().isoformat())
+    """Complete OCR output for a document"""
+    # Raw OCR data
+    raw_text: str = ""
+    blocks: List[OCRBlock] = []
+
+    # Language detection
+    primary_language: Language = Language.UNKNOWN
+    detected_languages: List[Language] = []
+
+    # Structured extraction
+    structured_data: Optional[StructuredPrescription] = None
+
+    # Table detection
+    tables: List[TableData] = []
+
+    # Confidence metrics
+    overall_confidence: float = Field(ge=0.0, le=1.0, default=0.0)
+    low_confidence_blocks: List[int] = []  # Indices of blocks needing review
+
+    # Processing metadata
+    processing_time_ms: int = 0
+    image_width: Optional[int] = None
+    image_height: Optional[int] = None
+    needs_manual_review: bool = False
+
+    # Warnings and errors
+    warnings: List[str] = []
+    errors: List[str] = []
 
 
 class OCRRequest(BaseModel):
-    """Request schema for OCR endpoint."""
-    image_base64: Optional[str] = Field(None, description="Base64 encoded image")
-    languages: List[LanguageCode] = [LanguageCode.ENGLISH, LanguageCode.KHMER, LanguageCode.FRENCH]
+    """Request model for OCR processing"""
+    languages: List[Language] = [Language.ENGLISH, Language.KHMER, Language.FRENCH]
+    detect_tables: bool = True
+    extract_medications: bool = True
     lenient_quality: bool = False
 
 
-def build_text_block(region: Dict) -> TextBlock:
-    """Convert internal region dict to TextBlock schema."""
-    box = region.get("box")
-    bounding_box = None
-    if box:
-        bounding_box = BoundingBox(
-            x=box[0], y=box[1], width=box[2], height=box[3]
-        )
-    
-    return TextBlock(
-        raw_text=region.get("raw", ""),
-        corrected_text=region.get("cleaned", region.get("raw", "")),
-        final_text=region.get("final", ""),
-        confidence=region.get("confidence", 0.5),
-        region_type=RegionType(region.get("type", "body")),
-        bounding_box=bounding_box,
-        detected_language=region.get("detected_language"),
-        needs_review=region.get("needs_review", False)
-    )
-
-
-def build_output(regions: List[Dict], quality_metrics: Dict = None, 
-                 processing_time: int = None, error: str = None) -> Dict:
-    """
-    Build structured output from pipeline results.
-    
-    Args:
-        regions: List of processed region dictionaries
-        quality_metrics: Image quality check results
-        processing_time: Processing time in milliseconds
-        error: Error message if any
-        
-    Returns:
-        Dictionary matching OCRResult schema
-    """
-    if error:
-        return {
-            "success": False,
-            "languages": ["eng", "khm", "fra"],
-            "text_blocks": [],
-            "full_text": "",
-            "medications": [],
-            "overall_confidence": 0.0,
-            "needs_review": True,
-            "quality_metrics": quality_metrics,
-            "processing_time_ms": processing_time,
-            "error": error,
-            "timestamp": datetime.utcnow().isoformat()
-        }
-    
-    text_blocks = []
-    all_medications = []
-    confidences = []
-    full_text_parts = []
-    
-    for region in regions:
-        text_blocks.append({
-            "raw_text": region.get("raw", ""),
-            "corrected_text": region.get("cleaned", region.get("raw", "")),
-            "final_text": region.get("final", ""),
-            "confidence": region.get("confidence", 0.5),
-            "region_type": region.get("type", "body"),
-            "bounding_box": {
-                "x": region["box"][0],
-                "y": region["box"][1],
-                "width": region["box"][2],
-                "height": region["box"][3]
-            } if region.get("box") else None,
-            "detected_language": region.get("detected_language"),
-            "needs_review": region.get("needs_review", False)
-        })
-        
-        confidences.append(region.get("confidence", 0.5))
-        full_text_parts.append(region.get("final", ""))
-        all_medications.extend(region.get("medications", []))
-    
-    avg_confidence = sum(confidences) / len(confidences) if confidences else 0.0
-    needs_review = avg_confidence < 0.7 or any(r.get("needs_review") for r in regions)
-    
-    return {
-        "success": True,
-        "languages": ["eng", "khm", "fra"],
-        "text_blocks": text_blocks,
-        "full_text": "\n".join(full_text_parts),
-        "medications": all_medications,
-        "overall_confidence": round(avg_confidence, 2),
-        "needs_review": needs_review,
-        "quality_metrics": quality_metrics,
-        "processing_time_ms": processing_time,
-        "error": None,
-        "timestamp": datetime.utcnow().isoformat()
-    }
-
+class OCRResponse(BaseModel):
+    """Response model for OCR API"""
+    success: bool
+    result: Optional[OCRResult] = None
+    error: Optional[str] = None
