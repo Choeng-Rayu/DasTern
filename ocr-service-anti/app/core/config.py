@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     
     # Tesseract Configuration
     tesseract_cmd: str = Field(
-        default="/usr/bin/tesseract",
+        default="/opt/homebrew/bin/tesseract",
         description="Path to Tesseract executable"
     )
     default_languages: str = Field(

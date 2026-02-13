@@ -1,6 +1,6 @@
 """
-AI LLM Service - MT5 Model API
-Handles OCR correction and chatbot functionality
+AI LLM Service - Ollama-based API
+Handles OCR correction and chatbot functionality using Ollama
 """
 import os
 import sys
@@ -12,9 +12,6 @@ from fastapi.middleware.cors import CORSMiddleware
 try:
     from .schemas import OCRCorrectionRequest, OCRCorrectionResponse
     from .schemas import ChatRequest, ChatResponse
-    from .ocr_corrector import correct_ocr_text
-    from .chat_assistant import chat_with_assistant
-    from .model_loader import load_mt5_model
 except ImportError:
     current_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(current_dir)
@@ -22,9 +19,6 @@ except ImportError:
         sys.path.insert(0, parent_dir)
     from app.schemas import OCRCorrectionRequest, OCRCorrectionResponse
     from app.schemas import ChatRequest, ChatResponse
-    from app.ocr_corrector import correct_ocr_text
-    from app.chat_assistant import chat_with_assistant
-    from app.model_loader import load_mt5_model
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -32,10 +26,10 @@ logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info("Loading MT5 model...")
-    load_mt5_model()
-    logger.info("MT5 model loaded successfully!")
+    logger.info("Starting AI Service...")
+    # Note: Using Ollama for inference, no local model loading needed
     yield
+    logger.info("Shutting down AI Service...")
 
 # Initialize FastAPI
 app = FastAPI(
@@ -56,18 +50,27 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    """Health check endpoint"""
+    """Root endpoint"""
     return {
         "service": "AI LLM Service",
         "status": "running",
-        "model": "MT5-small",
+        "model": "ollama with Llama3.2:3b",
         "capabilities": ["ocr_correction", "chatbot"]
+    }
+
+@app.get("/health")
+async def health_check():
+    """Health check endpoint"""
+    return {
+        "status": "healthy",
+        "service": "AI LLM Service",
+        "model": "ollama with Llama3.2:3b"
     }
 
 @app.post("/api/v1/correct", response_model=OCRCorrectionResponse)
 async def correct_ocr(request: OCRCorrectionRequest):
     """
-    Correct OCR text using MT5 model
+    Correct OCR text using Ollama
     
     Args:
         request: OCR correction request with raw text
@@ -76,15 +79,28 @@ async def correct_ocr(request: OCRCorrectionRequest):
         Corrected text with confidence score
     """
     try:
+        from .core.ollama_client import OllamaClient
+        
         logger.info(f"Received OCR correction request for language: {request.language}")
         
-        result = correct_ocr_text(
-            raw_text=request.raw_text,
-            language=request.language,
-            context=request.context
-        )
+        ollama_client = OllamaClient()
         
-        return OCRCorrectionResponse(**result)
+        prompt = f"""Fix OCR errors in this {request.language} text. Return only the corrected text without explanations.
+
+Original text:
+{request.raw_text}
+
+Corrected text:"""
+        
+        corrected_text = await ollama_client.generate(prompt)
+        
+        return OCRCorrectionResponse(
+            corrected_text=corrected_text.strip(),
+            confidence=0.85,
+            language=request.language,
+            changes_made=[],
+            metadata={"model": "llama3.2:3b", "service": "ai-llm-service"}
+        )
         
     except Exception as e:
         logger.error(f"Error in OCR correction: {str(e)}")
