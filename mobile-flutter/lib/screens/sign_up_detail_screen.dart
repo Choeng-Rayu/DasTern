@@ -1,7 +1,10 @@
+import 'package:dastern_mobile/data/survey_data.dart';
+import 'package:dastern_mobile/screens/survey_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:dastern_mobile/l10n/app_localizations.dart';
 // import 'package:ui_for_capstone/data/survey_data.dart';
 // import 'package:ui_for_capstone/ui/screen/survey_flow_screen.dart';
-import '../widgets/hospital_logo.dart';
+import '../widgets/header_widgets.dart';
 import '../widgets/bottom_round_container.dart';
 import '../widgets/primary_button.dart';
 import '../widgets/auth_background.dart';
@@ -35,20 +38,22 @@ class SignupDetailScreen extends StatelessWidget {
         child: Align(
           alignment: Alignment.bottomCenter,
           child: BottomRoundContainer(
-            backgroundColor: const Color(0xFF1E1E1E),
+            backgroundColor: Colors.black.withOpacity(0.5),
             padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 18),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Row(
+                  Row(
                     children: [
-                      Icon(Icons.arrow_back_ios, color: Colors.white, size: 20),
-                      SizedBox(width: 8),
+                      const Icon(Icons.arrow_back_ios,
+                          color: Colors.white, size: 20),
+                      const SizedBox(width: 8),
                       Text(
-                        'បញ្ចូលពត៌មាន',
-                        style: TextStyle(
+                        AppLocalizations.of(context)?.fillDetailTitle ??
+                            'បញ្ចូលពត៌មាន',
+                        style: const TextStyle(
                           fontSize: 18,
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -60,7 +65,8 @@ class SignupDetailScreen extends StatelessWidget {
                   const Label('លេខសំគាល់'),
                   const CustomInputField(hint: 'សូមបញ្ចូលលេខសំគាល់របស់អ្នក'),
                   const Label('លេខសំគាល់សំខាន់'),
-                  const CustomInputField(hint: 'សូមបញ្ចូលលេខសំគាល់សំខាន់របស់អ្នក'),
+                  const CustomInputField(
+                      hint: 'សូមបញ្ចូលលេខសំគាល់សំខាន់របស់អ្នក'),
                   const Label('អាសយដ្ឋានបច្ចុប្បន្ន'),
                   const CustomInputField(
                     hint: 'សូមបញ្ចូលអាសយដ្ឋានបច្ចុប្បន្នរបស់អ្នក',
@@ -69,58 +75,56 @@ class SignupDetailScreen extends StatelessWidget {
                   const Row(
                     children: [
                       Expanded(
-                        child: CustomInputField(hint: '១', maxLength: 1),
-                      ),
-                      SizedBox(width: 8),
+                          child: CustomInputField(hint: '', maxLength: 1)),
+                      SizedBox(width: 10),
                       Expanded(
-                        child: CustomInputField(hint: '២', maxLength: 1),
-                      ),
-                      SizedBox(width: 8),
+                          child: CustomInputField(hint: '', maxLength: 1)),
+                      SizedBox(width: 10),
                       Expanded(
-                        child: CustomInputField(hint: '៣', maxLength: 1),
-                      ),
-                      SizedBox(width: 8),
+                          child: CustomInputField(hint: '', maxLength: 1)),
+                      SizedBox(width: 10),
                       Expanded(
-                        child: CustomInputField(hint: '៤', maxLength: 1),
-                      ),
+                          child: CustomInputField(hint: '', maxLength: 1)),
                     ],
                   ),
-                  const Label('លេខកូដថ្មី'),
-                  const Row(
-                    children: [
-                      Expanded(
-                        child: CustomInputField(hint: '១', maxLength: 1),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: CustomInputField(hint: '២', maxLength: 1),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: CustomInputField(hint: '៣', maxLength: 1),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: CustomInputField(hint: '៤', maxLength: 1),
-                      ),
-                    ],
-                  ),
-                  const CustomInputField(
-                    hint: 'សូមបញ្ចូលពត៌មាន និងអត្ថបទបន្ថែមប្រសិនបើមាន',
-                  ),
-                  const Label('អាសយដ្ឋាន'),
-                  const CustomInputField(hint: 'អាសយដ្ឋាន'),
+
+                  // Label(AppLocalizations.of(context)?.password ??
+                  //     'លេខកូខសម្ងាត់'),
+                  // const Row(
+                  //   children: [
+                  //     Expanded(
+                  //         child: CustomInputField(hint: '១', maxLength: 1)),
+                  //     SizedBox(width: 8),
+                  //     Expanded(
+                  //         child: CustomInputField(hint: '២', maxLength: 1)),
+                  //     SizedBox(width: 8),
+                  //     Expanded(
+                  //         child: CustomInputField(hint: '៣', maxLength: 1)),
+                  //     SizedBox(width: 8),
+                  //     Expanded(
+                  //         child: CustomInputField(hint: '៤', maxLength: 1)),
+                  //   ],
+                  // ),
+                  const SizedBox(height: 16),
+                  Label(AppLocalizations.of(context)?.readTerms ??
+                      'សូមអានលក្ខខណ្ឌ និងច្បាប់មុនពេលប្រើប្រាស់កម្មវិធី'),
+
+                  // Label(AppLocalizations.of(context)?.address ?? 'អាសយដ្ឋាន'),
+                  // CustomInputField(
+                  //     hint: AppLocalizations.of(context)?.enterAddressHint ??
+                  //         'អាសយដ្ឋាន'),
+
                   const SizedBox(height: 18),
-                  PrimaryButton(
+                    PrimaryButton(
                     text: 'បញ្ចូល',
                     onPressed: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) =>
-                      //         SurveyFlowScreen(surveys: surveys),
-                      //   ),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              SurveyFlowScreen(surveys: surveys),
+                        ),
+                      );
                     },
                   ),
                 ],

@@ -1,0 +1,24 @@
+[
+  {"lang": "eng", "input": "paracetamo1 500 mg 2 x daY", "output": "Paracetamol 500mg, twice daily"},
+  {"lang": "eng", "input": "amoxici11in 250 rng", "output": "Amoxicillin 250mg"},
+  {"lang": "eng", "input": "ibupr0fen 400mg 3x daily", "output": "Ibuprofen 400mg, three times daily"},
+  {"lang": "eng", "input": "take 1 tab1et after mea1s", "output": "Take 1 tablet after meals"},
+  {"lang": "eng", "input": "asprin 100 mg once dai1y", "output": "Aspirin 100mg once daily"},
+  {"lang": "eng", "input": "metforrn1n 500 rng twice day", "output": "Metformin 500mg twice daily"},
+  {"lang": "eng", "input": "om3prazole 20mg before breakfast", "output": "Omeprazole 20mg before breakfast"},
+  {"lang": "eng", "input": "at0rvastatin l0mg at night", "output": "Atorvastatin 10mg at night"},
+  {"lang": "eng", "input": "lisinopri1 5 rng morning", "output": "Lisinopril 5mg morning"},
+  {"lang": "eng", "input": "gabapent1n 300rng 3x dai1y", "output": "Gabapentin 300mg three times daily"},
+
+  {"lang": "khm", "input": "ថ្នាំ បញ្ចុះ កម្ដៅ", "output": "ថ្នាំបញ្ចុះកម្ដៅ"},
+  {"lang": "khm", "input": "ពីរ គ្រាប់ ម្ដង ក្នុង មួយ ថ្ org org org org org", "output": "ពីរគ្រាប់ម្ដងក្នុងមួយថ្org org"},
+  {"lang": "khm", "input": "ថ្នាំ ប ន្ org org org org org org org org org org org org org org org org org org org org org org org", "output": " org org org org org org org org org org org org org org org"},
+  {"lang": "khm", "input": "org org org org", "output": "org org org org"},
+
+  {"lang": "fra", "input": "comprimé 2x par jour", "output": "comprimé 2 fois par jour"},
+  {"lang": "fra", "input": "prendre avant 1es repas", "output": "prendre avant les repas"},
+  {"lang": "fra", "input": "une cu1llère à soupe", "output": "une cuillère à soupe"},
+  {"lang": "fra", "input": "1 ge1ule matin et soir", "output": "1 gélule matin et soir"},
+  {"lang": "fra", "input": "3 fo1s par jour pendant 7 jours", "output": "3 fois par jour pendant 7 jours"},
+  {"lang": "fra", "input": "sirop 5m1 apr3s repas", "output": "sirop 5ml après repas"}
+]

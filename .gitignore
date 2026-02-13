@@ -6,9 +6,13 @@
 .venv/
 venv/
 env/
+<<<<<<< HEAD
 *.venv/
 paddle-ocr-service/venv_ocr/
 paddle-ocr-service/venv_ocr_broken_3.3.3/
+=======
+.vscode/
+>>>>>>> 956213acb02fd8a10977582667da49fee5a0be8e
 
 # Environment variables (NEVER commit!)
 .env

@@ -64,6 +64,7 @@ dependencies:
 
   # Intl for date formatting
   intl: ^0.20.2
+  uuid: ^4.5.2
 
 dev_dependencies:
   flutter_test:
