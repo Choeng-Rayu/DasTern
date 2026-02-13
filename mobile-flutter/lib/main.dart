@@ -1,7 +1,7 @@
 import 'package:dastern_mobile/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'screens/welcome_screen.dart';
+import 'screens/doctor_screen.dart';
 import 'screens/tab/main_navigation.dart';
 
 void main() {
@@ -66,8 +66,8 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
-      // DEMO MODE: Show welcome screen with login/signup flow
-      home: WelcomeScreen(onLocaleChange: (locale) => setLocale(locale)),
+      // DEVELOPER MODE: Skip login, go directly to doctor screen
+      home: const DoctorScreen(),
     );
   }
 }
