@@ -1,35 +1,30 @@
-import 'package:logger/logger.dart';
-import 'api_client.dart';
-import '../models/ai_response.dart';
-import '../models/medication.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import '../core/constants/api_constants.dart';
+import '../data/dtos/ai_response_dto.dart';
+import '../utils/app_logger.dart';
 
-class AIService {
-  final APIClient apiClient;
-  final Logger logger = Logger();
+class AiService {
+  final http.Client _client;
 
-  AIService({required this.apiClient});
+  AiService({http.Client? client}) : _client = client ?? http.Client();
 
-  /// Correct OCR text using AI
-  Future<AIProcessingResult> correctOCRText(
-    String rawText, {
-    String language = 'en',
-    Map<String, dynamic>? context,
-  }) async {
+  Future<AiResponseDto> enhancePrescription(Map<String, dynamic> ocrData) async {
+    final uri = Uri.parse('${ApiConstants.aiBaseUrl}${ApiConstants.prescriptionProcessEndpoint}');
+    
+    AppLogger.i('Sending OCR data to AI Service: $uri');
+
     try {
-      logger.i('Correcting OCR text with AI');
-
-      final result = await apiClient.correctOCRText(
-        rawText,
-        language: language,
-        context: context,
+      final response = await _client.post(
+        uri,
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'raw_ocr_json': ocrData,
+        }),
       );
 
-      return AIProcessingResult.fromJson(result);
-    } catch (e) {
-      logger.e('Error correcting OCR text: $e');
-      rethrow;
-    }
-  }
+      AppLogger.d('AI Service Response: ${response.statusCode}');
+      // AppLogger.d('Body: ${response.body}'); // Log body only if needed for debug
 
   /// Extract medication reminders from OCR data
   Future<ReminderResponse> extractReminders(

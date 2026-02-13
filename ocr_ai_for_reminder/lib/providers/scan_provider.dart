@@ -72,7 +72,6 @@ class ScanProvider with ChangeNotifier {
       notifyListeners();
 
       final prescription = await _repository.analyzePrescription(ocrResult);
-
       _prescription = prescription;
       _status = ProcessStatus.analyzed;
       _statusMessage = "Complete!";

@@ -4,6 +4,7 @@
  */
 
 import { Pool } from 'pg';
+require('dotenv').config();
 
 // Create a connection pool
 const pool = new Pool({
@@ -22,6 +23,8 @@ pool.on('error', (err) => {
   console.error('❌ Unexpected database error:', err);
   process.exit(-1);
 });
+
+console.log('DB connection:', process.env.DATABASE_URL);
 
 /**
  * Execute a query on the database
