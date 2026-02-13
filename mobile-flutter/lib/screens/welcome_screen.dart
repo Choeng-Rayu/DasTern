@@ -1,7 +1,6 @@
 import 'package:dastern_mobile/l10n/app_localizations.dart';
 import 'package:dastern_mobile/screens/login_screen.dart';
 import 'package:dastern_mobile/screens/sign_up_screen.dart';
-import 'package:dastern_mobile/screens/login_screen.dart';
 import 'package:dastern_mobile/widgets/bottom_round_container.dart';
 import 'package:flutter/material.dart';
 // import 'package:ui_for_capstone/ui/screen/signup_screen.dart';

@@ -1,23 +1,76 @@
-import 'package:dastern_mobile/l10n/app_localizations.dart';
+import 'package:dastern_mobile/services/auth_service.dart';
+import 'package:dastern_mobile/widgets/auth_background.dart';
+import 'package:dastern_mobile/widgets/bottom_round_container.dart';
+import 'package:dastern_mobile/widgets/custom_input_field.dart';
+import 'package:dastern_mobile/widgets/header_widgets.dart';
+import 'package:dastern_mobile/widgets/label.dart';
+import 'package:dastern_mobile/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
-import '../widgets/header_widgets.dart';
-import '../widgets/bottom_round_container.dart';
-import '../widgets/primary_button.dart';
-import '../widgets/auth_background.dart';
-import '../widgets/label.dart';
-import '../widgets/custom_input_field.dart';
-import 'tab/main_navigation.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final phoneNumberController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  String errorMessage = "";
+  bool isLoading = false;
+
+  Future<void> handleLogin() async {
+    setState(() {
+      isLoading = true;
+      errorMessage = "";
+    });
+
+    final phone = phoneNumberController.text.trim();
+    final password = passwordController.text.trim();
+
+    // validation
+    if (phone.isEmpty || password.isEmpty) {
+      setState(() {
+        isLoading = false;
+        errorMessage = "Please fill phone number and password.";
+      });
+      return;
+    }
+
+    // Initialize AuthService with baseUrl (adjust as needed)
+    final authService = AuthService(baseUrl: 'http://localhost:8000');
+    final token = await authService.login(phone, password);
+
+    setState(() {
+      isLoading = false;
+    });
+
+    if (token != null) {
+      print("Login success token: $token");
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Login Successful")),
+        );
+
+        // Navigate to home screen (or doctor screen if available)
+        Navigator.pushReplacementNamed(context, '/home');
+      }
+    } else {
+      setState(() {
+        errorMessage = "Login failed. Please check phone number or password.";
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    phoneNumberController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 12.0),
                       child: Text(
-                        AppLocalizations.of(context)?.login ?? 'ចូល',
+                        'Your Account',
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -63,118 +116,44 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                  Label('អ៊ីមែល / Email'),
+
+                  const SizedBox(height: 16),
+                  // PHONE NUMBER
+                  const Label('Phone Number'),
                   CustomInputField(
-                    controller: _emailController,
-                    hint: 'user@example.com',
+                    controller: phoneNumberController,
+                    hint: 'Enter your phone number',
                   ),
-                  Label('ពាក្យសម្ងាត់ / Password'),
+
+                  // PASSWORD
+                  const Label('Password'),
                   CustomInputField(
-                    controller: _passwordController,
-                    hint: 'Enter password',
+                    controller: passwordController,
                     obscureText: true,
+                    hint: 'Enter your password',
                   ),
-                  const SizedBox(height: 24),
-                  PrimaryButton(
-                    text: AppLocalizations.of(context)?.login ?? 'ចូល',
-                    onPressed: () {
-                      // Simple demo - just navigate to home
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MainNavigation(),
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 12),
-                  Center(
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text(
-                        'Back to Welcome',
-                        style: TextStyle(fontSize: 15, color: Colors.blue),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
-}
+                  const SizedBox(height: 18),
 
-import 'package:dastern_mobile/l10n/app_localizations.dart';
-import 'package:dastern_mobile/widgets/auth_background.dart';
-import 'package:dastern_mobile/widgets/bottom_round_container.dart';
-import 'package:dastern_mobile/widgets/header_widgets.dart';
-import 'package:flutter/material.dart';
-
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: AuthBackground(
-        logo: const HospitalLogo(
-          radius: 24,
-          name: 'DasTern',
-          textStyle: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            shadows: [
-              Shadow(
-                blurRadius: 4,
-                color: Colors.black26,
-                offset: Offset(1, 1),
-              ),
-            ]
-          ),
-        ),
-
-        child: Align(
-          alignment: Alignment.bottomCenter,
-          child: BottomRoundContainer(
-            backgroundColor: Colors.black.withOpacity(0.5),
-            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 18),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 12.0),
+                  // ERROR MESSAGE
+                  if (errorMessage.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
                       child: Text(
-                        AppLocalizations.of(context)?.createNewAccount ??
-                            'គណនីថ្មី',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(221, 255, 255, 255),
-                        ),
+                        errorMessage,
+                        style: const TextStyle(color: Colors.red),
                       ),
                     ),
-                  )
+
+                  // LOGIN BUTTON
+                  PrimaryButton(
+                    text: isLoading ? "Loading..." : "Login",
+                    onPressed: isLoading ? null : handleLogin,
+                  ),
                 ],
               ),
             ),
-            ),
+          ),
         ),
       ),
     );
