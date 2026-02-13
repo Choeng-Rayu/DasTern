@@ -127,7 +127,7 @@ async function getHandler(req: NextRequest, auth: JwtPayload) {
     // Get approved connections (from family_member_profiles)
     const connectionsResult = await query(
       `SELECT 
-        fmp.id, fmp.relationship_type, fmp.linked_at,
+        fmp.user_id, fmp.relationship_type, fmp.linked_at,
         fmp.can_view_prescriptions, fmp.can_view_reminders,
         fmp.can_manage_reminders, fmp.can_receive_alerts,
         u.id as patient_id,
