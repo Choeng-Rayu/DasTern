@@ -21,4 +21,28 @@ class AuthService {
       return null;
     }
   }
+
+  static Future<User?> doctorLogin(String phoneNumber, String password,
+      String firstName, String lastName) async {
+    await Future.delayed(const Duration(seconds: 1));
+
+    // find the doctor in the list
+    try {
+      final doctor = DummyUsers.doctors.firstWhere(
+          (d) =>
+              d.phoneNumber == phoneNumber &&
+              d.firstName == firstName &&
+              d.lastName == lastName,
+          orElse: () => throw Exception("Doctor not found"));
+
+      // check password
+      if (DummyUsers.doctorPasswords[phoneNumber] == password) {
+        return doctor;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
 }
