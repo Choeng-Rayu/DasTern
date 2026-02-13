@@ -306,6 +306,121 @@ async def health_check():
     """Health check endpoint"""
     return {"status": "healthy", "service": "ai-llm-service"}
 
+
+@app.post("/api/v1/prescription/unified-reminder")
+async def generate_unified_reminder(request: dict):
+    """
+    Process a single prescription and generate unified JSON for reminders.
+    Returns data for user review before final reminder creation.
+    
+    Response includes `needs_review: true` - user must review/edit data 
+    before confirming to generate final reminders.
+    
+    This endpoint produces the target format:
+    {
+      "needs_review": true,
+      "prescription_data": {
+        "patients": [{
+          "name": "patient name",
+          "source": "hospital name",
+          "visit_date": "DD/MM/YYYY",
+          "medicines": [{
+            "name": "Medication 20mg",
+            "total_quantity": 14,
+            "unit": "Tablet",
+            "reminders": [{
+              "time": "Morning",
+              "dosage_quantity": 1,
+              "dosage_unit": "Tablet",
+              "instruction_kh": "លេប ១ គ្រាប់ ក្រោយបាយ"
+            }]
+          }]
+        }]
+      }
+    }
+    
+    Args:
+        request: Dict with:
+            - 'ocr_data': OCR output (raw text or structured) - required
+            - 'patient_name': Optional patient name override
+            - 'source': Optional hospital/clinic name override
+            - 'visit_date': Optional visit date in DD/MM/YYYY format
+            
+    Returns:
+        Unified prescription data with Khmer instructions for user review
+    """
+    try:
+        from .features.prescription.enhancer import enhance_prescription
+        from .features.prescription.reminder_generator import generate_unified_reminders
+        
+        ocr_data = request.get("ocr_data", {})
+        
+        if not ocr_data:
+            raise HTTPException(status_code=400, detail="No OCR data provided. Use 'ocr_data' field.")
+        
+        logger.info("Processing prescription for unified reminders (user review required)")
+        
+        # Step 1: Enhance prescription using AI
+        enhanced = enhance_prescription(ocr_data)
+        
+        if not enhanced.get("success"):
+            # Fallback to basic processing
+            from .core.ollama_client import OllamaClient
+            from .features.prescription.processor import PrescriptionProcessor
+            
+            ollama_client = OllamaClient()
+            processor = PrescriptionProcessor(ollama_client)
+            extracted_data = processor.process_prescription(ocr_data)
+        else:
+            extracted_data = enhanced.get("extracted_data", {})
+        
+        if not extracted_data or not extracted_data.get("medications"):
+            return {
+                "success": False,
+                "needs_review": False,
+                "error": "No medications found in prescription",
+                "prescription_data": {"patients": []},
+                "metadata": {
+                    "processing_timestamp": datetime.now().isoformat()
+                }
+            }
+        
+        # Step 2: Generate unified reminders with Khmer instructions
+        result = generate_unified_reminders(
+            prescription_data=extracted_data,
+            patient_name=request.get("patient_name", ""),
+            source=request.get("source", ""),
+            visit_date=request.get("visit_date", "")
+        )
+        
+        # Mark as needs review - user must confirm before generating reminders
+        result["needs_review"] = True
+        
+        # Add enhancement metadata
+        result["metadata"]["ai_enhanced"] = enhanced.get("ai_enhanced", False)
+        result["metadata"]["extraction_method"] = enhanced.get("extraction_method", "basic")
+        result["metadata"]["review_message"] = "Please review and edit prescription data before confirming"
+        
+        logger.info(f"✅ Generated {result['metadata']['total_reminders']} reminders for review")
+        return result
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error generating unified reminders: {str(e)}", exc_info=True)
+        return {
+            "success": False,
+            "needs_review": False,
+            "error": str(e),
+            "prescription_data": {"patients": []},
+            "metadata": {
+                "processing_timestamp": datetime.now().isoformat()
+            }
+        }
+
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8001)
+    import os
+    host = os.getenv("AI_SERVICE_HOST", "0.0.0.0")
+    port = int(os.getenv("AI_SERVICE_PORT", "8001"))
+    uvicorn.run(app, host=host, port=port)
