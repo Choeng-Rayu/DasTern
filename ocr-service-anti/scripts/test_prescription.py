@@ -12,12 +12,17 @@ import nest_asyncio
 from pathlib import Path
 from datetime import datetime, timedelta
 from typing import Dict, Any, List, Optional
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Allow nested event loops (useful for running in some environments)
 nest_asyncio.apply()
 
-# Configuration
-AI_LLM_SERVICE_URL = "http://localhost:8001"
+# Configuration - read from environment with default
+AI_LLM_SERVICE_URL = os.getenv("AI_LLM_SERVICE_URL", "http://localhost:8001")
 OCR_LANGUAGES = "eng+khm+fra"
 
 # Test images directory

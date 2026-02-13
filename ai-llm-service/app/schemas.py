@@ -73,3 +73,56 @@ class ChatResponse(BaseModel):
     language: str = Field(..., description="Response language")
     confidence: float = Field(..., description="Response confidence 0-1")
     metadata: Optional[Dict[str, Any]] = Field(default=None, description="Additional metadata")
+
+
+# ============================================================
+# Unified Prescription Schemas for Reminder Generation
+# ============================================================
+
+class ReminderSlot(BaseModel):
+    """Individual reminder slot with time, dosage, and Khmer instruction"""
+    time: str = Field(..., description="Time slot: Morning, Noon, Evening, Night")
+    time_24h: str = Field(default="", description="24-hour format time: 08:00, 12:00, 18:00, 21:00")
+    dosage_quantity: int = Field(..., description="Number of units to take")
+    dosage_unit: str = Field(..., description="Unit type: Tablet, Capsule, Ampoule, etc.")
+    instruction_kh: str = Field(..., description="Khmer instruction: លេប ១ គ្រាប់")
+    notes_kh: Optional[str] = Field(default=None, description="Additional Khmer notes: ក្រោយបាយ")
+
+
+class MedicineWithReminders(BaseModel):
+    """Medicine with total quantity and reminder schedule"""
+    name: str = Field(..., description="Medication name with dosage: Omeprazole 20mg")
+    total_quantity: int = Field(..., description="Total quantity prescribed")
+    unit: str = Field(..., description="Unit type: Tablet, Capsule, Ampoule")
+    reminders: List[ReminderSlot] = Field(default_factory=list, description="List of daily reminders")
+    duration_days: Optional[int] = Field(default=None, description="Duration in days")
+    notes: Optional[str] = Field(default=None, description="Additional notes in English")
+
+
+class PatientPrescription(BaseModel):
+    """Patient prescription from a single source/visit"""
+    name: str = Field(..., description="Patient name")
+    source: str = Field(..., description="Hospital or clinic name")
+    visit_date: str = Field(..., description="Visit date in DD/MM/YYYY format")
+    diagnosis: Optional[str] = Field(default=None, description="Medical diagnosis")
+    doctor: Optional[str] = Field(default=None, description="Doctor name")
+    medicines: List[MedicineWithReminders] = Field(default_factory=list, description="List of prescribed medicines")
+
+
+class UnifiedPrescriptionResponse(BaseModel):
+    """Complete response for unified prescription processing"""
+    success: bool = Field(..., description="Processing success status")
+    prescription_data: Dict[str, Any] = Field(
+        default_factory=dict, 
+        description="Contains 'patients' list with prescriptions"
+    )
+    error: Optional[str] = Field(default=None, description="Error message if failed")
+    metadata: Optional[Dict[str, Any]] = Field(default=None, description="Processing metadata")
+
+
+class UnifiedPrescriptionRequest(BaseModel):
+    """Request for unified prescription processing"""
+    ocr_data: Dict[str, Any] = Field(..., description="OCR output data")
+    base_date: Optional[str] = Field(default=None, description="Start date for reminders (YYYY-MM-DD)")
+    patient_id: Optional[str] = Field(default=None, description="Optional patient identifier")
+
