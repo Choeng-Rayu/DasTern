@@ -1,4 +1,8 @@
+import 'package:dastern_mobile/l10n/app_localizations.dart';
 import 'package:dastern_mobile/services/auth_service.dart';
+// import 'package:dastern_mobile/models/user/user.dart';
+import 'package:dastern_mobile/screens/doctor_screen.dart';
+// import 'package:dastern_mobile/services/auth_service_login.dart';
 import 'package:dastern_mobile/widgets/auth_background.dart';
 import 'package:dastern_mobile/widgets/bottom_round_container.dart';
 import 'package:dastern_mobile/widgets/custom_input_field.dart';
@@ -39,9 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    // Initialize AuthService with baseUrl (adjust as needed)
-    final authService = AuthService(baseUrl: 'http://localhost:8000');
-    final token = await authService.login(phone, password);
+    final token = await AuthService(baseUrl: '').login(phone, password);
 
     setState(() {
       isLoading = false;
@@ -50,14 +52,16 @@ class _LoginScreenState extends State<LoginScreen> {
     if (token != null) {
       print("Login success token: $token");
 
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Login Successful")),
-        );
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Login Successful")),
+      );
 
-        // Navigate to home screen (or doctor screen if available)
-        Navigator.pushReplacementNamed(context, '/home');
-      }
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const DoctorScreen(),
+        ),
+      );
     } else {
       setState(() {
         errorMessage = "Login failed. Please check phone number or password.";
@@ -107,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 12.0),
                       child: Text(
-                        'Your Account',
+                        'ចូលគណនីរបស់អ្នក',
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -119,18 +123,24 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   const SizedBox(height: 16),
                   // PHONE NUMBER
-                  const Label('Phone Number'),
+                  Label(
+                    AppLocalizations.of(context)?.phoneNumber ?? 'លេខទូរស័ព្ទ',
+                  ),
                   CustomInputField(
                     controller: phoneNumberController,
-                    hint: 'Enter your phone number',
+                    hint: AppLocalizations.of(context)?.fillPhoneNumber ??
+                        'សូមបំពេញលេខទូរស័ព្ទរបស់អ្នក',
                   ),
 
                   // PASSWORD
-                  const Label('Password'),
+                  Label(
+                    AppLocalizations.of(context)?.password ?? 'លេខកូខសម្ងាត់',
+                  ),
                   CustomInputField(
                     controller: passwordController,
                     obscureText: true,
-                    hint: 'Enter your password',
+                    hint: AppLocalizations.of(context)?.fillPassword ??
+                        'សូមបំពេញលេខកូខសម្ងាត់របស់អ្នក',
                   ),
 
                   const SizedBox(height: 18),
@@ -147,7 +157,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   // LOGIN BUTTON
                   PrimaryButton(
-                    text: isLoading ? "Loading..." : "Login",
+                    text: isLoading
+                        ? "Loading..."
+                        : (AppLocalizations.of(context)?.continueText ??
+                            "Login"),
                     onPressed: isLoading ? null : handleLogin,
                   ),
                 ],

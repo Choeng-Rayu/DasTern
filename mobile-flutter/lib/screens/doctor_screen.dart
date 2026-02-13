@@ -110,17 +110,20 @@ class _DoctorScreenState extends State<DoctorScreen> {
                           const SizedBox(height: 12),
                           const Text(
                             '• Monitor patient medication adherence',
-                            style: TextStyle(fontSize: 14, color: Colors.black54),
+                            style:
+                                TextStyle(fontSize: 14, color: Colors.black54),
                           ),
                           const SizedBox(height: 8),
                           const Text(
                             '• Track medication effectiveness',
-                            style: TextStyle(fontSize: 14, color: Colors.black54),
+                            style:
+                                TextStyle(fontSize: 14, color: Colors.black54),
                           ),
                           const SizedBox(height: 8),
                           const Text(
                             '• Receive alerts for missed doses',
-                            style: TextStyle(fontSize: 14, color: Colors.black54),
+                            style:
+                                TextStyle(fontSize: 14, color: Colors.black54),
                           ),
                         ],
                       ),
