@@ -3,13 +3,24 @@ import 'package:flutter/foundation.dart';
 import '../data/repositories/prescription_repository.dart';
 import '../models/prescription.dart';
 import '../models/medicine.dart';
+import '../services/ocr_service.dart';
+import '../services/ai_service.dart';
+import '../services/api_client.dart';
 import '../utils/app_logger.dart';
 
 class ScanProvider with ChangeNotifier {
   final PrescriptionRepository _repository;
 
   ScanProvider({PrescriptionRepository? repository})
-      : _repository = repository ?? PrescriptionRepository();
+      : _repository = repository ?? _createDefaultRepository();
+
+  static PrescriptionRepository _createDefaultRepository() {
+    final apiClient = APIClient();
+    return PrescriptionRepository(
+      ocrService: OCRService(apiClient: apiClient),
+      aiService: AIService(apiClient: apiClient),
+    );
+  }
 
   File? _imageFile;
   ProcessStatus _status = ProcessStatus.initial;
@@ -53,7 +64,7 @@ class ScanProvider with ChangeNotifier {
       _errorMessage = null;
       notifyListeners();
 
-      final ocrResult = await _repository.scanPrescription(_imageFile!);
+      final ocrResult = await _repository.scanPrescription(_imageFile!.path);
 
       // Step 2: AI Analysis
       _status = ProcessStatus.analyzing;
@@ -61,12 +72,11 @@ class ScanProvider with ChangeNotifier {
       notifyListeners();
 
       final prescription = await _repository.analyzePrescription(ocrResult);
-      
+
       _prescription = prescription;
       _status = ProcessStatus.analyzed;
       _statusMessage = "Complete!";
       notifyListeners();
-
     } catch (e) {
       AppLogger.e("Processing failed", e);
       _status = ProcessStatus.error;

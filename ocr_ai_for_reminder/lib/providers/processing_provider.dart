@@ -6,6 +6,7 @@ import '../services/ai_service.dart';
 import '../models/ocr_response.dart';
 import '../models/ai_response.dart';
 import '../models/medication.dart';
+import '../core/constants/api_constants.dart';
 
 class ProcessingState {
   final bool isProcessing;
@@ -40,8 +41,10 @@ class OCRProvider extends ChangeNotifier {
   late final OCRService _ocrService;
   late final APIClient _apiClient;
 
-  OCRProvider({String baseUrl = 'http://localhost:8000'}) {
-    _apiClient = APIClient(baseUrl: baseUrl);
+  OCRProvider({String? baseUrl}) {
+    final url =
+        baseUrl ?? '${ApiConstants.baseUrl}:${ApiConstants.defaultOcrPort}';
+    _apiClient = APIClient(baseUrl: url);
     _ocrService = OCRService(apiClient: _apiClient);
   }
 
@@ -153,8 +156,10 @@ class AIProvider extends ChangeNotifier {
   late final AIService _aiService;
   late final APIClient _apiClient;
 
-  AIProvider({String baseUrl = 'http://localhost:8001'}) {
-    _apiClient = APIClient(baseUrl: baseUrl);
+  AIProvider({String? baseUrl}) {
+    final url =
+        baseUrl ?? '${ApiConstants.baseUrl}:${ApiConstants.defaultAiPort}';
+    _apiClient = APIClient(baseUrl: url);
     _aiService = AIService(apiClient: _apiClient);
   }
 
@@ -298,7 +303,8 @@ class AIProvider extends ChangeNotifier {
         progress: 1.0,
       );
       notifyListeners();
-      logger.i('Full pipeline completed with ${_medications.length} medications');
+      logger
+          .i('Full pipeline completed with ${_medications.length} medications');
       return true;
     } catch (e) {
       _processingState = _processingState.copyWith(

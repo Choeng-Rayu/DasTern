@@ -23,14 +23,16 @@ class ApiConstants {
   }
 
   // OCR Service (Port configurable)
-  static String get ocrBaseUrl => '$baseUrl:$defaultOcrPort/api/v1'; // http://192.168.0.164:8006/api/v1
-  static const String ocrEndpoint = '/ocr'; // POST to /ocr to process images
+  static String get ocrBaseUrl => '$baseUrl:$defaultOcrPort'; // http://127.0.0.1:8000
+  static const String ocrEndpoint = '/api/v1/ocr'; // POST to /api/v1/ocr to process images
   static const String ocrHealthEndpoint = '/health';
 
-  // AI Service (Port configurable)
-  static String get aiBaseUrl => '$baseUrl:$defaultAiPort/api/v1';
-  static const String prescriptionProcessEndpoint = '/prescription/process';
-  static const String chatEndpoint = '/chat';
+  // AI Service (Port configurable) - base URL without /api/v1 suffix
+  static String get aiBaseUrl => '$baseUrl:$defaultAiPort'; // http://127.0.0.1:8001
+  static const String extractRemindersEndpoint = '/extract-reminders'; // For reminder extraction
+  static const String correctOcrEndpoint = '/correct-ocr'; // For OCR text correction
+  static const String prescriptionProcessEndpoint = '/api/v1/prescription/process';
+  static const String chatEndpoint = '/api/v1/chat';
 
   // Timeouts
   static const Duration connectionTimeout = Duration(seconds: 30);

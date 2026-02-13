@@ -32,9 +32,30 @@ async def process_ocr_file(ocr_file_path: str, user_id: str = None):
     # Extract full text - support multiple OCR formats
     full_text = ocr_data.get('full_text') or ocr_data.get('corrected_text') or ocr_data.get('text', '')
     
-    if not full_text:
+    # If full_text is empty, try to extract from blocks
+    if not full_text or full_text.strip() == '':
+        blocks = ocr_data.get('blocks', [])
+        if blocks:
+            text_parts = []
+            for block in blocks:
+                # Get raw_text from block if available
+                raw_text = block.get('raw_text', '')
+                if raw_text:
+                    text_parts.append(raw_text)
+                else:
+                    # Otherwise, extract from lines
+                    lines = block.get('lines', [])
+                    for line in lines:
+                        line_text = line.get('text', '')
+                        if line_text:
+                            text_parts.append(line_text)
+            
+            full_text = '\n'.join(text_parts)
+            print(f"📦 Extracted text from {len(blocks)} blocks")
+    
+    if not full_text or full_text.strip() == '':
         print("❌ Error: No text found in OCR file")
-        print("   Expected fields: 'full_text', 'corrected_text', or 'text'")
+        print("   Expected fields: 'full_text', 'corrected_text', 'text', or 'blocks'")
         print(f"   Available fields: {list(ocr_data.keys())}")
         return
     

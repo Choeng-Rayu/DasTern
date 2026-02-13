@@ -1,14 +1,15 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:logger/logger.dart';
+import '../core/constants/api_constants.dart';
 
 class APIClient {
   final String baseUrl;
   final Logger logger = Logger();
 
   APIClient({
-    this.baseUrl = 'http://localhost:8001',
-  });
+    String? baseUrl,
+  }) : baseUrl = baseUrl ?? ApiConstants.aiBaseUrl;
 
   /// Upload image for OCR processing
   Future<http.StreamedResponse> uploadImageForOCR(
@@ -122,11 +123,12 @@ class APIClient {
   /// Health check endpoint
   Future<bool> healthCheck() async {
     try {
-      final uri = Uri.parse('$baseUrl/');
+      final uri = Uri.parse('$baseUrl/health');
       final response = await http.get(uri).timeout(
             const Duration(seconds: 5),
             onTimeout: () => http.Response('timeout', 408),
           );
+      logger.i('Health check response from $uri: ${response.statusCode}');
       return response.statusCode == 200;
     } catch (e) {
       logger.w('Health check failed: $e');
