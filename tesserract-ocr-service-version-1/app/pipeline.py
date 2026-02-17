@@ -1,165 +1,260 @@
 """
-Main OCR Pipeline Module
+OCR Pipeline Orchestration - Heart of OCR Service
+Coordinates all OCR processing steps
 
-Connects all components into a complete prescription OCR system.
-Flow: Quality Gate → Preprocessing → Layout → OCR → Rule Cleanup → Post-processing → Output
+This is the main entry point for OCR processing that:
+1. Runs multi-language OCR with PaddleOCR
+2. Classifies document layout with LayoutLMv3
+3. Groups blocks into logical rows
+4. Extracts key-value pairs and table data
+5. Applies rule-based corrections
+6. Calculates confidence scores
 """
 
-import cv2
-import numpy as np
-import time
-from typing import Dict, List, Optional, Union
+import logging
+import os
+from typing import Dict, Any, List
 
-from .quality import quality_check, quality_check_lenient
-from .preprocess import preprocess, preprocess_for_khmer
-from .layout import extract_regions, merge_overlapping_regions
-from .ocr_engine import ocr, ocr_with_confidence, ocr_multi_pass, detect_language_hint
-from .postprocess import clean, postprocess_region
-from .confidence import score_ocr_confidence, calculate_document_confidence, needs_manual_review
-from .schemas import build_output
+from .ocr.paddle_engine import run_ocr_multi_language
+from .layout.layoutlmv3 import classify_layout, detect_table_structure
+from .layout.grouping import group_blocks, group_medication_rows
+from .layout.key_value import extract_key_values, extract_medications_from_table
+from .rules.medical_terms import fix_terms, normalize_strength, normalize_drug_name
+from .rules.khmer_fix import fix_khmer, convert_khmer_digits
+from .confidence import calculate_document_confidence
+
+logger = logging.getLogger(__name__)
 
 
-def run_pipeline(
-    img: np.ndarray,
-    lenient_quality: bool = False,
-    languages: str = "eng+khm+fra"
-) -> Dict:
+def process_image(image_path: str) -> Dict[str, Any]:
     """
-    Run the complete OCR pipeline on an image.
-    
+    Complete OCR pipeline for prescription image.
+
+    Steps:
+    1. Extract text with PaddleOCR (multi-language)
+    2. Classify layout with LayoutLMv3
+    3. Group related blocks
+    4. Extract key-value pairs
+    5. Apply rule-based corrections
+    6. Calculate confidence scores
+
     Args:
-        img: Input image in BGR format (from cv2.imread)
-        lenient_quality: Use lenient quality thresholds for mobile images
-        languages: Tesseract language codes
-        
+        image_path: Path to prescription image
+
     Returns:
-        Structured OCR result dictionary
+        Structured OCR result with all metadata
     """
-    start_time = time.time()
-    
-    # Step 1: Quality Gate
-    if lenient_quality:
-        quality_ok, quality_msg, quality_metrics = quality_check_lenient(img)
+    logger.info(f"Processing image: {image_path}")
+
+    # Validate input
+    if not os.path.exists(image_path):
+        raise FileNotFoundError(f"Image not found: {image_path}")
+
+    # Step 1: Run multi-language OCR
+    logger.info("Step 1: Running OCR...")
+    raw_blocks, primary_language = run_ocr_multi_language(image_path)
+    logger.info(f"Detected {len(raw_blocks)} blocks, primary language: {primary_language}")
+
+    if not raw_blocks:
+        return _create_empty_result(image_path)
+
+    # Step 2: Classify layout
+    logger.info("Step 2: Classifying layout...")
+    classified_blocks = classify_layout(raw_blocks)
+
+    # Detect table structure
+    table_data = detect_table_structure(classified_blocks)
+
+    # Step 3: Group blocks
+    logger.info("Step 3: Grouping blocks...")
+    grouped_blocks = group_blocks(classified_blocks)
+
+    # Step 4: Apply text corrections
+    logger.info("Step 4: Applying text corrections...")
+    for block in grouped_blocks:
+        original_text = block.get("text", "")
+
+        # Apply Khmer fixes first
+        corrected_text = fix_khmer(original_text)
+
+        # Then apply medical term fixes
+        corrected_text = fix_terms(corrected_text)
+
+        # Convert Khmer digits to Arabic
+        corrected_text = convert_khmer_digits(corrected_text)
+
+        block["text"] = corrected_text
+        block["original_text"] = original_text
+
+    # Step 5: Extract structured data
+    logger.info("Step 5: Extracting structured data...")
+    structured_data = extract_key_values(grouped_blocks)
+
+    # Extract medications from table if present
+    if table_data.get("has_table"):
+        medications = extract_medications_from_table(table_data)
+        structured_data["medications"] = _normalize_medications(medications)
     else:
-        quality_ok, quality_msg, quality_metrics = quality_check(img)
-    
-    quality_metrics["passed"] = quality_ok
-    quality_metrics["message"] = quality_msg
-    
-    if not quality_ok:
-        return build_output(
-            regions=[],
-            quality_metrics=quality_metrics,
-            processing_time=int((time.time() - start_time) * 1000),
-            error=quality_msg
-        )
-    
-    # Step 2: Preprocessing
-    preprocessed = preprocess(img, apply_deskew=True)
-    
-    # Also prepare grayscale version for OCR (often works better)
-    gray_preprocessed = preprocess(img, apply_deskew=True, return_gray=True)
-    
-    # Step 3: Layout Analysis
-    regions = extract_regions(preprocessed)
-    regions = merge_overlapping_regions(regions)
-    
-    if not regions:
-        # Fallback: treat entire image as one region
-        h, w = preprocessed.shape[:2]
-        regions = [{
-            "box": (0, 0, w, h),
-            "type": "body",
-            "area": w * h
-        }]
-    
-    # Step 4: Region-Based OCR
-    results = []
-    for region in regions:
-        x, y, w, h = region["box"]
-        
-        # Extract region from both preprocessed versions
-        crop_binary = preprocessed[y:y+h, x:x+w]
-        crop_gray = gray_preprocessed[y:y+h, x:x+w]
-        
-        if crop_binary.size == 0:
-            continue
-        
-        # Multi-pass OCR
-        ocr_result = ocr_multi_pass(crop_gray)
-        raw_text = ocr_result["text"]
-        detected_lang = ocr_result["detected_language"]
-        
-        # Get confidence from Tesseract
-        conf_result = ocr_with_confidence(crop_gray, lang=languages)
-        tesseract_conf = conf_result.get("confidence", 0)
-        
-        # Step 5: Rule-based cleanup (no AI correction in OCR service)
-        cleaned_text = raw_text
-        
-        # Step 6: Post-processing
-        final_text = clean(cleaned_text, language=detected_lang.split("+")[0] if detected_lang else "eng")
-        
-        # Step 7: Confidence Scoring
-        confidence = score_ocr_confidence(raw_text, final_text, tesseract_conf)
-        
-        results.append({
-            "box": region["box"],
-            "type": region["type"],
-            "raw": raw_text,
-            "cleaned": cleaned_text,
-            "final": final_text,
-            "detected_language": detected_lang,
-            "tesseract_confidence": tesseract_conf,
-            "confidence": confidence,
-            "needs_review": needs_manual_review(confidence)
-        })
-    
-    # Calculate overall document confidence
-    doc_confidence = calculate_document_confidence(results)
-    
-    # Build structured output
-    processing_time = int((time.time() - start_time) * 1000)
-    
-    return build_output(
-        regions=results,
-        quality_metrics=quality_metrics,
-        processing_time=processing_time
+        # Try to extract from grouped medication rows
+        med_rows = group_medication_rows(grouped_blocks)
+        structured_data["medications"] = _extract_medications_from_rows(med_rows)
+
+    # Step 6: Calculate confidence
+    logger.info("Step 6: Calculating confidence...")
+    confidence_report = calculate_document_confidence(
+        blocks=grouped_blocks,
+        medications=structured_data.get("medications", [])
     )
 
+    # Build final result
+    result = _build_result(
+        image_path=image_path,
+        blocks=grouped_blocks,
+        structured_data=structured_data,
+        table_data=table_data,
+        primary_language=primary_language,
+        confidence_report=confidence_report
+    )
 
-def run_pipeline_simple(img: np.ndarray, lang: str = "eng+khm+fra") -> str:
-    """
-    Simplified pipeline that returns just the extracted text.
-    Useful for quick testing or simple integrations.
-    """
-    result = run_pipeline(img, languages=lang)
-    return result.get("full_text", "")
-
-
-def run_pipeline_from_file(filepath: str, **kwargs) -> Dict:
-    """
-    Run pipeline from image file path.
-    """
-    img = cv2.imread(filepath)
-    if img is None:
-        return build_output(
-            regions=[],
-            error=f"Failed to load image: {filepath}"
-        )
-    return run_pipeline(img, **kwargs)
+    logger.info(f"Processing complete. Confidence: {confidence_report['overall_confidence']:.2%}")
+    return result
 
 
-def run_pipeline_from_bytes(image_bytes: bytes, **kwargs) -> Dict:
-    """
-    Run pipeline from image bytes (e.g., from HTTP upload).
-    """
-    nparr = np.frombuffer(image_bytes, np.uint8)
-    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    if img is None:
-        return build_output(
-            regions=[],
-            error="Failed to decode image from bytes"
-        )
-    return run_pipeline(img, **kwargs)
+def _create_empty_result(image_path: str) -> Dict[str, Any]:
+    """Create empty result for failed OCR."""
+    return {
+        "success": False,
+        "image_path": image_path,
+        "raw_text": "",
+        "blocks": [],
+        "structured_data": None,
+        "overall_confidence": 0.0,
+        "needs_manual_review": True,
+        "error": "No text detected in image"
+    }
 
+
+def _normalize_medications(medications: List[Dict]) -> List[Dict[str, Any]]:
+    """Normalize extracted medications with proper formatting."""
+    normalized = []
+
+    for med in medications:
+        name = med.get("name", "")
+
+        # Normalize drug name
+        normalized_name, name_conf = normalize_drug_name(name)
+
+        # Normalize strength
+        strength = med.get("strength", "")
+        if strength:
+            strength = normalize_strength(strength)
+
+        normalized.append({
+            "sequence": med.get("sequence", len(normalized) + 1),
+            "name": normalized_name,
+            "original_name": name,
+            "strength": strength,
+            "quantity": med.get("quantity"),
+            "quantity_unit": med.get("quantity_unit", "tablets"),
+            "dosage_schedule": med.get("dosage_schedule", {}),
+            "instructions": med.get("instructions"),
+            "confidence": name_conf * med.get("confidence", 1.0),
+        })
+
+    return normalized
+
+
+def _extract_medications_from_rows(med_rows: List[Dict]) -> List[Dict[str, Any]]:
+    """Extract medications from grouped medication rows."""
+    medications = []
+
+    for row in med_rows:
+        blocks = row.get("blocks", [])
+        if not blocks:
+            continue
+
+        # Combine text from all blocks
+        combined_text = " ".join(b.get("text", "") for b in blocks)
+
+        # Try to parse medication info
+        med = {
+            "sequence": row.get("sequence", len(medications) + 1),
+            "name": combined_text.split()[0] if combined_text else "",
+            "raw_text": combined_text,
+            "dosage_schedule": {},
+            "confidence": sum(b.get("confidence", 0) for b in blocks) / len(blocks) if blocks else 0
+        }
+
+        medications.append(med)
+
+    return medications
+
+
+def _build_result(
+    image_path: str,
+    blocks: List[Dict],
+    structured_data: Dict,
+    table_data: Dict,
+    primary_language: str,
+    confidence_report: Dict
+) -> Dict[str, Any]:
+    """Build the final OCR result dictionary."""
+
+    # Combine all text
+    raw_text = "\n".join(b.get("text", "") for b in blocks)
+
+    # Map language string to enum
+    language_map = {"en": "en", "kh": "kh", "fr": "fr", "mixed": "mixed"}
+    language = language_map.get(primary_language, "unknown")
+
+    return {
+        "success": True,
+        "image_path": image_path,
+        "raw_text": raw_text,
+        "blocks": blocks,
+        "block_count": len(blocks),
+        "primary_language": language,
+        "structured_data": {
+            "patient_name": structured_data.get("patient_name"),
+            "patient_age": structured_data.get("patient_age"),
+            "patient_gender": structured_data.get("patient_gender"),
+            "hospital_name": structured_data.get("hospital_name"),
+            "prescription_number": structured_data.get("prescription_number"),
+            "diagnosis": structured_data.get("diagnosis"),
+            "date": structured_data.get("date"),
+            "doctor_name": structured_data.get("doctor_name"),
+            "medications": structured_data.get("medications", []),
+        },
+        "table_detected": table_data.get("has_table", False),
+        "table_data": table_data if table_data.get("has_table") else None,
+        "overall_confidence": confidence_report.get("overall_confidence", 0.0),
+        "confidence_level": confidence_report.get("confidence_level", "critical"),
+        "needs_manual_review": confidence_report.get("needs_review", True),
+        "review_reasons": confidence_report.get("review_reasons", []),
+        "low_confidence_blocks": confidence_report.get("low_confidence_blocks", []),
+    }
+
+
+def process_image_simple(image_path: str) -> List[Dict[str, Any]]:
+    """
+    Simplified OCR pipeline returning just blocks with corrections.
+    Useful for debugging and simpler use cases.
+
+    Args:
+        image_path: Path to prescription image
+
+    Returns:
+        List of OCR blocks with text corrections applied
+    """
+    # Run OCR
+    blocks, _ = run_ocr_multi_language(image_path)
+
+    # Classify layout
+    blocks = classify_layout(blocks)
+
+    # Apply corrections
+    for block in blocks:
+        block["text"] = fix_terms(block["text"])
+        block["text"] = fix_khmer(block["text"])
+
+    return blocks

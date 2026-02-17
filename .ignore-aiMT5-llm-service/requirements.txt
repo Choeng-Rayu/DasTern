@@ -1,0 +1,21 @@
+# FastAPI and Server
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+
+# LLM Core
+llama-cpp-python>=0.2.0  # For quantized LLaMA models
+transformers==4.35.0
+torch==2.9.0
+sentencepiece==0.1.99
+
+# Data Validation
+pydantic==2.5.0
+
+# Optional: Ollama integration (alternative to llama-cpp-python)
+# ollama>=0.1.0
+
+# Testing (optional)
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+httpx>=0.25.0

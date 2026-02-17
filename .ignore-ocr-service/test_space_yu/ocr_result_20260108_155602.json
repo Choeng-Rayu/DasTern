@@ -1,0 +1,118 @@
+{
+  "success": true,
+  "languages": [
+    "eng",
+    "khm",
+    "fra"
+  ],
+  "text_blocks": [
+    {
+      "raw_text": "លេខកូដ: HAKF1354164 ឈ្មោះអ្នកជំងឺ: ង៉ាំ ដានី អាយុ: 19 ឆ្នាំ ភេទ: ស្រី\nប្រភេទបង់ប្រាក់ : មូលនិធិសមធម៌ / 20051002-0409 (anaé |\nរោគវិនិច្ឆ័យ : Chronic Cystitis ae\nign : ពិគ្រោះជំងឺក្រៅ - បន្ទប់លេខ 5",
+      "corrected_text": "លេខកូដ: HAKF1354164 ឈ្មោះអ្នកជំងឺ: ង៉ាំ ដានី អាយុ: 19 ឆ្នាំ ភេទ: ស្រី\nប្រភេទបង់ប្រាក់ : មូលនិធិសមធម៌ / 20051002-0409 (anaé |\nរោគវិនិច្ឆ័យ : Chronic Cystitis ae\nign : ពិគ្រោះជំងឺក្រៅ - បន្ទប់លេខ 5",
+      "final_text": "លេខកូដ: HAKF1354164 ឈ្មោះអ្នកជំងឺ: ង៉ាំ ដានី អាយុ: 19 ឆ្នាំ ភេទ: ស្រី ប្រភេទបង់ប្រាក់: មូលនិធិសមធម៌ / 20051002-0409 (anaé | រោគវិនិច្ឆ័យ: Chronic Cystitis ae ign: ពិគ្រោះជំងឺក្រ - បន្ទប់លេខ 5",
+      "confidence": 0.9,
+      "region_type": "header",
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 944,
+        "height": 352
+      },
+      "detected_language": "khm",
+      "needs_review": false
+    },
+    {
+      "raw_text": "ផ្នែក : ពិគ្រោះជំងឺក្រៅ - បន្ទប់លេខ 5 < a\nវេជ្ជបញ្ជា .\nរោយ ៤ មបស សក\nណាយ យយ\n10mg +\n[cc ce) ec\n01695 2019 _14គាប់ | [a - | ' |\n4 2៣\" _?គ្រច់ | fst fs | -\n1 * 2 ម្ន ន\n\nco. ម្ល so qi Sw 2\n\n. ខួ\n\n. 4 Sp eal’ 4 | ក",
+      "corrected_text": "ផ្នែក : ពិគ្រោះជំងឺក្រៅ - បន្ទប់លេខ 5 < a\nវេជ្ជបញ្ជា .\nរោយ ៤ មបស សក\nណាយ យយ\n10mg +\n[cc ce) ec\n01695 2019 _14គាប់ | [a - | ' |\n4 2៣\" _?គ្រច់ | fst fs | -\n1 * 2 ម្ន ន\n\nco. ម្ល so qi Sw 2\n\n. ខួ\n\n. 4 Sp eal’ 4 | ក",
+      "final_text": "ផ្នែក: ពិគ្រោះជំងឺក្រ - បន្ទប់លេខ 5 < a វេជ្ជបញ្ជា. រោយ ៤ មបស សក ណាយ យយ 10mg + [cc ce) ec 01695 2019 _14គាប់ | [a - | ' | 4 2៣\" _?គ្រច់ | fst fs | - 1 * 2 ម្ន ន co. ម្ល so qi Sw 2. ខួ. 4 Sp eal’ 4 | ក",
+      "confidence": 0.7,
+      "region_type": "footer",
+      "bounding_box": {
+        "x": 0,
+        "y": 315,
+        "width": 944,
+        "height": 965
+      },
+      "detected_language": "khm",
+      "needs_review": false
+    },
+    {
+      "raw_text": "",
+      "corrected_text": "",
+      "final_text": "",
+      "confidence": 0.0,
+      "region_type": "body",
+      "bounding_box": {
+        "x": 728,
+        "y": 352,
+        "width": 206,
+        "height": 63
+      },
+      "detected_language": "eng+khm+fra",
+      "needs_review": true
+    },
+    {
+      "raw_text": "a",
+      "corrected_text": "a",
+      "final_text": "a",
+      "confidence": 0.55,
+      "region_type": "body",
+      "bounding_box": {
+        "x": 0,
+        "y": 761,
+        "width": 189,
+        "height": 80
+      },
+      "detected_language": "eng+fra",
+      "needs_review": true
+    },
+    {
+      "raw_text": "",
+      "corrected_text": "",
+      "final_text": "",
+      "confidence": 0.0,
+      "region_type": "signature",
+      "bounding_box": {
+        "x": 493,
+        "y": 1002,
+        "width": 451,
+        "height": 278
+      },
+      "detected_language": "eng+khm+fra",
+      "needs_review": true
+    },
+    {
+      "raw_text": "=",
+      "corrected_text": "=",
+      "final_text": "=",
+      "confidence": 0.55,
+      "region_type": "signature",
+      "bounding_box": {
+        "x": 532,
+        "y": 1072,
+        "width": 235,
+        "height": 80
+      },
+      "detected_language": "eng+khm+fra",
+      "needs_review": true
+    }
+  ],
+  "full_text": "លេខកូដ: HAKF1354164 ឈ្មោះអ្នកជំងឺ: ង៉ាំ ដានី អាយុ: 19 ឆ្នាំ ភេទ: ស្រី ប្រភេទបង់ប្រាក់: មូលនិធិសមធម៌ / 20051002-0409 (anaé | រោគវិនិច្ឆ័យ: Chronic Cystitis ae ign: ពិគ្រោះជំងឺក្រ - បន្ទប់លេខ 5\nផ្នែក: ពិគ្រោះជំងឺក្រ - បន្ទប់លេខ 5 < a វេជ្ជបញ្ជា. រោយ ៤ មបស សក ណាយ យយ 10mg + [cc ce) ec 01695 2019 _14គាប់ | [a - | ' | 4 2៣\" _?គ្រច់ | fst fs | - 1 * 2 ម្ន ន co. ម្ល so qi Sw 2. ខួ. 4 Sp eal’ 4 | ក\n\na\n\n=",
+  "medications": [],
+  "overall_confidence": 0.45,
+  "needs_review": true,
+  "quality_metrics": {
+    "blur_score": 1812.3,
+    "brightness": 198.48,
+    "resolution": {
+      "height": 1280,
+      "width": 944
+    },
+    "contrast": 47.05,
+    "passed": true,
+    "message": "Image quality acceptable"
+  },
+  "processing_time_ms": 15594,
+  "error": null,
+  "timestamp": "2026-01-08T08:56:02.829200"
+}

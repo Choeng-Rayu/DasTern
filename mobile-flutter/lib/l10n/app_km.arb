@@ -1,7 +1,20 @@
 
+
 {
   "@@locale": "km",
-    "createNewAccount": "បង្កើតគណនីថ្មី",
+    "phoneNumber": "លេខទូរស័ព្ទ",
+    "fillDetailTitle ": "បញ្ចូលពត៌មាន",
+  "fillPhoneNumber": "សូមបំពេញលេខទូរស័ព្ទរបស់អ្នក",
+  "password": "លេខកូខសម្ងាត់",
+  "fillPassword": "សូមបំពេញលេខកូខសម្ងាត់របស់អ្នក",
+  "confirmPassword": "បញ្ជាក់លេខកូខសម្ងាត់",
+  "fillConfirmPassword": "សូមបំពេញលេខកូខសម្ងាត់របស់អ្នកម្តងទៀត",
+  "pinCode": "លេខកូខ៤ខ្ទង់",
+  "readTerms": "សូមអានលក្ខខណ្ឌ និងច្បាប់មុនពេលប្រើប្រាស់កម្មវិធី",
+  "alreadyRead": "អានរួចរាល់",
+
+  
+  "createNewAccount": "បង្កើតគណនីថ្មី",
   "lastName": "នាមត្រកូល",
   "fillLastName": "សូមបំពេញនាមត្រកូលរបស់អ្នក",
   "firstName": "នាមខ្លួន",
@@ -48,10 +61,11 @@
   "medicineName": "ឈ្មោះថ្នាំ",
   "save": "រក្សាទុក",
   "cancel": "បោះបង់",
-    "loginAsDoctor": "ចូលប្រើប្រាស់ជាគ្រូពេទ្យ",
-      "signin": "បានបង្កើតគណនីពីមុន",
+  "loginAsDoctor": "ចូលប្រើប្រាស់ជាគ្រូពេទ្យ",
+  "signin": "បានបង្កើតគណនីពីមុន",
+  
 
-        "createAccount": "បង្កើតគណនី",
+  "createAccount": "បង្កើតគណនី",
   "hello": "សួស្តី",
   "dateOfBirth": "ថ្ងៃកំណើត",
   "todaySchedule": "កាលវិភាគ (ថ្ងៃនេះ)",
@@ -164,5 +178,23 @@
   "enterNameHint": "សុខជាត",
   "enterFamilyContactHint": "098765432",
   "enterWeightHint": "60.0",
-  "enterAddressHint": "ភូមិ កុម សង្កាត់"
+  "enterAddressHint": "ភូមិ កុម សង្កាត់",
+  "familyAlert": "មុខងារគ្រួសារ",
+  "searchMember": "រកមើលអ្នកជិតស្និទ្ធ",
+  "age": "អាយុ",
+  "years": "ឆ្នាំ",
+  "phone": "លេខទូរស័ព្ទ",
+  "pendingPrescription": "រង់ចាំទទួលថ្នាំ",
+  "viewPrescription": "មើលវេជ្ជបញ្ជា",
+  "prescriptionDate": "របង្កើតថ្ងៃថ្នាំ",
+  "medicine": "ថ្នាំ",
+  "quantity": "ចំនួន",
+  "usage": "ប្រើប្រាស់",
+  "home": "ទំព័រដើម",
+  "patients": "កាលីប្រតិ​បត្​តិ​ការ",
+  "prescription": "វេជ្ជបញ្ជា​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​",
+  "morningTime": "ពេលព្រឹក",
+  "eveningTime": "ពេលល្ងាច",
+  "morningAndEvening": "ព្រឹក និង ល្ងាច"
+
 }
