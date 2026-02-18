@@ -5,10 +5,10 @@ class OcrTextDisplay extends StatelessWidget {
   final double confidence;
 
   const OcrTextDisplay({
-    Key? key,
+    super.key,
     required this.text,
     this.confidence = 0.0,
-  }) : super(key: key);
+  });
 
   Color _getConfidenceColor(double confidence) {
     if (confidence >= 0.8) return Colors.green;
@@ -28,7 +28,7 @@ class OcrTextDisplay extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 12),
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              color: _getConfidenceColor(confidence).withOpacity(0.1),
+              color: _getConfidenceColor(confidence).withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Row(
@@ -58,7 +58,7 @@ class OcrTextDisplay extends StatelessWidget {
             color: colorScheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: colorScheme.outline.withOpacity(0.2),
+              color: colorScheme.outline.withValues(alpha: 0.2),
             ),
           ),
           child: SelectableText(

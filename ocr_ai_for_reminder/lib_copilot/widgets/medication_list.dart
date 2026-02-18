@@ -5,9 +5,9 @@ class MedicationList extends StatelessWidget {
   final List<Medication> medications;
 
   const MedicationList({
-    Key? key,
+    super.key,
     required this.medications,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +67,7 @@ class MedicationList extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: colorScheme.primary.withOpacity(0.2),
+            color: colorScheme.primary.withValues(alpha: 0.2),
             width: 1,
           ),
         ),
@@ -81,7 +81,7 @@ class MedicationList extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: colorScheme.primary.withOpacity(0.1),
+                      color: colorScheme.primary.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Icon(
