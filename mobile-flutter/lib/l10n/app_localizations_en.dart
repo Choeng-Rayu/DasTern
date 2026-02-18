@@ -12,6 +12,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'DasTern';
 
   @override
+  String get yourAccount => 'Your Account';
+
+  @override
+  String get next => 'Next';
+
+  @override
   String get fillDetailTitle => 'Information';
 
   @override

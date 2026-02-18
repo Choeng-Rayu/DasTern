@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../screens/scan_screen.dart';
-import '../screens/medicine_schedule_screen.dart';
-import '../screens/settings_screen.dart';
+import '../../../../ui/screens/scan_screen.dart';
+import '../../../../ui/screens/medicine_schedule_screen.dart';
+import '../../../../ui/screens/settings_screen.dart';
 
 class AppRouter {
   static const String initialRoute = '/scan';

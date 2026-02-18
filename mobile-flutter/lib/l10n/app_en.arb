@@ -7,6 +7,16 @@
     "description": "The application title"
   },
 
+    "yourAccount": "Your Account",
+  "@yourAccount": {
+    "description": "yourAccount"
+  },
+
+  "next": "Next",
+  "@next": {
+    "description": "Next"
+  },
+
         "fillDetailTitle": "Fill information",
   "@phoneNumber": {
     "description": "Fill information"

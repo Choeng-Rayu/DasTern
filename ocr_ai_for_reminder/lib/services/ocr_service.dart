@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 
 import 'package:logger/logger.dart';
 import 'dart:io';
@@ -82,6 +84,8 @@ class OCRService {
       'processingTime': ocrResponse.meta.processingTimeMs,
     };
   }
+
+>>>>>>> c04fb50ce3d62100ad607cc395b368e4045989f9
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
@@ -130,4 +134,8 @@ class OcrService {
       rethrow;
     }
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> c04fb50ce3d62100ad607cc395b368e4045989f9
 }

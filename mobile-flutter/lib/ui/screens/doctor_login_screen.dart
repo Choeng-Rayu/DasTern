@@ -1,14 +1,13 @@
 import 'package:dastern_mobile/l10n/app_localizations.dart';
-import 'package:dastern_mobile/services/auth_service.dart';
-// import 'package:dastern_mobile/models/user/user.dart';
-import 'package:dastern_mobile/screens/doctor_screen.dart';
-// import 'package:dastern_mobile/services/auth_service_login.dart';
-import 'package:dastern_mobile/widgets/auth_background.dart';
+import 'package:dastern_mobile/models/user/user.dart';
+import 'package:dastern_mobile/ui/screens/doctor_screen.dart';
+import 'package:dastern_mobile/services/auth_service_login.dart';
+import 'package:dastern_mobile/widgets/layouts/auth_background.dart';
 import 'package:dastern_mobile/widgets/bottom_round_container.dart';
-import 'package:dastern_mobile/widgets/custom_input_field.dart';
-import 'package:dastern_mobile/widgets/header_widgets.dart';
-import 'package:dastern_mobile/widgets/label.dart';
-import 'package:dastern_mobile/widgets/primary_button.dart';
+import 'package:dastern_mobile/widgets/inputs/custom_input_field.dart';
+import 'package:dastern_mobile/widgets/tiles/hospital_logo.dart';
+import 'package:dastern_mobile/widgets/tiles/label.dart';
+import 'package:dastern_mobile/widgets/buttons/primary_button.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -21,6 +20,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final phoneNumberController = TextEditingController();
   final passwordController = TextEditingController();
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
 
   String errorMessage = "";
   bool isLoading = false;
@@ -28,51 +29,49 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> handleLogin() async {
     setState(() {
       isLoading = true;
-      errorMessage = "";
     });
 
     final phone = phoneNumberController.text.trim();
     final password = passwordController.text.trim();
+    final firstName = firstNameController.text.trim();
+    final lastName = lastNameController.text.trim();
 
-    // validation
-    if (phone.isEmpty || password.isEmpty) {
+    // Simple validation - just check fields are not empty
+    if (phone.isEmpty ||
+        password.isEmpty ||
+        firstName.isEmpty ||
+        lastName.isEmpty) {
       setState(() {
         isLoading = false;
-        errorMessage = "Please fill phone number and password.";
       });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please fill all fields")),
+      );
       return;
     }
 
-    final token = await AuthService(baseUrl: '').login(phone, password);
+    // Simulate network delay
+    await Future.delayed(const Duration(seconds: 1));
 
     setState(() {
       isLoading = false;
     });
 
-    if (token != null) {
-      print("Login success token: $token");
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Login Successful")),
-      );
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const DoctorScreen(),
-        ),
-      );
-    } else {
-      setState(() {
-        errorMessage = "Login failed. Please check phone number or password.";
-      });
-    }
+    // Navigate to doctor screen
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const DoctorScreen(),
+      ),
+    );
   }
 
   @override
   void dispose() {
     phoneNumberController.dispose();
     passwordController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
     super.dispose();
   }
 
@@ -111,7 +110,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 12.0),
                       child: Text(
-                        'ចូលគណនីរបស់អ្នក',
+                        AppLocalizations.of(context)?.yourAccount ??
+                            'គណនីរបស់​អ្នក',
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -120,8 +120,26 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 12),
+
+                  // FIRST NAME
+                  Label('ឈ្មោះ'),
+                  CustomInputField(
+                    controller: firstNameController,
+                    hint: 'សូមបំពេញឈ្មោះដំបូង',
+                  ),
+
+                  const SizedBox(height: 12),
+
+                  // LAST NAME
+                  Label('នាម'),
+                  CustomInputField(
+                    controller: lastNameController,
+                    hint: 'សូមបំពេញឈ្មោះកំរាលត្រកូល',
+                  ),
 
                   const SizedBox(height: 16),
+
                   // PHONE NUMBER
                   Label(
                     AppLocalizations.of(context)?.phoneNumber ?? 'លេខទូរស័ព្ទ',
@@ -142,8 +160,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     hint: AppLocalizations.of(context)?.fillPassword ??
                         'សូមបំពេញលេខកូខសម្ងាត់របស់អ្នក',
                   ),
-
-                  const SizedBox(height: 18),
 
                   // ERROR MESSAGE
                   if (errorMessage.isNotEmpty)

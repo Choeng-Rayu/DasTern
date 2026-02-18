@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+<<<<<<< HEAD
+import 'providers/scan_provider.dart';
+import 'ui/theme/app_theme.dart';
+import 'ui/screens/home/home_view.dart';
+=======
 
 import 'providers/processing_provider.dart';
 import 'ui/screens/home_screen.dart';
@@ -13,26 +18,34 @@ import 'ui/screens/saved_prescriptions_screen.dart';
 import 'models/medication.dart';
 
 import 'providers/scan_provider.dart';
+import 'ui/theme/app_theme.dart';
+import 'ui/screens/home/home_view.dart';
+
+>>>>>>> c04fb50ce3d62100ad607cc395b368e4045989f9
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+<<<<<<< HEAD
+  const MyApp({super.key});
+=======
   const MyApp({Key? key}) : super(key: key);
+>>>>>>> c04fb50ce3d62100ad607cc395b368e4045989f9
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+<<<<<<< HEAD
+=======
+
         ChangeNotifierProvider(
           create: (_) => OCRProvider(),
         ),
         ChangeNotifierProvider(
           create: (_) => AIProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => ScanProvider(),
         ),
       ],
       child: MaterialApp(
@@ -102,8 +115,22 @@ class MyApp extends StatelessWidget {
                 as List<MedicationInfo>?;
             return FinalPreviewScreen(medications: medications);
           },
-          '/saved-prescriptions': (context) => const SavedPrescriptionsScreen(),
+          '/saved-prescriptions': (context) =>
+              const SavedPrescriptionsScreen(),
         },
+
+>>>>>>> c04fb50ce3d62100ad607cc395b368e4045989f9
+        ChangeNotifierProvider(create: (_) => ScanProvider()),
+      ],
+      child: MaterialApp(
+        title: 'Prescription OCR',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.lightTheme,
+        home: const HomeView(),
+<<<<<<< HEAD
+=======
+
+>>>>>>> c04fb50ce3d62100ad607cc395b368e4045989f9
       ),
     );
   }

@@ -126,8 +126,13 @@ RULES: Extract ONLY visible text. Use empty strings for missing data. NO EXPLANA
             "options": {
                 "temperature": 0.1,
                 "top_p": 0.9,
+<<<<<<< HEAD
+                "num_ctx": 2048,
+                "num_predict": 800
+=======
                 "top_k": 40,
                 "max_tokens": 500
+>>>>>>> c04fb50ce3d62100ad607cc395b368e4045989f9
             }
         }
         

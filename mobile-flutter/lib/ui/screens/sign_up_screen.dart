@@ -1,16 +1,17 @@
 import 'package:dastern_mobile/l10n/app_localizations.dart';
-import 'package:dastern_mobile/screens/sign_up_detail_screen.dart';
+import 'package:dastern_mobile/ui/screens/sign_up_detail_screen.dart';
 import 'package:flutter/material.dart';
-import '../widgets/header_widgets.dart';
-import '../widgets/bottom_round_container.dart';
-import '../widgets/primary_button.dart';
-import '../widgets/auth_background.dart';
-import '../widgets/label.dart';
-import '../widgets/custom_input_field.dart';
-import 'tab/main_navigation.dart';
+import '../../widgets/tiles/hospital_logo.dart';
+import '../../widgets/bottom_round_container.dart';
+import '../../widgets/buttons/primary_button.dart';
+import '../../widgets/layouts/auth_background.dart';
+import '../../widgets/tiles/label.dart';
+import '../../widgets/inputs/custom_input_field.dart';
 
 class SignupScreen extends StatelessWidget {
-  const SignupScreen({Key? key}) : super(key: key);
+  const SignupScreen({
+    Key? key
+    }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -101,12 +102,12 @@ class SignupScreen extends StatelessWidget {
                   PrimaryButton(
                     text: AppLocalizations.of(context)?.continueText ?? 'បន្ត',
                     onPressed: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder:(context) => const SignupDetailScreen(),
-                      //   ),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:(context) => const SignupDetailScreen(),
+                        ),
+                      );
                     },
                   ),
                   const SizedBox(height: 12),

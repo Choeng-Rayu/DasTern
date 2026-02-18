@@ -93,6 +93,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+<<<<<<< HEAD
+# Initialize engines
+=======
 # Import and include extraction routes
 try:
     from .api.extraction_routes import router as extraction_router
@@ -102,7 +105,7 @@ except ImportError as e:
     logger.warning(f"⚠️ Fine-tuned extraction routes not available: {e}")
 
 # Initialize reminder engine
-# Initialize engines
+>>>>>>> c04fb50ce3d62100ad607cc395b368e4045989f9
 ollama_client = OllamaClient()
 reminder_engine = ReminderEngine(ollama_client)
 
@@ -396,4 +399,6 @@ async def chat(request: ChatRequest):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8001)
+    host = os.getenv("AI_SERVICE_HOST", "0.0.0.0")
+    port = int(os.getenv("AI_SERVICE_PORT", "8001"))
+    uvicorn.run(app, host=host, port=port)

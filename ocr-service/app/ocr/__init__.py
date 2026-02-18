@@ -1,5 +1,5 @@
 <<<<<<< HEAD
-# OCR Engines and Processors
-=======
 """OCR Engine Module"""
->>>>>>> 956213acb02fd8a10977582667da49fee5a0be8e
+=======
+# OCR Engines and Processors
+>>>>>>> 479e2f047f47a189e6575eb2c4ec1dee4038fac6

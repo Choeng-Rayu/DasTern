@@ -1,18 +1,4 @@
 <<<<<<< HEAD
-# Build stage for Python dependencies
-FROM python:3.11-slim as builder
-
-WORKDIR /app
-
-# Install build dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install Python dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir --user -r requirements.txt
-=======
 # ===========================================
 # DasTern OCR Service
 # Python 3.10 + PaddleOCR + LayoutLMv3
@@ -44,10 +30,28 @@ RUN pip install \
     --default-timeout=1000 \
     --retries 5 \
     -r requirements.txt
->>>>>>> 956213acb02fd8a10977582667da49fee5a0be8e
+=======
+# Build stage for Python dependencies
+FROM python:3.11-slim as builder
+
+WORKDIR /app
+
+# Install build dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir --user -r requirements.txt
+>>>>>>> 479e2f047f47a189e6575eb2c4ec1dee4038fac6
 
 
 <<<<<<< HEAD
+EXPOSE 8002
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8002"]
+=======
 # Production stage
 FROM python:3.11-slim
 
@@ -90,8 +94,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
 
 # Run the application
 CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8002"]
-=======
-EXPOSE 8002
-
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8002"]
->>>>>>> 956213acb02fd8a10977582667da49fee5a0be8e
+>>>>>>> 479e2f047f47a189e6575eb2c4ec1dee4038fac6

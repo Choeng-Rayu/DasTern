@@ -1,6 +1,6 @@
 <<<<<<< HEAD
-"""Core AI generation module"""
-=======
 """Core LLM functionality"""
 
->>>>>>> 956213acb02fd8a10977582667da49fee5a0be8e
+=======
+"""Core AI generation module"""
+>>>>>>> 479e2f047f47a189e6575eb2c4ec1dee4038fac6
