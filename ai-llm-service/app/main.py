@@ -1,24 +1,16 @@
 """
-AI LLM Service API Entry Point
-FastAPI application for prescription enhancement using LLaMA/Ollama
+AI LLM Service - Ollama-based API
+Handles OCR correction and chatbot functionality using Ollama
 """
 
 import logging
 from datetime import datetime
-<<<<<<< HEAD
 from contextlib import asynccontextmanager
-=======
-from typing import Optional, Dict, Any
-
->>>>>>> 956213acb02fd8a10977582667da49fee5a0be8e
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 try:
     from .schemas import OCRCorrectionRequest, OCRCorrectionResponse
     from .schemas import ChatRequest, ChatResponse
-    from .ocr_corrector import correct_ocr_text
-    from .chat_assistant import chat_with_assistant
-    from .model_loader import load_mt5_model
 except ImportError:
     current_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(current_dir)
@@ -26,9 +18,6 @@ except ImportError:
         sys.path.insert(0, parent_dir)
     from app.schemas import OCRCorrectionRequest, OCRCorrectionResponse
     from app.schemas import ChatRequest, ChatResponse
-    from app.ocr_corrector import correct_ocr_text
-    from app.chat_assistant import chat_with_assistant
-    from app.model_loader import load_mt5_model
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -36,10 +25,10 @@ logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info("Loading MT5 model...")
-    load_mt5_model()
-    logger.info("MT5 model loaded successfully!")
+    logger.info("Starting AI Service...")
+    # Note: Using Ollama for inference, no local model loading needed
     yield
+    logger.info("Shutting down AI Service...")
 
 # Initialize FastAPI
 app = FastAPI(
@@ -176,12 +165,21 @@ async def startup_event():
 
 @app.get("/")
 async def root():
-    """Health check endpoint"""
+    """Root endpoint"""
     return {
         "service": "AI LLM Service",
         "status": "running",
-        "model": "MT5-small",
+        "model": "ollama with Llama3.2:3b",
         "capabilities": ["ocr_correction", "chatbot"]
+    }
+
+@app.get("/health")
+async def health_check():
+    """Health check endpoint"""
+    return {
+        "status": "healthy",
+        "service": "AI LLM Service",
+        "model": "ollama with Llama3.2:3b"
     }
 
 @app.post("/api/v1/correct", response_model=OCRCorrectionResponse)
