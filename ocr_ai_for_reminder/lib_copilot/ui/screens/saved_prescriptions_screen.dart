@@ -136,7 +136,7 @@ class _SavedPrescriptionsScreenState extends State<SavedPrescriptionsScreen> {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Colors.blue.withOpacity(0.1),
+                      color: Colors.blue.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: const Icon(Icons.medical_services,
@@ -176,7 +176,7 @@ class _SavedPrescriptionsScreenState extends State<SavedPrescriptionsScreen> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.orange.withOpacity(0.1),
+                    color: Colors.orange.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
@@ -333,7 +333,7 @@ class _SavedPrescriptionsScreenState extends State<SavedPrescriptionsScreen> {
           const SizedBox(height: 8),
           _buildInfoRow(Icons.medication, 'Dosage', med.dosage),
           _buildInfoRow(
-              Icons.schedule, 'Times', med.times24h.join(', ') + ' (' + med.times.join(', ') + ')'),
+              Icons.schedule, 'Times', '${med.times24h.join(', ')} (${med.times.join(', ')})'),
           _buildInfoRow(Icons.repeat, 'Repeat', med.repeat),
           if (med.durationDays != null)
             _buildInfoRow(
@@ -406,11 +406,13 @@ class _SavedPrescriptionsScreenState extends State<SavedPrescriptionsScreen> {
           ),
           ElevatedButton(
             onPressed: () async {
-              Navigator.pop(context);
+              final nav = Navigator.of(context);
+              final messenger = ScaffoldMessenger.of(context);
+              nav.pop();
               await _storage.clearAll();
               await _loadPrescriptions();
               if (mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
+                messenger.showSnackBar(
                   const SnackBar(content: Text('All prescriptions cleared')),
                 );
               }

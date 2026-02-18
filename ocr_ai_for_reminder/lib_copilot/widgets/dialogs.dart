@@ -5,15 +5,15 @@ class LoadingDialog extends StatelessWidget {
   final bool isDismissible;
 
   const LoadingDialog({
-    Key? key,
+    super.key,
     this.message = 'Processing...',
     this.isDismissible = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => isDismissible,
+    return PopScope(
+      canPop: isDismissible,
       child: Dialog(
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -42,12 +42,12 @@ class ErrorDialog extends StatelessWidget {
   final VoidCallback? onDismiss;
 
   const ErrorDialog({
-    Key? key,
+    super.key,
     this.title = 'Error',
     required this.message,
     this.onRetry,
     this.onDismiss,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -83,18 +83,18 @@ class SuccessDialog extends StatelessWidget {
   final VoidCallback? onConfirm;
 
   const SuccessDialog({
-    Key? key,
+    super.key,
     this.title = 'Success',
     required this.message,
     this.onConfirm,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Row(
         children: [
-          Icon(Icons.check_circle, color: Colors.green, size: 28),
+          const Icon(Icons.check_circle, color: Colors.green, size: 28),
           const SizedBox(width: 12),
           Expanded(child: Text(title)),
         ],

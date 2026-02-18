@@ -1,0 +1,196 @@
+{
+  "demo_timestamp": "2026-01-23T09:37:36.266364",
+  "prescription_image": {
+    "filename": "khmer_prescription_001.jpg",
+    "size": "2.3 MB",
+    "format": "JPEG",
+    "dimensions": "1920x1080",
+    "patient_id": "550e8400-e29b-41d4-a716-446655440000"
+  },
+  "ocr_result": {
+    "raw_text": "SOK HENG POLYCLINIC\nតេជោបញ្ញា\n\nឈ្មោះ: ឈុន ចាប់ ភេទ: ស្រី អាយុ: 47 ឆ្នាំ\n\nលេខ ឈ្មោះថ្នាំ ចំនួន ព្រឹក ថ្ងៃ ល្ងាច យប់ សម្គាល់ ថ្ងៃ\n1. Calcium amp Tablet 1 - - - ថ្នាំបញ្ចុះ 4\n2. Multivitamine Tablet 1 - 1 - ថ្នាំបញ្ចុះ 10\n3. Amitriptyline 10mg - - - 1 ថ្នាំបញ្ចុះ 5",
+    "confidence": 0.87,
+    "language": "km",
+    "processing_time": 3.2
+  },
+  "ai_result": {
+    "corrected_text": "SOK HENG POLYCLINIC\nតេជោបញ្ញា\n\nឈ្មោះ: ឈុន ចាប់ ភេទ: ស្រី អាយុ: 47 ឆ្នាំ\n\nលេខ ឈ្មោះថ្នាំ ចំនួន ព្រឹក ថ្ងៃ ល្ងាច យប់ សម្គាល់ ថ្ងៃ\n1. Calcium amp Tablet 1 - - - ថ្នាំបញ្ចុះ 4\n2. Multivitamine Tablet 1 - 1 - ថ្នាំបញ្ចុះ 10\n3. Amitriptyline 10mg - - - 1 ថ្នាំបញ្ចុះ 5",
+    "confidence": 0.92,
+    "corrections_made": 3,
+    "processing_time": 1.8
+  },
+  "medications": [
+    {
+      "name": "Calcium",
+      "strength": null,
+      "dosage": "1 tablet",
+      "frequency": "once daily",
+      "duration": "4 days",
+      "timing": {
+        "morning": true,
+        "noon": false,
+        "evening": false,
+        "night": false
+      },
+      "instructions": "Take as prescribed"
+    },
+    {
+      "name": "Multivitamine",
+      "strength": null,
+      "dosage": "1 tablet",
+      "frequency": "twice daily",
+      "duration": "10 days",
+      "timing": {
+        "morning": true,
+        "noon": true,
+        "evening": false,
+        "night": false
+      },
+      "instructions": "Take as prescribed"
+    },
+    {
+      "name": "Amitriptyline",
+      "strength": "10mg",
+      "dosage": "1 tablet",
+      "frequency": "once daily",
+      "duration": "5 days",
+      "timing": {
+        "morning": false,
+        "noon": false,
+        "evening": false,
+        "night": true
+      },
+      "instructions": "Take as prescribed"
+    }
+  ],
+  "reminders": [
+    {
+      "medication_name": "Calcium",
+      "reminder_times": [
+        "08:00"
+      ],
+      "start_date": "2026-01-23",
+      "end_date": "2026-01-27",
+      "duration_days": 4,
+      "total_reminders": 4
+    },
+    {
+      "medication_name": "Multivitamine",
+      "reminder_times": [
+        "08:00",
+        "12:00"
+      ],
+      "start_date": "2026-01-23",
+      "end_date": "2026-02-02",
+      "duration_days": 10,
+      "total_reminders": 20
+    },
+    {
+      "medication_name": "Amitriptyline",
+      "reminder_times": [
+        "22:00"
+      ],
+      "start_date": "2026-01-23",
+      "end_date": "2026-01-28",
+      "duration_days": 5,
+      "total_reminders": 5
+    }
+  ],
+  "database_records": {
+    "prescription_id": "123e4567-e89b-12d3-a456-426614174000",
+    "medications_saved": 3,
+    "reminders_created": 3,
+    "storage_time": 0.3
+  },
+  "api_response": {
+    "success": true,
+    "prescription_id": "123e4567-e89b-12d3-a456-426614174000",
+    "ocr_confidence": 0.87,
+    "ai_enhanced": true,
+    "medications": [
+      {
+        "name": "Calcium",
+        "strength": null,
+        "dosage": "1 tablet",
+        "frequency": "once daily",
+        "duration": "4 days",
+        "timing": {
+          "morning": true,
+          "noon": false,
+          "evening": false,
+          "night": false
+        },
+        "instructions": "Take as prescribed"
+      },
+      {
+        "name": "Multivitamine",
+        "strength": null,
+        "dosage": "1 tablet",
+        "frequency": "twice daily",
+        "duration": "10 days",
+        "timing": {
+          "morning": true,
+          "noon": true,
+          "evening": false,
+          "night": false
+        },
+        "instructions": "Take as prescribed"
+      },
+      {
+        "name": "Amitriptyline",
+        "strength": "10mg",
+        "dosage": "1 tablet",
+        "frequency": "once daily",
+        "duration": "5 days",
+        "timing": {
+          "morning": false,
+          "noon": false,
+          "evening": false,
+          "night": true
+        },
+        "instructions": "Take as prescribed"
+      }
+    ],
+    "reminders": [
+      {
+        "medication_name": "Calcium",
+        "reminder_times": [
+          "08:00"
+        ],
+        "start_date": "2026-01-23",
+        "end_date": "2026-01-27",
+        "duration_days": 4,
+        "total_reminders": 4
+      },
+      {
+        "medication_name": "Multivitamine",
+        "reminder_times": [
+          "08:00",
+          "12:00"
+        ],
+        "start_date": "2026-01-23",
+        "end_date": "2026-02-02",
+        "duration_days": 10,
+        "total_reminders": 20
+      },
+      {
+        "medication_name": "Amitriptyline",
+        "reminder_times": [
+          "22:00"
+        ],
+        "start_date": "2026-01-23",
+        "end_date": "2026-01-28",
+        "duration_days": 5,
+        "total_reminders": 5
+      }
+    ],
+    "message": "Prescription processed successfully. Created 3 medications and 3 reminders."
+  },
+  "summary": {
+    "total_processing_time": 5.3,
+    "medications_count": 3,
+    "reminders_count": 3,
+    "total_notifications": 29,
+    "success": true
+  }
+}

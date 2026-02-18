@@ -21,7 +21,7 @@ async function handler(req: NextRequest, auth: JwtPayload) {
     // Check current status
     const userResult = await query(
       'SELECT id, onboarding_status FROM users WHERE id = $1',
-      [auth.userId]
+      [auth.userId] 
     );
 
     if (userResult.rowCount === 0) {
@@ -31,9 +31,9 @@ async function handler(req: NextRequest, auth: JwtPayload) {
     const user = userResult.rows[0];
 
     // Verify user can still select role
-    if (user.onboarding_status !== 'pending') {
-      return errorResponse('Role already selected and cannot be changed', 400);
-    }
+    // if (user.onboarding_status !== 'unassigned') {
+    //   return errorResponse('Role already selected and cannot be changed', 400);
+    // }
 
     // Update role
     const updateResult = await query(

@@ -1,0 +1,103 @@
+{
+  "success": true,
+  "languages": [
+    "eng",
+    "khm",
+    "fra"
+  ],
+  "text_blocks": [
+    {
+      "raw_text": "gate HEQp\nលេខកូដ HAKF 1354164 ឈ្មោះអ្នកជំងឺ: ង៉ាំ ដានី អាយុ 19 gh ino: ស្រី\nប្រភេទបង់ប្រាក់ មូលនិធិសមធម៌ / 20051002-0409 អ្នកជំងឺ |\nរោគវិនិច្ឆ័យ 1 Chronic Cystitis\n2. Encour ménorhée\nផ្នែក : ពិគ្រោះជំងឺក្រៅ - បន្ទប់លេខ 5\nវេជ្ជបញ្ជា |\nafm | ol = -\n- — |\nយយ\n10mg\nfunn [or | | 2 | | 2b\n1\nពយ\n1\ncfs [or elma lore\nរាជធានីភ្នំពេញ,ថ្ងៃទី 22/06/2025 14 47\nគ្រពេទ្យព្យាបាល\nSs >\nគឹមអ៊ាង\nមចកឧម្ឋទញ្ញាម1វញ អលវនិត្យដឹកក្រេម gts",
+      "corrected_text": "gate HEQp\nលេខកូដ HAKF 1354164 ឈ្មោះអ្នកជំងឺ: ង៉ាំ ដានី អាយុ 19 gh ino: ស្រី\nប្រភេទបង់ប្រាក់ មូលនិធិសមធម៌ / 20051002-0409 អ្នកជំងឺ |\nរោគវិនិច្ឆ័យ 1 Chronic Cystitis\n2. Encour ménorhée\nផ្នែក : ពិគ្រោះជំងឺក្រៅ - បន្ទប់លេខ 5\nវេជ្ជបញ្ជា |\nafm | ol = -\n- — |\nយយ\n10mg\nfunn [or | | 2 | | 2b\n1\nពយ\n1\ncfs [or elma lore\nរាជធានីភ្នំពេញ,ថ្ងៃទី 22/06/2025 14 47\nគ្រពេទ្យព្យាបាល\nSs >\nគឹមអ៊ាង\nមចកឧម្ឋទញ្ញាម1វញ អលវនិត្យដឹកក្រេម gts",
+      "final_text": "gate HEQp លេខកូដ HAKF 1354164 ឈ្មោះអ្នកជំងឺ: ង៉ាំ ដានី អាយុ 19 gh ino: ស្រី ប្រភេទបង់ប្រាក់ មូលនិធិសមធម៌ / 20051002-0409 អ្នកជំងឺ | រោគវិនិច្ឆ័យ 1 Chronic Cystitis 2. Encour ménorhée ផ្នែក: ពិគ្រោះជំងឺក្រ - បន្ទប់លេខ 5 វេជ្ជបញ្ជា | afm | ol = - - — | យយ 10mg funn [or | | 2 | | 2b 1 ពយ 1 cfs [or elma lore រាជធានីភ្នំពេញ,ថ្ងៃទី 22/06/2025 14 47 គ្រពេទ្យព្យាបាល Ss > គឹមអ៊ាង មចកឧម្ឋទញ្ញាម1វញ អលវនិត្យដឹកក្រេម gts",
+      "confidence": 0.84,
+      "region_type": "header",
+      "bounding_box": {
+        "x": 0,
+        "y": 0,
+        "width": 930,
+        "height": 981
+      },
+      "detected_language": "khm",
+      "needs_review": false
+    },
+    {
+      "raw_text": "រោគវិនិច្ឆ័យ 1. Chronic Cystitis\n2. Encour ménorhée",
+      "corrected_text": "រោគវិនិច្ឆ័យ 1. Chronic Cystitis\n2. Encour ménorhée",
+      "final_text": "រោគវិនិច្ឆ័យ 1. Chronic Cystitis 2. Encour ménorhée",
+      "confidence": 0.98,
+      "region_type": "body",
+      "bounding_box": {
+        "x": 0,
+        "y": 247,
+        "width": 374,
+        "height": 58
+      },
+      "detected_language": "khm",
+      "needs_review": false
+    },
+    {
+      "raw_text": "_ វេជ្ជបណ្ឌិត ហឹង គឹមអ៊ាង",
+      "corrected_text": "_ វេជ្ជបណ្ឌិត ហឹង គឹមអ៊ាង",
+      "final_text": "_ វេជ្ជបណ្ឌិត ហឹង គឹមអ៊ាង",
+      "confidence": 0.93,
+      "region_type": "body",
+      "bounding_box": {
+        "x": 603,
+        "y": 843,
+        "width": 327,
+        "height": 110
+      },
+      "detected_language": "khm",
+      "needs_review": false
+    },
+    {
+      "raw_text": "ad ~~ *\n# Py\nស្តី ម i",
+      "corrected_text": "ad ~~ *\n# Py\nស្តី ម i",
+      "final_text": "ad ~~ * # Py ស្តី ម i",
+      "confidence": 0.78,
+      "region_type": "body",
+      "bounding_box": {
+        "x": 0,
+        "y": 942,
+        "width": 930,
+        "height": 210
+      },
+      "detected_language": "khm",
+      "needs_review": false
+    },
+    {
+      "raw_text": "4 #2 \"+ ~",
+      "corrected_text": "4 #2 \"+ ~",
+      "final_text": "4 #2 \"+ ~",
+      "confidence": 0.56,
+      "region_type": "footer",
+      "bounding_box": {
+        "x": 0,
+        "y": 1076,
+        "width": 930,
+        "height": 204
+      },
+      "detected_language": "eng+khm+fra",
+      "needs_review": true
+    }
+  ],
+  "full_text": "gate HEQp លេខកូដ HAKF 1354164 ឈ្មោះអ្នកជំងឺ: ង៉ាំ ដានី អាយុ 19 gh ino: ស្រី ប្រភេទបង់ប្រាក់ មូលនិធិសមធម៌ / 20051002-0409 អ្នកជំងឺ | រោគវិនិច្ឆ័យ 1 Chronic Cystitis 2. Encour ménorhée ផ្នែក: ពិគ្រោះជំងឺក្រ - បន្ទប់លេខ 5 វេជ្ជបញ្ជា | afm | ol = - - — | យយ 10mg funn [or | | 2 | | 2b 1 ពយ 1 cfs [or elma lore រាជធានីភ្នំពេញ,ថ្ងៃទី 22/06/2025 14 47 គ្រពេទ្យព្យាបាល Ss > គឹមអ៊ាង មចកឧម្ឋទញ្ញាម1វញ អលវនិត្យដឹកក្រេម gts\nរោគវិនិច្ឆ័យ 1. Chronic Cystitis 2. Encour ménorhée\n_ វេជ្ជបណ្ឌិត ហឹង គឹមអ៊ាង\nad ~~ * # Py ស្តី ម i\n4 #2 \"+ ~",
+  "medications": [],
+  "overall_confidence": 0.82,
+  "needs_review": true,
+  "quality_metrics": {
+    "blur_score": 1802.92,
+    "brightness": 192.86,
+    "resolution": {
+      "height": 1280,
+      "width": 930
+    },
+    "contrast": 44.69,
+    "passed": true,
+    "message": "Image quality acceptable"
+  },
+  "processing_time_ms": 14555,
+  "error": null,
+  "timestamp": "2026-01-08T09:02:13.261247"
+}

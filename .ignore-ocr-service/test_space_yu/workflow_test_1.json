@@ -1,0 +1,83 @@
+{
+  "prescription_name": "SOK HENG POLYCLINIC Prescription",
+  "ocr_text": "SOK HENG POLYCLINIC\nតេជោបញ្ញា\n\nឈ្មោះ: ឈុន ចាប់ ភេទ: ស្រី អាយុ: 47 ឆ្នាំ\n\nលេខ ឈ្មោះថ្នាំ ចំនួន ព្រឹក ថ្ងៃ ល្ងាច យប់ សម្គាល់ ថ្ងៃ\n1. Calcium amp Tablet 1 - - - ថ្នាំបញ្ចុះ 4\n2. Multivitamine Tablet 1 - 1 - ថ្នាំបញ្ចុះ 10\n3. Amitriptyline 10mg - - - 1 ថ្នាំបញ្ចុះ 5",
+  "medications": [
+    {
+      "name": "Calcium",
+      "strength": null,
+      "dosage": "1 tablet",
+      "frequency": "twice daily",
+      "duration": "4 days",
+      "timing": {
+        "morning": true,
+        "noon": true,
+        "evening": false,
+        "night": false
+      }
+    },
+    {
+      "name": "Multivitamine",
+      "strength": null,
+      "dosage": "1 tablet",
+      "frequency": "three times daily",
+      "duration": "10 days",
+      "timing": {
+        "morning": true,
+        "noon": true,
+        "evening": false,
+        "night": true
+      }
+    },
+    {
+      "name": "Amitriptyline",
+      "strength": "10mg",
+      "dosage": "1 tablet",
+      "frequency": "twice daily",
+      "duration": "5 days",
+      "timing": {
+        "morning": true,
+        "noon": true,
+        "evening": false,
+        "night": false
+      }
+    }
+  ],
+  "reminders": [
+    {
+      "medication_name": "Calcium",
+      "strength": null,
+      "dosage": "1 tablet",
+      "reminder_times": [
+        "08:00",
+        "12:00"
+      ],
+      "duration_days": 4,
+      "frequency": "twice daily"
+    },
+    {
+      "medication_name": "Multivitamine",
+      "strength": null,
+      "dosage": "1 tablet",
+      "reminder_times": [
+        "08:00",
+        "12:00",
+        "22:00"
+      ],
+      "duration_days": 10,
+      "frequency": "three times daily"
+    },
+    {
+      "medication_name": "Amitriptyline",
+      "strength": "10mg",
+      "dosage": "1 tablet",
+      "reminder_times": [
+        "08:00",
+        "12:00"
+      ],
+      "duration_days": 5,
+      "frequency": "twice daily"
+    }
+  ],
+  "test_passed": true,
+  "timestamp": "2026-01-23 09:35:19"
+}

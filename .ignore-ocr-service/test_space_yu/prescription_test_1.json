@@ -1,0 +1,133 @@
+{
+  "prescription_id": "test_1",
+  "ocr_text": "SOK HENG POLYCLINIC\n        តេជោបញ្ញា\n        \n        ឈ្មោះ: ឈុន ចាប់ ភេទ: ស្រី អាយុ: 47 ឆ្នាំ\n        \n        លេខ ឈ្មោះថ្នាំ ចំនួន ព្រឹក ថ្ងៃ ល្ងាច យប់ សម្គាល់ ថ្ងៃ\n        1. Calcium amp Tablet 1 - - - ថ្នាំបញ្ចុះ 4\n        2. Multivitamine Tablet 1 - 1 - ថ្នាំបញ្ចុះ 10\n        3. Amitriptyline 10mg - - - 1 ថ្នាំបញ្ចុះ 5",
+  "medications": [
+    {
+      "name": "Calcium",
+      "strength": null,
+      "dosage": "1 tablet",
+      "timing": {
+        "morning": true,
+        "noon": true,
+        "evening": false,
+        "night": false
+      },
+      "frequency": "twice daily",
+      "duration": "4 days",
+      "instructions": "Take as prescribed",
+      "raw_line": "1. Calcium amp Tablet 1 - - - ថ្នាំបញ្ចុះ 4"
+    },
+    {
+      "name": "Multivitamine",
+      "strength": null,
+      "dosage": "1 tablet",
+      "timing": {
+        "morning": true,
+        "noon": true,
+        "evening": false,
+        "night": true
+      },
+      "frequency": "three times daily",
+      "duration": "10 days",
+      "instructions": "Take as prescribed",
+      "raw_line": "2. Multivitamine Tablet 1 - 1 - ថ្នាំបញ្ចុះ 10"
+    },
+    {
+      "name": "Amitriptyline",
+      "strength": "10mg",
+      "dosage": "1 tablet",
+      "timing": {
+        "morning": true,
+        "noon": true,
+        "evening": false,
+        "night": false
+      },
+      "frequency": "twice daily",
+      "duration": "5 days",
+      "instructions": "Take as prescribed",
+      "raw_line": "3. Amitriptyline 10mg - - - 1 ថ្នាំបញ្ចុះ 5"
+    }
+  ],
+  "reminders": [
+    {
+      "medication_name": "Calcium",
+      "strength": null,
+      "dosage": "1 tablet",
+      "reminder_times": [
+        "08:00",
+        "12:00"
+      ],
+      "days_of_week": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "duration_days": 4,
+      "instructions": "Take as prescribed",
+      "timing_details": {
+        "morning": true,
+        "noon": true,
+        "evening": false,
+        "night": false
+      }
+    },
+    {
+      "medication_name": "Multivitamine",
+      "strength": null,
+      "dosage": "1 tablet",
+      "reminder_times": [
+        "08:00",
+        "12:00",
+        "22:00"
+      ],
+      "days_of_week": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "duration_days": 10,
+      "instructions": "Take as prescribed",
+      "timing_details": {
+        "morning": true,
+        "noon": true,
+        "evening": false,
+        "night": true
+      }
+    },
+    {
+      "medication_name": "Amitriptyline",
+      "strength": "10mg",
+      "dosage": "1 tablet",
+      "reminder_times": [
+        "08:00",
+        "12:00"
+      ],
+      "days_of_week": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "duration_days": 5,
+      "instructions": "Take as prescribed",
+      "timing_details": {
+        "morning": true,
+        "noon": true,
+        "evening": false,
+        "night": false
+      }
+    }
+  ],
+  "timestamp": "2026-01-23T10:00:00Z"
+}

@@ -176,13 +176,13 @@ async function completeDoctorProfile(userId: string, data: any): Promise<Profile
   try {
     await client.query('BEGIN');
 
-    // Create doctor profile (pending verification)
+    // Create doctor profile (auto-verified)
     const profileResult = await client.query(
       `INSERT INTO doctor_profiles (
         user_id, license_number, specialization, hospital_name,
         years_of_experience, clinic_name, hospital_address,
         verification_status
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, 'pending')
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, 'verified')
       ON CONFLICT (user_id) DO UPDATE SET
         license_number = EXCLUDED.license_number,
         specialization = EXCLUDED.specialization,
@@ -190,6 +190,7 @@ async function completeDoctorProfile(userId: string, data: any): Promise<Profile
         years_of_experience = EXCLUDED.years_of_experience,
         clinic_name = EXCLUDED.clinic_name,
         hospital_address = EXCLUDED.hospital_address,
+        verification_status = 'verified',
         updated_at = NOW()
       RETURNING *`,
       [
@@ -203,10 +204,10 @@ async function completeDoctorProfile(userId: string, data: any): Promise<Profile
       ]
     );
 
-    // Update user status to profile_pending (needs admin verification)
+    // Update user status to active (profile completed and verified)
     const userResult = await client.query(
       `UPDATE users SET
-        onboarding_status = 'profile_pending',
+        onboarding_status = 'active',
         profile_completed_at = NOW(),
         updated_at = NOW()
       WHERE id = $1
@@ -220,7 +221,7 @@ async function completeDoctorProfile(userId: string, data: any): Promise<Profile
       success: true,
       user: userResult.rows[0],
       profile: profileResult.rows[0],
-      nextStep: 'awaiting_verification'
+      nextStep: 'dashboard'
     };
 
   } catch (error) {

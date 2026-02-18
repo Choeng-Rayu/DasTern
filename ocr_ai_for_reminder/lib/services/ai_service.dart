@@ -4,23 +4,25 @@ import '../core/constants/api_constants.dart';
 import '../data/dtos/ai_response_dto.dart';
 import '../utils/app_logger.dart';
 
-class AiService {
-  final http.Client _client;
+class AIService {
+  final APIClient apiClient;
+  final Logger logger = Logger();
 
-  AiService({http.Client? client}) : _client = client ?? http.Client();
+  AIService({required this.apiClient});
 
-  Future<AiResponseDto> enhancePrescription(Map<String, dynamic> ocrData) async {
-    final uri = Uri.parse('${ApiConstants.aiBaseUrl}${ApiConstants.prescriptionProcessEndpoint}');
-    
-    AppLogger.i('Sending OCR data to AI Service: $uri');
-
+  /// Correct OCR text using AI
+  Future<AIProcessingResult> correctOCRText(
+    String rawText, {
+    String language = 'en',
+    Map<String, dynamic>? context,
+  }) async {
     try {
-      final response = await _client.post(
-        uri,
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({
-          'raw_ocr_json': ocrData,
-        }),
+      logger.i('Correcting OCR text with AI');
+
+      final result = await apiClient.correctOCRText(
+        rawText,
+        language: language,
+        context: context,
       );
 
       AppLogger.d('AI Service Response: ${response.statusCode}');

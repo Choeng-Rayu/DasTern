@@ -12,7 +12,7 @@ class RoundedButton extends StatelessWidget {
   final Size minimumSize;
 
   const RoundedButton({
-    Key? key,
+    super.key,
     required this.label,
     required this.onPressed,
     this.backgroundColor = Colors.blue,
@@ -22,7 +22,7 @@ class RoundedButton extends StatelessWidget {
     this.isEnabled = true,
     this.icon,
     this.minimumSize = const Size(double.infinity, 50),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,7 @@ class TextInputField extends StatefulWidget {
   final VoidCallback? onSuffixIconPressed;
 
   const TextInputField({
-    Key? key,
+    super.key,
     required this.label,
     this.hint,
     required this.controller,
@@ -81,7 +81,7 @@ class TextInputField extends StatefulWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.onSuffixIconPressed,
-  }) : super(key: key);
+  });
 
   @override
   State<TextInputField> createState() => _TextInputFieldState();
@@ -139,13 +139,13 @@ class EmptyStateWidget extends StatelessWidget {
   final String? actionLabel;
 
   const EmptyStateWidget({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     required this.description,
     this.onActionPressed,
     this.actionLabel,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
