@@ -1,18 +1,30 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
-import { successResponse, errorResponse } from '@/lib/utils/response';
+import { withPatientAuth } from '@/lib/middleware/auth';
 
-export async function POST(req: NextRequest) {
+export const GET = withPatientAuth(async (req, auth) => {
   try {
-    const { doctor_id, patient_id } = await req.json();
-    // Patient approves access
-    await query(
-      `UPDATE doctor_patient_access SET status = 'approved', approved_at = NOW()
-       WHERE doctor_id = $1 AND patient_id = $2 AND status = 'pending'`,
-      [doctor_id, patient_id]
+    const result = await query(
+      `SELECT dpr.id, dpr.doctor_id, dpr.status, dpr.created_at, dpr.updated_at,
+              u.first_name AS doctor_first_name, u.last_name AS doctor_last_name, u.email AS doctor_email
+       FROM doctor_patient_relationships dpr
+       JOIN users u ON dpr.doctor_id = u.id
+       WHERE dpr.patient_id = $1 AND dpr.status = 'pending'`,
+      [auth.userId]
     );
-    return successResponse({}, 'Access approved');
-  } catch (error) {
-    return errorResponse('Failed to approve access', 500);
+    return NextResponse.json(
+      {
+        success: true,
+        message: 'Doctor requests fetched successfully',
+        data: result.rows
+      },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    console.error('Error fetching doctor requests:', error.message, error.stack);
+    return NextResponse.json(
+      { success: false, error: error.message || 'Failed to fetch doctor requests' },
+      { status: 500 }
+    );
   }
-}
+});

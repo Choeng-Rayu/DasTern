@@ -174,52 +174,50 @@ class UserHeader extends StatelessWidget {
 
   /// Build hospital logo widget integrated into the header
   Widget _buildHospitalLogo() {
-    return Flexible(
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: logoRadius * 2.5,
-            height: logoRadius * 1.5,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: logoRadius * 2.5,
+          height: logoRadius * 1.5,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+            border: Border.all(
+              color: Colors.blue.shade300,
+              width: 2,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.15),
+                blurRadius: 6,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: ClipOval(
+              child: Image.asset(
+                'assets/images/doctor.png',
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 6),
+        Expanded(
+          child: Text(
+            hospitalName,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
               color: Colors.white,
-              border: Border.all(
-                color: Colors.blue.shade300,
-                width: 2,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.15),
-                  blurRadius: 6,
-                  offset: const Offset(0, 2),
-                ),
-              ],
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: ClipOval(
-                child: Image.asset(
-                  'assets/images/doctor.png',
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
+            overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(width: 6),
-          Flexible(
-            child: Text(
-              hospitalName,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

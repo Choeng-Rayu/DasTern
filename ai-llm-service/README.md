@@ -1,20 +1,22 @@
 # AI-LLM Service
 
-AI-powered prescription OCR correction and parsing service using LLaMA 3.1 8B via Ollama.
+AI-powered prescription OCR extraction service using **fine-tuned LLaMA 3.1 8B** (dastern-medical-extractor) via Ollama.
 
 ## What This Does
 
-Takes messy OCR output from prescription images and:
-- **Corrects OCR errors** (s00mg → 500mg, Esome → Esomeprazole)
-- **Extracts key medical data** (patient, medications, dosages, instructions)
-- **Ignores irrelevant data** (IDs, phone numbers, layout artifacts)
-- **Outputs clean JSON** for the DasTern mobile app
+Takes OCR output from prescription images and:
+- **Corrects OCR errors** (s00mg → 500mg, paracetamo1 → Paracetamol)
+- **Extracts structured medical data** (medications with dosage, frequency, duration)
+- **Extracts diagnosis** (medical conditions)
+- **Extracts prescriber information** (doctor name, facility)
+- **Outputs database-ready JSON** with 18 prescription fields
+- **Supports mixed languages** (English, Khmer, French)
 
 ---
 
 ## Setup (First Time)
 
-### 1. Install Ollama & Download Model
+### 1. Install Ollama & Download Base Model
 
 ```bash
 # Install Ollama
@@ -23,11 +25,12 @@ brew install ollama
 # Start Ollama server (keep this running in one terminal)
 ollama serve
 
-# In another terminal, download LLaMA model (4.9GB, one-time download)
+# In another terminal, download base LLaMA model (4.9GB, one-time download)
 ollama pull llama3.1:8b
 
 # Verify model is downloaded
 ollama list
+# Should show: llama3.1:8b
 ```
 
 ### 2. Setup Python Environment
@@ -56,48 +59,84 @@ export OLLAMA_HOST=http://localhost:11434
 echo 'export OLLAMA_HOST=http://localhost:11434' >> ~/.zshrc
 ```
 
-### 4. Verify Setup
+### 4. Create Fine-Tuned Model (Required)
+
+```bash
+# Make sure you're in the project directory with venv activated
+cd /Users/macbook/CADT/DasTern/ai-llm-service
+source venv/bin/activate
+
+# Step 1: Create training dataset from correction reports
+python tools/create_finetuning_dataset.py
+# Output: Creates data/training/finetuning_dataset.jsonl
+
+# Step 2: Fine-tune the model (takes 5-15 minutes)
+bash scripts/finetune_model.sh
+# Output: Creates dastern-medical-extractor model
+
+# Step 3: Verify fine-tuned model is created
+ollama list
+# Should now show: dastern-medical-extractor AND llama3.1:8b
+```
+
+### 5. Verify Setup
 
 ```bash
 # Check Ollama is running
 curl http://localhost:11434/api/tags
 
-# Should show: {"models":[{"name":"llama3.1:8b",...}]}
+# Should show both models
 
-# Run test
-python3 tests/test_simple.py
+# Test the fine-tuned model
+ollama run dastern-medical-extractor "Extract: Paracetamol 500mg twice daily"
+# Should return structured JSON with medication details
 ```
 
 ---
 
 ## Daily Usage
 
-Every time you start working:
+Every time you start working (3 terminals needed):
 
 ```bash
-# 1. Make sure Ollama is running (in one terminal)
+# Terminal 1: Start Ollama (keep running)
 ollama serve
 
-# 2. In your work terminal:
+# Terminal 2: Start AI Service (keep running)
 cd /Users/macbook/CADT/DasTern/ai-llm-service
 source venv/bin/activate
-export OLLAMA_HOST=http://localhost:11434
+python -m uvicorn app.main_ollama:app --reload --port 8002
+# Wait for: "Application startup complete."
 
-# Now you're ready to use the tools!
+# Terminal 3: Process OCR files
+cd /Users/macbook/CADT/DasTern/ai-llm-service
+source venv/bin/activate
+python tools/process_ocr_file.py data/your_ocr_file.json
 ```
 
 ---
 
 ## How to Use
 
-### Process OCR Data
+### Process OCR Files
+
+The main tool is `process_ocr_file.py` which extracts structured prescription data from OCR JSON files.
 
 ```bash
-# Process a prescription OCR file
-python3 tools/process_with_corrections.py data/ocr_file.json
+# Process any OCR file
+python tools/process_ocr_file.py data/your_ocr_file.json
+
+# With user ID (optional)
+python tools/process_ocr_file.py data/your_ocr_file.json user-12345
+
+# Example with existing test file
+python tools/process_ocr_file.py data/tesseract_result_7.json
 ```
 
-**Input format** (your OCR JSON):
+**Input format** - OCR JSON with any of these fields:
+- `full_text` (most common)
+- `corrected_text` (Tesseract format)
+- `text` (generic format)
 ```json
 {
   "corrected_text": "Dr. Sun Moniroth\nPatient: Mr. Pich\nparacetamo1 s00mg...",
@@ -106,60 +145,51 @@ python3 tools/process_with_corrections.py data/ocr_file.json
 }
 ```
 
-**Output:** Generates `reports/correction_report_YYYYMMDD_HHMMSS.json` with:
-- Original OCR text
-- AI-enhanced output
-- All corrections made
-- Quality metrics
+**Output:** Creates `data/extracted_*.json` with database-ready data:
+```json
+{
+  "success": true,
+  "extracted_data": {
+    "medications": [{
+      "medication_name": "Paracetamol",
+      "strength": "500mg",
+      "form": "tablet",
+      "dosage": "1 tablet",
+      "frequency": "twice daily",
+      "frequency_times": 2,
+      "duration": "7 days",
+      "duration_days": 7
+    }],
+    "diagnosis": ["Chronic Cystitis"],
+    "prescriber_name": "Dr. Sun Moniroth"
+  },
+  "model_used": "dastern-medical-extractor",
+  "confidence": 0.90
+}
+```
 
-### Add Training Data (Teach the AI)
+### Improve Model Accuracy (Re-train)
 
-**When to use:** AI makes mistakes on a new hospital format
-
-**What you need:** The original prescription **image** (not just OCR output)
-
-**How it works:**
+**When to use:** Add more training examples to improve accuracy
 
 ```bash
-python3 tools/add_training_simple.py data/new_prescription.json
+# Step 1: Re-create training dataset (reads all correction reports)
+python tools/create_finetuning_dataset.py
+
+# Step 2: Re-train the model (takes 5-15 minutes)
+bash scripts/finetune_model.sh
+
+# Step 3: Restart AI service (picks up new model automatically)
 ```
-
-**The tool will:**
-1. Show you the messy OCR text
-2. Ask YOU (human) to type the CORRECT data by looking at the original image
-3. Save this example so AI learns the pattern
-
-**Example session:**
-```
-📄 OCR Text (messy):
-paracetamo1 s00mg
-Patient: 25 years
-
-Now YOU look at the original image and type correct data:
-
-Patient name? Mr. Pich Chan
-Patient age? 35
-Medication name? Paracetamol
-Medication strength? 500mg
-...
-```
-
-**How AI "learns":**
-- ✅ NO model retraining required
-- ✅ Uses **few-shot learning** - includes your examples in every prompt
-- ✅ Instant - works immediately after adding example
-- ✅ Just needs 3-5 examples to handle most cases
-
-**Your examples are saved in:** `data/training/sample_prescriptions.jsonl`
 
 ### Run Tests
 
 ```bash
-# Test with real OCR data
-python3 tests/test_real_ocr_data.py
+# Test OCR processing
+python tools/process_ocr_file.py data/tesseract_result_7.json
 
-# Quick API test
-python3 tests/test_simple.py
+# Test model directly
+ollama run dastern-medical-extractor "Extract: Paracetamol 500mg BD x 7 days"
 ```
 
 ---
@@ -168,23 +198,24 @@ python3 tests/test_simple.py
 
 ```
 ai-llm-service/
-├── tools/                        # User scripts
-│   ├── add_training_simple.py    # Add training examples
-│   └── process_with_corrections.py # Process OCR files
-├── tests/                        # Test scripts
-│   ├── test_real_ocr_data.py     # Test with real data
-│   └── test_simple.py            # Quick API test
-├── app/                          # Core application
-│   ├── main.py                   # FastAPI server
-│   ├── core/                     # AI generation & model loading
-│   ├── features/prescription/    # Prescription enhancer & validator
-│   └── safety/                   # Safety checks
-├── prompts/                      # AI system prompts
-│   └── medical_system_prompt.py  # Instructions for LLaMA
-├── data/                         # Data files
-│   └── training/sample_prescriptions.jsonl  # Training examples
-├── reports/                      # Generated outputs (gitignored)
-└── requirements.txt              # Python dependencies
+├── tools/                              # CLI tools
+│   ├── process_ocr_file.py             # Main OCR processor (USE THIS)
+│   └── create_finetuning_dataset.py    # Create training data
+├── scripts/                            # Automation scripts
+│   └── finetune_model.sh               # Fine-tune model
+├── app/                                # FastAPI application
+│   ├── main_ollama.py                  # Main server
+│   ├── api/extraction_routes.py        # Extraction endpoints
+│   ├── core/finetuned_extractor.py     # Fine-tuned model client
+│   └── core/ollama_client.py           # Ollama API client
+├── data/                               # Data files
+│   ├── training/finetuning_dataset.jsonl  # Training data
+│   ├── reports/correction_report_*.json   # Correction reports
+│   └── extracted_*.json                   # Extraction outputs
+├── docs/                               # Documentation
+│   ├── FINETUNING_GUIDE.md             # Complete fine-tuning guide
+│   └── HOW_TO_RUN_AND_TEST.md          # Detailed usage guide
+└── requirements_ollama.txt             # Python dependencies
 ```
 
 ---
@@ -194,21 +225,34 @@ ai-llm-service/
 ### Daily Workflow
 
 ```bash
-# 1. Start working
+# Terminal 1: Start Ollama
+ollama serve
+
+# Terminal 2: Start AI Service  
 cd /Users/macbook/CADT/DasTern/ai-llm-service
 source venv/bin/activate
-export OLLAMA_HOST=http://localhost:11434
+python -m uvicorn app.main_ollama:app --reload --port 8002
 
-# 2. Process prescriptions
-python3 tools/process_with_corrections.py data/prescription1.json
-python3 tools/process_with_corrections.py data/prescription2.json
+# Terminal 3: Process OCR files
+cd /Users/macbook/CADT/DasTern/ai-llm-service
+source venv/bin/activate
+python tools/process_ocr_file.py data/prescription1.json
+python tools/process_ocr_file.py data/prescription2.json
 
-# 3. Check reports
-ls -lh reports/
-cat reports/correction_report_*.json | jq
+# Check outputs
+ls -lh data/extracted_*.json
+cat data/extracted_prescription1.json | python -m json.tool
 ```
 
-### Add New Hospital Format (Step-by-Step)
+### Re-train Model with New Data
+
+```bash
+# When you have new correction reports in data/reports/
+python tools/create_finetuning_dataset.py
+bash scripts/finetune_model.sh
+
+# Restart service to use updated model
+```
 
 **Scenario:** You receive OCR from a new hospital and AI makes mistakes.
 
