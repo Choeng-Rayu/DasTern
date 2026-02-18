@@ -7,8 +7,12 @@ import '../../widgets/family_patient_details.dart';
 import '../../widgets/family_prescription_list.dart';
 import '../../widgets/family_bottom_nav.dart';
 
+
+import '../../models/family_member.dart';
+
 class FamilyAlertScreen extends StatefulWidget {
-  const FamilyAlertScreen({super.key});
+  final FamilyMember member;
+  const FamilyAlertScreen({super.key, required this.member});
 
   @override
   State<FamilyAlertScreen> createState() => _FamilyAlertScreenState();
@@ -22,6 +26,7 @@ class _FamilyAlertScreenState extends State<FamilyAlertScreen> {
     final l10n = AppLocalizations.of(context)!;
     final isKhmer = Localizations.localeOf(context).languageCode == 'km';
 
+    final member = widget.member;
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FB),
       body: SingleChildScrollView(
@@ -31,8 +36,8 @@ class _FamilyAlertScreenState extends State<FamilyAlertScreen> {
             // Header with doctor icon near DasTern title
             FamilyHeaderWidget(
               appName: isKhmer ? 'ដាស់ធឺន' : 'DasTern',
-              greeting: isKhmer ? 'សួស្តី មេងហេង !' : 'Hello Mengheng!',
-              avatarImagePath: 'assets/images/doctor.png', // Doctor icon near title
+              greeting: isKhmer ? 'សួស្តី ${member.name}!' : 'Hello ${member.name}!',
+              avatarImagePath: 'assets/images/doctor.png',
               backgroundImagePath: 'assets/images/header_background.png',
               onNotificationTap: _onNotificationTap,
             ),
@@ -60,12 +65,10 @@ class _FamilyAlertScreenState extends State<FamilyAlertScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: FamilyAlertCard(
-                name: isKhmer ? 'សុខឡាង' : 'Soklang',
-                description: isKhmer
-                    ? 'នៅតែរង់ចាំទទួលថ្នាំ ពេលព្រឹក'
-                    : 'Still waiting for morning medication',
-                time: isKhmer ? '១ម៉ោងមុន' : '1 hour ago',
-                date: isKhmer ? '៣១-១២-២០២៥' : '31-12-2025',
+                name: member.name,
+                description: member.lastActivity ?? '',
+                time: '',
+                date: '',
                 profileImagePath: 'assets/images/profile.png',
                 onTap: _onAlertCardTap,
               ),
@@ -76,17 +79,17 @@ class _FamilyAlertScreenState extends State<FamilyAlertScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: FamilyPatientDetailCard(
-                name: isKhmer ? 'សុខឡាង' : 'Soklang',
-                statusLabel: l10n.pendingPrescription,
-                isPending: true,
+                name: member.name,
+                statusLabel: member.hasPendingPrescription ? l10n.pendingPrescription : 'ធម្មតា',
+                isPending: member.hasPendingPrescription,
                 genderLabel: l10n.gender,
-                genderValue: isKhmer ? 'ប្រុស' : 'Male',
-                generationLabel: isKhmer ? 'អាយុ' : 'Gen',
-                generationValue: isKhmer ? 'ឆ្នាំ១១សា៤' : 'Z',
-                ageLabel: isKhmer ? 'អាយុ' : 'Age',
-                ageValue: isKhmer ? '២០ ឆ្នាំ' : '20 years',
-                phoneLabel: isKhmer ? 'លេខទូរស័ព្ទ' : 'Phone',
-                phoneValue: '090979874',
+                genderValue: member.gender,
+                generationLabel: isKhmer ? 'ជំនាន់' : 'Gen',
+                generationValue: '-',
+                ageLabel: l10n.age,
+                ageValue: '${member.age} ${isKhmer ? 'ឆ្នាំ' : 'years'}',
+                phoneLabel: l10n.phone,
+                phoneValue: member.phone,
                 morningLabel: isKhmer ? 'ពេលព្រឹក' : 'Morning',
                 eveningLabel: isKhmer ? 'ពេលល្ងាច' : 'Evening',
                 buttonLabel: l10n.viewPrescription,
