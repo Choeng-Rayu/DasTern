@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dastern_mobile/screens/home_screen.dart';
+import 'package:dastern_mobile/ui/screens/home_screen.dart';
 
 /// Home Page Tab - Just a wrapper for navigation
 /// All UI design is in screens/home_screen.dart

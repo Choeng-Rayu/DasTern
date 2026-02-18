@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'statistics_card.dart';
+import '../cards/statistics_card.dart';
 
 class StatisticsRow extends StatelessWidget {
   final String receivedCount;

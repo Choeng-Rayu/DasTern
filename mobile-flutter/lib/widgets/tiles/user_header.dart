@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dastern_mobile/widgets/hospital_logo.dart';
+import 'package:dastern_mobile/widgets/tiles/hospital_logo.dart';
 
 class UserHeader extends StatelessWidget {
   final String userName;

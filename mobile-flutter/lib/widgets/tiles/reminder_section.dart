@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'box_card.dart';
+import '../cards/box_card.dart';
 import 'reminder_item.dart';
 
 class ReminderSection extends StatelessWidget {

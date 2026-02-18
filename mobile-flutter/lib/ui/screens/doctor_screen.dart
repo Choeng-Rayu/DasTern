@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../widgets/doctor_header.dart';
-import '../widgets/statistics_row.dart';
-import '../widgets/reminder_section.dart';
-import '../widgets/chart_section.dart';
+import '../../widgets/tiles/doctor_header.dart';
+import '../../widgets/tiles/statistics_row.dart';
+import '../../widgets/tiles/reminder_section.dart';
+import '../../widgets/cards/chart_section.dart';
 
 class DoctorScreen extends StatelessWidget {
   const DoctorScreen({Key? key}) : super(key: key);

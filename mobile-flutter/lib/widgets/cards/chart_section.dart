@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'box_card.dart';
-import 'medicine_bar_chart.dart';
+import '../tiles/medicine_bar_chart.dart';
 
 class ChartSection extends StatelessWidget {
   final List<Map<String, dynamic>> chartData;

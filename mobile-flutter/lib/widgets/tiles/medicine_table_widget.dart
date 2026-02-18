@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/medicine.dart';
+import '../../models/medicine.dart';
 
 class MedicineTableWidget extends StatelessWidget {
   final List<Medicine> items;

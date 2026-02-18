@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:dastern_mobile/widgets/background_homepage.dart';
-import 'package:dastern_mobile/widgets/user_header.dart';
+import 'package:dastern_mobile/widgets/layouts/background_homepage.dart';
+import 'package:dastern_mobile/widgets/tiles/user_header.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

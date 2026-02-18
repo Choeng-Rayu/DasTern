@@ -1,15 +1,15 @@
 import 'package:dastern_mobile/data/survey_data.dart';
-import 'package:dastern_mobile/screens/survey_screen.dart';
+import 'package:dastern_mobile/ui/screens/survey_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:dastern_mobile/l10n/app_localizations.dart';
 // import 'package:ui_for_capstone/data/survey_data.dart';
 // import 'package:ui_for_capstone/ui/screen/survey_flow_screen.dart';
-import '../widgets/hospital_logo.dart';
-import '../widgets/bottom_round_container.dart';
-import '../widgets/primary_button.dart';
-import '../widgets/auth_background.dart';
-import '../widgets/label.dart';
-import '../widgets/custom_input_field.dart';
+import '../../widgets/tiles/hospital_logo.dart';
+import '../../widgets/bottom_round_container.dart';
+import '../../widgets/buttons/primary_button.dart';
+import '../../widgets/layouts/auth_background.dart';
+import '../../widgets/tiles/label.dart';
+import '../../widgets/inputs/custom_input_field.dart';
 
 class SignupDetailScreen extends StatelessWidget {
   const SignupDetailScreen({Key? key}) : super(key: key);

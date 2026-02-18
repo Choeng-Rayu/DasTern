@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dastern_mobile/screens/patient_tracking_screen.dart';
+import 'package:dastern_mobile/ui/screens/patient_tracking_screen.dart';
 
 /// Patient Tracking Page Tab - Just a wrapper for navigation
 /// All UI design is in screens/patient_tracking_screen.dart
