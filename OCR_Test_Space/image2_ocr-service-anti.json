@@ -1,0 +1,247 @@
+{
+    "meta": {
+        "languages": [
+            "eng",
+            "khm",
+            "fra"
+        ],
+        "dpi": 71,
+        "processing_time_ms": 1832.120656967163,
+        "model_version": "default",
+        "stage_times": {
+            "validation": 115.35239219665527,
+            "quality_analysis": 178.3010959625244,
+            "preprocessing": 21.088361740112305,
+            "layout_analysis": 117.10119247436523,
+            "ocr_extraction": 1391.1545276641846,
+            "postprocessing": 7.865667343139648
+        },
+        "image_size": {
+            "width": 930,
+            "height": 1280
+        }
+    },
+    "quality": {
+        "blur": "low",
+        "blur_score": 1802.9228543629022,
+        "contrast": "ok",
+        "contrast_score": 44.68520600625875,
+        "skew_angle": -2.0825652797308845,
+        "dpi": 71,
+        "is_grayscale": false
+    },
+    "qr_codes": [],
+    "blocks": [
+        {
+            "type": "text",
+            "bbox": {
+                "x": 0,
+                "y": 0,
+                "width": 975,
+                "height": 1312
+            },
+            "lines": [
+                {
+                    "text": "DCE H. \u1799 \u179c EP |",
+                    "bbox": {
+                        "x": 96,
+                        "y": 34,
+                        "width": 879,
+                        "height": 153
+                    },
+                    "confidence": 0.58,
+                    "language": "en",
+                    "tags": []
+                },
+                {
+                    "text": "KhmerSovet \u1780\u1780\u179a Horn",
+                    "bbox": {
+                        "x": 156,
+                        "y": 109,
+                        "width": 168,
+                        "height": 37
+                    },
+                    "confidence": 0.22,
+                    "language": "en",
+                    "tags": []
+                },
+                {
+                    "text": "\u179b\u17c1\u1781\u1780\u17bc\u178a: HAKF1354164 \u1788\u17d2\u1798\u17c4\u17c7\u17a2\u17d2\u1793\u1780\u1787\u17c6\u1784\u17ba: \u1784\u17c9\u17b6\u17c6 \u178a\u17b6\u1793\u17b8 \u17a2\u17b6\u1799\u17bb: 19 \u1786\u17d2\u1793\u17b6\u17c6 \u1797\u17c1\u1791: \u179f\u17d2\u179a\u17b8 |",
+                    "bbox": {
+                        "x": 92,
+                        "y": 166,
+                        "width": 877,
+                        "height": 37
+                    },
+                    "confidence": 0.9245454545454546,
+                    "language": "kh",
+                    "tags": []
+                },
+                {
+                    "text": "\u1794\u17d2\u179a\u1797\u17c1\u1791\u1794\u1784\u17cb\u1794\u17d2\u179a\u17b6\u1780\u17cb : \u1798\u17bc\u179b\u1793\u17b7\u1792\u17b7\u179f\u1798\u1792\u1798\u17cc / 20051002-0409 |",
+                    "bbox": {
+                        "x": 91,
+                        "y": 207,
+                        "width": 878,
+                        "height": 34
+                    },
+                    "confidence": 0.81,
+                    "language": "kh",
+                    "tags": []
+                },
+                {
+                    "text": "\u179a\u17c4\u1782\u179c\u17b7\u1793\u17b7\u1785\u17d2\u1786\u17d0\u1799 : 1. Chronic Cystitis",
+                    "bbox": {
+                        "x": 90,
+                        "y": 254,
+                        "width": 253,
+                        "height": 28
+                    },
+                    "confidence": 0.9380000000000001,
+                    "language": "en",
+                    "tags": []
+                },
+                {
+                    "text": "2. Encour m\u00e9norh\u00e9e",
+                    "bbox": {
+                        "x": 191,
+                        "y": 291,
+                        "width": 170,
+                        "height": 17
+                    },
+                    "confidence": 0.9266666666666667,
+                    "language": "fr",
+                    "tags": []
+                },
+                {
+                    "text": "\u1795\u17d2\u1793\u17c2\u1780 : \u1796\u17b7\u1782\u17d2\u179a\u17c4\u17c7\u1787\u17c6\u1784\u17ba\u1780\u17d2\u179a\u17c5 - \u1794\u1793\u17d2\u1791\u1794\u17cb\u179b\u17c1\u1781 5 :",
+                    "bbox": {
+                        "x": 88,
+                        "y": 342,
+                        "width": 862,
+                        "height": 39
+                    },
+                    "confidence": 0.8528571428571429,
+                    "language": "kh",
+                    "tags": []
+                },
+                {
+                    "text": "\u179c\u17c1\u1787\u17d2\u1787\u1794\u1789\u17d2\u1787\u17b6 \u179f",
+                    "bbox": {
+                        "x": 456,
+                        "y": 386,
+                        "width": 439,
+                        "height": 46
+                    },
+                    "confidence": 0.655,
+                    "language": "kh",
+                    "tags": []
+                },
+                {
+                    "text": "\u1780 ie",
+                    "bbox": {
+                        "x": 821,
+                        "y": 498,
+                        "width": 134,
+                        "height": 27
+                    },
+                    "confidence": 0.27,
+                    "language": "en",
+                    "tags": []
+                },
+                {
+                    "text": "\u1796\u17b8 \u1799",
+                    "bbox": {
+                        "x": 130,
+                        "y": 502,
+                        "width": 645,
+                        "height": 64
+                    },
+                    "confidence": 0.155,
+                    "language": "kh",
+                    "tags": []
+                },
+                {
+                    "text": "10\u17e39 \u2014\u2014 _",
+                    "bbox": {
+                        "x": 130,
+                        "y": 541,
+                        "width": 816,
+                        "height": 37
+                    },
+                    "confidence": 0.73,
+                    "language": "kh",
+                    "tags": []
+                },
+                {
+                    "text": "eo [| ae",
+                    "bbox": {
+                        "x": 81,
+                        "y": 545,
+                        "width": 871,
+                        "height": 104
+                    },
+                    "confidence": 0.4166666666666667,
+                    "language": "en",
+                    "tags": []
+                },
+                {
+                    "text": "Esome 20mg |7 \u1782\u17d2\u179a\u17b6\u1794\u17cb\u179f\u17d2\u179a\u17c4\u1794| PO |\u1782\u17d2\u179a\u17b6\u1794\u17cb \u1780\u17d2\u179a\u17c4\u1799\u1794\u17b6\u1799 \u1793",
+                    "bbox": {
+                        "x": 128,
+                        "y": 636,
+                        "width": 700,
+                        "height": 48
+                    },
+                    "confidence": 0.74625,
+                    "language": "kh",
+                    "tags": [
+                        "time_candidate",
+                        "quantity_candidate"
+                    ]
+                },
+                {
+                    "text": "= 2 1 | \u1780\u17c4 \u17a0\u17c8 \u1780",
+                    "bbox": {
+                        "x": 126,
+                        "y": 689,
+                        "width": 676,
+                        "height": 72
+                    },
+                    "confidence": 0.42,
+                    "language": "kh",
+                    "tags": []
+                },
+                {
+                    "text": "ara \u1799 \u1794\u1799",
+                    "bbox": {
+                        "x": 138,
+                        "y": 712,
+                        "width": 639,
+                        "height": 33
+                    },
+                    "confidence": 0.7166666666666667,
+                    "language": "en",
+                    "tags": []
+                },
+                {
+                    "text": "- ; \u179a\u17b6\u1787\u1792\u17b6\u1793\u17b8\u1797\u17d2\u1793\u17c6\u1796\u17c1\u1789,\u1790\u17d2\u1784\u17c3\u1791\u17b8 22/06/2",
+                    "bbox": {
+                        "x": 382,
+                        "y": 783,
+                        "width": 410,
+                        "height": 36
+                    },
+                    "confidence": 0.595,
+                    "language": "kh",
+                    "tags": [
+                        "time_candidate"
+                    ]
+                }
+            ],
+            "table": null,
+            "raw_text": "DCE H. \u1799 \u179c EP |\nKhmerSovet \u1780\u1780\u179a Horn\n\u179b\u17c1\u1781\u1780\u17bc\u178a: HAKF1354164 \u1788\u17d2\u1798\u17c4\u17c7\u17a2\u17d2\u1793\u1780\u1787\u17c6\u1784\u17ba: \u1784\u17c9\u17b6\u17c6 \u178a\u17b6\u1793\u17b8 \u17a2\u17b6\u1799\u17bb: 19 \u1786\u17d2\u1793\u17b6\u17c6 \u1797\u17c1\u1791: \u179f\u17d2\u179a\u17b8 |\n\u1794\u17d2\u179a\u1797\u17c1\u1791\u1794\u1784\u17cb\u1794\u17d2\u179a\u17b6\u1780\u17cb : \u1798\u17bc\u179b\u1793\u17b7\u1792\u17b7\u179f\u1798\u1792\u1798\u17cc / 20051002-0409 |\n\u179a\u17c4\u1782\u179c\u17b7\u1793\u17b7\u1785\u17d2\u1786\u17d0\u1799 : 1. Chronic Cystitis\n2. Encour m\u00e9norh\u00e9e\n\u1795\u17d2\u1793\u17c2\u1780 : \u1796\u17b7\u1782\u17d2\u179a\u17c4\u17c7\u1787\u17c6\u1784\u17ba\u1780\u17d2\u179a\u17c5 - \u1794\u1793\u17d2\u1791\u1794\u17cb\u179b\u17c1\u1781 5 :\n\u179c\u17c1\u1787\u17d2\u1787\u1794\u1789\u17d2\u1787\u17b6 \u179f\n\u1780 ie\n\u1796\u17b8 \u1799\n10\u17e39 \u2014\u2014 _\neo [| ae\nEsome 20mg |7 \u1782\u17d2\u179a\u17b6\u1794\u17cb\u179f\u17d2\u179a\u17c4\u1794| PO |\u1782\u17d2\u179a\u17b6\u1794\u17cb \u1780\u17d2\u179a\u17c4\u1799\u1794\u17b6\u1799 \u1793\n= 2 1 | \u1780\u17c4 \u17a0\u17c8 \u1780\nara \u1799 \u1794\u1799\n- ; \u179a\u17b6\u1787\u1792\u17b6\u1793\u17b8\u1797\u17d2\u1793\u17c6\u1796\u17c1\u1789,\u1790\u17d2\u1784\u17c3\u1791\u17b8 22/06/2"
+        }
+    ],
+    "raw_text": "DCE H. \u1799 \u179c EP |\nKhmerSovet \u1780\u1780\u179a Horn\n\u179b\u17c1\u1781\u1780\u17bc\u178a: HAKF1354164 \u1788\u17d2\u1798\u17c4\u17c7\u17a2\u17d2\u1793\u1780\u1787\u17c6\u1784\u17ba: \u1784\u17c9\u17b6\u17c6 \u178a\u17b6\u1793\u17b8 \u17a2\u17b6\u1799\u17bb: 19 \u1786\u17d2\u1793\u17b6\u17c6 \u1797\u17c1\u1791: \u179f\u17d2\u179a\u17b8 |\n\u1794\u17d2\u179a\u1797\u17c1\u1791\u1794\u1784\u17cb\u1794\u17d2\u179a\u17b6\u1780\u17cb : \u1798\u17bc\u179b\u1793\u17b7\u1792\u17b7\u179f\u1798\u1792\u1798\u17cc / 20051002-0409 |\n\u179a\u17c4\u1782\u179c\u17b7\u1793\u17b7\u1785\u17d2\u1786\u17d0\u1799 : 1. Chronic Cystitis\n2. Encour m\u00e9norh\u00e9e\n\u1795\u17d2\u1793\u17c2\u1780 : \u1796\u17b7\u1782\u17d2\u179a\u17c4\u17c7\u1787\u17c6\u1784\u17ba\u1780\u17d2\u179a\u17c5 - \u1794\u1793\u17d2\u1791\u1794\u17cb\u179b\u17c1\u1781 5 :\n\u179c\u17c1\u1787\u17d2\u1787\u1794\u1789\u17d2\u1787\u17b6 \u179f\n\u1780 ie\n\u1796\u17b8 \u1799\n10\u17e39 \u2014\u2014 _\neo [| ae\nEsome 20mg |7 \u1782\u17d2\u179a\u17b6\u1794\u17cb\u179f\u17d2\u179a\u17c4\u1794| PO |\u1782\u17d2\u179a\u17b6\u1794\u17cb \u1780\u17d2\u179a\u17c4\u1799\u1794\u17b6\u1799 \u1793\n= 2 1 | \u1780\u17c4 \u17a0\u17c8 \u1780\nara \u1799 \u1794\u1799\n- ; \u179a\u17b6\u1787\u1792\u17b6\u1793\u17b8\u1797\u17d2\u1793\u17c6\u1796\u17c1\u1789,\u1790\u17d2\u1784\u17c3\u1791\u17b8 22/06/2"
+}
