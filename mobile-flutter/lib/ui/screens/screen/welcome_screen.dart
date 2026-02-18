@@ -3,8 +3,8 @@ import 'package:dastern_mobile/ui/screens/doctor_screen.dart';
 import 'package:dastern_mobile/ui/screens/login_screen.dart';
 import 'package:dastern_mobile/ui/screens/sign_up_screen.dart';
 import 'package:dastern_mobile/widgets/bottom_round_container.dart';
+import 'package:dastern_mobile/widgets/header_widgets.dart';
 import 'package:flutter/material.dart';
-import '../../widgets/tiles/hospital_logo.dart';
 import '../../widgets/buttons/primary_button.dart';
 import '../../widgets/layouts/background_welcome.dart';
 
@@ -158,7 +158,7 @@ class WelcomeScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: ( context) => const LoginScreen(),
+                            builder: (context) => const LoginScreen(),
                           ),
                         );
                       },

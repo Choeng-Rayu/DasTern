@@ -1,8 +1,8 @@
 import 'package:dastern_mobile/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'ui/screens/welcome_screen.dart';
-// import 'ui/screens/tab/main_navigation.dart';
+import 'ui/screens/home_screen.dart';
+// import 'ui/screens/welcome_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -66,11 +66,8 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
-      // DEVELOPMENT MODE: Skip welcome screen, go straight to tabs
-      // home: const MainNavigation(),
-
-      // PRODUCTION MODE: Uncomment this line and comment out the line above
-      home: WelcomeScreen(onLocaleChange: (locale) => setLocale(locale)),
+      // DEVELOPMENT MODE: Show home screen directly
+      home: const HomeScreen(),
     );
   }
 }

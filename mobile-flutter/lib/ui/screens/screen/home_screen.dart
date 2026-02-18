@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dastern_mobile/widgets/layouts/background_homepage.dart';
 import 'package:dastern_mobile/widgets/tiles/user_header.dart';
+import 'package:dastern_mobile/widgets/cards/medication_shift.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -49,7 +50,40 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     const SizedBox(height: 24),
 
-                    // Today's Reminders Section
+                    // Today's Medication Shifts - 3 boxes in one row
+                    const Text(
+                      'Today\'s Medication Schedule',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    SizedBox(
+                      height: 200,
+                      child: Row(
+                        children: [
+                          const MedicationShift(
+                            shift: 'Morning',
+                            timeToTake: '7:00 AM',
+                            image: 'assets/images/morning.png',
+                          ),
+                          const MedicationShift(
+                            shift: 'Afternoon',
+                            timeToTake: '2:00 PM',
+                            image: 'assets/images/afternoon.png',
+                          ),
+                          const MedicationShift(
+                            shift: 'Evening',
+                            timeToTake: '7:00 PM',
+                            image: 'assets/images/night.png',
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Today's Reminders Section (Optional - can keep or remove)
                     const Text(
                       'Today\'s Medication Reminders',
                       style: TextStyle(

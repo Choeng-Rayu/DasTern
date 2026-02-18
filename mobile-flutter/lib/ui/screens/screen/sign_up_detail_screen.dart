@@ -1,10 +1,10 @@
 import 'package:dastern_mobile/data/survey_data.dart';
 import 'package:dastern_mobile/ui/screens/survey_screen.dart';
+import 'package:dastern_mobile/widgets/header_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:dastern_mobile/l10n/app_localizations.dart';
 // import 'package:ui_for_capstone/data/survey_data.dart';
 // import 'package:ui_for_capstone/ui/screen/survey_flow_screen.dart';
-import '../../widgets/tiles/hospital_logo.dart';
 import '../../widgets/bottom_round_container.dart';
 import '../../widgets/buttons/primary_button.dart';
 import '../../widgets/layouts/auth_background.dart';
@@ -67,19 +67,16 @@ class SignupDetailScreen extends StatelessWidget {
                   CustomInputField(
                       hint: AppLocalizations.of(context)?.fillPhoneNumber ??
                           'សូមបំពេញលេខទូរស័ព្ទរបស់អ្នក'),
-
                   Label(AppLocalizations.of(context)?.password ??
                       'លេខកូខសម្ងាត់'),
                   CustomInputField(
                       hint: AppLocalizations.of(context)?.fillPassword ??
                           'សូមបំពេញលេខកូខសម្ងាត់របស់អ្នក'),
-
                   Label(AppLocalizations.of(context)?.confirmPassword ??
                       'បញ្ជាក់លេខកូខសម្ងាត់'),
                   CustomInputField(
                       hint: AppLocalizations.of(context)?.fillConfirmPassword ??
                           'សូមបំពេញលេខកូខសម្ងាត់របស់អ្នកម្តងទៀត'),
-
                   Label(
                       AppLocalizations.of(context)?.pinCode ?? 'លេខកូខ៤ខ្ទង់'),
                   const Row(
@@ -93,22 +90,19 @@ class SignupDetailScreen extends StatelessWidget {
                       Expanded(child: CustomInputField(hint: '', maxLength: 1)),
                     ],
                   ),
-
                   const SizedBox(height: 16),
                   Label(AppLocalizations.of(context)?.readTerms ??
                       'សូមអានលក្ខខណ្ឌ និងច្បាប់មុនពេលប្រើប្រាស់កម្មវិធី'),
-
                   const SizedBox(height: 18),
                   PrimaryButton(
                     text: AppLocalizations.of(context)?.continueText ?? 'បន្ត',
                     onPressed: () {
                       Navigator.push(
-                        context,
+                          context,
                           MaterialPageRoute(
-                            builder:
-                            (context) => SurveyFlowScreen(surveys: surveys),
-                        )
-                      );
+                            builder: (context) =>
+                                SurveyFlowScreen(surveys: surveys),
+                          ));
                     },
                   ),
                 ],
