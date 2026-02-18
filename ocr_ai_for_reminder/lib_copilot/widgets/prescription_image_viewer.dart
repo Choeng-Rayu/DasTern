@@ -5,9 +5,9 @@ class PrescriptionImageViewer extends StatelessWidget {
   final File imageFile;
 
   const PrescriptionImageViewer({
-    Key? key,
+    super.key,
     required this.imageFile,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class PrescriptionImageViewer extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),

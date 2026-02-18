@@ -12,7 +12,7 @@ class MedicationCard extends StatelessWidget {
   final VoidCallback? onDelete;
 
   const MedicationCard({
-    Key? key,
+    super.key,
     required this.medicationName,
     required this.dosage,
     required this.times,
@@ -22,7 +22,7 @@ class MedicationCard extends StatelessWidget {
     this.onTap,
     this.onEdit,
     this.onDelete,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -66,12 +66,12 @@ class MedicationCard extends StatelessWidget {
                   PopupMenuButton(
                     itemBuilder: (context) => [
                       PopupMenuItem(
-                        child: const Text('Edit'),
                         onTap: onEdit,
+                        child: const Text('Edit'),
                       ),
                       PopupMenuItem(
-                        child: const Text('Delete'),
                         onTap: onDelete,
+                        child: const Text('Delete'),
                       ),
                     ],
                   ),
@@ -96,7 +96,7 @@ class MedicationCard extends StatelessWidget {
                 children: [
                   Icon(Icons.repeat, size: 16, color: Colors.grey[600]),
                   const SizedBox(width: 4),
-                  Text('$repeat', style: TextStyle(color: Colors.grey[600])),
+                  Text(repeat, style: TextStyle(color: Colors.grey[600])),
                   if (durationDays != null) ...[
                     const SizedBox(width: 16),
                     Icon(Icons.calendar_today, size: 16, color: Colors.grey[600]),
@@ -135,14 +135,14 @@ class QualityMetricsWidget extends StatelessWidget {
   final double processingTime;
 
   const QualityMetricsWidget({
-    Key? key,
+    super.key,
     required this.blur,
     required this.blurScore,
     required this.contrast,
     required this.contrastScore,
     required this.skewAngle,
     required this.processingTime,
-  }) : super(key: key);
+  });
 
   Color _getQualityColor(String quality) {
     switch (quality.toLowerCase()) {
@@ -231,7 +231,7 @@ class _MetricRow extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.2),
+              color: color.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
