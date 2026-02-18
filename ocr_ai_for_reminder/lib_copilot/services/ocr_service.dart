@@ -61,9 +61,14 @@ class OCRService {
   /// Parse JSON with error handling
   Map<String, dynamic> _parseJson(String jsonString) {
     try {
-      return Map<String, dynamic>.from(
-        (jsonDecode(jsonString) as Map).cast<String, dynamic>(),
-      );
+      final decoded = jsonDecode(jsonString);
+      if (decoded is Map<String, dynamic>) {
+        return decoded;
+      } else if (decoded is Map) {
+        return Map<String, dynamic>.from(decoded);
+      } else {
+        throw Exception('Invalid JSON format: expected Map, got ${decoded.runtimeType}');
+      }
     } catch (e) {
       logger.e('Error parsing JSON: $e');
       rethrow;

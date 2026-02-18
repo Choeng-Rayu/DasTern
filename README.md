@@ -307,32 +307,91 @@ git push
 
 ---
 
-## 🚀 ALTERNATIVE: Manual Setup (Not Recommended)
+## 🚀 ALTERNATIVE: Manual Setup (Current Working System)
+
+### Current Architecture (Flutter → OCR → AI with Ollama)
+
+The current working system uses:
+- **Flutter App** (`ocr_ai_for_reminder/`) - User interface
+- **OCR Service** (`ocr-service-anti/`) - Tesseract-based text extraction
+- **AI-LLM Service** (`ai-llm-service/`) - Ollama with llama3.2:3b for correction & extraction
+- **No Next.js backend** - Direct service-to-service communication
+
+### 📖 Detailed Setup Guides
+
+We have two comprehensive guides for manual setup:
+
+1. **[📘 MANUAL_SETUP_GUIDE.md](./MANUAL_SETUP_GUIDE.md)** - Complete step-by-step guide
+   - First-time installation (Tesseract, Ollama, dependencies)
+   - Opening VSCode with 4 terminals
+   - Starting each service manually
+   - Using the system to extract and organize prescription data
+   - Understanding data flow
+   - Troubleshooting common issues
+
+2. **[⚡ MANUAL_QUICK_START.md](./MANUAL_QUICK_START.md)** - One-page quick reference
+   - Essential commands only
+   - Quick health checks
+   - Emergency troubleshooting
 
 ### Prerequisites
-- Node.js 18+ (for Next.js backend)
-- Python 3.10+ (for OCR and AI services)
-- Flutter 3.0+ (for mobile app)
-- Tesseract OCR installed
-- PostgreSQL (for database)
+- **VSCode** (or any terminal)
+- **Python 3.10+** (for OCR and AI services)
+- **Flutter 3.0+** (for mobile app)
+- **Tesseract OCR** installed with language packs (eng, khm, fra)
+- **Ollama** installed with llama3.2:3b model
+- **Homebrew** (macOS) or system package manager
 
-### Quick Start
+### Automated Quick Start (Recommended for Development)
 
-1. **Next.js Backend**
+```bash
+# Start all services with one script
+./start_all_services.sh
+
+# Or start manually (see MANUAL_SETUP_GUIDE.md)
+```
+
+### Manual Quick Start (4 Terminals)
+
+```bash
+# Terminal 1: Ollama
+ollama serve
+
+# Terminal 2: OCR Service
+cd ocr-service-anti
+source venv/bin/activate
+python main.py 8000
+
+# Terminal 3: AI Service
+cd ai-llm-service
+source venv/bin/activate
+export OLLAMA_HOST=http://localhost:11434
+python app/main_ollama.py
+
+# Terminal 4: Flutter App
+cd ocr_ai_for_reminder
+flutter run -d macos
+```
+
+**For complete details, see [MANUAL_SETUP_GUIDE.md](./MANUAL_SETUP_GUIDE.md)**
+
+### Legacy Setup (Original Architecture with Next.js)
+
+1. **Next.js Backend** (if used)
    ```bash
    cd backend-nextjs
    npm install
    npm run dev
    ```
 
-2. **OCR Service**
+2. **OCR Service** (legacy path)
    ```bash
    cd ocr-service
    pip install -r requirements.txt
    uvicorn app.main:app --reload --port 8000
    ```
 
-3. **AI LLM Service**
+3. **AI LLM Service** (MT5 version)
    ```bash
    cd ai-llm-service
    pip install -r requirements.txt

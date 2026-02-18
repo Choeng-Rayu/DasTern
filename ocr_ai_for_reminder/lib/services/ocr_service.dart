@@ -82,7 +82,6 @@ class OCRService {
       'processingTime': ocrResponse.meta.processingTimeMs,
     };
   }
-
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
@@ -131,5 +130,4 @@ class OcrService {
       rethrow;
     }
   }
-
 }
