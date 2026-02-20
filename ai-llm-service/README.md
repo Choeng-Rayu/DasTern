@@ -60,103 +60,71 @@ The AI-LLM Service is a **multi-layered microservice** that processes prescripti
 ### System Design
 
 ```
-┌──────────────────────────────────────────────────────────────────┐
-│                     CLIENT LAYER                                │
-│  Mobile App | Web Interface | Backend Services | OCR Systems    │
-└─────────────────────────┬────────────────────────────────────────┘
-                          │ HTTP/REST API
-                          ↓
-┌──────────────────────────────────────────────────────────────────┐
-│              API GATEWAY & ROUTING LAYER                         │
-│         FastAPI (extraction_routes.py)                           │
-│  • Request validation & CORS handling                            │
-│  • Error handling & logging                                      │
-│  • Rate limiting & request throttling                            │
-└─────────────────────────────┬────────────────────────────────────┘
-                              │
-              ┌───────────────┼──────────────┐
-              ↓               ↓              ↓
-    ┌─────────────────┐ ┌──────────────┐ ┌──────────────┐
-    │  BUSINESS LOGIC │ │   SAFETY &   │ │  EXTERNAL    │
-    │    LAYER        │ │ VALIDATION   │ │  SERVICES    │
-    ├─────────────────┤ ├──────────────┤ ├──────────────┤
-    │ • Processor     │ │ • Medical    │ │ • Ollama     │
-    │ • Enhancer      │ │   Validator  │ │   LLM        │
-    │ • Fast Parser   │ │ • Language   │ │ • Tesseract  │
-    │ • Reminder Eng. │ │   Safety     │ │   OCR        │
-    │ • Khmer Output  │ │ • Structure  │ │              │
-    │                 │ │   Validator  │ │              │
-    └────────┬────────┘ └──────┬───────┘ └──────┬───────┘
-             │                 │                │
-             └─────────────────┼────────────────┘
-                               ↓
-            ┌──────────────────────────────────────┐
-            │  CORE PROCESSING LAYER               │
-            ├──────────────────────────────────────┤
-            │ • Model Loader (Cache Management)    │
-            │ • Ollama Client (LLM Interface)      │
-            │ • Generation Engine (Inference)      │
-            │ • Finetuned Extractor (Data Parse)   │
-            └──────────────────────────────────────┘
-                               │
-              ┌────────────────┴────────────────┐
-              ↓                                 ↓
-    ┌─────────────────────┐         ┌──────────────────────┐
-    │  OLLAMA SERVICE     │         │  TESSERACT OCR       │
-    │  (Port 11434)       │         │  (External Process)  │
-    ├─────────────────────┤         ├──────────────────────┤
-    │ • Llama 3.2 3B      │         │ • Text Recognition   │
-    │ • LLM Inference     │         │ • Handwriting Detect │
-    │ • Context Mgmt      │         │ • Multi-language     │
-    │ • Response Stream   │         │ • Confidence Scores  │
-    └─────────────────────┘         └──────────────────────┘
-                │                              │
-                └──────────────┬───────────────┘
-                               ↓
-        ┌──────────────────────────────────────────┐
-        │       DATA PERSISTENCE LAYER             │
-        ├──────────────────────────────────────────┤
-        │ • JSON Storage (results, reports)        │
-        │ • File System (prescriptions, logs)      │
-        │ • PostgreSQL (future relational DB)      │
-        │ • Redis Cache (future session store)     │
-        └──────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────┐
+│           CLIENT LAYER (Mobile, Web, API)           │
+└────────────────────┬────────────────────────────────┘
+                     │ HTTP Request
+                     ↓
+┌─────────────────────────────────────────────────────┐
+│    API GATEWAY (FastAPI - extraction_routes.py)    │
+│    • Validate requests • Route to processors        │
+└────────────────────┬────────────────────────────────┘
+                     │
+        ┌────────────┼────────────┐
+        ↓            ↓            ↓
+┌──────────────┐ ┌──────────┐ ┌─────────────┐
+│   BUSINESS   │ │VALIDATION│ │  EXTERNAL   │
+│    LOGIC     │ │  SAFETY  │ │  SERVICES   │
+├──────────────┤ ├──────────┤ ├─────────────┤
+│• Processor   │ │• Medical │ │• Ollama LLM │
+│• Enhancer    │ │  checks  │ │  (11434)    │
+│• Parser      │ │• Language│ │• Tesseract  │
+│• Reminder    │ │  safety  │ │  OCR        │
+└──────┬───────┘ └────┬─────┘ └──────┬──────┘
+       │             │              │
+       └─────────────┼──────────────┘
+                     ↓
+        ┌─────────────────────────┐
+        │ CORE PROCESSING         │
+        ├─────────────────────────┤
+        │ • Model Loader (cache)  │
+        │ • Ollama Client         │
+        │ • LLM Generation        │
+        │ • Data Extractor        │
+        └────────────┬────────────┘
+                     ↓
+        ┌─────────────────────────┐
+        │   DATA PERSISTENCE      │
+        ├─────────────────────────┤
+        │ • JSON Storage          │
+        │ • Reports & Logs        │
+        │ • Training Data         │
+        └──────────────┬──────────┘
+                       ↓
+            JSON Response (Medications,
+            Diagnosis, Reminders)
 ```
 
-### Layer Responsibilities
+### Main Components & Responsibilities
 
-**1. API Layer** (`app/api/extraction_routes.py`)
-- Receives HTTP requests from clients
-- Validates input parameters and file formats
-- Routes to appropriate business logic
-- Returns formatted JSON responses
+| Layer | Components | Responsibility |
+|-------|-----------|-----------------|
+| **API** | `extraction_routes.py` | Receive & validate HTTP requests, route to business logic |
+| **Business Logic** | Processor, Enhancer, Parser | Orchestrate workflow, enrich data, normalize text |
+| **Validation** | Medical Validator, Language Safety | Verify drug names, dosages, language quality |
+| **Core Processing** | Model Loader, Ollama Client, LLM Generation | Manage LLM model, execute inference, parse results |
+| **Data Layer** | JSON files, Reports | Store prescriptions, logs, training data |
+| **External** | Ollama (LLM), Tesseract (OCR) | AI model inference, text extraction |
 
-**2. Business Logic Layer** (`app/features/`)
-- **Processor**: Orchestrates prescription processing workflow
-- **Enhancer**: Enriches extracted data with additional context
-- **Fast Parser**: Quick parsing and normalization
-- **Reminder Engine**: Generates medication schedules
-- **Khmer Instructions**: Creates patient-friendly instructions in Khmer
+### Processing Steps
 
-**3. Safety & Validation Layer** (`app/safety/`)
-- **Medical Validator**: Checks drug names, dosages, interactions
-- **Language Safety**: Validates output quality and appropriateness
-- **Prescription Validator**: Ensures data structure completeness
-
-**4. Core Processing Layer** (`app/core/`)
-- **Model Loader**: Manages LLM model lifecycle and caching
-- **Ollama Client**: Communicates with Ollama inference service
-- **Generation Engine**: Orchestrates LLM prompt and response handling
-- **Finetuned Extractor**: Parses and structures LLM output
-
-**5. External Services**
-- **Ollama (Port 11434)**: Local LLM inference server
-- **Tesseract OCR**: Text extraction from images
-
-**6. Data Layer** (`data/`)
-- JSON files for extracted prescriptions
-- Reports and correction logs
-- Training datasets for model improvement
+1. **Client sends OCR image** → API receives and validates
+2. **Processor orchestrates** → Calls parser, enhancer, validators
+3. **LLM inference** → Ollama generates structured extraction
+4. **Validation layer** → Verifies medical accuracy & language quality
+5. **Data enrichment** → Generates reminders, Khmer instructions
+6. **Storage** → Saves results to JSON with confidence scores
+7. **Response** → Returns medications, diagnosis, reminders to client
 
 ---
 
@@ -842,75 +810,24 @@ python tools/process_ocr_file.py data/file.json
 
 ---
 
-## Architecture Deep Dive
+## Architecture Details
 
-### Layer Communication Patterns
-
-```
-┌─────────────────────────────────────────────────────┐
-│                  Layer Flow                         │
-├─────────────────────────────────────────────────────┤
-│                                                     │
-│  HTTP Request                                       │
-│      ↓                                              │
-│  API Layer ─────→ Business Logic Layer              │
-│      ↓              ↓          ↓                     │
-│  Validation   Processor    Enhancer                 │
-│  Routing      Parser       Reminder                 │
-│      │              ↓          │                     │
-│      └──────→ Core Processing Layer                 │
-│               ├─→ Model Loader                      │
-│               ├─→ Ollama Client                     │
-│               ├─→ Generation Engine                 │
-│               └─→ Extractor                         │
-│                    ↓                                │
-│              External Services                      │
-│              ├─→ Ollama LLM                         │
-│              └─→ Tesseract OCR                      │
-│                    ↓                                │
-│              Validation Layer                       │
-│              ├─→ Medical Checks                     │
-│              ├─→ Language Safety                    │
-│              └─→ Structure Validation               │
-│                    ↓                                │
-│              Data Persistence                       │
-│              └─→ JSON/DB Storage                    │
-│                    ↓                                │
-│              HTTP Response                          │
-│                                                     │
-└─────────────────────────────────────────────────────┘
-```
-
-### Model Decision Logic
+### Layer Communication
 
 ```
-Llama 3.2 3B chosen because:
-
-1. Size vs Accuracy Trade-off ✅
-   • 3B parameters = 2.5GB download
-   • 85-92% accuracy for medical extraction
-   • Sufficient for structured data extraction
-
-2. Speed ✅
-   • 1-3 seconds per prescription
-   • Runs on CPU (no GPU required)
-   • Can handle 20+ requests/minute
-
-3. Resource Efficiency ✅
-   • 3.5GB total RAM
-   • Fits on laptop with other applications
-   • Cost: $0 (open source)
-
-4. Language Support ✅
-   • English: Native
-   • Khmer: Supported through finetuning
-   • French: Native support
-   • Multiple language mixing: Handled
-
-5. Community & Reliability ✅
-   • Meta's Llama 3.2 (2024)
-   • Active community support
-   • Regular updates & improvements
+HTTP Request
+    ↓
+API Layer → Validates & routes
+    ↓
+Business Logic → Processes data
+    ↓
+Core Processing → Runs LLM model
+    ↓
+Validation → Checks accuracy
+    ↓
+Data Storage → Saves results
+    ↓
+HTTP Response
 ```
 
 ---
