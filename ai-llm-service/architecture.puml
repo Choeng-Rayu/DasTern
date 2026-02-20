@@ -1,0 +1,90 @@
+@startuml AI_LLM_Architecture
+
+!theme plain
+title AI-LLM Service Architecture - Layer Communication
+
+package "API Layer" {
+    [FastAPI Routes] as APIRoutes
+    [Extraction Routes] as ExtractionRoutes
+}
+
+package "Business Logic Layer" {
+    [Prescription Processor] as PrescriptionProcessor
+    [Reminder Engine] as ReminderEngine
+    [Khmer Instructions] as KhmerInstructions
+}
+
+package "Core Processing Layer" {
+    [Model Loader] as ModelLoader
+    [Ollama Client] as OllamaClient
+    [Generation Engine] as GenerationEngine
+    [Finetuned Extractor] as FinetunedExtractor
+}
+
+package "Safety & Validation Layer" {
+    [Medical Validator] as MedicalValidator
+    [Language Safety] as LanguageSafety
+    [Prescription Validator] as PrescriptionValidator
+}
+
+package "External Services" {
+    [Ollama LLM] as OllamaLLM
+    [Tesseract OCR] as TesseractOCR
+}
+
+package "Data Layer" {
+    database "Data Storage" as DataStore
+}
+
+' API Layer Communication
+APIRoutes --> ExtractionRoutes : routes requests
+
+' API to Business Logic
+ExtractionRoutes --> PrescriptionProcessor : sends OCR data
+ExtractionRoutes --> ReminderEngine : requests reminders
+
+' Business Logic to Core Processing
+PrescriptionProcessor --> ModelLoader : requests model
+PrescriptionProcessor --> FinetunedExtractor : extracts information
+PrescriptionProcessor --> GenerationEngine : generates output
+
+ReminderEngine --> GenerationEngine : generates reminder text
+KhmerInstructions --> GenerationEngine : uses generation engine
+
+' Core Processing Communications
+ModelLoader --> OllamaClient : loads model from Ollama
+GenerationEngine --> OllamaLLM : calls LLM inference
+FinetunedExtractor --> ModelLoader : gets finetuned model
+OllamaClient --> OllamaLLM : manages connection
+
+' Core to Safety Validation
+GenerationEngine --> MedicalValidator : validates medical content
+FinetunedExtractor --> PrescriptionValidator : validates extracted data
+GenerationEngine --> LanguageSafety : checks language safety
+
+' Business Logic to Safety
+PrescriptionProcessor --> PrescriptionValidator : validates prescription
+PrescriptionProcessor --> MedicalValidator : checks medical terms
+
+' Data Layer Communications
+PrescriptionProcessor --> DataStore : stores prescription data
+ReminderEngine --> DataStore : stores reminders
+FinetunedExtractor --> DataStore : stores extracted info
+PrescriptionValidator --> DataStore : logs validation results
+
+' External Services
+TesseractOCR ..> PrescriptionProcessor : provides OCR input
+PrescriptionProcessor ..> TesseractOCR : calls OCR processing
+
+legend right
+    Component : Description
+    ==
+    API Layer : Handles HTTP requests & routing
+    Business Logic : Core features & domain logic
+    Core Processing : AI model management & generation
+    Safety Validation : Data validation & safety checks
+    External Services : Third-party integrations
+    Data Layer : Persistent storage
+endlegend
+
+@enduml
