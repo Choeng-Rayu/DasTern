@@ -102,6 +102,7 @@ except ImportError as e:
     logger.warning(f"⚠️ Fine-tuned extraction routes not available: {e}")
 
 # Initialize reminder engine
+# Initialize engines
 ollama_client = OllamaClient()
 reminder_engine = ReminderEngine(ollama_client)
 
@@ -395,6 +396,4 @@ async def chat(request: ChatRequest):
 
 if __name__ == "__main__":
     import uvicorn
-    host = os.getenv("AI_SERVICE_HOST", "0.0.0.0")
-    port = int(os.getenv("AI_SERVICE_PORT", "8001"))
-    uvicorn.run(app, host=host, port=port)
+    uvicorn.run(app, host="127.0.0.1", port=8001)

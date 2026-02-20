@@ -46,3 +46,12 @@ async def root():
         "description": "Layer-by-layer OCR for Cambodian prescriptions",
         "docs": "/docs",
     }
+
+@app.get("/health")
+async def health_check():
+    """Health check endpoint for Flutter connectivity."""
+    return {
+        "status": "healthy",
+        "service": "ocr-service",
+        "version": "1.0.0",
+    }

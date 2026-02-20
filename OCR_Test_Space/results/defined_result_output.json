@@ -1,0 +1,273 @@
+{
+    "raw_extracted_text": {
+        "description": "Accurate raw text extraction from the prescription image. Khmer text preserved as-is, all numbers converted to universal (English) numerals.",
+        "hospital": {
+            "name_km": "\u1798\u1793\u17d2\u1791\u17b8\u179a\u1796\u17c1\u1791\u17d2\u1799\u1798\u17b7\u178f\u17d2\u178f\u1797\u17b6\u1796\u1781\u17d2\u1798\u17c2\u179a-\u179f\u17bc\u179c\u17b7\u1799\u17c2\u178f",
+            "name_en": "Khmer-Soviet Friendship Hospital",
+            "system": "H-EQIP"
+        },
+        "patient_info": {
+            "label_code_km": "\u179b\u17c1\u1781\u1780\u17bc\u178a",
+            "code": "HAKF1354164",
+            "label_name_km": "\u1788\u17d2\u1798\u17c4\u17c7\u17a2\u17d2\u1793\u1780\u1787\u17c6\u1784\u17ba",
+            "name": "\u1792\u17bb\u17c6 \u1796\u17b6\u1793\u17b8",
+            "label_age_km": "\u17a2\u17b6\u1799\u17bb",
+            "age": "19 \u1786\u17d2\u1793\u17b6\u17c6",
+            "label_sex_km": "\u1797\u17c1\u1791",
+            "sex": "\u179f\u17d2\u179a\u17b8",
+            "label_payment_km": "\u1794\u17d2\u179a\u1797\u17c1\u1791\u1794\u1784\u17cb\u1794\u17d2\u179a\u17b6\u1780\u17cb",
+            "payment_type": "\u1798\u17bc\u179b\u1793\u17b7\u1792\u17b7\u179f\u1798\u1792\u1798\u17cc / 20051002-0409",
+            "badge": "\u17a2\u17d2\u1793\u1780\u1787\u17c6\u1784\u17ba"
+        },
+        "diagnosis": {
+            "label_km": "\u179a\u17c4\u1782\u179c\u17b7\u1793\u17b7\u1785\u17d2\u1786\u17d0\u1799",
+            "items": [
+                "1. Chronic Cystitis",
+                "2. Encour m\u00e9norh\u00e9e"
+            ]
+        },
+        "department": {
+            "label_km": "\u1795\u17d2\u1793\u17c2\u1780",
+            "value": "\u1796\u17b7\u1782\u17d2\u179a\u17c4\u17c7\u1787\u17c6\u1784\u17ba\u1780\u17d2\u179a\u17c5 - \u1794\u1793\u17d2\u1791\u1794\u17cb\u179b\u17c1\u1781 5"
+        },
+        "prescription_title_km": "\u1785\u17c1\u1789\u1790\u17d2\u1793\u17b6\u17c6",
+        "prescription_table": {
+            "column_headers": {
+                "no": "\u179b.\u179a",
+                "medicine_name": "\u1788\u17d2\u1798\u17c4\u17c7\u17b1\u179f\u1790",
+                "quantity": "\u1785\u17c6\u1793\u17bd\u1793",
+                "usage_method": "\u179c\u17b7\u1792\u17b8\u1794\u17d2\u179a\u17be",
+                "morning": "\u1796\u17d2\u179a\u17b9\u1780 (6-8)",
+                "noon": "\u1790\u17d2\u1784\u17c3\u178f\u17d2\u179a\u1784\u17cb (11-12)",
+                "evening": "\u179b\u17d2\u1784\u17b6\u1785 (05-06)",
+                "night": "\u1799\u1794\u17cb (08-10)"
+            },
+            "rows": [
+                {
+                    "no": 1,
+                    "medicine_name": "Butylscopolamine 10mg",
+                    "quantity": "14 \u1782\u17d2\u179a\u17b6\u1794\u17cb",
+                    "usage_method": "",
+                    "morning": "1",
+                    "noon": "-",
+                    "evening": "1",
+                    "night": "-"
+                },
+                {
+                    "no": 2,
+                    "medicine_name": "Multivitamine",
+                    "quantity": "10 \u1782\u17d2\u179a\u17b6\u1794\u17cb",
+                    "usage_method": "",
+                    "morning": "1",
+                    "noon": "-",
+                    "evening": "1",
+                    "night": "-"
+                },
+                {
+                    "no": 3,
+                    "medicine_name": "Esome 20mg",
+                    "quantity": "7 \u1782\u17d2\u179a\u17b6\u1794\u17cb\u179f\u17d2\u179a\u17b6\u1794",
+                    "usage_method": "PO",
+                    "morning": "1 \u1782\u17d2\u179a\u17b6\u1794\u17cb \u1780\u17d2\u179a\u17c4\u1799\u1794\u17b6\u1799",
+                    "noon": "-",
+                    "evening": "-",
+                    "night": "-"
+                },
+                {
+                    "no": 4,
+                    "medicine_name": "Paracetamol 500mg",
+                    "quantity": "15 \u1782\u17d2\u179a\u17b6\u1794\u17cb",
+                    "usage_method": "PO",
+                    "morning": "1 \u1782\u17d2\u179a\u17b6\u1794\u17cb \u1780\u17d2\u179a\u17c4\u1799\u1794\u17b6\u1799",
+                    "noon": "1 \u1782\u17d2\u179a\u17b6\u1794\u17cb",
+                    "evening": "1\u1782\u17d2\u179a\u17b6\u1794\u17cb \u1780\u17d2\u179a\u17c4\u1799\u1794\u17b6\u1799",
+                    "night": "-"
+                }
+            ]
+        },
+        "footer": {
+            "location_and_date": "\u179a\u17b6\u1787\u1792\u17b6\u1793\u17b8\u1797\u17d2\u1793\u17c6\u1796\u17c1\u1789,\u1790\u17d2\u1784\u17c3\u1791\u17b8 22/06/2025 14:47",
+            "doctor_role_km": "\u1782\u17d2\u179a\u17bc\u1796\u17c1\u1791\u17d2\u1799\u1796\u17d2\u1799\u17b6\u1794\u17b6\u179b",
+            "note_km": "\u179f\u17bc\u1798\u1799\u1780\u179c\u17c1\u1787\u17d2\u1787\u1794\u1789\u17d2\u1787\u17b6\u1798\u1780\u179c\u17b7\u1789 \u1796\u17c1\u179b\u1796\u17b7\u1793\u17b7\u178f\u17d2\u1799\u179b\u17be\u1780\u1780\u17d2\u179a\u17c4\u1799",
+            "doctor_name": "\u179c\u17c1\u1787\u17d2\u1787\u1794\u178e\u17d2\u178c\u17b7\u178f \u17a0\u17ca\u17b8\u1784 \u1782\u17b8\u1798\u17a2\u17b6\u1784"
+        }
+    },
+    "structured_reminder_data": {
+        "description": "Processed and structured data optimized for generating automated medication reminders. This is the target output format when OCR scans a prescription image.",
+        "prescription_id": "HAKF1354164",
+        "prescription_date": "2025-06-22T14:47:00",
+        "patient": {
+            "name": "\u1792\u17bb\u17c6 \u1796\u17b6\u1793\u17b8",
+            "age": 19,
+            "sex": "\u179f\u17d2\u179a\u17b8"
+        },
+        "hospital_name": "\u1798\u1793\u17d2\u1791\u17b8\u179a\u1796\u17c1\u1791\u17d2\u1799\u1798\u17b7\u178f\u17d2\u178f\u1797\u17b6\u1796\u1781\u17d2\u1798\u17c2\u179a-\u179f\u17bc\u179c\u17b7\u1799\u17c2\u178f",
+        "doctor_name": "\u179c\u17c1\u1787\u17d2\u1787\u1794\u178e\u17d2\u178c\u17b7\u178f \u17a0\u17ca\u17b8\u1784 \u1782\u17b8\u1798\u17a2\u17b6\u1784",
+        "diagnosis": [
+            "Chronic Cystitis",
+            "Encour m\u00e9norh\u00e9e"
+        ],
+        "medications": [
+            {
+                "id": 1,
+                "name": "Butylscopolamine",
+                "dosage_mg": 10,
+                "form": "\u1782\u17d2\u179a\u17b6\u1794\u17cb",
+                "form_en": "tablet",
+                "total_quantity": 14,
+                "unit_km": "\u1782\u17d2\u179a\u17b6\u1794\u17cb",
+                "route": null,
+                "meal_instruction": null,
+                "meal_instruction_km": null,
+                "schedule": {
+                    "morning": {
+                        "take": true,
+                        "time_range": "06:00-08:00",
+                        "quantity": 1,
+                        "instruction_km": "\u179b\u17c1\u1794 1 \u1782\u17d2\u179a\u17b6\u1794\u17cb"
+                    },
+                    "noon": {
+                        "take": false,
+                        "time_range": "11:00-12:00",
+                        "quantity": 0,
+                        "instruction_km": null
+                    },
+                    "evening": {
+                        "take": true,
+                        "time_range": "17:00-18:00",
+                        "quantity": 1,
+                        "instruction_km": "\u179b\u17c1\u1794 1 \u1782\u17d2\u179a\u17b6\u1794\u17cb"
+                    },
+                    "night": {
+                        "take": false,
+                        "time_range": "20:00-22:00",
+                        "quantity": 0,
+                        "instruction_km": null
+                    }
+                },
+                "daily_total": 2,
+                "estimated_duration_days": 7
+            },
+            {
+                "id": 2,
+                "name": "Multivitamine",
+                "dosage_mg": null,
+                "form": "\u1782\u17d2\u179a\u17b6\u1794\u17cb",
+                "form_en": "tablet",
+                "total_quantity": 10,
+                "unit_km": "\u1782\u17d2\u179a\u17b6\u1794\u17cb",
+                "route": null,
+                "meal_instruction": null,
+                "meal_instruction_km": null,
+                "schedule": {
+                    "morning": {
+                        "take": true,
+                        "time_range": "06:00-08:00",
+                        "quantity": 1,
+                        "instruction_km": "\u179b\u17c1\u1794 1 \u1782\u17d2\u179a\u17b6\u1794\u17cb"
+                    },
+                    "noon": {
+                        "take": false,
+                        "time_range": "11:00-12:00",
+                        "quantity": 0,
+                        "instruction_km": null
+                    },
+                    "evening": {
+                        "take": true,
+                        "time_range": "17:00-18:00",
+                        "quantity": 1,
+                        "instruction_km": "\u179b\u17c1\u1794 1 \u1782\u17d2\u179a\u17b6\u1794\u17cb"
+                    },
+                    "night": {
+                        "take": false,
+                        "time_range": "20:00-22:00",
+                        "quantity": 0,
+                        "instruction_km": null
+                    }
+                },
+                "daily_total": 2,
+                "estimated_duration_days": 5
+            },
+            {
+                "id": 3,
+                "name": "Esome",
+                "dosage_mg": 20,
+                "form": "\u1782\u17d2\u179a\u17b6\u1794\u17cb",
+                "form_en": "tablet",
+                "total_quantity": 7,
+                "unit_km": "\u1782\u17d2\u179a\u17b6\u1794\u17cb\u179f\u17d2\u179a\u17b6\u1794",
+                "route": "PO",
+                "meal_instruction": "after_meal",
+                "meal_instruction_km": "\u1780\u17d2\u179a\u17c4\u1799\u1794\u17b6\u1799",
+                "schedule": {
+                    "morning": {
+                        "take": true,
+                        "time_range": "06:00-08:00",
+                        "quantity": 1,
+                        "instruction_km": "\u179b\u17c1\u1794 1 \u1782\u17d2\u179a\u17b6\u1794\u17cb \u1780\u17d2\u179a\u17c4\u1799\u1794\u17b6\u1799"
+                    },
+                    "noon": {
+                        "take": false,
+                        "time_range": "11:00-12:00",
+                        "quantity": 0,
+                        "instruction_km": null
+                    },
+                    "evening": {
+                        "take": false,
+                        "time_range": "17:00-18:00",
+                        "quantity": 0,
+                        "instruction_km": null
+                    },
+                    "night": {
+                        "take": false,
+                        "time_range": "20:00-22:00",
+                        "quantity": 0,
+                        "instruction_km": null
+                    }
+                },
+                "daily_total": 1,
+                "estimated_duration_days": 7
+            },
+            {
+                "id": 4,
+                "name": "Paracetamol",
+                "dosage_mg": 500,
+                "form": "\u1782\u17d2\u179a\u17b6\u1794\u17cb",
+                "form_en": "tablet",
+                "total_quantity": 15,
+                "unit_km": "\u1782\u17d2\u179a\u17b6\u1794\u17cb",
+                "route": "PO",
+                "meal_instruction": "after_meal",
+                "meal_instruction_km": "\u1780\u17d2\u179a\u17c4\u1799\u1794\u17b6\u1799",
+                "schedule": {
+                    "morning": {
+                        "take": true,
+                        "time_range": "06:00-08:00",
+                        "quantity": 1,
+                        "instruction_km": "\u179b\u17c1\u1794 1 \u1782\u17d2\u179a\u17b6\u1794\u17cb \u1780\u17d2\u179a\u17c4\u1799\u1794\u17b6\u1799"
+                    },
+                    "noon": {
+                        "take": true,
+                        "time_range": "11:00-12:00",
+                        "quantity": 1,
+                        "instruction_km": "\u179b\u17c1\u1794 1 \u1782\u17d2\u179a\u17b6\u1794\u17cb"
+                    },
+                    "evening": {
+                        "take": true,
+                        "time_range": "17:00-18:00",
+                        "quantity": 1,
+                        "instruction_km": "\u179b\u17c1\u1794 1 \u1782\u17d2\u179a\u17b6\u1794\u17cb \u1780\u17d2\u179a\u17c4\u1799\u1794\u17b6\u1799"
+                    },
+                    "night": {
+                        "take": false,
+                        "time_range": "20:00-22:00",
+                        "quantity": 0,
+                        "instruction_km": null
+                    }
+                },
+                "daily_total": 3,
+                "estimated_duration_days": 5
+            }
+        ]
+    }
+}

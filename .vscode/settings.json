@@ -1,4 +1,7 @@
 {
     "cmake.sourceDirectory": "D:/Y3-Term2/Capstone-project/DasTern/mobile-flutter/linux",
-    "kiroAgent.configureMCP": "Disabled"
+    "kiroAgent.configureMCP": "Disabled",
+    "python.analysis.extraPaths": [
+        "./ai-llm-service/scripts"
+    ]
 }
